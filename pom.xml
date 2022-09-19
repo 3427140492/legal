@@ -194,6 +194,20 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 财务-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyui-finance</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 档案-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-records</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -213,10 +227,6 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-demo1</artifactId>
-            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -230,6 +240,8 @@
         <module>ruoyi-common</module>
         <module>ruoyi-hr</module>
         <module>ruoyi-statistics</module>
+        <module>ruoyui-finance</module>
+        <module>ruoyi-records</module>
     </modules>
     <packaging>pom</packaging>
 
