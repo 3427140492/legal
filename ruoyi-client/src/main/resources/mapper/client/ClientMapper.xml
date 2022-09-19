@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.client.mapper.ClientMapper">
+    
+    <resultMap type="Client" id="ClientResult">
+        <result property="id"    column="id"    />
+        <result property="client"    column="client"    />
+        <result property="phone"    column="phone"    />
+        <result property="type"    column="type"    />
+        <result property="typeinfo"    column="typeinfo"    />
+        <result property="cardnum"    column="cardnum"    />
+        <result property="principal"    column="principal"    />
+        <result property="contact"    column="contact"    />
+        <result property="email"    column="email"    />
+        <result property="duty"    column="duty"    />
+        <result property="affectedareas"    column="affectedareas"    />
+        <result property="tel"    column="tel"    />
+        <result property="pertainarea"    column="pertainarea"    />
+        <result property="status"    column="status"    />
+        <result property="legalperson"    column="legalperson"    />
+        <result property="legalpersontel"    column="legalpersontel"    />
+        <result property="file"    column="file"    />
+        <result property="nation"    column="nation"    />
+        <result property="sex"    column="sex"    />
+        <result property="birth"    column="birth"    />
+        <result property="address"    column="address"    />
+        <result property="remark"    column="remark"    />
+        <result property="addtime"    column="addtime"    />
+        <result property="systemUserId"    column="system_user_id"    />
+        <result property="assign"    column="assign"    />
+        <result property="fileurl"    column="fileurl"    />
+    </resultMap>
+
+    <sql id="selectClientVo">
+        select id, client, phone, type, typeinfo, cardnum, principal, contact, email, duty, affectedareas, tel, pertainarea, status, legalperson, legalpersontel, file, nation, sex, birth, address, remark, addtime, system_user_id, assign, fileurl from client
+    </sql>
+
+    <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        <where>  
+            <if test="client != null  and client != ''"> and client = #{client}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="typeinfo != null  and typeinfo != ''"> and typeinfo = #{typeinfo}</if>
+            <if test="cardnum != null  and cardnum != ''"> and cardnum = #{cardnum}</if>
+            <if test="principal != null  and principal != ''"> and principal = #{principal}</if>
+            <if test="contact != null  and contact != ''"> and contact = #{contact}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="duty != null  and duty != ''"> and duty = #{duty}</if>
+            <if test="affectedareas != null  and affectedareas != ''"> and affectedareas = #{affectedareas}</if>
+            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
+            <if test="pertainarea != null  and pertainarea != ''"> and pertainarea = #{pertainarea}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="legalperson != null  and legalperson != ''"> and legalperson = #{legalperson}</if>
+            <if test="legalpersontel != null  and legalpersontel != ''"> and legalpersontel = #{legalpersontel}</if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="nation != null  and nation != ''"> and nation = #{nation}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="birth != null  and birth != ''"> and birth = #{birth}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="addtime != null  and addtime != ''"> and addtime = #{addtime}</if>
+            <if test="systemUserId != null "> and system_user_id = #{systemUserId}</if>
+            <if test="assign != null "> and assign = #{assign}</if>
+            <if test="fileurl != null  and fileurl != ''"> and fileurl = #{fileurl}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientById" parameterType="Long" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClient" parameterType="Client" useGeneratedKeys="true" keyProperty="id">
+        insert into client
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="client != null">client,</if>
+            <if test="phone != null">phone,</if>
+            <if test="type != null">type,</if>
+            <if test="typeinfo != null">typeinfo,</if>
+            <if test="cardnum != null">cardnum,</if>
+            <if test="principal != null">principal,</if>
+            <if test="contact != null">contact,</if>
+            <if test="email != null">email,</if>
+            <if test="duty != null">duty,</if>
+            <if test="affectedareas != null">affectedareas,</if>
+            <if test="tel != null">tel,</if>
+            <if test="pertainarea != null">pertainarea,</if>
+            <if test="status != null">status,</if>
+            <if test="legalperson != null">legalperson,</if>
+            <if test="legalpersontel != null">legalpersontel,</if>
+            <if test="file != null">file,</if>
+            <if test="nation != null">nation,</if>
+            <if test="sex != null">sex,</if>
+            <if test="birth != null">birth,</if>
+            <if test="address != null">address,</if>
+            <if test="remark != null">remark,</if>
+            <if test="addtime != null">addtime,</if>
+            <if test="systemUserId != null">system_user_id,</if>
+            <if test="assign != null">assign,</if>
+            <if test="fileurl != null">fileurl,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="client != null">#{client},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="type != null">#{type},</if>
+            <if test="typeinfo != null">#{typeinfo},</if>
+            <if test="cardnum != null">#{cardnum},</if>
+            <if test="principal != null">#{principal},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="email != null">#{email},</if>
+            <if test="duty != null">#{duty},</if>
+            <if test="affectedareas != null">#{affectedareas},</if>
+            <if test="tel != null">#{tel},</if>
+            <if test="pertainarea != null">#{pertainarea},</if>
+            <if test="status != null">#{status},</if>
+            <if test="legalperson != null">#{legalperson},</if>
+            <if test="legalpersontel != null">#{legalpersontel},</if>
+            <if test="file != null">#{file},</if>
+            <if test="nation != null">#{nation},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="birth != null">#{birth},</if>
+            <if test="address != null">#{address},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="addtime != null">#{addtime},</if>
+            <if test="systemUserId != null">#{systemUserId},</if>
+            <if test="assign != null">#{assign},</if>
+            <if test="fileurl != null">#{fileurl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClient" parameterType="Client">
+        update client
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="client != null">client = #{client},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="typeinfo != null">typeinfo = #{typeinfo},</if>
+            <if test="cardnum != null">cardnum = #{cardnum},</if>
+            <if test="principal != null">principal = #{principal},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="duty != null">duty = #{duty},</if>
+            <if test="affectedareas != null">affectedareas = #{affectedareas},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="pertainarea != null">pertainarea = #{pertainarea},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="legalperson != null">legalperson = #{legalperson},</if>
+            <if test="legalpersontel != null">legalpersontel = #{legalpersontel},</if>
+            <if test="file != null">file = #{file},</if>
+            <if test="nation != null">nation = #{nation},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="addtime != null">addtime = #{addtime},</if>
+            <if test="systemUserId != null">system_user_id = #{systemUserId},</if>
+            <if test="assign != null">assign = #{assign},</if>
+            <if test="fileurl != null">fileurl = #{fileurl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientById" parameterType="Long">
+        delete from client where id = #{id}
+    </delete>
+
+    <delete id="deleteClientByIds" parameterType="String">
+        delete from client where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
