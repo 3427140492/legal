@@ -187,6 +187,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!--行政-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hr</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -221,7 +228,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>ruoyi-demo1</module>
+        <module>ruoyi-hr</module>
         <module>ruoyi-statistics</module>
     </modules>
     <packaging>pom</packaging>
