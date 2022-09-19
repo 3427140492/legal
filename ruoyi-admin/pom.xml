@@ -55,6 +55,13 @@
             <artifactId>ruoyi-statistics</artifactId>
         </dependency>
 
+        <!--行政-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hr</artifactId>
+        </dependency>
+
+
         <!-- 定时任务-->
         <dependency>
             <groupId>com.ruoyi</groupId>
