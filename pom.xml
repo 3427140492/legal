@@ -217,6 +217,12 @@
 
             <dependency>
                 <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-client</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ruoyi</groupId>
                 <artifactId>spring-web</artifactId>
             </dependency>
 
