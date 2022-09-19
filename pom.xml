@@ -220,14 +220,6 @@
                 <artifactId>spring-web</artifactId>
             </dependency>
 
-            <!--前端接口-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-demo1</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 
