@@ -234,6 +234,7 @@
         <module>ruoyi-statistics</module>
         <module>ruoyui-finance</module>
         <module>ruoyi-records</module>
+        <module>ruoyi-client</module>
     </modules>
     <packaging>pom</packaging>
 
