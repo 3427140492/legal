@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import Layout from '@/layout'
+import ggtzQR from '@/views/hr/ggtzQR'
 
 /**
  * Note: 路由配置项
@@ -145,7 +146,28 @@ export const constantRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },//公告通知查看
+  // {
+  //   path: '/hr/notice',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/hr/notice/ggtzQR'),
+  //       name: 'ggtzQR',
+  //       meta: { title: '公告通知查看', activeMenu: '/hr/notice' }
+  //     }
+  //   ]
+  // }
+  {
+    path:'/hr/ggtzQR',
+    component:Layout,
+    hidden: true,
+    name: 'ggtzQR',
+    meta: { title: '公告通知查看'}
   }
+  
 ];
 
 const router = createRouter({
@@ -159,5 +181,6 @@ const router = createRouter({
     }
   },
 });
+
 
 export default router;
