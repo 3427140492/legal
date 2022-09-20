@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author ruoyi
  * @date 2022-09-15
  */
-public class Client extends BaseEntity
+public class StatisticsClient extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

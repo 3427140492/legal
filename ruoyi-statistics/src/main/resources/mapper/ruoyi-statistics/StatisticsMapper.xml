@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.statistics.mapper.StatisticsMapper">
     
-    <resultMap type="CaseLaw" id="CaseLawResult">
+    <resultMap type="StatisticsCaseLaw" id="CaseLawResult">
         <result property="id"    column="id"    />
         <result property="caseNo"    column="case_no"    />
         <result property="caseOppositeParties"    column="case_opposite_parties"    />
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseRecordNum"    column="case_record_num"    />
     </resultMap>
 
-    <resultMap id="CaseLawHrEmpResult" type="CaseLaw" extends="CaseLawResult">
+    <resultMap id="CaseLawHrEmpResult" type="StatisticsCaseLaw" extends="CaseLawResult">
         <collection property="hrEmpList" notNullColumn="emp_id" javaType="java.util.List" resultMap="HrEmpResult" />
         <collection property="ClientList" notNullColumn="client" javaType="java.util.List" resultMap="ClientResult" />
 
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where case_recycle = 'Y'
     </sql>
 
-    <select id="selectCaseLawList" parameterType="CaseLaw" resultMap="CaseLawResult">
+    <select id="selectCaseLawList" parameterType="StatisticsCaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
 
     </select>

@@ -1,7 +1,7 @@
 package com.ruoyi.web.controller.lvshi;
 
-import com.ruoyi.client.domain.CaseLaw;
-import com.ruoyi.client.service.ICaseLawService;
+import com.ruoyi.client.domain.ClientCaseLaw;
+import com.ruoyi.client.service.IClientsService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -26,17 +26,17 @@ import java.util.List;
 public class CaseLawController extends BaseController
 {
     @Autowired
-    private ICaseLawService caseLawService;
+    private IClientsService caseLawService;
 
     /**
      * 查询我的当事人列表
      */
     @PreAuthorize("@ss.hasPermi('client:wddsr:list')")
     @GetMapping("/list")
-    public TableDataInfo list(CaseLaw caseLaw)
+    public TableDataInfo list(ClientCaseLaw caseLaw)
     {
         startPage();
-        List<CaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
+        List<ClientCaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
         return getDataTable(list);
     }
 
@@ -46,10 +46,10 @@ public class CaseLawController extends BaseController
     @PreAuthorize("@ss.hasPermi('client:wddsr:export')")
     @Log(title = "我的当事人", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CaseLaw caseLaw)
+    public void export(HttpServletResponse response, ClientCaseLaw caseLaw)
     {
-        List<CaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
-        ExcelUtil<CaseLaw> util = new ExcelUtil<CaseLaw>(CaseLaw.class);
+        List<ClientCaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
+        ExcelUtil<ClientCaseLaw> util = new ExcelUtil<ClientCaseLaw>(ClientCaseLaw.class);
         util.exportExcel(response, list, "我的当事人数据");
     }
 
@@ -69,7 +69,7 @@ public class CaseLawController extends BaseController
     @PreAuthorize("@ss.hasPermi('client:wddsr:add')")
     @Log(title = "我的当事人", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CaseLaw caseLaw)
+    public AjaxResult add(@RequestBody ClientCaseLaw caseLaw)
     {
         return toAjax(caseLawService.insertCaseLaw(caseLaw));
     }
@@ -80,7 +80,7 @@ public class CaseLawController extends BaseController
     @PreAuthorize("@ss.hasPermi('client:wddsr:edit')")
     @Log(title = "我的当事人", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CaseLaw caseLaw)
+    public AjaxResult edit(@RequestBody ClientCaseLaw caseLaw)
     {
         return toAjax(caseLawService.updateCaseLaw(caseLaw));
     }

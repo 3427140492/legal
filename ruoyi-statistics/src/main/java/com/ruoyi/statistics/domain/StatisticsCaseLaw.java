@@ -15,7 +15,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-09-15
  */
-public class CaseLaw extends BaseEntity
+public class StatisticsCaseLaw extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -81,7 +81,7 @@ public class CaseLaw extends BaseEntity
     /** $table.subTable.functionName信息 */
     private List<HrEmp> hrEmpList;
 
-    private List<Client> ClientList;
+    private List<StatisticsClient> statisticsClientList;
 
 
     public Integer getId() {
@@ -204,12 +204,12 @@ public class CaseLaw extends BaseEntity
         this.hrEmpList = hrEmpList;
     }
 
-    public List<Client> getClientList() {
-        return ClientList;
+    public List<StatisticsClient> getClientList() {
+        return statisticsClientList;
     }
 
-    public void setClientList(List<Client> clientList) {
-        ClientList = clientList;
+    public void setClientList(List<StatisticsClient> statisticsClientList) {
+        this.statisticsClientList = statisticsClientList;
     }
 
     @Override

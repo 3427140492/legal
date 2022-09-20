@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.record.mapper.CaseLawMapper">
+<mapper namespace="com.ruoyi.record.mapper.RecordMapper">
     
-    <resultMap type="CaseLaw" id="CaseLawResult">
+    <resultMap type="RecordCaseLaw" id="CaseLawResult">
         <result property="id"    column="id"    />
         <result property="caseNo"    column="case_no"    />
         <result property="caseOppositeParties"    column="case_opposite_parties"    />
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, case_no, case_opposite_parties,case_wtr from case_law
     </sql>
 
-    <select id="selectCaseLawList" parameterType="CaseLaw" resultMap="CaseLawResult">
+    <select id="selectCaseLawList" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
         <if test=" searchType == 1">
             <if test=" searchStr !=null and searchStr !=''">

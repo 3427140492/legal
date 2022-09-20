@@ -3,9 +3,9 @@ package com.ruoyi.client.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.client.mapper.CaseLawMapper;
-import com.ruoyi.client.domain.CaseLaw;
-import com.ruoyi.client.service.ICaseLawService;
+import com.ruoyi.client.mapper.ClientsMapper;
+import com.ruoyi.client.domain.ClientCaseLaw;
+import com.ruoyi.client.service.IClientsService;
 
 /**
  * 我的当事人Service业务层处理
@@ -14,10 +14,10 @@ import com.ruoyi.client.service.ICaseLawService;
  * @date 2022-09-16
  */
 @Service
-public class CaseLawServiceImpl implements ICaseLawService 
+public class ClientsServiceImpl implements IClientsService
 {
     @Autowired
-    private CaseLawMapper caseLawMapper;
+    private ClientsMapper clientsMapper;
 
     /**
      * 查询我的当事人
@@ -26,9 +26,9 @@ public class CaseLawServiceImpl implements ICaseLawService
      * @return 我的当事人
      */
     @Override
-    public CaseLaw selectCaseLawById(Integer id)
+    public ClientCaseLaw selectCaseLawById(Integer id)
     {
-        return caseLawMapper.selectCaseLawById(id);
+        return clientsMapper.selectCaseLawById(id);
     }
 
     /**
@@ -38,9 +38,9 @@ public class CaseLawServiceImpl implements ICaseLawService
      * @return 我的当事人
      */
     @Override
-    public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw)
+    public List<ClientCaseLaw> selectCaseLawList(ClientCaseLaw caseLaw)
     {
-        return caseLawMapper.selectCaseLawList(caseLaw);
+        return clientsMapper.selectCaseLawList(caseLaw);
     }
 
     /**
@@ -50,9 +50,9 @@ public class CaseLawServiceImpl implements ICaseLawService
      * @return 结果
      */
     @Override
-    public int insertCaseLaw(CaseLaw caseLaw)
+    public int insertCaseLaw(ClientCaseLaw caseLaw)
     {
-        return caseLawMapper.insertCaseLaw(caseLaw);
+        return clientsMapper.insertCaseLaw(caseLaw);
     }
 
     /**
@@ -62,9 +62,9 @@ public class CaseLawServiceImpl implements ICaseLawService
      * @return 结果
      */
     @Override
-    public int updateCaseLaw(CaseLaw caseLaw)
+    public int updateCaseLaw(ClientCaseLaw caseLaw)
     {
-        return caseLawMapper.updateCaseLaw(caseLaw);
+        return clientsMapper.updateCaseLaw(caseLaw);
     }
 
     /**
@@ -76,7 +76,7 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int deleteCaseLawByIds(Integer[] ids)
     {
-        return caseLawMapper.deleteCaseLawByIds(ids);
+        return clientsMapper.deleteCaseLawByIds(ids);
     }
 
     /**
@@ -88,6 +88,6 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int deleteCaseLawById(Integer id)
     {
-        return caseLawMapper.deleteCaseLawById(id);
+        return clientsMapper.deleteCaseLawById(id);
     }
 }

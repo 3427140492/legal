@@ -1,7 +1,7 @@
 package com.ruoyi.record.service;
 
 import java.util.List;
-import com.ruoyi.record.domain.CaseLaw;
+import com.ruoyi.record.domain.RecordCaseLaw;
 
 /**
  * 归档Service接口
@@ -9,7 +9,7 @@ import com.ruoyi.record.domain.CaseLaw;
  * @author ruoyi
  * @date 2022-09-15
  */
-public interface ICaseLawService 
+public interface IRecordService
 {
     /**
      * 查询归档列表
@@ -17,5 +17,5 @@ public interface ICaseLawService
      * @param caseLaw 归档
      * @return 归档集合
      */
-    List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+    List<RecordCaseLaw> selectCaseLawList(RecordCaseLaw caseLaw);
 }

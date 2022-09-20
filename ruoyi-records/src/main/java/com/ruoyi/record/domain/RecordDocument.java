@@ -52,7 +52,7 @@ public class RecordDocument extends BaseEntity
     private String searchStr;
 
     /** $table.subTable.functionName信息 */
-    private List<CaseLaw> caseLawList;
+    private List<RecordCaseLaw> caseLawList;
 
     public void setId(Integer id) 
     {
@@ -145,12 +145,12 @@ public class RecordDocument extends BaseEntity
         this.searchStr = searchStr;
     }
 
-    public List<CaseLaw> getCaseLawList()
+    public List<RecordCaseLaw> getCaseLawList()
     {
         return caseLawList;
     }
 
-    public void setCaseLawList(List<CaseLaw> caseLawList)
+    public void setCaseLawList(List<RecordCaseLaw> caseLawList)
     {
         this.caseLawList = caseLawList;
     }

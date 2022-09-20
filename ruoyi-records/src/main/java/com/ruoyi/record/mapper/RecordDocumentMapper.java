@@ -2,7 +2,7 @@ package com.ruoyi.record.mapper;
 
 import java.util.List;
 import com.ruoyi.record.domain.RecordDocument;
-import com.ruoyi.record.domain.CaseLaw;
+import com.ruoyi.record.domain.RecordCaseLaw;
 
 /**
  * 全所电子归档Mapper接口
@@ -74,7 +74,7 @@ public interface RecordDocumentMapper
      * @param caseLawList ${subTable.functionName}列表
      * @return 结果
      */
-    int batchCaseLaw(List<CaseLaw> caseLawList);
+    int batchCaseLaw(List<RecordCaseLaw> caseLawList);
     
 
     /**

@@ -1,7 +1,7 @@
 package com.ruoyi.statistics.service;
 
 import java.util.List;
-import com.ruoyi.statistics.domain.CaseLaw;
+import com.ruoyi.statistics.domain.StatisticsCaseLaw;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,31 +19,31 @@ public interface IStatisticsService
      * @param id 收结案统计主键
      * @return 收结案统计
      */
-    CaseLaw selectCaseLawById(Integer id);
+    StatisticsCaseLaw selectCaseLawById(Integer id);
 
     /**
      * 查询收结案统计列表
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 收结案统计集合
      */
-    List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+    List<StatisticsCaseLaw> selectCaseLawList(StatisticsCaseLaw statisticsCaseLaw);
 
     /**
      * 新增收结案统计
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 结果
      */
-    int insertCaseLaw(CaseLaw caseLaw);
+    int insertCaseLaw(StatisticsCaseLaw statisticsCaseLaw);
 
     /**
      * 修改收结案统计
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 结果
      */
-    int updateCaseLaw(CaseLaw caseLaw);
+    int updateCaseLaw(StatisticsCaseLaw statisticsCaseLaw);
 
     /**
      * 批量删除收结案统计

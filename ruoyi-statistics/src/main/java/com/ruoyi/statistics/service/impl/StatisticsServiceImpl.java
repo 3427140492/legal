@@ -8,7 +8,7 @@ import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.statistics.domain.HrEmp;
 import com.ruoyi.statistics.mapper.StatisticsMapper;
-import com.ruoyi.statistics.domain.CaseLaw;
+import com.ruoyi.statistics.domain.StatisticsCaseLaw;
 import com.ruoyi.statistics.service.IStatisticsService;
 
 /**
@@ -30,7 +30,7 @@ public class StatisticsServiceImpl implements IStatisticsService
      * @return 收结案统计
      */
     @Override
-    public CaseLaw selectCaseLawById(Integer id)
+    public StatisticsCaseLaw selectCaseLawById(Integer id)
     {
         return statisticsMapper.selectCaseLawById(id);
     }
@@ -38,43 +38,43 @@ public class StatisticsServiceImpl implements IStatisticsService
     /**
      * 查询收结案统计列表
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 收结案统计
      */
     @Override
-    public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw)
+    public List<StatisticsCaseLaw> selectCaseLawList(StatisticsCaseLaw statisticsCaseLaw)
     {
-        return statisticsMapper.selectCaseLawList(caseLaw);
+        return statisticsMapper.selectCaseLawList(statisticsCaseLaw);
     }
 
     /**
      * 新增收结案统计
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 结果
      */
     @Transactional
     @Override
-    public int insertCaseLaw(CaseLaw caseLaw)
+    public int insertCaseLaw(StatisticsCaseLaw statisticsCaseLaw)
     {
-        int rows = statisticsMapper.insertCaseLaw(caseLaw);
-        insertHrEmp(caseLaw);
+        int rows = statisticsMapper.insertCaseLaw(statisticsCaseLaw);
+        insertHrEmp(statisticsCaseLaw);
         return rows;
     }
 
     /**
      * 修改收结案统计
      * 
-     * @param caseLaw 收结案统计
+     * @param statisticsCaseLaw 收结案统计
      * @return 结果
      */
     @Transactional
     @Override
-    public int updateCaseLaw(CaseLaw caseLaw)
+    public int updateCaseLaw(StatisticsCaseLaw statisticsCaseLaw)
     {
-        statisticsMapper.deleteHrEmpById(caseLaw.getId());
-        insertHrEmp(caseLaw);
-        return statisticsMapper.updateCaseLaw(caseLaw);
+        statisticsMapper.deleteHrEmpById(statisticsCaseLaw.getId());
+        insertHrEmp(statisticsCaseLaw);
+        return statisticsMapper.updateCaseLaw(statisticsCaseLaw);
     }
 
     /**
@@ -108,12 +108,12 @@ public class StatisticsServiceImpl implements IStatisticsService
     /**
      * 新增${subTable.functionName}信息
      * 
-     * @param caseLaw 收结案统计对象
+     * @param statisticsCaseLaw 收结案统计对象
      */
-    public void insertHrEmp(CaseLaw caseLaw)
+    public void insertHrEmp(StatisticsCaseLaw statisticsCaseLaw)
     {
-        List<HrEmp> hrEmpList = caseLaw.getHrEmpList();
-        Integer id = caseLaw.getId();
+        List<HrEmp> hrEmpList = statisticsCaseLaw.getHrEmpList();
+        Integer id = statisticsCaseLaw.getId();
         if (StringUtils.isNotNull(hrEmpList))
         {
             List<HrEmp> list = new ArrayList<HrEmp>();

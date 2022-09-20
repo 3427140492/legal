@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.record.domain.CaseLaw;
+import com.ruoyi.record.domain.RecordCaseLaw;
 import com.ruoyi.record.mapper.RecordDocumentMapper;
 import com.ruoyi.record.domain.RecordDocument;
 import com.ruoyi.record.service.IRecordDocumentService;
@@ -112,12 +112,12 @@ public class RecordDocumentServiceImpl implements IRecordDocumentService
      */
     public void insertCaseLaw(RecordDocument recordDocument)
     {
-        List<CaseLaw> caseLawList = recordDocument.getCaseLawList();
+        List<RecordCaseLaw> caseLawList = recordDocument.getCaseLawList();
         Integer id = recordDocument.getId();
         if (StringUtils.isNotNull(caseLawList))
         {
-            List<CaseLaw> list = new ArrayList<CaseLaw>();
-            for (CaseLaw caseLaw : caseLawList)
+            List<RecordCaseLaw> list = new ArrayList<RecordCaseLaw>();
+            for (RecordCaseLaw caseLaw : caseLawList)
             {
                 caseLaw.setId(id);
                 list.add(caseLaw);

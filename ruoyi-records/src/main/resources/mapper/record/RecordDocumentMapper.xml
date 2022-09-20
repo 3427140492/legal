@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <collection property="caseLawList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseLawResult" />
     </resultMap>
 
-    <resultMap type="CaseLaw" id="CaseLawResult">
+    <resultMap type="RecordCaseLaw" id="CaseLawResult">
         <result property="id"    column="sub_id"    />
         <result property="caseNo"    column="sub_case_no"    />
         <result property="caseSubmitter"    column="sub_case_submitter"    />

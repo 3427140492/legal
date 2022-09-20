@@ -1,4 +1,4 @@
-package com.ruoyi.client.domain;
+package com.ruoyi.record.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,12 +9,12 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 我的当事人对象 case_law
+ * ${subTable.functionName}对象 case_law
  * 
- * @author gk
- * @date 2022-09-16
+ * @author ruoyi
+ * @date 2022-09-15
  */
-public class CaseLaw extends BaseEntity
+public class RecordCaseLaw extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -223,6 +223,26 @@ public class CaseLaw extends BaseEntity
     /** 服务人次 */
     @Excel(name = "服务人次")
     private Long standard;
+
+    private String searchType;
+
+    public String getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getSearchStr() {
+        return searchStr;
+    }
+
+    public void setSearchStr(String searchStr) {
+        this.searchStr = searchStr;
+    }
+
+    private String searchStr;
 
     public void setId(Integer id) 
     {
