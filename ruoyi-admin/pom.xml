@@ -49,36 +49,6 @@
             <artifactId>ruoyi-framework</artifactId>
         </dependency>
 
-        <!-- 统计-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-statistics</artifactId>
-        </dependency>
-
-        <!--行政-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-hr</artifactId>
-        </dependency>
-
-        <!--客户-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-client</artifactId>
-        </dependency>
-
-        <!-- 财务-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyui-finance</artifactId>
-        </dependency>
-
-        <!-- 档案-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-records</artifactId>
-        </dependency>
-
         <!-- 定时任务-->
         <dependency>
             <groupId>com.ruoyi</groupId>

@@ -180,44 +180,10 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
-            <!-- 统计-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-statistics</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-            <!--行政-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-hr</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-            <!-- 财务-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyui-finance</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-            <!-- 档案-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-records</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-common</artifactId>
-                <version>${ruoyi.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-client</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -236,11 +202,6 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>ruoyi-hr</module>
-        <module>ruoyi-statistics</module>
-        <module>ruoyui-finance</module>
-        <module>ruoyi-records</module>
-        <module>ruoyi-client</module>
     </modules>
     <packaging>pom</packaging>
 
