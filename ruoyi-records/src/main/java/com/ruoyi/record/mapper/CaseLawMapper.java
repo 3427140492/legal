@@ -18,7 +18,7 @@ public interface CaseLawMapper {
      * @param caseLaw 归档
      * @return 归档集合
      */
-    public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+    List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
 
 
 }

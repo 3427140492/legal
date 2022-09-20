@@ -17,7 +17,7 @@ public interface AdmNoticeMapper
      * @param id 公告通知主键
      * @return 公告通知
      */
-    public AdmNotice selectAdmNoticeById(Long id);
+    AdmNotice selectAdmNoticeById(Long id);
 
     /**
      * 查询公告通知列表
@@ -25,7 +25,7 @@ public interface AdmNoticeMapper
      * @param admNotice 公告通知
      * @return 公告通知集合
      */
-    public List<AdmNotice> selectAdmNoticeList(AdmNotice admNotice);
+    List<AdmNotice> selectAdmNoticeList(AdmNotice admNotice);
 
     /**
      * 新增公告通知
@@ -33,7 +33,7 @@ public interface AdmNoticeMapper
      * @param admNotice 公告通知
      * @return 结果
      */
-    public int insertAdmNotice(AdmNotice admNotice);
+    int insertAdmNotice(AdmNotice admNotice);
 
     /**
      * 修改公告通知
@@ -41,7 +41,7 @@ public interface AdmNoticeMapper
      * @param admNotice 公告通知
      * @return 结果
      */
-    public int updateAdmNotice(AdmNotice admNotice);
+    int updateAdmNotice(AdmNotice admNotice);
 
     /**
      * 删除公告通知
@@ -49,7 +49,7 @@ public interface AdmNoticeMapper
      * @param id 公告通知主键
      * @return 结果
      */
-    public int deleteAdmNoticeById(Long id);
+    int deleteAdmNoticeById(Long id);
 
     /**
      * 批量删除公告通知
@@ -57,5 +57,5 @@ public interface AdmNoticeMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAdmNoticeByIds(Long[] ids);
+    int deleteAdmNoticeByIds(Long[] ids);
 }

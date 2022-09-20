@@ -17,7 +17,7 @@ public interface CaseLawMapper
      * @param id 我的当事人主键
      * @return 我的当事人
      */
-    public CaseLaw selectCaseLawById(Integer id);
+    CaseLaw selectCaseLawById(Integer id);
 
     /**
      * 查询我的当事人列表
@@ -25,7 +25,7 @@ public interface CaseLawMapper
      * @param caseLaw 我的当事人
      * @return 我的当事人集合
      */
-    public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+    List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
 
     /**
      * 新增我的当事人
@@ -33,7 +33,7 @@ public interface CaseLawMapper
      * @param caseLaw 我的当事人
      * @return 结果
      */
-    public int insertCaseLaw(CaseLaw caseLaw);
+    int insertCaseLaw(CaseLaw caseLaw);
 
     /**
      * 修改我的当事人
@@ -41,7 +41,7 @@ public interface CaseLawMapper
      * @param caseLaw 我的当事人
      * @return 结果
      */
-    public int updateCaseLaw(CaseLaw caseLaw);
+    int updateCaseLaw(CaseLaw caseLaw);
 
     /**
      * 删除我的当事人
@@ -49,7 +49,7 @@ public interface CaseLawMapper
      * @param id 我的当事人主键
      * @return 结果
      */
-    public int deleteCaseLawById(Integer id);
+    int deleteCaseLawById(Integer id);
 
     /**
      * 批量删除我的当事人
@@ -57,5 +57,5 @@ public interface CaseLawMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteCaseLawByIds(Integer[] ids);
+    int deleteCaseLawByIds(Integer[] ids);
 }

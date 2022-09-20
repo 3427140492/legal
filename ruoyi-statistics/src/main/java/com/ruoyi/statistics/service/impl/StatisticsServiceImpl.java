@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.statistics.domain.HrEmp;
-import com.ruoyi.statistics.mapper.CaseLawMapper;
+import com.ruoyi.statistics.mapper.StatisticsMapper;
 import com.ruoyi.statistics.domain.CaseLaw;
-import com.ruoyi.statistics.service.ICaseLawService;
+import com.ruoyi.statistics.service.IStatisticsService;
 
 /**
  * 收结案统计Service业务层处理
@@ -18,10 +18,10 @@ import com.ruoyi.statistics.service.ICaseLawService;
  * @date 2022-09-15
  */
 @Service
-public class CaseLawServiceImpl implements ICaseLawService 
+public class StatisticsServiceImpl implements IStatisticsService
 {
     @Autowired
-    private CaseLawMapper caseLawMapper;
+    private StatisticsMapper statisticsMapper;
 
     /**
      * 查询收结案统计
@@ -32,7 +32,7 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public CaseLaw selectCaseLawById(Integer id)
     {
-        return caseLawMapper.selectCaseLawById(id);
+        return statisticsMapper.selectCaseLawById(id);
     }
 
     /**
@@ -44,7 +44,7 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw)
     {
-        return caseLawMapper.selectCaseLawList(caseLaw);
+        return statisticsMapper.selectCaseLawList(caseLaw);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int insertCaseLaw(CaseLaw caseLaw)
     {
-        int rows = caseLawMapper.insertCaseLaw(caseLaw);
+        int rows = statisticsMapper.insertCaseLaw(caseLaw);
         insertHrEmp(caseLaw);
         return rows;
     }
@@ -72,9 +72,9 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int updateCaseLaw(CaseLaw caseLaw)
     {
-        caseLawMapper.deleteHrEmpById(caseLaw.getId());
+        statisticsMapper.deleteHrEmpById(caseLaw.getId());
         insertHrEmp(caseLaw);
-        return caseLawMapper.updateCaseLaw(caseLaw);
+        return statisticsMapper.updateCaseLaw(caseLaw);
     }
 
     /**
@@ -87,8 +87,8 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int deleteCaseLawByIds(Integer[] ids)
     {
-        caseLawMapper.deleteHrEmpByIds(ids);
-        return caseLawMapper.deleteCaseLawByIds(ids);
+        statisticsMapper.deleteHrEmpByIds(ids);
+        return statisticsMapper.deleteCaseLawByIds(ids);
     }
 
     /**
@@ -101,8 +101,8 @@ public class CaseLawServiceImpl implements ICaseLawService
     @Override
     public int deleteCaseLawById(Integer id)
     {
-        caseLawMapper.deleteHrEmpById(id);
-        return caseLawMapper.deleteCaseLawById(id);
+        statisticsMapper.deleteHrEmpById(id);
+        return statisticsMapper.deleteCaseLawById(id);
     }
 
     /**
@@ -124,7 +124,7 @@ public class CaseLawServiceImpl implements ICaseLawService
             }
             if (list.size() > 0)
             {
-                caseLawMapper.batchHrEmp(list);
+                statisticsMapper.batchHrEmp(list);
             }
         }
     }

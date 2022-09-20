@@ -18,7 +18,7 @@ public interface RecordDocumentMapper
      * @param id 全所电子归档主键
      * @return 全所电子归档
      */
-    public RecordDocument selectRecordDocumentById(Integer id);
+    RecordDocument selectRecordDocumentById(Integer id);
 
     /**
      * 查询全所电子归档列表
@@ -26,7 +26,7 @@ public interface RecordDocumentMapper
      * @param recordDocument 全所电子归档
      * @return 全所电子归档集合
      */
-    public List<RecordDocument> selectRecordDocumentList(RecordDocument recordDocument);
+    List<RecordDocument> selectRecordDocumentList(RecordDocument recordDocument);
 
     /**
      * 新增全所电子归档
@@ -34,7 +34,7 @@ public interface RecordDocumentMapper
      * @param recordDocument 全所电子归档
      * @return 结果
      */
-    public int insertRecordDocument(RecordDocument recordDocument);
+    int insertRecordDocument(RecordDocument recordDocument);
 
     /**
      * 修改全所电子归档
@@ -42,7 +42,7 @@ public interface RecordDocumentMapper
      * @param recordDocument 全所电子归档
      * @return 结果
      */
-    public int updateRecordDocument(RecordDocument recordDocument);
+    int updateRecordDocument(RecordDocument recordDocument);
 
     /**
      * 删除全所电子归档
@@ -50,7 +50,7 @@ public interface RecordDocumentMapper
      * @param id 全所电子归档主键
      * @return 结果
      */
-    public int deleteRecordDocumentById(Integer id);
+    int deleteRecordDocumentById(Integer id);
 
     /**
      * 批量删除全所电子归档
@@ -58,7 +58,7 @@ public interface RecordDocumentMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteRecordDocumentByIds(Integer[] ids);
+    int deleteRecordDocumentByIds(Integer[] ids);
 
     /**
      * 批量删除${subTable.functionName}
@@ -66,7 +66,7 @@ public interface RecordDocumentMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteCaseLawByIds(Integer[] ids);
+    int deleteCaseLawByIds(Integer[] ids);
     
     /**
      * 批量新增${subTable.functionName}
@@ -74,7 +74,7 @@ public interface RecordDocumentMapper
      * @param caseLawList ${subTable.functionName}列表
      * @return 结果
      */
-    public int batchCaseLaw(List<CaseLaw> caseLawList);
+    int batchCaseLaw(List<CaseLaw> caseLawList);
     
 
     /**
@@ -83,5 +83,5 @@ public interface RecordDocumentMapper
      * @param id 全所电子归档ID
      * @return 结果
      */
-    public int deleteCaseLawById(Integer id);
+    int deleteCaseLawById(Integer id);
 }

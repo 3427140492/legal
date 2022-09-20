@@ -3,6 +3,8 @@ package com.ruoyi.statistics.mapper;
 import java.util.List;
 import com.ruoyi.statistics.domain.CaseLaw;
 import com.ruoyi.statistics.domain.HrEmp;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * 收结案统计Mapper接口
@@ -10,7 +12,9 @@ import com.ruoyi.statistics.domain.HrEmp;
  * @author ruoyi
  * @date 2022-09-15
  */
-public interface CaseLawMapper 
+@Repository
+@Mapper
+public interface StatisticsMapper
 {
     /**
      * 查询收结案统计
@@ -18,7 +22,7 @@ public interface CaseLawMapper
      * @param id 收结案统计主键
      * @return 收结案统计
      */
-    public CaseLaw selectCaseLawById(Integer id);
+    CaseLaw selectCaseLawById(Integer id);
 
     /**
      * 查询收结案统计列表
@@ -26,7 +30,7 @@ public interface CaseLawMapper
      * @param caseLaw 收结案统计
      * @return 收结案统计集合
      */
-    public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+    List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
 
     /**
      * 新增收结案统计
@@ -34,7 +38,7 @@ public interface CaseLawMapper
      * @param caseLaw 收结案统计
      * @return 结果
      */
-    public int insertCaseLaw(CaseLaw caseLaw);
+    int insertCaseLaw(CaseLaw caseLaw);
 
     /**
      * 修改收结案统计
@@ -42,7 +46,7 @@ public interface CaseLawMapper
      * @param caseLaw 收结案统计
      * @return 结果
      */
-    public int updateCaseLaw(CaseLaw caseLaw);
+    int updateCaseLaw(CaseLaw caseLaw);
 
     /**
      * 删除收结案统计
@@ -50,7 +54,7 @@ public interface CaseLawMapper
      * @param id 收结案统计主键
      * @return 结果
      */
-    public int deleteCaseLawById(Integer id);
+    int deleteCaseLawById(Integer id);
 
     /**
      * 批量删除收结案统计
@@ -58,7 +62,7 @@ public interface CaseLawMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteCaseLawByIds(Integer[] ids);
+    int deleteCaseLawByIds(Integer[] ids);
 
     /**
      * 批量删除${subTable.functionName}
@@ -66,7 +70,7 @@ public interface CaseLawMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteHrEmpByIds(Integer[] ids);
+    int deleteHrEmpByIds(Integer[] ids);
     
     /**
      * 批量新增${subTable.functionName}
@@ -74,7 +78,7 @@ public interface CaseLawMapper
      * @param hrEmpList ${subTable.functionName}列表
      * @return 结果
      */
-    public int batchHrEmp(List<HrEmp> hrEmpList);
+    int batchHrEmp(List<HrEmp> hrEmpList);
     
 
     /**
@@ -83,5 +87,5 @@ public interface CaseLawMapper
      * @param id 收结案统计ID
      * @return 结果
      */
-    public int deleteHrEmpById(Integer id);
+    int deleteHrEmpById(Integer id);
 }
