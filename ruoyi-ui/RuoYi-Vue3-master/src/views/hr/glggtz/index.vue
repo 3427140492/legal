@@ -31,7 +31,7 @@
         </el-form-item>
       </el-form>
   
-       <!-- <el-row :gutter="10" class="mb8">
+       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <el-button
             type="primary"
@@ -46,7 +46,7 @@
           <el-button
             type="success"
             plain
-            icon="el-icon-edit"
+           icon="el-icon-edit"
             size="mini"
             :disabled="single"
             @click="handleUpdate"
@@ -75,10 +75,10 @@
           >导出</el-button>
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-      </el-row> -->
+      </el-row>
   
       <el-table border="1px" v-loading="loading" :data="noticeList" @selection-change="handleSelectionChange">
-        <!-- <el-table-column type="selection" width="55" align="center" /> -->
+        <el-table-column type="selection" width="55" align="center" />
       <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
       <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="时间" align="center" prop="noticeNotificationtime" />
@@ -113,6 +113,14 @@
       <!-- 添加或修改公告通知对话框 -->
       <el-dialog :title="title" v-model="open" width="500px" append-to-body>
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+            <el-form-item label="标题" prop="title" >
+            <el-input
+              v-model="queryParams.title"
+              placeholder="请输入标题"
+              clearable
+              @keyup.enter.native="handleQuery"
+            />
+           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitForm">确 定</el-button>

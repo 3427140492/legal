@@ -204,7 +204,14 @@
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-client</artifactId>
-                <version>3.8.2</version>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-records</artifactId>
+                <version>${ruoyi.version}</version>
             </dependency>
 
         </dependencies>
@@ -219,6 +226,7 @@
         <module>ruoyi-common</module>
         <module>ruoyi-hr</module>
         <module>ruoyi-client</module>
+        <module>ruoyi-records</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -234,8 +242,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>

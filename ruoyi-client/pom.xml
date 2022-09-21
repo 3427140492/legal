@@ -11,6 +11,11 @@
 
     <artifactId>ruoyi-client</artifactId>
 
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
     <dependencies>
 
         <!-- 通用工具-->
@@ -22,9 +27,6 @@
     </dependencies>
 
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+
 
 </project>
