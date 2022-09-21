@@ -199,6 +199,14 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+
+            <!-- 客户-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-client</artifactId>
+                <version>3.8.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -210,6 +218,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>ruoyi-hr</module>
+        <module>ruoyi-client</module>
     </modules>
     <packaging>pom</packaging>
 
