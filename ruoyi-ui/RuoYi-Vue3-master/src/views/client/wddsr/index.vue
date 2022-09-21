@@ -26,7 +26,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['client:wddsr:add']"
+          v-hasPermi="['hrClient:wddsr:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +37,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['client:wddsr:edit']"
+          v-hasPermi="['hrClient:wddsr:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -48,7 +48,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['client:wddsr:remove']"
+          v-hasPermi="['hrClient:wddsr:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +58,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['client:wddsr:export']"
+          v-hasPermi="['hrClient:wddsr:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -86,14 +86,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['client:wddsr:edit']"
+            v-hasPermi="['hrClient:wddsr:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['client:wddsr:remove']"
+            v-hasPermi="['hrClient:wddsr:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -252,7 +252,7 @@
 </template>
 
 <script>
-import { listWddsr, getWddsr, delWddsr, addWddsr, updateWddsr } from "@/api/client/wddsr";
+import { listWddsr, getWddsr, delWddsr, addWddsr, updateWddsr } from "@/api/hrClient/wddsr";
 
 export default {
   name: "Wddsr",
@@ -477,7 +477,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('client/wddsr/export', {
+      this.download('hrClient/wddsr/export', {
         ...this.queryParams
       }, `wddsr_${new Date().getTime()}.xlsx`)
     }
