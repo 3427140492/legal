@@ -77,17 +77,7 @@
         </template>
       </el-table-column>
      
-      <el-table-column label="收案时间" align="center" prop="collectionTime" width="180">
-        <template #default="scope">
-          <span>{{ parseTime(scope.row.collectionTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
       
-      <el-table-column label="结案审批时间" align="center" prop="caseApprovalEndtime" width="180">
-        <template #default ="scope">
-          <span>{{ parseTime(scope.row.caseApprovalEndtime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
      
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
