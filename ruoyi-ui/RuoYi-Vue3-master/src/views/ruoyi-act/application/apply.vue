@@ -54,7 +54,7 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
+<!--
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -99,7 +99,7 @@
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    </el-row> -->
 
     <el-table v-loading="loading" :data="applyList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
@@ -109,7 +109,7 @@
       <el-table-column label="${comment}" align="center" prop="type" />
       <el-table-column label="${comment}" align="center" prop="leader" />
       <el-table-column label="${comment}" align="center" prop="createtime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.createtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
@@ -119,7 +119,7 @@
       <el-table-column label="${comment}" align="center" prop="file" />
       <el-table-column label="${comment}" align="center" prop="wtr" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -141,13 +141,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改业务申请对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="${comment}" prop="caseNo">
           <el-input v-model="form.caseNo" placeholder="请输入${comment}" />
