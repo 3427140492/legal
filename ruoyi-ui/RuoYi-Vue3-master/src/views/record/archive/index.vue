@@ -24,8 +24,6 @@
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-
-
     <el-table :data="lawlist" border >
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
