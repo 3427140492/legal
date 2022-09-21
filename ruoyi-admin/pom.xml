@@ -79,6 +79,12 @@
             <artifactId>ruoyi-client</artifactId>
         </dependency>
 
+        <!-- 统计-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-statistics</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

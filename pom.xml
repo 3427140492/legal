@@ -207,10 +207,17 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
-            <!-- -->
+            <!-- 档案-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-records</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!--统计-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-statistics</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -227,6 +234,7 @@
         <module>ruoyi-hr</module>
         <module>ruoyi-client</module>
         <module>ruoyi-records</module>
+        <module>ruoyi-statistics</module>
     </modules>
     <packaging>pom</packaging>
 
