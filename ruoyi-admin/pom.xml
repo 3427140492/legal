@@ -61,6 +61,12 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- 审批-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-act</artifactId>
+        </dependency>
+
         <!--行政管理-->
         <dependency>
             <groupId>com.ruoyi</groupId>

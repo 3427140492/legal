@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.act.mapper.ApplyMapper">
+    
+    <resultMap type="Apply" id="ApplyResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="submiter"    column="submiter"    />
+        <result property="type"    column="type"    />
+        <result property="leader"    column="leader"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="status"    column="status"    />
+        <result property="wid"    column="wid"    />
+        <result property="remark"    column="remark"    />
+        <result property="file"    column="file"    />
+        <result property="wtr"    column="wtr"    />
+    </resultMap>
+
+    <sql id="selectApplyVo">
+        select id, case_no, submiter, type, leader, createtime, status, wid, remark, file, wtr from apply
+    </sql>
+
+    <select id="selectApplyList" parameterType="Apply" resultMap="ApplyResult">
+        <include refid="selectApplyVo"/>
+        <where>  
+            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+            <if test="submiter != null  and submiter != ''"> and submiter = #{submiter}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="leader != null  and leader != ''"> and leader = #{leader}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="wid != null "> and wid = #{wid}</if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="wtr != null  and wtr != ''"> and wtr = #{wtr}</if>
+        </where>
+    </select>
+    
+    <select id="selectApplyById" parameterType="Integer" resultMap="ApplyResult">
+        <include refid="selectApplyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertApply" parameterType="Apply" useGeneratedKeys="true" keyProperty="id">
+        insert into apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">case_no,</if>
+            <if test="submiter != null">submiter,</if>
+            <if test="type != null">type,</if>
+            <if test="leader != null">leader,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="status != null">status,</if>
+            <if test="wid != null">wid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="file != null">file,</if>
+            <if test="wtr != null">wtr,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="submiter != null">#{submiter},</if>
+            <if test="type != null">#{type},</if>
+            <if test="leader != null">#{leader},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="wid != null">#{wid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="file != null">#{file},</if>
+            <if test="wtr != null">#{wtr},</if>
+         </trim>
+    </insert>
+
+    <update id="updateApply" parameterType="Apply">
+        update apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="submiter != null">submiter = #{submiter},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="wid != null">wid = #{wid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="file != null">file = #{file},</if>
+            <if test="wtr != null">wtr = #{wtr},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteApplyById" parameterType="Integer">
+        delete from apply where id = #{id}
+    </delete>
+
+    <delete id="deleteApplyByIds" parameterType="String">
+        delete from apply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

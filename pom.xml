@@ -187,6 +187,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 审批-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-act</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>spring-web</artifactId>
@@ -235,6 +242,7 @@
         <module>ruoyi-client</module>
         <module>ruoyi-records</module>
         <module>ruoyi-statistics</module>
+        <module>ruoyi-act</module>
     </modules>
     <packaging>pom</packaging>
 

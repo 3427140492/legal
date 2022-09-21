@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.act.mapper.CaseSealApplyforMapper">
+    
+    <resultMap type="CaseSealApplyfor" id="CaseSealApplyforResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="applyforReceive"    column="applyfor_receive"    />
+        <result property="applyforApprovalStatus"    column="applyfor_approval_status"    />
+        <result property="applyforRecipient"    column="applyfor_recipient"    />
+        <result property="sendPerson"    column="send_person"    />
+        <result property="applyforUsingTheItem"    column="applyfor_using_the_item"    />
+        <result property="caseid"    column="caseid"    />
+        <result property="remark"    column="remark"    />
+        <result property="typeid"    column="typeid"    />
+    </resultMap>
+
+    <resultMap id="CaseSealApplyforCaseFilesResult" type="CaseSealApplyfor" extends="CaseSealApplyforResult">
+        <collection property="caseFilesList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseFilesResult" />
+    </resultMap>
+
+    <resultMap type="CaseFiles" id="CaseFilesResult">
+        <result property="id"    column="sub_id"    />
+        <result property="appid"    column="sub_appid"    />
+        <result property="filename"    column="sub_filename"    />
+        <result property="filepath"    column="sub_filepath"    />
+        <result property="typeid"    column="sub_typeid"    />
+    </resultMap>
+
+    <sql id="selectCaseSealApplyforVo">
+        select seal.*,type.typeName,files.filename from case_seal_applyfor seal
+            inner join file_type type on seal.typeid = type.id
+            inner join case_files  files on seal.id = files.appid
+    </sql>
+
+    <select id="selectCaseSealApplyforList" parameterType="CaseSealApplyfor" resultMap="CaseSealApplyforResult">
+        <include refid="selectCaseSealApplyforVo"/>
+        <where>
+<!--            <if test="caseNo!=null and caseNo!=''">-->
+<!--                and  seal.case_no like "%"#{caseNo}"%"-->
+<!--            </if>-->
+<!--            <if test="applyforApprovalStatus!=null and applyforApprovalStatus!=''">-->
+<!--                and seal.applyfor_approval_status = #{applyforApprovalStatus}-->
+<!--            </if>-->
+<!--            <if test="typeid!=null and typeid!=''">-->
+<!--                and  seal.typeid = #{typeid}-->
+<!--            </if>-->
+<!--            <if test="applyforReceive != null and applyforReceive != ''">-->
+<!--                and seal.applyfor_receive > #{applyforReceive}-->
+<!--            </if>-->
+<!--            <if test="caseSubtime2 != null and caseSubtime2 != ''">-->
+<!--                and seal.applyfor_receive &lt; #{caseSubtime2}-->
+<!--            </if>-->
+<!--            <if test="uname!=null and uname!=''">-->
+<!--                and seal.applyfor_recipient = #{uname}-->
+<!--            </if>-->
+        </where>
+        order by applyfor_receive desc
+    </select>
+    
+    <select id="selectCaseSealApplyforById" parameterType="Integer" resultMap="CaseSealApplyforCaseFilesResult">
+        select seal.*,files.id as sub_id from case_seal_applyfor seal
+                          inner join file_type type on seal.typeid = type.id
+                          inner join case_files  files on seal.id = files.appid
+        where seal.id = #{id}
+    </select>
+        
+    <insert id="insertCaseSealApplyfor" parameterType="CaseSealApplyfor" useGeneratedKeys="true" keyProperty="id">
+        insert into case_seal_applyfor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">case_no,</if>
+            <if test="applyforReceive != null">applyfor_receive,</if>
+            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">applyfor_approval_status,</if>
+            <if test="applyforRecipient != null">applyfor_recipient,</if>
+            <if test="sendPerson != null">send_person,</if>
+            <if test="applyforUsingTheItem != null">applyfor_using_the_item,</if>
+            <if test="caseid != null">caseid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="typeid != null">typeid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="applyforReceive != null">#{applyforReceive},</if>
+            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">#{applyforApprovalStatus},</if>
+            <if test="applyforRecipient != null">#{applyforRecipient},</if>
+            <if test="sendPerson != null">#{sendPerson},</if>
+            <if test="applyforUsingTheItem != null">#{applyforUsingTheItem},</if>
+            <if test="caseid != null">#{caseid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="typeid != null">#{typeid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCaseSealApplyfor" parameterType="CaseSealApplyfor">
+        update case_seal_applyfor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="applyforReceive != null">applyfor_receive = #{applyforReceive},</if>
+            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">applyfor_approval_status = #{applyforApprovalStatus},</if>
+            <if test="applyforRecipient != null">applyfor_recipient = #{applyforRecipient},</if>
+            <if test="sendPerson != null">send_person = #{sendPerson},</if>
+            <if test="applyforUsingTheItem != null">applyfor_using_the_item = #{applyforUsingTheItem},</if>
+            <if test="caseid != null">caseid = #{caseid},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="typeid != null">typeid = #{typeid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCaseSealApplyforById" parameterType="Integer">
+        delete from case_seal_applyfor where id = #{id}
+    </delete>
+
+    <delete id="deleteCaseSealApplyforByIds" parameterType="String">
+        delete from case_seal_applyfor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteCaseFilesByIds" parameterType="String">
+        delete from case_files where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCaseFilesById" parameterType="Integer">
+        delete from case_files where id = #{id}
+    </delete>
+
+    <insert id="batchCaseFiles">
+        insert into case_files( id, appid, filename, filepath, typeid) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.appid}, #{item.filename}, #{item.filepath}, #{item.typeid})
+        </foreach>
+    </insert>
+</mapper>

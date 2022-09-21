@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.act.mapper.CaseLawMapper">
+    
+    <resultMap type="CaseLaw" id="CaseLawResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="caseOppositeParties"    column="case_opposite_parties"    />
+        <result property="caseOppositeCardnum"    column="case_opposite_cardnum"    />
+        <result property="caseThirdParty"    column="case_third_party"    />
+        <result property="caseSuspect"    column="case_suspect"    />
+        <result property="caseClash"    column="case_clash"    />
+        <result property="caseCause"    column="case_cause"    />
+        <result property="caseAccept"    column="case_accept"    />
+        <result property="caseLawsuitobj"    column="case_lawsuitobj"    />
+        <result property="caseSubsidy"    column="case_subsidy"    />
+        <result property="caseSubsidysal"    column="case_subsidysal"    />
+        <result property="caseSettleStatus"    column="case_settle_status"    />
+        <result property="casePlan"    column="case_plan"    />
+        <result property="caseApproveStatus"    column="case_approve_status"    />
+        <result property="caseAgencyfee"    column="case_agencyfee"    />
+        <result property="caseProxysal"    column="case_proxysal"    />
+        <result property="caseTransactionRegion"    column="case_transaction_region"    />
+        <result property="caseAssign"    column="case_assign"    />
+        <result property="casePaidsal"    column="case_paidsal"    />
+        <result property="caseUnpaidsal"    column="case_unpaidsal"    />
+        <result property="caseInvoiced"    column="case_invoiced"    />
+        <result property="caseNotinvoiced"    column="case_notinvoiced"    />
+        <result property="casePropernum"    column="case_propernum"    />
+        <result property="caseCourt"    column="case_court"    />
+        <result property="caseFilenumber"    column="case_filenumber"    />
+        <result property="caseCorrelationFile"    column="case_correlation_file"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+        <result property="caseSubtime"    column="case_subtime"    />
+        <result property="caseRecycle"    column="case_recycle"    />
+        <result property="caseRemarks"    column="case_remarks"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="caseAttorney"    column="case_attorney"    />
+        <result property="caseStatus"    column="case_status"    />
+        <result property="caseLawsuitStatus"    column="case_lawsuit_status"    />
+        <result property="caseChargeWay"    column="case_charge_way"    />
+        <result property="systemApprovalId"    column="system_approval_id"    />
+        <result property="caseCaseTypeId"    column="case_case_type_id"    />
+        <result property="caseTypeName"    column="case_type_name"    />
+        <result property="caseSealApplyforId"    column="case_seal_applyfor_id"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
+        <result property="empName"    column="emp_name"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="caseParties"    column="case_parties"    />
+        <result property="caseFxmoney"    column="case_fxmoney"    />
+        <result property="caseWtr"    column="case_wtr"    />
+        <result property="caseContract"    column="case_contract"    />
+        <result property="caseRecord"    column="case_record"    />
+        <result property="caseShare"    column="case_share"    />
+        <result property="caseSettleType"    column="case_settle_type"    />
+        <result property="caseApprovalEndtime"    column="case_approval_endtime"    />
+        <result property="caseRecordNum"    column="case_record_num"    />
+        <result property="standard"    column="standard"    />
+    </resultMap>
+
+    <resultMap id="CaseLawCaseCaseTypeResult" type="CaseLaw" extends="CaseLawResult">
+        <collection property="caseCaseTypeList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseCaseTypeResult" />
+    </resultMap>
+
+    <resultMap type="CaseCaseType" id="CaseCaseTypeResult">
+        <result property="id"    column="sub_id"    />
+        <result property="caseTypeName"    column="sub_case_type_name"    />
+        <result property="typePid"    column="sub_type_pid"    />
+        <result property="typeMoneyMin"    column="sub_type_money_min"    />
+        <result property="typeMoneyMax"    column="sub_type_money_max"    />
+    </resultMap>
+
+    <sql id="selectCaseLawVo">
+--         select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
+--             select case_law.id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard, case_case_type.case_type_name from case_law ,case_case_type where case_law.case_case_type_id = case_case_type.id
+            select case_law.id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard, case_case_type.case_type_name from case_law ,case_case_type
+</sql>
+
+    <select id="selectCaseLawList" parameterType="CaseLaw" resultMap="CaseLawResult">
+        <include refid="selectCaseLawVo"/>
+        <where>
+            <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
+            <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
+            <if test="caseSubtime != null "> and case_subtime = #{caseSubtime}</if>
+            <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_case_type_id = #{caseCaseTypeId}</if>
+            and case_law.case_case_type_id = case_case_type.id
+        </where>
+
+    </select>
+    
+    <select id="selectCaseLawById" parameterType="Integer" resultMap="CaseLawCaseCaseTypeResult">
+        select a.id, a.case_no, a.case_opposite_parties, a.case_opposite_cardnum, a.case_third_party, a.case_suspect, a.case_clash, a.case_cause, a.case_accept, a.case_lawsuitobj, a.case_subsidy, a.case_subsidysal, a.case_settle_status, a.case_plan, a.case_approve_status, a.case_agencyfee, a.case_proxysal, a.case_transaction_region, a.case_assign, a.case_paidsal, a.case_unpaidsal, a.case_invoiced, a.case_notinvoiced, a.case_propernum, a.case_court, a.case_filenumber, a.case_correlation_file, a.case_submitter, a.case_subtime, a.case_recycle, a.case_remarks, a.client_id, a.case_attorney, a.case_status, a.case_lawsuit_status, a.case_charge_way, a.system_approval_id, a.case_case_type_id, a.case_seal_applyfor_id, a.hr_emp_id, a.collection_time, a.case_parties, a.case_fxmoney, a.case_wtr, a.case_contract, a.case_record, a.case_share, a.case_settle_type, a.case_approval_endtime, a.case_record_num, a.standard,
+ b.id as sub_id, b.case_type_name,c.id,c.emp_name
+        from case_law a
+        left join case_case_type b on b.id = a.case_case_type_id
+        left join hr_emp c on a.hr_emp_id = c.id
+        where a.id = #{id}
+    </select>
+        
+</mapper>
