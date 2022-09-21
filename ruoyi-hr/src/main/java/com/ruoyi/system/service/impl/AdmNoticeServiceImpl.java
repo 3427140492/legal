@@ -11,7 +11,7 @@ import com.ruoyi.system.service.IAdmNoticeService;
  * 公告通知Service业务层处理
  * 
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-21
  */
 @Service
 public class AdmNoticeServiceImpl implements IAdmNoticeService 

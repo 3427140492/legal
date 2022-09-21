@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain;
 
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -9,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 公告通知对象 adm_notice
  * 
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-21
  */
 public class AdmNotice extends BaseEntity
 {
@@ -29,11 +31,12 @@ public class AdmNotice extends BaseEntity
     private String systemUserId;
 
     /** 时间 */
-    @Excel(name = "时间")
-    private String noticeNotificationtime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date noticeNotificationtime;
 
     /**  */
-    private String noticeNotificationendtime;
+    private Date noticeNotificationendtime;
 
     /** 公告内容 */
     private String noticeContent;
@@ -77,21 +80,21 @@ public class AdmNotice extends BaseEntity
     {
         return systemUserId;
     }
-    public void setNoticeNotificationtime(String noticeNotificationtime) 
+    public void setNoticeNotificationtime(Date noticeNotificationtime) 
     {
         this.noticeNotificationtime = noticeNotificationtime;
     }
 
-    public String getNoticeNotificationtime() 
+    public Date getNoticeNotificationtime() 
     {
         return noticeNotificationtime;
     }
-    public void setNoticeNotificationendtime(String noticeNotificationendtime) 
+    public void setNoticeNotificationendtime(Date noticeNotificationendtime) 
     {
         this.noticeNotificationendtime = noticeNotificationendtime;
     }
 
-    public String getNoticeNotificationendtime() 
+    public Date getNoticeNotificationendtime() 
     {
         return noticeNotificationendtime;
     }
