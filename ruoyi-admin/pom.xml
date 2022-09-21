@@ -67,11 +67,10 @@
             <artifactId>ruoyi-hr</artifactId>
         </dependency>
 
-
-        <!--客户-->
+        <!-- 档案-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-client</artifactId>
+            <artifactId>ruoyi-records</artifactId>
         </dependency>
 
     </dependencies>
