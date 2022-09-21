@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.record.mapper.RecordDocumentMapper">
+    
+    <resultMap type="RecordDocument" id="RecordDocumentResult">
+        <result property="id"    column="id"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="systemUserId"    column="system_user_id"    />
+        <result property="upddate"    column="upddate"    />
+        <result property="folderId"    column="folder_id"    />
+        <result property="documentFile"    column="document_file"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+    </resultMap>
+
+    <resultMap id="RecordDocumentCaseLawResult" type="RecordDocument" extends="RecordDocumentResult">
+        <collection property="caseLawList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseLawResult" />
+    </resultMap>
+
+    <resultMap type="RecordCaseLaw" id="CaseLawResult">
+        <result property="id"    column="sub_id"    />
+        <result property="caseNo"    column="sub_case_no"    />
+        <result property="caseSubmitter"    column="sub_case_submitter"    />
+    </resultMap>
+
+    <sql id="selectRecordDocumentVo">
+        select cl.case_no,rd.document_file,cl.case_submitter,rd.upddate
+        from record_document rd, case_law cl
+        where cl.id = rd.case_law_id
+    </sql>
+
+    <select id="selectRecordDocumentList" parameterType="RecordDocument" resultMap="RecordDocumentResult">
+        <include refid="selectRecordDocumentVo"/>
+            <if test=" searchType == 1">
+                <if test=" searchStr !=null and searchStr !=''">
+                    and cl.case_no like '%${searchStr}%'
+                </if>
+            </if>
+            <if test=" searchType == 2">
+                <if test=" searchStr !=null and searchStr !=''">
+                    and cl.case_submitter like '%${searchStr}%'
+                </if>
+            </if>
+            <if test=" searchType == 3">
+                <if test=" searchStr !=null and searchStr !=''">
+                    and rd.document_file like '%${searchStr}%'
+                </if>
+            </if>
+    </select>
+    
+    <select id="selectRecordDocumentById" parameterType="Integer" resultMap="RecordDocumentCaseLawResult">
+        select a.id, a.case_law_id, a.system_user_id, a.upddate, a.folder_id, a.document_file,
+ b.id as sub_id, b.case_no as sub_case_no, b.case_opposite_parties as sub_case_opposite_parties, b.case_opposite_cardnum as sub_case_opposite_cardnum, b.case_third_party as sub_case_third_party, b.case_suspect as sub_case_suspect, b.case_clash as sub_case_clash, b.case_cause as sub_case_cause, b.case_accept as sub_case_accept, b.case_lawsuitobj as sub_case_lawsuitobj, b.case_subsidy as sub_case_subsidy, b.case_subsidysal as sub_case_subsidysal, b.case_settle_status as sub_case_settle_status, b.case_plan as sub_case_plan, b.case_approve_status as sub_case_approve_status, b.case_agencyfee as sub_case_agencyfee, b.case_proxysal as sub_case_proxysal, b.case_transaction_region as sub_case_transaction_region, b.case_assign as sub_case_assign, b.case_paidsal as sub_case_paidsal, b.case_unpaidsal as sub_case_unpaidsal, b.case_invoiced as sub_case_invoiced, b.case_notinvoiced as sub_case_notinvoiced, b.case_propernum as sub_case_propernum, b.case_court as sub_case_court, b.case_filenumber as sub_case_filenumber, b.case_correlation_file as sub_case_correlation_file, b.case_submitter as sub_case_submitter, b.case_subtime as sub_case_subtime, b.case_recycle as sub_case_recycle, b.case_remarks as sub_case_remarks, b.client_id as sub_client_id, b.case_attorney as sub_case_attorney, b.case_status as sub_case_status, b.case_lawsuit_status as sub_case_lawsuit_status, b.case_charge_way as sub_case_charge_way, b.system_approval_id as sub_system_approval_id, b.case_case_type_id as sub_case_case_type_id, b.case_seal_applyfor_id as sub_case_seal_applyfor_id, b.hr_emp_id as sub_hr_emp_id, b.collection_time as sub_collection_time, b.case_parties as sub_case_parties, b.case_fxmoney as sub_case_fxmoney, b.case_wtr as sub_case_wtr, b.case_contract as sub_case_contract, b.case_record as sub_case_record, b.case_share as sub_case_share, b.case_settle_type as sub_case_settle_type, b.case_approval_endtime as sub_case_approval_endtime, b.case_record_num as sub_case_record_num, b.standard as sub_standard
+        from record_document a
+        left join case_law b on b.id = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertRecordDocument" parameterType="RecordDocument" useGeneratedKeys="true" keyProperty="id">
+        insert into record_document
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="systemUserId != null">system_user_id,</if>
+            <if test="upddate != null">upddate,</if>
+            <if test="folderId != null">folder_id,</if>
+            <if test="documentFile != null">document_file,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="systemUserId != null">#{systemUserId},</if>
+            <if test="upddate != null">#{upddate},</if>
+            <if test="folderId != null">#{folderId},</if>
+            <if test="documentFile != null">#{documentFile},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRecordDocument" parameterType="RecordDocument">
+        update record_document
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseLawId != null">case_law_id = #{caseLawId},</if>
+            <if test="systemUserId != null">system_user_id = #{systemUserId},</if>
+            <if test="upddate != null">upddate = #{upddate},</if>
+            <if test="folderId != null">folder_id = #{folderId},</if>
+            <if test="documentFile != null">document_file = #{documentFile},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRecordDocumentById" parameterType="Integer">
+        delete from record_document where id = #{id}
+    </delete>
+
+    <delete id="deleteRecordDocumentByIds" parameterType="String">
+        delete from record_document where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteCaseLawByIds" parameterType="String">
+        delete from case_law where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCaseLawById" parameterType="Integer">
+        delete from case_law where id = #{id}
+    </delete>
+
+    <insert id="batchCaseLaw">
+        insert into case_law( id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.caseNo}, #{item.caseOppositeParties}, #{item.caseOppositeCardnum}, #{item.caseThirdParty}, #{item.caseSuspect}, #{item.caseClash}, #{item.caseCause}, #{item.caseAccept}, #{item.caseLawsuitobj}, #{item.caseSubsidy}, #{item.caseSubsidysal}, #{item.caseSettleStatus}, #{item.casePlan}, #{item.caseApproveStatus}, #{item.caseAgencyfee}, #{item.caseProxysal}, #{item.caseTransactionRegion}, #{item.caseAssign}, #{item.casePaidsal}, #{item.caseUnpaidsal}, #{item.caseInvoiced}, #{item.caseNotinvoiced}, #{item.casePropernum}, #{item.caseCourt}, #{item.caseFilenumber}, #{item.caseCorrelationFile}, #{item.caseSubmitter}, #{item.caseSubtime}, #{item.caseRecycle}, #{item.caseRemarks}, #{item.clientId}, #{item.caseAttorney}, #{item.caseStatus}, #{item.caseLawsuitStatus}, #{item.caseChargeWay}, #{item.systemApprovalId}, #{item.caseCaseTypeId}, #{item.caseSealApplyforId}, #{item.hrEmpId}, #{item.collectionTime}, #{item.caseParties}, #{item.caseFxmoney}, #{item.caseWtr}, #{item.caseContract}, #{item.caseRecord}, #{item.caseShare}, #{item.caseSettleType}, #{item.caseApprovalEndtime}, #{item.caseRecordNum}, #{item.standard})
+        </foreach>
+    </insert>
+</mapper>

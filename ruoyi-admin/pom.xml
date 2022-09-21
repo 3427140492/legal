@@ -67,6 +67,12 @@
             <artifactId>ruoyi-hr</artifactId>
         </dependency>
 
+        <!-- 档案-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-records</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
