@@ -73,6 +73,12 @@
             <artifactId>ruoyi-records</artifactId>
         </dependency>
 
+        <!-- 客户-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-client</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
