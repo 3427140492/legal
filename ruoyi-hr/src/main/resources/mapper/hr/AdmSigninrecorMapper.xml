@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AdmSigninrecorMapper">
+    
+    <resultMap type="AdmSigninrecor" id="AdmSigninrecorResult">
+        <result property="id"    column="id"    />
+        <result property="systemUserId"    column="system_user_id"    />
+        <result property="classify"    column="classify"    />
+        <result property="signinrecordSign"    column="signinrecord_sign"    />
+        <result property="signinrecordSite"    column="signinrecord_site"    />
+        <result property="signinStatus"    column="signin_status"    />
+    </resultMap>
+
+    <resultMap id="AdmSigninrecorSystemUserResult" type="AdmSigninrecor" extends="AdmSigninrecorResult">
+        <collection property="systemUserList" notNullColumn="sub_id" javaType="java.util.List" resultMap="SystemUserResult" />
+    </resultMap>
+
+    <resultMap type="SystemUser" id="SystemUserResult">
+        <result property="id"    column="sub_id"    />
+        <result property="userName"    column="sub_user_name"    />
+        <result property="userPwd"    column="sub_user_pwd"    />
+        <result property="userRealname"    column="sub_user_realname"    />
+        <result property="userPhone"    column="sub_user_phone"    />
+        <result property="userEmail"    column="sub_user_email"    />
+        <result property="userCreatedate"    column="sub_user_createdate"    />
+        <result property="userPreDate"    column="sub_user_pre_date"    />
+        <result property="userLoginNum"    column="sub_user_login_num"    />
+        <result property="hrEmpId"    column="sub_hr_emp_id"    />
+        <result property="userStatus"    column="sub_user_status"    />
+    </resultMap>
+
+    <sql id="selectAdmSigninrecorVo">
+        select * from adm_signinrecor asi  left join system_user su on su.id = asi.system_user_id
+    </sql>
+
+    <select id="selectAdmSigninrecorList" parameterType="AdmSigninrecor" resultMap="AdmSigninrecorResult">
+        <include refid="selectAdmSigninrecorVo"/>
+        <where>  
+            <if test="classify != null "> and classify = #{classify}</if>
+            <if test="signinrecordSign != null "> and signinrecord_sign = #{signinrecordSign}</if>
+        </where>
+    </select>
+    
+    <select id="selectAdmSigninrecorById" parameterType="Integer" resultMap="AdmSigninrecorSystemUserResult">
+        select a.id, a.system_user_id, a.classify, a.signinrecord_sign, a.signinrecord_site, a.signin_status,
+ b.id as sub_id, b.user_name as sub_user_name, b.user_pwd as sub_user_pwd, b.user_realname as sub_user_realname, b.user_phone as sub_user_phone, b.user_email as sub_user_email, b.user_createdate as sub_user_createdate, b.user_pre_date as sub_user_pre_date, b.user_login_num as sub_user_login_num, b.hr_emp_id as sub_hr_emp_id, b.user_status as sub_user_status
+        from adm_signinrecor a
+        left join system_user b on b.id = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertAdmSigninrecor" parameterType="AdmSigninrecor" useGeneratedKeys="true" keyProperty="id">
+        insert into adm_signinrecor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemUserId != null">system_user_id,</if>
+            <if test="classify != null">classify,</if>
+            <if test="signinrecordSign != null">signinrecord_sign,</if>
+            <if test="signinrecordSite != null">signinrecord_site,</if>
+            <if test="signinStatus != null">signin_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemUserId != null">#{systemUserId},</if>
+            <if test="classify != null">#{classify},</if>
+            <if test="signinrecordSign != null">#{signinrecordSign},</if>
+            <if test="signinrecordSite != null">#{signinrecordSite},</if>
+            <if test="signinStatus != null">#{signinStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAdmSigninrecor" parameterType="AdmSigninrecor">
+        update adm_signinrecor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="systemUserId != null">system_user_id = #{systemUserId},</if>
+            <if test="classify != null">classify = #{classify},</if>
+            <if test="signinrecordSign != null">signinrecord_sign = #{signinrecordSign},</if>
+            <if test="signinrecordSite != null">signinrecord_site = #{signinrecordSite},</if>
+            <if test="signinStatus != null">signin_status = #{signinStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAdmSigninrecorById" parameterType="Integer">
+        delete from adm_signinrecor where id = #{id}
+    </delete>
+
+    <delete id="deleteAdmSigninrecorByIds" parameterType="String">
+        delete from adm_signinrecor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteSystemUserByIds" parameterType="String">
+        delete from system_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSystemUserById" parameterType="Integer">
+        delete from system_user where id = #{id}
+    </delete>
+
+    <insert id="batchSystemUser">
+        insert into system_user( id, user_name, user_pwd, user_realname, user_phone, user_email, user_createdate, user_pre_date, user_login_num, hr_emp_id, user_status) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.userName}, #{item.userPwd}, #{item.userRealname}, #{item.userPhone}, #{item.userEmail}, #{item.userCreatedate}, #{item.userPreDate}, #{item.userLoginNum}, #{item.hrEmpId}, #{item.userStatus})
+        </foreach>
+    </insert>
+</mapper>
