@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.finance.mapper.CwInoutMapper">
+    
+    <resultMap type="FinCwInout" id="CwInoutResult">
+        <result property="id"    column="id"    />
+        <result property="cwInoutTypeId"    column="cw_inout_type_id"    />
+        <result property="cwInoutDate"    column="cw_inout_date"    />
+        <result property="cwInoutPerson"    column="cw_inout_person"    />
+        <result property="cwInoutMoney"    column="cw_inout_money"    />
+        <result property="cwPayType"    column="cw_pay_type"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="cwEnteringdate"    column="cw_enteringdate"    />
+        <result property="cwRemark"    column="cw_remark"    />
+        <result property="cwPayer"    column="cw_payer"    />
+        <result property="cwName"    column="cw_name"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+        <result property="casePaidsal"    column="case_paidsal"    />
+        <result property="empName"    column="emp_name"    />
+
+    </resultMap>
+
+    <resultMap id="CwInoutCwInoutTypeResult" type="FinCwInout" extends="CwInoutResult">
+        <collection property="cwInoutTypeList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CwInoutTypeResult" />
+    </resultMap>
+
+    <resultMap type="CwInoutType" id="CwInoutTypeResult">
+        <result property="id"    column="sub_id"    />
+        <result property="cwName"    column="sub_cw_name"    />
+        <result property="cwPid"    column="sub_cw_pid"    />
+        <result property="type"    column="sub_type"    />
+    </resultMap>
+
+    <sql id="selectCwInoutVo">
+        select a.cid,a.cw_name, a.cw_inout_date, a.case_law_id, a.cw_pay_type, b.case_no, a.emp_name, a.cw_payer, a.cw_remark, a.cw_inout_money,a.cw_enteringdate
+        from (
+                 select ci.id cid,ci.*,cit.cw_name,cit.cw_pid,he.emp_name,su.id user_id
+                 from cw_inout ci
+                          inner join cw_inout_type cit on cit.id = ci.cw_inout_type_id
+                          inner join hr_emp he on he.id = ci.cw_inout_person
+                          inner join system_user su on su.hr_emp_id = he.id
+             ) a left join (
+            select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id
+            from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
+            where case_recycle = 'Y'
+        ) b on b.cid = a.case_law_id where 1 = 1
+    </sql>
+
+    <select id="selectCwInoutList" parameterType="FinCwInout" resultMap="CwInoutResult">
+        <include refid="selectCwInoutVo"/>
+        <where>  
+            <if test="cwInoutTypeId != null "> and cw_inout_type_id = #{cwInoutTypeId}</if>
+            <if test="cwInoutDate != null  and cwInoutDate != ''"> and cw_inout_date = #{cwInoutDate}</if>
+            <if test="cwInoutPerson != null  and cwInoutPerson != ''"> and cw_inout_person = #{cwInoutPerson}</if>
+            <if test="cwInoutMoney != null "> and cw_inout_money = #{cwInoutMoney}</if>
+            <if test="cwPayType != null "> and cw_pay_type = #{cwPayType}</if>
+            <if test="caseLawId != null "> and case_law_id = #{caseLawId}</if>
+            <if test="cwEnteringdate != null  and cwEnteringdate != ''"> and cw_enteringdate = #{cwEnteringdate}</if>
+            <if test="cwRemark != null  and cwRemark != ''"> and cw_remark = #{cwRemark}</if>
+            <if test="cwPayer != null  and cwPayer != ''"> and cw_payer = #{cwPayer}</if>
+        </where>
+    </select>
+    
+    <select id="selectCwInoutById" parameterType="String" resultMap="CwInoutCwInoutTypeResult">
+        select a.id, a.cw_inout_type_id, a.cw_inout_date, a.cw_inout_person, a.cw_inout_money, a.cw_pay_type, a.case_law_id, a.cw_enteringdate, a.cw_remark, a.cw_payer,
+ b.id as sub_id, b.cw_name as sub_cw_name, b.cw_pid as sub_cw_pid, b.type as sub_type
+        from cw_inout a
+        left join cw_inout_type b on b.id = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertCwInout" parameterType="FinCwInout" useGeneratedKeys="true" keyProperty="id">
+        insert into cw_inout
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cwInoutTypeId != null">cw_inout_type_id,</if>
+            <if test="cwInoutDate != null">cw_inout_date,</if>
+            <if test="cwInoutPerson != null">cw_inout_person,</if>
+            <if test="cwInoutMoney != null">cw_inout_money,</if>
+            <if test="cwPayType != null">cw_pay_type,</if>
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="cwEnteringdate != null">cw_enteringdate,</if>
+            <if test="cwRemark != null">cw_remark,</if>
+            <if test="cwPayer != null">cw_payer,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cwInoutTypeId != null">#{cwInoutTypeId},</if>
+            <if test="cwInoutDate != null">#{cwInoutDate},</if>
+            <if test="cwInoutPerson != null">#{cwInoutPerson},</if>
+            <if test="cwInoutMoney != null">#{cwInoutMoney},</if>
+            <if test="cwPayType != null">#{cwPayType},</if>
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="cwEnteringdate != null">#{cwEnteringdate},</if>
+            <if test="cwRemark != null">#{cwRemark},</if>
+            <if test="cwPayer != null">#{cwPayer},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCwInout" parameterType="FinCwInout">
+        update cw_inout
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cwInoutTypeId != null">cw_inout_type_id = #{cwInoutTypeId},</if>
+            <if test="cwInoutDate != null">cw_inout_date = #{cwInoutDate},</if>
+            <if test="cwInoutPerson != null">cw_inout_person = #{cwInoutPerson},</if>
+            <if test="cwInoutMoney != null">cw_inout_money = #{cwInoutMoney},</if>
+            <if test="cwPayType != null">cw_pay_type = #{cwPayType},</if>
+            <if test="caseLawId != null">case_law_id = #{caseLawId},</if>
+            <if test="cwEnteringdate != null">cw_enteringdate = #{cwEnteringdate},</if>
+            <if test="cwRemark != null">cw_remark = #{cwRemark},</if>
+            <if test="cwPayer != null">cw_payer = #{cwPayer},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCwInoutById" parameterType="String">
+        delete from cw_inout where id = #{id}
+    </delete>
+
+    <delete id="deleteCwInoutByIds" parameterType="String">
+        delete from cw_inout where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteCwInoutTypeByIds" parameterType="String">
+        delete from cw_inout_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCwInoutTypeById" parameterType="String">
+        delete from cw_inout_type where id = #{id}
+    </delete>
+
+    <insert id="batchCwInoutType">
+        insert into cw_inout_type( id, cw_name, cw_pid, type) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.cwName}, #{item.cwPid}, #{item.type})
+        </foreach>
+    </insert>
+</mapper>

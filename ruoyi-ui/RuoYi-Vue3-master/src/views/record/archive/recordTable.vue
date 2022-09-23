@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" type="border-card">
       <el-tab-pane label="案件归档" name="ajarchive">
         <ajarchive-info-form ref="ajarchiveInfo" :info="info" :tables="tables" :menus="menus" />
       </el-tab-pane>
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       // 选中选项卡的 name
-      activeName: "columnInfo",
+      activeName: "ajarchive",
       // 表格的高度
       tableHeight: document.documentElement.scrollHeight - 245 + "px",
       // 表信息

@@ -221,6 +221,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 财务-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-finance</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!--统计-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -243,6 +250,7 @@
         <module>ruoyi-records</module>
         <module>ruoyi-statistics</module>
         <module>ruoyi-act</module>
+        <module>ruoyi-finance</module>
     </modules>
     <packaging>pom</packaging>
 

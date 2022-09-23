@@ -79,6 +79,12 @@
             <artifactId>ruoyi-records</artifactId>
         </dependency>
 
+        <!-- 财务-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-finance</artifactId>
+        </dependency>
+
         <!-- 客户-->
         <dependency>
             <groupId>com.ruoyi</groupId>
