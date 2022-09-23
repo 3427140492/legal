@@ -20,6 +20,8 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
+
+     
       <!-- <el-form-item label="" prop="noticeNotificationendtime">
         <el-date-picker clearable
           v-model="queryParams.noticeNotificationendtime"
@@ -166,7 +168,8 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      dateRange:[]
     };
   },
   created() {
@@ -197,7 +200,8 @@ export default {
         noticeNotificationtime: null,
         noticeNotificationendtime: null,
         noticeContent: null,
-        noticeFile: null
+        noticeFile: null,
+        dateRange:null
       };
       this.resetForm("form");
     },
@@ -271,4 +275,5 @@ export default {
     }
   }
 };
+
 </script>

@@ -17,6 +17,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
+
       <el-form-item label="创建时间" style="width: 308px">
         <el-date-picker
           v-model="dateRange"
@@ -27,6 +28,7 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -191,6 +193,8 @@ const tableNames = ref([]);
 const dateRange = ref([]);
 const uniqueId = ref("");
 
+
+
 const data = reactive({
   queryParams: {
     pageNum: 1,
@@ -207,6 +211,7 @@ const data = reactive({
 });
 
 const { queryParams, preview } = toRefs(data);
+
 
 onActivated(() => {
   const time = route.query.t;

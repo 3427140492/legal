@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AdmExpressageMapper">
+    
+    <resultMap type="AdmExpressage" id="AdmExpressageResult">
+        <result property="id"    column="id"    />
+        <result property="systemUserAddresser"    column="system_user_addresser"    />
+        <result property="systemUserRecipients"    column="system_user_recipients"    />
+        <result property="expressageSendaunit"    column="expressage_sendaunit"    />
+        <result property="expressageSendadate"    column="expressage_sendadate"    />
+        <result property="expressageDateofreceipt"    column="expressage_dateofreceipt"    />
+        <result property="expressageBringDate"    column="expressage_bring_date"    />
+        <result property="expressageSendWaayId"    column="expressage_send_waay_id"    />
+        <result property="expressageExpressTypeId"    column="expressage_express_type_id"    />
+        <result property="expressageCourierNumber"    column="expressage_courier_number"    />
+        <result property="expressageFile"    column="expressage_file"    />
+        <result property="expressageCollarnote"    column="expressage_collarnote"    />
+        <result property="expressageRemark"    column="expressage_remark"    />
+        <result property="takestatus"    column="takestatus"    />
+        <result property="expressFee"    column="express_fee"    />
+        <result property="collarPerson"    column="collar_person"    />
+        <result property="expressageTel"    column="expressage_tel"    />
+        <result property="expressageType"    column="expressage_type"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="sendName"    column="send_name"    />
+        <result property="expressName"    column="express_name"    />
+    </resultMap>
+
+    <resultMap id="AdmExpressageSendWaayResult" type="AdmExpressage" extends="AdmExpressageResult">
+        <collection property="sendWaayList" notNullColumn="sub_id" javaType="java.util.List" resultMap="SendWaayResult" />
+    </resultMap>
+
+    <resultMap type="SendWaay" id="SendWaayResult">
+        <result property="id"    column="sub_id"    />
+        <result property="sorting"    column="sub_sorting"    />
+        <result property="sendName"    column="sub_send_name"    />
+    </resultMap>
+
+    <sql id="selectAdmExpressageVo">
+        select * from adm_expressage ae  left join send_waay sw on sw.id = ae.expressage_send_waay_id  left join express_type et on et.id =expressage_express_type_id  where 1 = 1
+    </sql>
+
+    <select id="selectAdmExpressageList" parameterType="AdmExpressage" resultMap="AdmExpressageResult">
+        <include refid="selectAdmExpressageVo"/>
+        <where>  
+            <if test="systemUserRecipients != null  and systemUserRecipients != ''"> and system_user_recipients like concat('%', #{systemUserRecipients}, '%')</if>
+            <if test="expressageBringDate != null "> and expressage_bring_date = #{expressageBringDate}</if>
+            <if test="expressageSendWaayId != null "> and expressage_send_waay_id = #{expressageSendWaayId}</if>
+            <if test="expressageExpressTypeId != null "> and expressage_express_type_id = #{expressageExpressTypeId}</if>
+            <if test="takestatus != null "> and takestatus = #{takestatus}</if>
+            <if test="collarPerson != null  and collarPerson != ''"> and collar_person like concat('%', #{collarPerson}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAdmExpressageById" parameterType="Integer" resultMap="AdmExpressageSendWaayResult">
+        select a.id, a.system_user_addresser, a.system_user_recipients, a.expressage_sendaunit, a.expressage_sendadate, a.expressage_dateofreceipt, a.expressage_bring_date, a.expressage_send_waay_id, a.expressage_express_type_id, a.expressage_courier_number, a.expressage_file, a.expressage_collarnote, a.expressage_remark, a.takestatus, a.express_fee, a.collar_person, a.expressage_tel, a.expressage_type, a.case_no,
+ b.id as sub_id, b.sorting as sub_sorting, b.send_name as sub_send_name
+        from adm_expressage a
+        left join send_waay b on b.id = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertAdmExpressage" parameterType="AdmExpressage" useGeneratedKeys="true" keyProperty="id">
+        insert into adm_expressage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">system_user_addresser,</if>
+            <if test="systemUserRecipients != null">system_user_recipients,</if>
+            <if test="expressageSendaunit != null">expressage_sendaunit,</if>
+            <if test="expressageSendadate != null">expressage_sendadate,</if>
+            <if test="expressageDateofreceipt != null">expressage_dateofreceipt,</if>
+            <if test="expressageBringDate != null">expressage_bring_date,</if>
+            <if test="expressageSendWaayId != null">expressage_send_waay_id,</if>
+            <if test="expressageExpressTypeId != null">expressage_express_type_id,</if>
+            <if test="expressageCourierNumber != null">expressage_courier_number,</if>
+            <if test="expressageFile != null">expressage_file,</if>
+            <if test="expressageCollarnote != null">expressage_collarnote,</if>
+            <if test="expressageRemark != null">expressage_remark,</if>
+            <if test="takestatus != null">takestatus,</if>
+            <if test="expressFee != null">express_fee,</if>
+            <if test="collarPerson != null">collar_person,</if>
+            <if test="expressageTel != null">expressage_tel,</if>
+            <if test="expressageType != null">expressage_type,</if>
+            <if test="caseNo != null">case_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">#{systemUserAddresser},</if>
+            <if test="systemUserRecipients != null">#{systemUserRecipients},</if>
+            <if test="expressageSendaunit != null">#{expressageSendaunit},</if>
+            <if test="expressageSendadate != null">#{expressageSendadate},</if>
+            <if test="expressageDateofreceipt != null">#{expressageDateofreceipt},</if>
+            <if test="expressageBringDate != null">#{expressageBringDate},</if>
+            <if test="expressageSendWaayId != null">#{expressageSendWaayId},</if>
+            <if test="expressageExpressTypeId != null">#{expressageExpressTypeId},</if>
+            <if test="expressageCourierNumber != null">#{expressageCourierNumber},</if>
+            <if test="expressageFile != null">#{expressageFile},</if>
+            <if test="expressageCollarnote != null">#{expressageCollarnote},</if>
+            <if test="expressageRemark != null">#{expressageRemark},</if>
+            <if test="takestatus != null">#{takestatus},</if>
+            <if test="expressFee != null">#{expressFee},</if>
+            <if test="collarPerson != null">#{collarPerson},</if>
+            <if test="expressageTel != null">#{expressageTel},</if>
+            <if test="expressageType != null">#{expressageType},</if>
+            <if test="caseNo != null">#{caseNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAdmExpressage" parameterType="AdmExpressage">
+        update adm_expressage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="systemUserAddresser != null">system_user_addresser = #{systemUserAddresser},</if>
+            <if test="systemUserRecipients != null">system_user_recipients = #{systemUserRecipients},</if>
+            <if test="expressageSendaunit != null">expressage_sendaunit = #{expressageSendaunit},</if>
+            <if test="expressageSendadate != null">expressage_sendadate = #{expressageSendadate},</if>
+            <if test="expressageDateofreceipt != null">expressage_dateofreceipt = #{expressageDateofreceipt},</if>
+            <if test="expressageBringDate != null">expressage_bring_date = #{expressageBringDate},</if>
+            <if test="expressageSendWaayId != null">expressage_send_waay_id = #{expressageSendWaayId},</if>
+            <if test="expressageExpressTypeId != null">expressage_express_type_id = #{expressageExpressTypeId},</if>
+            <if test="expressageCourierNumber != null">expressage_courier_number = #{expressageCourierNumber},</if>
+            <if test="expressageFile != null">expressage_file = #{expressageFile},</if>
+            <if test="expressageCollarnote != null">expressage_collarnote = #{expressageCollarnote},</if>
+            <if test="expressageRemark != null">expressage_remark = #{expressageRemark},</if>
+            <if test="takestatus != null">takestatus = #{takestatus},</if>
+            <if test="expressFee != null">express_fee = #{expressFee},</if>
+            <if test="collarPerson != null">collar_person = #{collarPerson},</if>
+            <if test="expressageTel != null">expressage_tel = #{expressageTel},</if>
+            <if test="expressageType != null">expressage_type = #{expressageType},</if>
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAdmExpressageById" parameterType="Integer">
+        delete from adm_expressage where id = #{id}
+    </delete>
+
+    <delete id="deleteAdmExpressageByIds" parameterType="String">
+        delete from adm_expressage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteSendWaayByIds" parameterType="String">
+        delete from send_waay where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSendWaayById" parameterType="Integer">
+        delete from send_waay where id = #{id}
+    </delete>
+
+    <insert id="batchSendWaay">
+        insert into send_waay( id, sorting, send_name) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.sorting}, #{item.sendName})
+        </foreach>
+    </insert>
+</mapper>

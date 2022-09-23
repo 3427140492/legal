@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAdmNoticeVo"/>
         <where>  
             <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
-            <if test="noticeNotificationtime != null "> and notice_notificationtime &gt;= #{noticeNotificationtime}</if>
+            <if test="noticeNotificationtime != null "> and notice_notificationtime >= #{noticeNotificationtime}</if>
             <if test="noticeNotificationendtime != null "> and notice_notificationendtime &lt;= #{noticeNotificationendtime}</if>
         </where>
     </select>
