@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.client.mapper.ClientCaseLawMapper">
+<mapper namespace="com.ruoyi.hrClient.mapper.ClientCaseLawMapper">
     
     <resultMap type="ClientCaseLaw" id="CaseLawResult">
         <result property="id"    column="id"    />

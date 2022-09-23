@@ -1,37 +1,40 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="标题" prop="title">
         <el-input
           v-model="queryParams.title"
           placeholder="请输入标题"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="开始时间" prop="noticeNotificationtime">
-        <el-input
-          v-model="queryParams.noticeNotificationtime"
-          placeholder="请输入时间"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+
+      <el-form-item label="创建时间" style="width: 308px">
+        <el-date-picker
+          v-model="dateRange"
+          value-format="YYYY-MM-DD"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
-      <el-form-item label="结束时间" prop="noticeNotificationendtime">
-        <el-input
+      <!-- <el-form-item label="" prop="noticeNotificationendtime">
+        <el-date-picker clearable
           v-model="queryParams.noticeNotificationendtime"
-          placeholder="请输入"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择">
+        </el-date-picker>
+      </el-form-item> -->
       <el-form-item>
-        <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
-        <el-button  size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" @click="handleQuery">搜索</el-button>
+        <el-button @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-     <!-- <el-row :gutter="10" class="mb8">
+    <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -74,39 +77,43 @@
           v-hasPermi="['hr:notice:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row> -->
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
 
     <el-table border="1px" v-loading="loading" :data="noticeList" @selection-change="handleSelectionChange">
-      <!-- <el-table-column type="selection" width="55" align="center" /> -->
-      <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="时间" align="center" prop="noticeNotificationtime" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-
-          <!-- query(scope.$index,scope.row) -->
-          <!-- <router-link to="/notice/ggtzQR"> -->
-            <!-- <el-button 
-             @click="toView" >
-             查看
-             </el-button> -->
-          <!-- </router-link> -->
-
-          <el-button 
-             @click="toView(scope.row,'ggtzQR')" >
-             查看
-             </el-button>
-
+      <el-table-column label="时间" align="center" prop="noticeNotificationtime" width="180">
+        <template #scope>
+          <span>{{ parseTime(scope.row.noticeNotificationtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-    </el-table> 
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template #scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['hr:notice:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['hr:notice:remove']"
+          >删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     
     <pagination
       v-show="total>0"
       :total="total"
       v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
+      v-model.limit="queryParams.pageSize"
       @pagination="getList"
     />
 
@@ -124,7 +131,6 @@
 
 <script>
 import { listNotice, getNotice, delNotice, addNotice, updateNotice } from "@/api/hr/notice";
-
 
 export default {
   name: "Notice",
@@ -167,23 +173,6 @@ export default {
     this.getList();
   },
   methods: {
-    toView(row,name){
-      // alert("sdf");
-      console.log(row.id);
-      // this.$router.push('/hr/ggtzQR');
-      this.$router.push({ 
-          name:name,
-          params:{
-             id:row.id
-          }
-      })
-    },
-    //公告通知查看传值
-    // query(index,row){
-    //      console.log(row);
-    //      console.log(row,index);
-    //      this.$router.push({path:"",query:{id:row.id}})
-    // },
     /** 查询公告通知列表 */
     getList() {
       this.loading = true;
@@ -279,18 +268,7 @@ export default {
       this.download('hr/notice/export', {
         ...this.queryParams
       }, `notice_${new Date().getTime()}.xlsx`)
-    },
-    // query(row){
-      //  router.push({
-      //    path:'/notice/ggtzQR',
-      //    query:{
-      //       id:row.id
-      //    }
-      //  })
-
-    //   this.$router.push({name:"ggtzQR",query:{id:row.id}})
-    // }
+    }
   }
-
 };
 </script>

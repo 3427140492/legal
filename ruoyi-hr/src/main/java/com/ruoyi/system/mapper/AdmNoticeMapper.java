@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.AdmNotice;
  * 公告通知Mapper接口
  * 
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-21
  */
 public interface AdmNoticeMapper 
 {

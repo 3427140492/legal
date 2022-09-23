@@ -57,12 +57,12 @@
       <el-table-column label="案件类型" align="center" prop="caseTypeName" />
       <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
       <el-table-column label="提交时间" align="center" prop="caseSubtime" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.caseSubtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -77,13 +77,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+       v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改我的申请对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="案号" prop="caseNo">
           {{form.caseNo}}

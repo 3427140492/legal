@@ -82,7 +82,7 @@
         <!-- 客户-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-client</artifactId>
+            <artifactId>ruoyi-hrClient</artifactId>
         </dependency>
 
         <!-- 统计-->

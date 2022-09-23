@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 公告通知Controller
  * 
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-21
  */
 @RestController
 @RequestMapping("/hr/notice")

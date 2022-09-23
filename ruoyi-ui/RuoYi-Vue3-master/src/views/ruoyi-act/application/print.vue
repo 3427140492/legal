@@ -61,12 +61,12 @@
       <el-table-column label="文书名称" align="center" prop="applyforUsingTheItem" />
       <el-table-column label="审批状态 1,2,3" align="center" prop="applyforApprovalStatus" />
       <el-table-column label="提交时间" align="center" prop="applyforReceive" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.applyforReceive, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -81,13 +81,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改用印申请对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <h3>{{form.applyforUsingTheItem}} </h3>
         <el-form-item label="案号" prop="caseNo">
@@ -132,22 +132,22 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
           <el-table-column label="用印申请外键" prop="appid" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.appid" placeholder="请输入用印申请外键" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="filename" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.filename" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="filepath" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.filepath" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="文件类型外键" prop="typeid" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.typeid" placeholder="请输入文件类型外键" />
             </template>
           </el-table-column>
