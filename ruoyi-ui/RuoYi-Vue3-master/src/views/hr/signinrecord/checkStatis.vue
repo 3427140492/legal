@@ -1,6 +1,16 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
+      
+      <el-form-item prop="userRealname">
+        <el-input
+          v-model="queryParams.userRealname"
+          placeholder="执业人员"
+          clearable
+          @keyup.enter="handleQuery"
+        />
+      </el-form-item>
+
       <el-form-item label="签到日期" prop="signinrecordSign">
         <el-date-picker clearable
           v-model="queryParams.signinrecordSign"
@@ -9,13 +19,23 @@
           placeholder="请选择签到日期">
         </el-date-picker>
       </el-form-item>
+
+      <el-form-item >
+      <el-select v-model="queryParams.classify" placeholder="签到类型">
+        <el-option label="签到类型" value="" />
+        <el-option label="上班签到" value="1" />
+        <el-option label="会议签到" value="2" />
+        <el-option label="外勤签到" value="3" />
+      </el-select>
+    </el-form-item>
+
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
+        <el-button size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <!-- <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -59,54 +79,39 @@
         >导出</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    </el-row> -->
 
-    <el-table v-loading="loading" :data="signinrecordList" @selection-change="handleSelectionChange">
-      <!-- <el-table-column type="selection" width="55" align="center" /> -->
-      <el-table-column label="签到类型" align="center" prop="classify">
-        <template v-slot="scope">
-          <span v-if="scope.row.classify == 1">上班签到</span>
-          <span v-if="scope.row.classify == 2">会议签到</span>
-          <span v-if="scope.row.classify == 3">外勤签到</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="签到人" align="center" prop="systemUserId" />
-      <el-table-column label="签到日期" align="center" prop="signinrecordSign" width="180">
-        <template v-slot="scope">
+    <el-table border="1px" v-loading="loading" :data="signinrecordList" @selection-change="handleSelectionChange">
+      <el-table-column label="签到人" align="center" prop="userRealname" width="300"/>
+      <el-table-column label="签到日期" align="center" prop="signinrecordSign" width="300">
+        <template #slot="scope">
           <span>{{ parseTime(scope.row.signinrecordSign, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="签到地点" align="center" prop="signinrecordSite" />
-      <!-- <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="签到" align="center" prop="signinStatus" >
         <template v-slot="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['hr:signinrecord:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['hr:signinrecord:remove']"
-          >删除</el-button>
+          <span v-if="scope.row.signinStatus == 'D' ">√</span>
+          <span v-if="scope.row.signinStatus == 'T' "></span>
         </template>
-      </el-table-column> -->
+      </el-table-column>
+      <el-table-column label="签退" align="center" prop="signinStatus" >
+        <template v-slot="scope">
+          <span v-if="scope.row.signinStatus == 'D' "></span>
+          <span v-if="scope.row.signinStatus == 'T' ">√</span>
+        </template>
+      </el-table-column>
     </el-table>
     
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改签到对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-divider content-position="center">系统用户信息</el-divider>
         <el-row :gutter="10" class="mb8">

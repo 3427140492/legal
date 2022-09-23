@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item prop="userRealname">
+        <el-input
+          v-model="queryParams.userRealname"
+          placeholder="执业人员"
+          clearable
+          @keyup.enter="handleQuery"
+        />
+      </el-form-item>
+
       <el-form-item label="签到日期" prop="signinrecordSign">
         <el-date-picker clearable
           v-model="queryParams.signinrecordSign"
@@ -9,6 +18,16 @@
           placeholder="请选择签到日期">
         </el-date-picker>
       </el-form-item>
+
+      <el-form-item >
+      <el-select v-model="queryParams.classify" placeholder="签到类型">
+        <el-option label="签到类型" value="" />
+        <el-option label="上班签到" value="1" />
+        <el-option label="会议签到" value="2" />
+        <el-option label="外勤签到" value="3" />
+      </el-select>
+    </el-form-item>
+
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
         <el-button size="mini" @click="resetQuery">重置</el-button>
@@ -70,7 +89,7 @@
           <span v-if="scope.row.classify == 3">外勤签到</span>
         </template>
       </el-table-column>
-      <el-table-column label="签到人" align="center" prop="systemUserId" />
+      <el-table-column label="签到人" align="center" prop="userRealname" />
       <el-table-column label="签到日期" align="center" prop="signinrecordSign" width="180">
         <template #slot="scope">
           <span>{{ parseTime(scope.row.signinrecordSign, '{y}-{m}-{d}') }}</span>
@@ -103,42 +122,42 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
           <el-table-column label="$comment" prop="userName" width="150">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-input v-model="scope.row.userName" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPwd" width="150">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-input v-model="scope.row.userPwd" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userRealname" width="150">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-input v-model="scope.row.userRealname" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPhone" width="150">
-            <template slot-scope="scope">
+            <template  #slot="scope">
               <el-input v-model="scope.row.userPhone" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userEmail" width="150">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-input v-model="scope.row.userEmail" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userCreatedate" width="240">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-date-picker clearable v-model="scope.row.userCreatedate" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPreDate" width="240">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-date-picker clearable v-model="scope.row.userPreDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userStatus" width="150">
-            <template slot-scope="scope">
+            <template #slot="scope">
               <el-select v-model="scope.row.userStatus" placeholder="请选择$comment">
                 <el-option label="请选择字典生成" value="" />
               </el-select>

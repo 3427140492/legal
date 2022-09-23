@@ -42,6 +42,12 @@ public class AdmSigninrecor extends BaseEntity
     @Excel(name = "签到类型 D 签到 T 签退")
     private String signinStatus;
 
+
+    /** $column.columnComment */
+    @Excel(name = "")
+    private String userRealname;
+
+
     /** 系统用户信息 */
     private List<SystemUser> systemUserList;
 
@@ -110,6 +116,17 @@ public class AdmSigninrecor extends BaseEntity
         this.systemUserList = systemUserList;
     }
 
+    public void setUserRealname(String userRealname)
+    {
+        this.userRealname = userRealname;
+    }
+
+    public String getUserRealname()
+    {
+        return userRealname;
+    }
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -120,6 +137,7 @@ public class AdmSigninrecor extends BaseEntity
             .append("signinrecordSite", getSigninrecordSite())
             .append("signinStatus", getSigninStatus())
             .append("systemUserList", getSystemUserList())
+            .append("userRealname", getUserRealname())
             .toString();
     }
 }

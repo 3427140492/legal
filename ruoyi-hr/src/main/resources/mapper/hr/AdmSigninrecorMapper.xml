@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="signinrecordSign"    column="signinrecord_sign"    />
         <result property="signinrecordSite"    column="signinrecord_site"    />
         <result property="signinStatus"    column="signin_status"    />
+        <result property="userRealname"    column="user_realname"    />
     </resultMap>
 
     <resultMap id="AdmSigninrecorSystemUserResult" type="AdmSigninrecor" extends="AdmSigninrecorResult">
