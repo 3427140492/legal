@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <!-- 123个-->
+
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi</artifactId>
     <version>3.8.2</version>
@@ -210,7 +210,7 @@
             <!-- 客户-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-hrClient</artifactId>
+                <artifactId>ruoyi-Client</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
 
@@ -246,7 +246,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>ruoyi-hr</module>
-        <module>ruoyi-hrClient</module>
+        <module>ruoyi-Client</module>
         <module>ruoyi-records</module>
         <module>ruoyi-statistics</module>
         <module>ruoyi-act</module>
