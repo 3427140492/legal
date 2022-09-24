@@ -72,6 +72,10 @@ public class FinCwInout extends BaseEntity
     @Excel(name = "提交人")
     private String empName;
 
+    private String searchType;
+
+    private String searchStr;
+
     /** $table.subTable.functionName信息 */
     private List<CwInoutType> cwInoutTypeList;
 
@@ -196,6 +200,22 @@ public class FinCwInout extends BaseEntity
     public String getCwPayer() 
     {
         return cwPayer;
+    }
+
+    public String getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getSearchStr() {
+        return searchStr;
+    }
+
+    public void setSearchStr(String searchStr) {
+        this.searchStr = searchStr;
     }
 
     public List<CwInoutType> getCwInoutTypeList()

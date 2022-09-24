@@ -1,70 +1,22 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="收支类别id" prop="cwInoutTypeId">
+      <el-form-item prop="SearchStr">
         <el-input
-          v-model="queryParams.cwInoutTypeId"
-          placeholder="请输入收支类别id"
+          style="width: 150px;"
+          v-model="queryParams.SearchStr"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发生日期" prop="cwInoutDate">
-        <el-input
-          v-model="queryParams.cwInoutDate"
-          placeholder="请输入发生日期"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item prop="SearchType">
+        <el-select v-model="queryParams.SearchType" style="width: 120px;">
+        <el-option label="案号搜索" value="1"/>
+          <el-option label="收支人搜索" value="2"/>
+          <el-option label="委托人搜索" value="3"/>
+        </el-select>
       </el-form-item>
-      <el-form-item label="收支人" prop="cwInoutPerson">
-        <el-input
-          v-model="queryParams.cwInoutPerson"
-          placeholder="请输入收支人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收支金额" prop="cwInoutMoney">
-        <el-input
-          v-model="queryParams.cwInoutMoney"
-          placeholder="请输入收支金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案件id" prop="caseLawId">
-        <el-input
-          v-model="queryParams.caseLawId"
-          placeholder="请输入案件id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="录入日期" prop="cwEnteringdate">
-        <el-input
-          v-model="queryParams.cwEnteringdate"
-          placeholder="请输入录入日期"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="备注" prop="cwRemark">
-        <el-input
-          v-model="queryParams.cwRemark"
-          placeholder="请输入备注"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="付款人" prop="cwPayer">
-        <el-input
-          v-model="queryParams.cwPayer"
-          placeholder="请输入付款人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+      
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh"  @click="resetQuery">重置</el-button>
@@ -243,7 +195,7 @@ export default {
         this.loading = false;
       });
     },
-    
+
     // 取消按钮
     cancel() {
       this.open = false;

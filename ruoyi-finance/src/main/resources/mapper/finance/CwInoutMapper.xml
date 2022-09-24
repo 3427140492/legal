@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           inner join hr_emp he on he.id = ci.cw_inout_person
                           inner join system_user su on su.hr_emp_id = he.id
              ) a left join (
-            select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id
+            select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id,cl.case_parties
             from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
             where case_recycle = 'Y'
         ) b on b.cid = a.case_law_id where 1 = 1
@@ -51,17 +51,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectCwInoutList" parameterType="FinCwInout" resultMap="CwInoutResult">
         <include refid="selectCwInoutVo"/>
-        <where>  
-            <if test="cwInoutTypeId != null "> and cw_inout_type_id = #{cwInoutTypeId}</if>
-            <if test="cwInoutDate != null  and cwInoutDate != ''"> and cw_inout_date = #{cwInoutDate}</if>
-            <if test="cwInoutPerson != null  and cwInoutPerson != ''"> and cw_inout_person = #{cwInoutPerson}</if>
-            <if test="cwInoutMoney != null "> and cw_inout_money = #{cwInoutMoney}</if>
-            <if test="cwPayType != null "> and cw_pay_type = #{cwPayType}</if>
-            <if test="caseLawId != null "> and case_law_id = #{caseLawId}</if>
-            <if test="cwEnteringdate != null  and cwEnteringdate != ''"> and cw_enteringdate = #{cwEnteringdate}</if>
-            <if test="cwRemark != null  and cwRemark != ''"> and cw_remark = #{cwRemark}</if>
-            <if test="cwPayer != null  and cwPayer != ''"> and cw_payer = #{cwPayer}</if>
-        </where>
+        <if test=" searchType == 1">
+            <if test=" searchStr !=null and searchStr !=''">
+                and b.case_no like '%${searchStr}%'
+            </if>
+        </if>
+        <if test=" searchType == 2">
+            <if test=" searchStr !=null and searchStr !=''">
+                and a.emp_name like '%${searchStr}%'
+            </if>
+        </if>
+        <if test=" searchType == 3">
+            <if test=" searchStr !=null and searchStr !=''">
+                and b.case_parties like '%${searchStr}%'
+            </if>
+        </if>
     </select>
     
     <select id="selectCwInoutById" parameterType="String" resultMap="CwInoutCwInoutTypeResult">
