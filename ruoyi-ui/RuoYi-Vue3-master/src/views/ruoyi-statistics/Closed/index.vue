@@ -1,313 +1,44 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <!-- <el-form-item label="案号" prop="caseNo">
+      <el-form-item label="承办律师" prop="empName">
         <el-input
-          v-model="queryParams.caseNo"
-          placeholder="请输入案号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="对方当事人" prop="caseOppositeParties">
-        <el-input
-          v-model="queryParams.caseOppositeParties"
-          placeholder="请输入对方当事人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="对方当事人证件号" prop="caseOppositeCardnum">
-        <el-input
-          v-model="queryParams.caseOppositeCardnum"
-          placeholder="请输入对方当事人证件号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="第三方" prop="caseThirdParty">
-        <el-input
-          v-model="queryParams.caseThirdParty"
-          placeholder="请输入第三方"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="嫌疑人" prop="caseSuspect">
-        <el-input
-          v-model="queryParams.caseSuspect"
-          placeholder="请输入嫌疑人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案件冲突" prop="caseClash">
-        <el-input
-          v-model="queryParams.caseClash"
-          placeholder="请输入案件冲突"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案由" prop="caseCause">
-        <el-input
-          v-model="queryParams.caseCause"
-          placeholder="请输入案由"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="受理机关" prop="caseAccept">
-        <el-input
-          v-model="queryParams.caseAccept"
-          placeholder="请输入受理机关"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="诉讼标的" prop="caseLawsuitobj">
-        <el-input
-          v-model="queryParams.caseLawsuitobj"
-          placeholder="请输入诉讼标的"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="补助金额" prop="caseSubsidysal">
-        <el-input
-          v-model="queryParams.caseSubsidysal"
-          placeholder="请输入补助金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="代理费" prop="caseAgencyfee">
-        <el-input
-          v-model="queryParams.caseAgencyfee"
-          placeholder="请输入代理费"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="杂费" prop="caseProxysal">
-        <el-input
-          v-model="queryParams.caseProxysal"
-          placeholder="请输入杂费"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="办理地区" prop="caseTransactionRegion">
-        <el-input
-          v-model="queryParams.caseTransactionRegion"
-          placeholder="请输入办理地区"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="已付金额" prop="casePaidsal">
-        <el-input
-          v-model="queryParams.casePaidsal"
-          placeholder="请输入已付金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="未付金额" prop="caseUnpaidsal">
-        <el-input
-          v-model="queryParams.caseUnpaidsal"
-          placeholder="请输入未付金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="已开票金额" prop="caseInvoiced">
-        <el-input
-          v-model="queryParams.caseInvoiced"
-          placeholder="请输入已开票金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="未开票金额" prop="caseNotinvoiced">
-        <el-input
-          v-model="queryParams.caseNotinvoiced"
-          placeholder="请输入未开票金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="专属案号" prop="casePropernum">
-        <el-input
-          v-model="queryParams.casePropernum"
-          placeholder="请输入专属案号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="受理法院" prop="caseCourt">
-        <el-input
-          v-model="queryParams.caseCourt"
-          placeholder="请输入受理法院"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="档案号" prop="caseFilenumber">
-        <el-input
-          v-model="queryParams.caseFilenumber"
-          placeholder="请输入档案号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提交人" prop="caseSubmitter">
-        <el-input
-          v-model="queryParams.caseSubmitter"
-          placeholder="请输入提交人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提交时间" prop="caseSubtime">
-        <el-date-picker clearable
-          v-model="queryParams.caseSubtime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择提交时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="案件回收" prop="caseRecycle">
-        <el-input
-          v-model="queryParams.caseRecycle"
-          placeholder="请输入案件回收"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="备注" prop="caseRemarks">
-        <el-input
-          v-model="queryParams.caseRemarks"
-          placeholder="请输入备注"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="客户id 外键" prop="clientId">
-        <el-input
-          v-model="queryParams.clientId"
-          placeholder="请输入客户id 外键"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="承办律师" prop="caseAttorney">
-        <el-input
-          v-model="queryParams.caseAttorney"
+          v-model="queryParams.empName"
           placeholder="请输入承办律师"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="收费方式" prop="caseChargeWay">
-        <el-input
-          v-model="queryParams.caseChargeWay"
-          placeholder="请输入收费方式"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收案审批人" prop="systemApprovalId">
-        <el-input
-          v-model="queryParams.systemApprovalId"
-          placeholder="请输入收案审批人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
-        <el-input
-          v-model="queryParams.caseCaseTypeId"
-          placeholder="请输入案件类型id 外键"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案件文书id 外键" prop="caseSealApplyforId">
-        <el-input
-          v-model="queryParams.caseSealApplyforId"
-          placeholder="请输入案件文书id 外键"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="主办律师id 外键" prop="hrEmpId">
-        <el-input
-          v-model="queryParams.hrEmpId"
-          placeholder="请输入主办律师id 外键"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收案时间" prop="collectionTime">
+
+    <el-form-item label="结案状态" prop="caseSettleStatus">
+      <el-select v-model="queryParams.caseSettleStatus" placeholder="结案状态" >
+          <el-option label="未结案" value="N" />
+          <el-option label="已结案" value="Y" />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item label="档案归档" prop="caseRecord">
+      <el-select v-model="queryParams.caseRecord" placeholder="档案归档" >
+          <el-option label="未归档" value="1" />
+          <el-option label="已归档" value="2" />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item label="收案时间" prop="collectionTime">
         <el-date-picker clearable
-          v-model="queryParams.collectionTime"
+          v-model="queryParams.collectionTime1"
           type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择收案时间">
+          value-format="YYYY-MM-DD">
+        </el-date-picker>
+        <el-date-picker clearable
+          v-model="queryParams.collectionTime2"
+          type="date"
+          value-format="YYYY-MM-DD">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="委托人" prop="caseParties">
-        <el-input
-          v-model="queryParams.caseParties"
-          placeholder="请输入委托人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="风险费" prop="caseFxmoney">
-        <el-input
-          v-model="queryParams.caseFxmoney"
-          placeholder="请输入风险费"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="委托人" prop="caseWtr">
-        <el-input
-          v-model="queryParams.caseWtr"
-          placeholder="请输入委托人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="结案审批时间" prop="caseApprovalEndtime">
-        <el-date-picker clearable
-          v-model="queryParams.caseApprovalEndtime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择结案审批时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="归档号" prop="caseRecordNum">
-        <el-input
-          v-model="queryParams.caseRecordNum"
-          placeholder="请输入归档号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="服务人次" prop="standard">
-        <el-input
-          v-model="queryParams.standard"
-          placeholder="请输入服务人次"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -316,7 +47,6 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
           size="mini"
           @click="handleExport"
           v-hasPermi="['ruoyi-statistics:Closed:export']"
@@ -326,31 +56,43 @@
     </el-row>
 
     <el-table v-loading="loading" :data="closedList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="案号" align="center" prop="caseNo" width="180" />
       <el-table-column label="案由" align="center" prop="caseCause" />
-      <el-table-column label="收案日期" align="center" prop="collectionTime">
+      <el-table-column label="收案日期" width="100" align="center" prop="collectionTime">
         <template #default="scope">
           <span>{{ parseTime(scope.row.collectionTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       
-
-      <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
-
+      <el-table-column label="委托人" align="center" prop="client" />
+      <el-table-column label="对方当事人" width="100" align="center" prop="caseOppositeParties" />
+      <el-table-column label="承办律师" align="center" prop="empName" />
       <el-table-column label="受理单位" align="center" prop="caseAccept" />
-      <el-table-column label="标的(万元)" align="center" prop="caseLawsuitobj" />
-      <el-table-column label="收费(万元)" align="center" prop="caseAgencyfee" />
-      <el-table-column label="已付款(元)" align="center" prop="casePaidsal" />
-      <el-table-column label="已开票(元)" align="center" prop="caseInvoiced" />
+      <el-table-column label="标的(万元)" width="100" align="center" prop="caseLawsuitobj" />
+      <el-table-column label="收费(万元)" width="100" align="center" prop="caseAgencyfee" />
+      <el-table-column label="已付款(元)" width="100" align="center" prop="casePaidsal" />
+      <el-table-column label="已开票(元)" width="100" align="center" prop="caseInvoiced" />
 
-      <el-table-column label="结案日期" align="center" prop="caseApprovalEndtime">
+      <el-table-column label="结案日期" width="100" align="center" prop="caseApprovalEndtime">
         <template #default="scope">
           <span>{{ parseTime(scope.row.caseSubtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结案方式" align="center" prop="caseSettleType" />
-      <el-table-column label="归档状态" align="center" prop="caseRecord" />
+      <el-table-column label="结案方式" align="center" prop="caseSettleType" >
+          <template v-slot="scope">
+            <span v-if="scope.row.caseSettleType == 0">默认</span>
+            <span v-if="scope.row.caseSettleType == 1">调解</span>
+            <span v-if="scope.row.caseSettleType == 2">判决</span>
+            <span v-if="scope.row.caseSettleType == 3">撤诉</span>
+            <span v-if="scope.row.caseSettleType == 4">其他方式</span>
+          </template>
+      </el-table-column>
+      <el-table-column label="归档状态" align="center" prop="caseRecord" >
+        <template v-slot="scope">
+            <span v-if="scope.row.caseRecord == 1">未归档</span>
+            <span v-if="scope.row.caseRecord == 2">归档</span>
+          </template>
+      </el-table-column>
       <el-table-column label="归档号" align="center" prop="caseRecordNum" />
     </el-table>
     
@@ -449,7 +191,10 @@ export default {
         caseSettleType: null,
         caseApprovalEndtime: null,
         caseRecordNum: null,
-        standard: null
+        standard: null,
+        empName:null,
+        collectionTime1:null,
+        collectionTime2:null,
       },
       // 表单参数
       form: {},
@@ -530,7 +275,9 @@ export default {
         caseSettleType: null,
         caseApprovalEndtime: null,
         caseRecordNum: null,
-        standard: null
+        standard: null,
+        collectionTime1:null,
+        collectionTime2:null,
       };
       this.hrEmpList = [];
       this.resetForm("form");

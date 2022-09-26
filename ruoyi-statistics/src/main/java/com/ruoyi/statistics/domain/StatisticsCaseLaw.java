@@ -42,7 +42,17 @@ public class StatisticsCaseLaw extends BaseEntity
     /** 收案时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "收案时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date collectionTime;
+    private String collectionTime;
+
+    /** 收案时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "收案开始时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private String collectionTime1;
+
+    /** 收案时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "收案结束时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private String collectionTime2;
 
     /** 受理机关 */
     @Excel(name = "受理机关")
@@ -77,12 +87,75 @@ public class StatisticsCaseLaw extends BaseEntity
     private String caseSettleType;
 
 
+    /** 案件回收 */
+    @Excel(name = "案件回收")
+    private String caseRecycle;
+
+    /** 案件回收 */
+    @Excel(name = "委托人")
+    private String client;
+
+    /** 案件回收 */
+    @Excel(name = "承办律师")
+    private String empName;
+
+
+    /** 结案状态 */
+    @Excel(name = "结案状态")
+    private String caseSettleStatus;
+
+    public String getCollectionTime1() {
+        return collectionTime1;
+    }
+
+    public void setCollectionTime1(String collectionTime1) {
+        this.collectionTime1 = collectionTime1;
+    }
+
+    public String getCollectionTime2() {
+        return collectionTime2;
+    }
+
+    public void setCollectionTime2(String collectionTime2) {
+        this.collectionTime2 = collectionTime2;
+    }
+
+    public String getCaseSettleStatus() {
+        return caseSettleStatus;
+    }
+
+    public void setCaseSettleStatus(String caseSettleStatus) {
+        this.caseSettleStatus = caseSettleStatus;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
 
     /** $table.subTable.functionName信息 */
     private List<StatisticsHrEmp> hrEmpList;
 
     private List<StatisticsClient> ClientList;
 
+    public String getCaseRecycle() {
+        return caseRecycle;
+    }
+
+    public void setCaseRecycle(String caseRecycle) {
+        this.caseRecycle = caseRecycle;
+    }
 
     public Integer getId() {
         return id;
@@ -124,11 +197,11 @@ public class StatisticsCaseLaw extends BaseEntity
         this.caseCause = caseCause;
     }
 
-    public Date getCollectionTime() {
+    public String getCollectionTime() {
         return collectionTime;
     }
 
-    public void setCollectionTime(Date collectionTime) {
+    public void setCollectionTime(String collectionTime) {
         this.collectionTime = collectionTime;
     }
 
@@ -212,25 +285,4 @@ public class StatisticsCaseLaw extends BaseEntity
         ClientList = clientList;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("caseNo", getCaseNo())
-            .append("caseOppositeParties", getCaseOppositeParties())
-            .append("caseCause", getCaseCause())
-            .append("caseAccept", getCaseAccept())
-            .append("caseLawsuitobj", getCaseLawsuitobj())
-            .append("caseAgencyfee", getCaseAgencyfee())
-            .append("casePaidsal", getCasePaidsal())
-            .append("caseInvoiced", getCaseInvoiced())
-            .append("caseSubtime", getCaseSubtime())
-            .append("collectionTime", getCollectionTime())
-            .append("caseRecord", getCaseRecord())
-            .append("caseSettleType", getCaseSettleType())
-            .append("caseRecordNum", getCaseRecordNum())
-            .append("hrEmpList", getHrEmpList())
-            .append("ClientList", getClientList())
-            .toString();
-    }
 }

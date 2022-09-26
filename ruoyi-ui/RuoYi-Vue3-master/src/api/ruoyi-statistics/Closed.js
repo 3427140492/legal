@@ -42,3 +42,12 @@ export function delClosed(id) {
     method: 'delete'
   })
 }
+
+
+export function listType(query) {
+  return request({
+    url: '/ruoyi-statistics/Closed/Typelist',
+    method: 'get',
+    params: query
+  })
+}

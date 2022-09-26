@@ -1,6 +1,7 @@
 package com.ruoyi.statistics.mapper;
 
 import java.util.List;
+
 import com.ruoyi.statistics.domain.StatisticsCaseLaw;
 import com.ruoyi.statistics.domain.StatisticsHrEmp;
 
@@ -84,4 +85,6 @@ public interface StatisticsMapper
      * @return 结果
      */
     public int deleteHrEmpById(Integer id);
+
+
 }

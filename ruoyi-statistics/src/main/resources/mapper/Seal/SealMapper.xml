@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.statistics.mapper.SealMapper">
+    
+    <resultMap type="Seal" id="SealResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="applyforReceive"    column="applyfor_receive"    />
+        <result property="applyforApprovalStatus"    column="applyfor_approval_status"    />
+        <result property="applyforRecipient"    column="applyfor_recipient"    />
+        <result property="sendPerson"    column="send_person"    />
+        <result property="applyforUsingTheItem"    column="applyfor_using_the_item"    />
+        <result property="caseid"    column="caseid"    />
+        <result property="remark"    column="remark"    />
+        <result property="typeid"    column="typeid"    />
+        <result property="empName"    column="emp_name"    />
+    </resultMap>
+
+    <resultMap id="SealCaseLawResult" type="Seal" extends="SealResult">
+        <collection property="statisticsHrEmpList" notNullColumn="emp_id" javaType="java.util.List" resultMap="HrEmpResult" />
+        <collection property="statisticsCaseLaw" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseLawResult" />
+    </resultMap>
+
+    <resultMap type="StatisticsCaseLaw" id="StatisticsCaseLawResult">
+        <result property="id"    column="id"    />
+        <result property="caseRecycle"    column="case_recycle"    />
+    </resultMap>
+
+    <resultMap type="StatisticsHrEmp" id="HrEmpResult">
+        <result property="empId"    column="id"    />
+        <result property="empName"    column="emp_name"    />
+    </resultMap>
+
+    <sql id="selectSealVo">
+        select cl.case_no,applyfor_receive,applyfor_approval_status,emp_name,applyfor_using_the_item from case_seal_applyfor csa
+        inner join case_law cl on cl.id = csa.caseid
+        inner join hr_emp hre on hre.id = csa.applyfor_recipient where case_recycle = 'Y'
+    </sql>
+
+    <select id="selectSealList" parameterType="Seal" resultMap="SealResult">
+        <include refid="selectSealVo"/>
+        <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">
+            and applyfor_approval_status = '${applyforApprovalStatus}'
+        </if>
+        <if test="applyforReceive1 != null and applyforReceive1 != ''">
+            and applyfor_receive &gt;= '${applyforReceive1}'
+        </if>
+        <if test="applyforReceive2 != null and applyforReceive2 != ''">
+            and applyfor_receive &lt;= '${applyforReceive2}'
+        </if>
+
+        <if test="empName != null and empName != ''">
+            and emp_name like '%${empName}%'
+        </if>
+    </select>
+
+
+</mapper>

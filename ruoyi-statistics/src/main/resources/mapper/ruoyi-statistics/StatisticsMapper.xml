@@ -19,11 +19,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseRecord"    column="case_record"    />
         <result property="caseSettleType"    column="case_settle_type"    />
         <result property="caseRecordNum"    column="case_record_num"    />
+        <result property="empName"    column="emp_name"    />
+        <result property="client"    column="client"    />
+        <result property="caseSettleStatus"    column="case_settle_status"    />
+        <result property="collectionTime1"    column="collection_time"    />
+        <result property="collectionTime2"    column="collection_time"    />
     </resultMap>
 
     <resultMap id="CaseLawHrEmpResult" type="StatisticsCaseLaw" extends="StatisticsCaseLawResult">
         <collection property="hrEmpList" notNullColumn="emp_id" javaType="java.util.List" resultMap="HrEmpResult" />
-        <collection property="ClientList" notNullColumn="hrClient" javaType="java.util.List" resultMap="ClientResult" />
+        <collection property="ClientList" notNullColumn="client" javaType="java.util.List" resultMap="ClientResult" />
 
     </resultMap>
 
@@ -34,22 +39,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap type="StatisticsClient" id="ClientResult">
         <result property="id"    column="id"    />
-        <result property="hrClient"    column="hrClient"    />
+        <result property="client"    column="client"    />
     </resultMap>
 
     <sql id="selectCaseLawVo">
-        select cl.id case_id,hre.id emp_id,case_no,hrClient,case_opposite_parties,emp_name,case_subtime,case_cause,
+        select cl.id case_id,hre.id emp_id,case_no,client,case_opposite_parties,emp_name,case_subtime,case_cause,
                collection_time,case_accept,case_lawsuitobj,case_agencyfee,case_paidsal,case_invoiced,case_settle_type,
                case_record,case_record_num
                 from case_law cl
                  inner join hr_emp hre on hre.id = cl.hr_emp_id
-                 inner join hrClient c on c.id = cl.client_id
+                 inner join client c on c.id = cl.client_id
         where case_recycle = 'Y'
     </sql>
 
     <select id="selectCaseLawList" parameterType="StatisticsCaseLaw" resultMap="StatisticsCaseLawResult">
         <include refid="selectCaseLawVo"/>
-
+        <if test="empName != null and empName != ''">
+            and emp_name like '%${empName}%'
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus != ''">
+            and case_settle_status = '${caseSettleStatus}'
+        </if>
+        <if test="caseRecord != null and caseRecord != ''">
+            and case_record = '${caseRecord}'
+        </if>
+        <if test="collectionTime1 != null and collectionTime1 != ''">
+            and collection_time &gt;= '${collectionTime1}'
+        </if>
+        <if test="collectionTime2 != null and collectionTime2 != ''">
+            and collection_time &lt;= '${collectionTime2}'
+        </if>
     </select>
 
 </mapper>
