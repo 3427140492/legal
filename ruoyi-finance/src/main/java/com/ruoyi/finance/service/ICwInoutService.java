@@ -1,6 +1,8 @@
 package com.ruoyi.finance.service;
 
 import java.util.List;
+
+import com.ruoyi.finance.domain.CwInoutType;
 import com.ruoyi.finance.domain.FinCwInout;
 
 /**
@@ -11,6 +13,9 @@ import com.ruoyi.finance.domain.FinCwInout;
  */
 public interface ICwInoutService 
 {
+    public Object selectCwInoutTypeList() ;
+    public List<Object> getChildren(String id);
+
     /**
      * 查询全所收支明细
      * 

@@ -8,9 +8,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 全所电子归档对象 record_document
- * 
+ *
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-27
  */
 public class RecordDocument extends BaseEntity
 {
@@ -31,14 +31,6 @@ public class RecordDocument extends BaseEntity
     @Excel(name = "最后更新日期")
     private String upddate;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Integer folderId;
-
-    /** 归档文件 */
-    @Excel(name = "归档文件")
-    private String documentFile;
-
     /** 案号 */
     @Excel(name = "案号")
     private String caseNo;
@@ -47,86 +39,35 @@ public class RecordDocument extends BaseEntity
     @Excel(name = "提交人")
     private String caseSubmitter;
 
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private Integer folderId;
+
+    /** 归档文件 */
+    @Excel(name = "归档文件")
+    private String documentFile;
+
+    /** 归档信息 */
+    private List<RecordCaseLaw> caseLawList;
+
     private String searchType;
 
     private String searchStr;
 
-    /** $table.subTable.functionName信息 */
-    private List<RecordCaseLaw> caseLawList;
-
-    public void setId(Integer id) 
-    {
-        this.id = id;
-    }
-
-    public Integer getId() 
-    {
-        return id;
-    }
-    public void setCaseLawId(Integer caseLawId) 
-    {
-        this.caseLawId = caseLawId;
-    }
-
-    public Integer getCaseLawId() 
-    {
-        return caseLawId;
-    }
-    public void setSystemUserId(Integer systemUserId) 
-    {
-        this.systemUserId = systemUserId;
-    }
-
-    public Integer getSystemUserId() 
-    {
-        return systemUserId;
-    }
-    public void setUpddate(String upddate) 
-    {
-        this.upddate = upddate;
-    }
-
-    public String getUpddate() 
-    {
-        return upddate;
-    }
-    public void setFolderId(Integer folderId) 
-    {
-        this.folderId = folderId;
-    }
-
-    public Integer getFolderId() 
-    {
-        return folderId;
-    }
-    public void setDocumentFile(String documentFile) 
-    {
-        this.documentFile = documentFile;
-    }
-
-    public void setCaseNo(String caseNo)
-    {
-        this.caseNo = caseNo;
-    }
-
-    public String getCaseNo()
-    {
+    public String getCaseNo() {
         return caseNo;
     }
 
-    public void setCaseSubmitter(String caseSubmitter)
-    {
-        this.caseSubmitter = caseSubmitter;
+    public void setCaseNo(String caseNo) {
+        this.caseNo = caseNo;
     }
 
-    public String getCaseSubmitter()
-    {
+    public String getCaseSubmitter() {
         return caseSubmitter;
     }
 
-    public String getDocumentFile() 
-    {
-        return documentFile;
+    public void setCaseSubmitter(String caseSubmitter) {
+        this.caseSubmitter = caseSubmitter;
     }
 
     public String getSearchType() {
@@ -145,6 +86,62 @@ public class RecordDocument extends BaseEntity
         this.searchStr = searchStr;
     }
 
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+    public void setCaseLawId(Integer caseLawId)
+    {
+        this.caseLawId = caseLawId;
+    }
+
+    public Integer getCaseLawId()
+    {
+        return caseLawId;
+    }
+    public void setSystemUserId(Integer systemUserId)
+    {
+        this.systemUserId = systemUserId;
+    }
+
+    public Integer getSystemUserId()
+    {
+        return systemUserId;
+    }
+    public void setUpddate(String upddate)
+    {
+        this.upddate = upddate;
+    }
+
+    public String getUpddate()
+    {
+        return upddate;
+    }
+    public void setFolderId(Integer folderId)
+    {
+        this.folderId = folderId;
+    }
+
+    public Integer getFolderId()
+    {
+        return folderId;
+    }
+    public void setDocumentFile(String documentFile)
+    {
+        this.documentFile = documentFile;
+    }
+
+    public String getDocumentFile()
+    {
+        return documentFile;
+    }
+
     public List<RecordCaseLaw> getCaseLawList()
     {
         return caseLawList;
@@ -158,13 +155,13 @@ public class RecordDocument extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("caseLawId", getCaseLawId())
-            .append("systemUserId", getSystemUserId())
-            .append("upddate", getUpddate())
-            .append("folderId", getFolderId())
-            .append("documentFile", getDocumentFile())
-            .append("caseLawList", getCaseLawList())
-            .toString();
+                .append("id", getId())
+                .append("caseLawId", getCaseLawId())
+                .append("systemUserId", getSystemUserId())
+                .append("upddate", getUpddate())
+                .append("folderId", getFolderId())
+                .append("documentFile", getDocumentFile())
+                .append("caseLawList", getCaseLawList())
+                .toString();
     }
 }

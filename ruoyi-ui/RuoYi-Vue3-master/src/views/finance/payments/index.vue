@@ -16,7 +16,9 @@
           <el-option label="委托人搜索" value="3"/>
         </el-select>
       </el-form-item>
-      
+      <el-form-item prop="cwName">
+        <el-tree-select v-model="queryParams.cwName" :data="cwInoutTypeListSelect" :props="{ value: 'id', label: 'cwName', children: 'children' }" :render-after-expand="false" clearable style="width: 400px;"/> 
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh"  @click="resetQuery">重置</el-button>
@@ -64,76 +66,11 @@
       v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改全所收支明细对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="收支类别id" prop="cwInoutTypeId">
-          <el-input v-model="form.cwInoutTypeId" placeholder="请输入收支类别id" />
-        </el-form-item>
-        <el-form-item label="发生日期" prop="cwInoutDate">
-          <el-input v-model="form.cwInoutDate" placeholder="请输入发生日期" />
-        </el-form-item>
-        <el-form-item label="收支人" prop="cwInoutPerson">
-          <el-input v-model="form.cwInoutPerson" placeholder="请输入收支人" />
-        </el-form-item>
-        <el-form-item label="收支金额" prop="cwInoutMoney">
-          <el-input v-model="form.cwInoutMoney" placeholder="请输入收支金额" />
-        </el-form-item>
-        <el-form-item label="案件id" prop="caseLawId">
-          <el-input v-model="form.caseLawId" placeholder="请输入案件id" />
-        </el-form-item>
-        <el-form-item label="录入日期" prop="cwEnteringdate">
-          <el-input v-model="form.cwEnteringdate" placeholder="请输入录入日期" />
-        </el-form-item>
-        <el-form-item label="备注" prop="cwRemark">
-          <el-input v-model="form.cwRemark" placeholder="请输入备注" />
-        </el-form-item>
-        <el-form-item label="付款人" prop="cwPayer">
-          <el-input v-model="form.cwPayer" placeholder="请输入付款人" />
-        </el-form-item>
-        <el-divider content-position="center">${subTable.functionName}信息</el-divider>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddCwInoutType">添加</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteCwInoutType">删除</el-button>
-          </el-col>
-        </el-row>
-        <el-table :data="cwInoutTypeList" :row-class-name="rowCwInoutTypeIndex" @selection-change="handleCwInoutTypeSelectionChange" ref="cwInoutType">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50"/>
-          <el-table-column label="类别名称" prop="cwName" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.cwName" placeholder="请输入类别名称" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="cwPid" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.cwPid" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="type" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.type" placeholder="请选择$comment">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listPayments, getPayments, delPayments, addPayments, updatePayments } from "@/api/finance/payments";
-
+import { listPayments, getPayments, delPayments, addPayments, updatePayments, cwInoutlistType } from "@/api/finance/payments";
 export default {
   name: "Payments",
   data() {
@@ -173,13 +110,14 @@ export default {
         cwEnteringdate: null,
         cwRemark: null,
         cwPayer: null,
-        casePaidsal: null
+        casePaidsal: null,
+        cwName: null
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {},
+      cwInoutTypeListSelect: []
     };
   },
   created() {
@@ -193,6 +131,9 @@ export default {
         this.paymentsList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+      cwInoutlistType().then(response => {
+        this.cwInoutTypeListSelect = response.rows;
       });
     },
 

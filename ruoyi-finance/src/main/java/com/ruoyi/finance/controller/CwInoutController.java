@@ -2,6 +2,8 @@ package com.ruoyi.finance.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.finance.domain.CwInoutType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,15 @@ public class CwInoutController extends BaseController
         List<FinCwInout> list = cwInoutService.selectCwInoutList(finCwInout);
         return getDataTable(list);
     }
+
+
+    @GetMapping("/sxlist")
+    public TableDataInfo list2()
+    {
+        List<CwInoutType> list = (List<CwInoutType>) cwInoutService.selectCwInoutTypeList();
+        return getDataTable(list);
+    }
+
 
     /**
      * 导出全所收支明细列表

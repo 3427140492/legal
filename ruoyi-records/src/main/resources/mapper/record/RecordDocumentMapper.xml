@@ -19,14 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <collection property="caseLawList" notNullColumn="sub_id" javaType="java.util.List" resultMap="CaseLawResult" />
     </resultMap>
 
-    <resultMap type="RecordCaseLaw" id="CaseLawResult">
-        <result property="id"    column="sub_id"    />
+    <resultMap type="CaseLaw" id="CaseLawResult">
+        <result property="id"    column="cid"    />
         <result property="caseNo"    column="sub_case_no"    />
-        <result property="caseSubmitter"    column="sub_case_submitter"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
     </resultMap>
 
     <sql id="selectRecordDocumentVo">
-        select cl.case_no,rd.document_file,cl.case_submitter,rd.upddate
+        select rd.id,cl.case_no,rd.document_file,cl.case_submitter,rd.upddate,rd.case_law_id
         from record_document rd, case_law cl
         where cl.id = rd.case_law_id
     </sql>

@@ -9,6 +9,14 @@ export function listPayments(query) {
   })
 }
 
+// 查询全所收支明细列表
+export function cwInoutlistType() {
+  return request({
+    url: '/finance/payments/sxlist',
+    method: 'get'
+  })
+}
+
 // 查询全所收支明细详细
 export function getPayments(id) {
   return request({
