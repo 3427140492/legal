@@ -34,7 +34,7 @@ public class CaseSealApplyfor extends BaseEntity
     @Excel(name = "审批状态 1,2,3")
     private String applyforApprovalStatus;
 
-    /** 申请人 */
+    /** 申请人  */
     @Excel(name = "申请人")
     private String applyforRecipient;
 
