@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="cognizanceInfoForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="cognizanceInfoForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="案号" prop="caseNo">
         <el-input
           v-model="queryParams.caseNo"
@@ -46,8 +46,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -55,7 +55,13 @@
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="案件类型id 外键" align="center" prop="caseCaseTypeId" />
       <el-table-column label="案件类型" align="center" prop="caseTypeName" />
-      <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
+      <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus">
+        <template v-slot="scope">
+          <span v-if="scope.row.caseApproveStatus == 1">审批中</span>
+          <span v-if="scope.row.caseApproveStatus == 2">审批通过</span>
+          <span v-if="scope.row.caseApproveStatus == 3">审批不通过</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提交时间" align="center" prop="caseSubtime" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.caseSubtime, '{y}-{m}-{d}') }}</span>
