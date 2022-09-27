@@ -12,13 +12,13 @@
       </el-form-item>
 
       <el-form-item label="签到日期" prop="signinrecordSign">
-        <el-date-picker clearable
-          v-model="queryParams.signinrecordSign"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择签到日期">
-        </el-date-picker>
-      </el-form-item>
+          <el-input
+            v-model="queryParams.signinrecordSign"
+            placeholder="请选择签到日期"
+            @keyup.enter="handleQuery"
+            type="date"
+          />
+        </el-form-item>
 
       <el-form-item >
       <el-select v-model="queryParams.classify" placeholder="签到类型">
@@ -31,7 +31,7 @@
 
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
-        <el-button size="mini" @click="resetQuery">重置</el-button>
+        <!-- <el-button size="mini" @click="resetQuery">重置</el-button> -->
       </el-form-item>
     </el-form>
 
@@ -126,42 +126,42 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
           <el-table-column label="$comment" prop="userName" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.userName" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPwd" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.userPwd" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userRealname" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.userRealname" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPhone" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.userPhone" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userEmail" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.userEmail" placeholder="请输入$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userCreatedate" width="240">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-date-picker clearable v-model="scope.row.userCreatedate" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userPreDate" width="240">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-date-picker clearable v-model="scope.row.userPreDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="userStatus" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-select v-model="scope.row.userStatus" placeholder="请选择$comment">
                 <el-option label="请选择字典生成" value="" />
               </el-select>
@@ -212,6 +212,7 @@ export default {
         pageSize: 10,
         classify: null,
         signinrecordSign: null,
+        userRealname:null
       },
       // 表单参数
       form: {},
