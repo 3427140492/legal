@@ -214,6 +214,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 日志-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-log</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- 档案-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
