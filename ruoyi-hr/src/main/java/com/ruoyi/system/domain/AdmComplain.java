@@ -56,6 +56,19 @@ public class AdmComplain extends BaseEntity
     private String clientname;
 
 
+    private String client;
+
+    public void setClient(String client)
+    {
+        this.client = client;
+    }
+
+    public String getClient()
+    {
+        return client;
+    }
+
+
     public void setPhone(String phone)
     {
         this.phone = phone;

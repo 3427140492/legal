@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <collection property="hrClientList" notNullColumn="sub_id" javaType="java.util.List" resultMap="ClientResult" />
     </resultMap>
 
-    <resultMap type="Client" id="ClientResult">
+    <resultMap type="HrClient" id="ClientResult">
         <result property="id"    column="sub_id"    />
         <result property="hrClient"    column="sub_client"    />
         <result property="phone"    column="sub_phone"    />
@@ -61,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="clientId != null "> and client_id = #{clientId}</if>
             <if test="complainSubmitTime != null "> and complain_submit_time = #{complainSubmitTime}</if>
             <if test="complainReplyNumber != null "> and complain_reply_number = #{complainReplyNumber}</if>
+            <if test="clientname != null and clientname != '' "> and c.client like concat('%', #{clientname}, '%')</if>
         </where>
     </select>
     

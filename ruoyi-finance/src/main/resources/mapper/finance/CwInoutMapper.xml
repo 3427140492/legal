@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.finance.mapper.CwInoutMapper">
     
     <resultMap type="FinCwInout" id="CwInoutResult">
-        <result property="id"    column="id"    />
+        <result property="id"    column="cid"    />
         <result property="cwInoutTypeId"    column="cw_inout_type_id"    />
         <result property="cwInoutDate"    column="cw_inout_date"    />
         <result property="cwInoutPerson"    column="cw_inout_person"    />
@@ -28,14 +28,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <resultMap type="CwInoutType" id="CwInoutTypeResult">
-        <result property="id"    column="sub_id"    />
-        <result property="cwName"    column="sub_cw_name"    />
-        <result property="cwPid"    column="sub_cw_pid"    />
-        <result property="type"    column="sub_type"    />
+        <result property="id"    column="id"    />
+        <result property="cwName"    column="cw_name"    />
+        <result property="cwPid"    column="cw_pid"    />
+        <result property="type"    column="type"    />
     </resultMap>
 
     <sql id="selectCwInoutVo">
-        select a.cid,a.cw_name, a.cw_inout_date, a.case_law_id, a.cw_pay_type, b.case_no, a.emp_name, a.cw_payer, a.cw_remark, a.cw_inout_money,a.cw_enteringdate
+        select a.cid,a.cw_name, a.cw_pid,a.cw_inout_type_id, a.cw_inout_date, a.case_law_id, a.cw_pay_type, b.case_no, a.emp_name, a.cw_payer, a.cw_remark, a.cw_inout_money,a.cw_enteringdate
         from (
                  select ci.id cid,ci.*,cit.cw_name,cit.cw_pid,he.emp_name,su.id user_id
                  from cw_inout ci
@@ -47,6 +47,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
             where case_recycle = 'Y'
         ) b on b.cid = a.case_law_id where 1 = 1
+    </sql>
+
+    <sql id="selectCwInoutTypeVo">
+        select id, cw_name, cw_pid, type from cw_inout_type where cw_pid is null
     </sql>
 
     <select id="selectCwInoutList" parameterType="FinCwInout" resultMap="CwInoutResult">
@@ -66,6 +70,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 and b.case_parties like '%${searchStr}%'
             </if>
         </if>
+        <if test="cwName != null  and cwName != ''"> and a.cw_inout_type_id like '%${cwName}%'</if>
+    </select>
+
+    <select id="selectCwInoutTypeList" resultMap="CwInoutTypeResult">
+        select id, cw_name, cw_pid, type from cw_inout_type where cw_pid is null
+    </select>
+
+    <select id="selectCwInoutTypeById" parameterType="String" resultMap="CwInoutTypeResult">
+        select id, cw_name, cw_pid, type from cw_inout_type where cw_pid = #{id}
     </select>
     
     <select id="selectCwInoutById" parameterType="String" resultMap="CwInoutCwInoutTypeResult">

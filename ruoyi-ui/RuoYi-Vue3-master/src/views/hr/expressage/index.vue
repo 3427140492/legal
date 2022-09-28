@@ -57,7 +57,7 @@
           v-hasPermi="['hr:expressage:add']"
         >新增</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="success"
           plain
@@ -86,7 +86,7 @@
           v-hasPermi="['hr:expressage:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar :showSearch="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
 
     <el-table border="1px" v-loading="loading" :data="expressageList" @selection-change="handleSelectionChange">

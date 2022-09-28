@@ -1,9 +1,12 @@
 package com.ruoyi.finance.service.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Map;
+
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.finance.domain.CwInoutType;
@@ -22,6 +25,35 @@ public class CwInoutServiceImpl implements ICwInoutService
 {
     @Autowired
     private CwInoutMapper cwInoutMapper;
+
+    @Override
+    public Object selectCwInoutTypeList() {
+        List<CwInoutType> treeList = cwInoutMapper.selectCwInoutTypeList();
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (CwInoutType inoutType : treeList) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id",inoutType.getId());
+            map.put("cwName",inoutType.getCwName());
+//            map.put("cwPid",inoutType.getCwPid());
+            map.put("children", getChildren(inoutType.getId()));
+            list.add(map);
+        }
+        return list;
+    }
+
+    public List<Object> getChildren(String id) {
+        List<Object> list = new ArrayList<>();
+        List<CwInoutType> treeList = cwInoutMapper.selectCwInoutTypeById(id);
+        for (CwInoutType cwInoutType : treeList) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id",cwInoutType.getId());
+            map.put("cwName",cwInoutType.getCwName());
+            map.put("cwPid",cwInoutType.getCwPid());
+            map.put("children", getChildren(cwInoutType.getId()));
+            list.add(map);
+        }
+        return list;
+    }
 
     /**
      * 查询全所收支明细

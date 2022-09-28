@@ -23,9 +23,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 全所电子归档Controller
- * 
+ *
  * @author ruoyi
- * @date 2022-09-15
+ * @date 2022-09-27
  */
 @RestController
 @RequestMapping("/record/document")
@@ -96,7 +96,7 @@ public class RecordDocumentController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('record:document:remove')")
     @Log(title = "全所电子归档", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)
     {
         return toAjax(recordDocumentService.deleteRecordDocumentByIds(ids));

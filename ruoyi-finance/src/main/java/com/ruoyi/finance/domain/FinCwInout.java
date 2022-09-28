@@ -72,12 +72,36 @@ public class FinCwInout extends BaseEntity
     @Excel(name = "提交人")
     private String empName;
 
+    /** $column.columnComment */
+    @Excel(name = "收支id")
+    private Long cwPid;
+
+    /** $column.columnComment */
+    @Excel(name = "类型")
+    private String type;
+
     private String searchType;
 
     private String searchStr;
 
     /** $table.subTable.functionName信息 */
     private List<CwInoutType> cwInoutTypeList;
+
+    public Long getCwPid() {
+        return cwPid;
+    }
+
+    public void setCwPid(Long cwPid) {
+        this.cwPid = cwPid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getCwName() {
         return cwName;

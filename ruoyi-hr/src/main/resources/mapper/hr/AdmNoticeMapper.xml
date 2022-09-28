@@ -13,24 +13,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="noticeNotificationendtime"    column="notice_notificationendtime"    />
         <result property="noticeContent"    column="notice_content"    />
         <result property="noticeFile"    column="notice_file"    />
+        <result property="userRealname"    column="user_Realname"    />
     </resultMap>
 
     <sql id="selectAdmNoticeVo">
-        select id, title, notice_releasetime, system_user_id, notice_notificationtime, notice_notificationendtime, notice_content, notice_file from adm_notice
+        select * from adm_notice an left join system_user su on su.id = an.system_user_id
     </sql>
 
     <select id="selectAdmNoticeList" parameterType="AdmNotice" resultMap="AdmNoticeResult">
         <include refid="selectAdmNoticeVo"/>
         <where>  
             <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
-            <if test="noticeNotificationtime != null "> and notice_notificationtime >= #{noticeNotificationtime}</if>
+            <if test="noticeNotificationtime != null "> and notice_notificationtime &gt;= #{noticeNotificationtime} </if>
             <if test="noticeNotificationendtime != null "> and notice_notificationendtime &lt;= #{noticeNotificationendtime}</if>
+
         </where>
     </select>
     
     <select id="selectAdmNoticeById" parameterType="Long" resultMap="AdmNoticeResult">
         <include refid="selectAdmNoticeVo"/>
-        where id = #{id}
+        where an.id = #{id}
     </select>
         
     <insert id="insertAdmNotice" parameterType="AdmNotice" useGeneratedKeys="true" keyProperty="id">

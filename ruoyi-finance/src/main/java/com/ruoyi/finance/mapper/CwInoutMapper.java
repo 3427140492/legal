@@ -12,6 +12,10 @@ import com.ruoyi.finance.domain.CwInoutType;
  */
 public interface CwInoutMapper 
 {
+    public List<CwInoutType> selectCwInoutTypeById(String id);
+
+    public List<CwInoutType> selectCwInoutTypeList();
+
     /**
      * 查询全所收支明细
      * 

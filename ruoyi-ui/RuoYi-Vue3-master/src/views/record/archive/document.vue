@@ -34,6 +34,7 @@
           <el-button
             size="mini"
             type="text"
+            plain
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['record:document:edit']"
@@ -56,6 +57,11 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+        <!-- 添加或修改全所电子归档对话框 -->
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+      
+    </el-dialog>
   </div>
 </template>
 
@@ -82,7 +88,7 @@ export default {
       total: 0,
       // 全所电子归档表格数据
       documentList: [],
-      // ${subTable.functionName}表格数据
+      // 归档表格数据
       caseLawList: [],
       // 弹出层标题
       title: "",
@@ -92,8 +98,11 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        SearchStr: null,
-        SearchType:null
+        caseLawId: null,
+        systemUserId: null,
+        upddate: null,
+        folderId: null,
+        documentFile: null
       },
       // 表单参数
       form: {},
@@ -159,7 +168,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getDocument(id).then(response => {
+      updateDocument(id).then(response => {
         this.form = response.data;
         this.caseLawList = response.data.caseLawList;
         this.open = true;
@@ -197,11 +206,11 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
-	/** ${subTable.functionName}序号 */
+	/** 归档序号 */
     rowCaseLawIndex({ row, rowIndex }) {
       row.index = rowIndex + 1;
     },
-    /** ${subTable.functionName}添加按钮操作 */
+    /** 归档添加按钮操作 */
     handleAddCaseLaw() {
       let obj = {};
       obj.caseNo = "";
@@ -256,13 +265,13 @@ export default {
       obj.standard = "";
       this.caseLawList.push(obj);
     },
-    /** ${subTable.functionName}删除按钮操作 */
+    /** 归档删除按钮操作 */
     handleDeleteCaseLaw() {
       if (this.checkedCaseLaw.length == 0) {
-        this.$modal.msgError("请先选择要删除的${subTable.functionName}数据");
+        this.$modal.msgError("请先选择要删除的归档数据");
       } else {
         const caseLawList = this.caseLawList;
-        const checkedCaseLaw = this.checkedCaseLaw;
+        const checkedCaseLaw = this.checkedCaseLaw
         this.caseLawList = caseLawList.filter(function(item) {
           return checkedCaseLaw.indexOf(item.index) == -1
         });
@@ -279,5 +288,5 @@ export default {
       }, `document_${new Date().getTime()}.xlsx`)
     }
   }
-};
+}
 </script>

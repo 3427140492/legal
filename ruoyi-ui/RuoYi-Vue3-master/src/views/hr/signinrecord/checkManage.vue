@@ -11,13 +11,13 @@
       </el-form-item>
 
       <el-form-item label="签到日期" prop="signinrecordSign">
-        <el-date-picker clearable
-          v-model="queryParams.signinrecordSign"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择签到日期">
-        </el-date-picker>
-      </el-form-item>
+          <el-input
+            v-model="queryParams.signinrecordSign"
+            placeholder="请选择签到日期"
+            @keyup.enter="handleQuery"
+            type="date"
+          />
+        </el-form-item>
 
       <el-form-item >
       <el-select v-model="queryParams.classify" placeholder="签到类型">
@@ -30,7 +30,7 @@
 
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
-        <el-button size="mini" @click="resetQuery">重置</el-button>
+        <!-- <el-button size="mini" @click="resetQuery">重置</el-button> -->
       </el-form-item>
     </el-form>
 
@@ -91,7 +91,7 @@
       </el-table-column>
       <el-table-column label="签到人" align="center" prop="userRealname" />
       <el-table-column label="签到日期" align="center" prop="signinrecordSign" width="180">
-        <template #slot="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.signinrecordSign, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
@@ -208,6 +208,7 @@ export default {
         pageSize: 10,
         classify: null,
         signinrecordSign: null,
+        userRealname:null
       },
       // 表单参数
       form: {},
