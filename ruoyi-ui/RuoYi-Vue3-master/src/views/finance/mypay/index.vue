@@ -6,6 +6,7 @@
           style="width: 150px;"
           v-model="queryParams.caseNo"
           clearable
+          placeholder="案号"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
