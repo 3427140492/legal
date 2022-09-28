@@ -79,6 +79,12 @@ public class CwInoutServiceImpl implements ICwInoutService
         return cwInoutMapper.selectCwInoutList(finCwInout);
     }
 
+    @Override
+    public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout) {
+
+        return cwInoutMapper.selectMyCwInout(finCwInout);
+    }
+
     /**
      * 新增全所收支明细
      * 

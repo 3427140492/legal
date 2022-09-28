@@ -53,6 +53,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, cw_name, cw_pid, type from cw_inout_type where cw_pid is null
     </sql>
 
+    <sql id="selectMyCwInout">
+        select t.cw_name,t.cw_inout_date,t.cw_inout_money,t.cw_pay_type,t1.case_no,t.cw_enteringdate,t.cw_remark
+        from
+            (select ci.id cid,ci.* ,ct.cw_name
+             from cw_inout ci left join cw_inout_type ct on ci.cw_inout_type_id = ct.id
+             where ci.cw_inout_person = 1) t
+                left join
+            (select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id
+             from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
+             where case_recycle = 'Y')t1
+            on t1.cid = t.case_law_id where 1 = 1
+    </sql>
+
+    <select id="selectMyCwInout" parameterType="FinCwInout" resultMap="CwInoutResult">
+        <include refid="selectMyCwInout"/>
+        <if test=" caseNo !=null and caseNo !=''"> and t1.case_no like '%${searchStr}%'</if>
+        <if test="cwName != null  and cwName != ''"> and t.cw_inout_type_id like '%${cwName}%'</if>
+    </select>
+
     <select id="selectCwInoutList" parameterType="FinCwInout" resultMap="CwInoutResult">
         <include refid="selectCwInoutVo"/>
         <if test=" searchType == 1">

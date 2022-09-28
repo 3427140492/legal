@@ -48,6 +48,18 @@ public class CwInoutController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 查询我的收支列表
+     */
+    @PreAuthorize("@ss.hasPermi('finance:payments:list')")
+    @GetMapping("/mylist")
+    public TableDataInfo mylist(FinCwInout finCwInout)
+    {
+        startPage();
+        List<FinCwInout> list = cwInoutService.selectMyCwInout(finCwInout);
+        return getDataTable(list);
+    }
+
 
     @GetMapping("/sxlist")
     public TableDataInfo list2()
