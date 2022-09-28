@@ -44,14 +44,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAdmExpressageList" parameterType="AdmExpressage" resultMap="AdmExpressageResult">
         <include refid="selectAdmExpressageVo"/>
-        <where>  
-            <if test="systemUserRecipients != null  and systemUserRecipients != ''"> and system_user_recipients like concat('%', #{systemUserRecipients}, '%')</if>
+            <if test="systemUserRecipients != null  and systemUserRecipients != ''"> and  ae.system_user_recipients like '%${systemUserRecipients}%' </if>
             <if test="expressageBringDate != null "> and expressage_bring_date = #{expressageBringDate}</if>
             <if test="expressageSendWaayId != null "> and expressage_send_waay_id = #{expressageSendWaayId}</if>
             <if test="expressageExpressTypeId != null "> and expressage_express_type_id = #{expressageExpressTypeId}</if>
             <if test="takestatus != null "> and takestatus = #{takestatus}</if>
-            <if test="collarPerson != null  and collarPerson != ''"> and collar_person like concat('%', #{collarPerson}, '%')</if>
-        </where>
+            <if test="collarPerson != null  and collarPerson != ''"> and ae.collar_person like '%${collarPerson}%'</if>
     </select>
     
     <select id="selectAdmExpressageById" parameterType="Integer" resultMap="AdmExpressageSendWaayResult">

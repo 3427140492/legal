@@ -10,21 +10,17 @@
           />
         </el-form-item>
         <el-form-item label="开始时间" prop="noticeNotificationtime">
-          <el-input
-            v-model="queryParams.noticeNotificationtime"
-            placeholder="请输入时间"
-            @keyup.enter="handleQuery"
-            type="date"
-          />
+     
+          <el-date-picker clearable v-model="queryParams.noticeNotificationtime" value-format="YYYY-MM-DD" placeholder="请输入开始时间">
+          </el-date-picker>
+
         </el-form-item>
+
         <el-form-item label="结束时间" prop="noticeNotificationendtime">
-          <el-input
-            v-model="queryParams.noticeNotificationendtime"
-            placeholder="请输入时间"
-            @keyup.enter="handleQuery"
-            type="date"
-          />
+              <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD" placeholder="请输入结束时间">
+              </el-date-picker>
         </el-form-item>
+        
         <el-form-item>
           <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
           <el-button
@@ -95,7 +91,7 @@
         </template> -->
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
-          <template v-slot="scope">
+          <!-- <template v-slot="scope">
 
             <el-button
             size="mini"
@@ -116,7 +112,25 @@
             >删除</el-button>
 
 
-          </template>
+          </template> -->
+
+          <template v-slot="scope">
+          <el-dropdown trigger="click">
+            <el-button>
+              操作<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="Query(scope.row)">查看</el-dropdown-item>
+                <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
+
       </el-table-column>
       </el-table> 
       
