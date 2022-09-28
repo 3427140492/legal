@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.act.mapper.CaseLawAllMapper">
+    
+    <resultMap type="CaseLawAll" id="CaseLawAllResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="caseOppositeParties"    column="case_opposite_parties"    />
+        <result property="caseOppositeCardnum"    column="case_opposite_cardnum"    />
+        <result property="caseThirdParty"    column="case_third_party"    />
+        <result property="caseSuspect"    column="case_suspect"    />
+        <result property="caseClash"    column="case_clash"    />
+        <result property="caseCause"    column="case_cause"    />
+        <result property="caseAccept"    column="case_accept"    />
+        <result property="caseLawsuitobj"    column="case_lawsuitobj"    />
+        <result property="caseSubsidy"    column="case_subsidy"    />
+        <result property="caseSubsidysal"    column="case_subsidysal"    />
+        <result property="caseSettleStatus"    column="case_settle_status"    />
+        <result property="casePlan"    column="case_plan"    />
+        <result property="caseApproveStatus"    column="case_approve_status"    />
+        <result property="caseAgencyfee"    column="case_agencyfee"    />
+        <result property="caseProxysal"    column="case_proxysal"    />
+        <result property="caseTransactionRegion"    column="case_transaction_region"    />
+        <result property="caseAssign"    column="case_assign"    />
+        <result property="casePaidsal"    column="case_paidsal"    />
+        <result property="caseUnpaidsal"    column="case_unpaidsal"    />
+        <result property="caseInvoiced"    column="case_invoiced"    />
+        <result property="caseNotinvoiced"    column="case_notinvoiced"    />
+        <result property="casePropernum"    column="case_propernum"    />
+        <result property="caseCourt"    column="case_court"    />
+        <result property="caseFilenumber"    column="case_filenumber"    />
+        <result property="caseCorrelationFile"    column="case_correlation_file"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+        <result property="caseSubtime"    column="case_subtime"    />
+        <result property="caseRecycle"    column="case_recycle"    />
+        <result property="caseRemarks"    column="case_remarks"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="caseAttorney"    column="case_attorney"    />
+        <result property="caseStatus"    column="case_status"    />
+        <result property="caseLawsuitStatus"    column="case_lawsuit_status"    />
+        <result property="caseChargeWay"    column="case_charge_way"    />
+        <result property="systemApprovalId"    column="system_approval_id"    />
+        <result property="caseCaseTypeId"    column="case_case_type_id"    />
+        <result property="caseSealApplyforId"    column="case_seal_applyfor_id"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="caseParties"    column="case_parties"    />
+        <result property="caseFxmoney"    column="case_fxmoney"    />
+        <result property="caseWtr"    column="case_wtr"    />
+        <result property="caseContract"    column="case_contract"    />
+        <result property="caseRecord"    column="case_record"    />
+        <result property="caseShare"    column="case_share"    />
+        <result property="caseSettleType"    column="case_settle_type"    />
+        <result property="caseApprovalEndtime"    column="case_approval_endtime"    />
+        <result property="caseRecordNum"    column="case_record_num"    />
+        <result property="standard"    column="standard"    />
+    </resultMap>
+
+    <sql id="selectCaseLawAllVo">
+        select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
+    </sql>
+
+    <select id="selectCaseLawAllList" parameterType="CaseLawAll" resultMap="CaseLawAllResult">
+        <include refid="selectCaseLawAllVo"/>
+        <where>  
+            <if test="caseNo != null  and caseNo != ''"> and case_no like concat('%', #{caseNo}, '%')</if>
+            <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
+            <if test="caseSubtime != null "> and case_subtime = #{caseSubtime}</if>
+            <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_case_type_id = #{caseCaseTypeId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCaseLawAllById" parameterType="Integer" resultMap="CaseLawAllResult">
+        <include refid="selectCaseLawAllVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCaseLawAll" parameterType="CaseLawAll" useGeneratedKeys="true" keyProperty="id">
+        insert into case_law
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">case_no,</if>
+            <if test="caseOppositeParties != null">case_opposite_parties,</if>
+            <if test="caseOppositeCardnum != null">case_opposite_cardnum,</if>
+            <if test="caseThirdParty != null">case_third_party,</if>
+            <if test="caseSuspect != null">case_suspect,</if>
+            <if test="caseClash != null">case_clash,</if>
+            <if test="caseCause != null">case_cause,</if>
+            <if test="caseAccept != null">case_accept,</if>
+            <if test="caseLawsuitobj != null">case_lawsuitobj,</if>
+            <if test="caseSubsidy != null">case_subsidy,</if>
+            <if test="caseSubsidysal != null">case_subsidysal,</if>
+            <if test="caseSettleStatus != null">case_settle_status,</if>
+            <if test="casePlan != null">case_plan,</if>
+            <if test="caseApproveStatus != null">case_approve_status,</if>
+            <if test="caseAgencyfee != null">case_agencyfee,</if>
+            <if test="caseProxysal != null">case_proxysal,</if>
+            <if test="caseTransactionRegion != null">case_transaction_region,</if>
+            <if test="caseAssign != null">case_assign,</if>
+            <if test="casePaidsal != null">case_paidsal,</if>
+            <if test="caseUnpaidsal != null">case_unpaidsal,</if>
+            <if test="caseInvoiced != null">case_invoiced,</if>
+            <if test="caseNotinvoiced != null">case_notinvoiced,</if>
+            <if test="casePropernum != null">case_propernum,</if>
+            <if test="caseCourt != null">case_court,</if>
+            <if test="caseFilenumber != null">case_filenumber,</if>
+            <if test="caseCorrelationFile != null">case_correlation_file,</if>
+            <if test="caseSubmitter != null">case_submitter,</if>
+            <if test="caseSubtime != null">case_subtime,</if>
+            <if test="caseRecycle != null">case_recycle,</if>
+            <if test="caseRemarks != null">case_remarks,</if>
+            <if test="clientId != null">client_id,</if>
+            <if test="caseAttorney != null">case_attorney,</if>
+            <if test="caseStatus != null">case_status,</if>
+            <if test="caseLawsuitStatus != null">case_lawsuit_status,</if>
+            <if test="caseChargeWay != null">case_charge_way,</if>
+            <if test="systemApprovalId != null">system_approval_id,</if>
+            <if test="caseCaseTypeId != null">case_case_type_id,</if>
+            <if test="caseSealApplyforId != null">case_seal_applyfor_id,</if>
+            <if test="hrEmpId != null">hr_emp_id,</if>
+            <if test="collectionTime != null">collection_time,</if>
+            <if test="caseParties != null">case_parties,</if>
+            <if test="caseFxmoney != null">case_fxmoney,</if>
+            <if test="caseWtr != null">case_wtr,</if>
+            <if test="caseContract != null">case_contract,</if>
+            <if test="caseRecord != null">case_record,</if>
+            <if test="caseShare != null">case_share,</if>
+            <if test="caseSettleType != null">case_settle_type,</if>
+            <if test="caseApprovalEndtime != null">case_approval_endtime,</if>
+            <if test="caseRecordNum != null">case_record_num,</if>
+            <if test="standard != null">standard,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="caseOppositeParties != null">#{caseOppositeParties},</if>
+            <if test="caseOppositeCardnum != null">#{caseOppositeCardnum},</if>
+            <if test="caseThirdParty != null">#{caseThirdParty},</if>
+            <if test="caseSuspect != null">#{caseSuspect},</if>
+            <if test="caseClash != null">#{caseClash},</if>
+            <if test="caseCause != null">#{caseCause},</if>
+            <if test="caseAccept != null">#{caseAccept},</if>
+            <if test="caseLawsuitobj != null">#{caseLawsuitobj},</if>
+            <if test="caseSubsidy != null">#{caseSubsidy},</if>
+            <if test="caseSubsidysal != null">#{caseSubsidysal},</if>
+            <if test="caseSettleStatus != null">#{caseSettleStatus},</if>
+            <if test="casePlan != null">#{casePlan},</if>
+            <if test="caseApproveStatus != null">#{caseApproveStatus},</if>
+            <if test="caseAgencyfee != null">#{caseAgencyfee},</if>
+            <if test="caseProxysal != null">#{caseProxysal},</if>
+            <if test="caseTransactionRegion != null">#{caseTransactionRegion},</if>
+            <if test="caseAssign != null">#{caseAssign},</if>
+            <if test="casePaidsal != null">#{casePaidsal},</if>
+            <if test="caseUnpaidsal != null">#{caseUnpaidsal},</if>
+            <if test="caseInvoiced != null">#{caseInvoiced},</if>
+            <if test="caseNotinvoiced != null">#{caseNotinvoiced},</if>
+            <if test="casePropernum != null">#{casePropernum},</if>
+            <if test="caseCourt != null">#{caseCourt},</if>
+            <if test="caseFilenumber != null">#{caseFilenumber},</if>
+            <if test="caseCorrelationFile != null">#{caseCorrelationFile},</if>
+            <if test="caseSubmitter != null">#{caseSubmitter},</if>
+            <if test="caseSubtime != null">#{caseSubtime},</if>
+            <if test="caseRecycle != null">#{caseRecycle},</if>
+            <if test="caseRemarks != null">#{caseRemarks},</if>
+            <if test="clientId != null">#{clientId},</if>
+            <if test="caseAttorney != null">#{caseAttorney},</if>
+            <if test="caseStatus != null">#{caseStatus},</if>
+            <if test="caseLawsuitStatus != null">#{caseLawsuitStatus},</if>
+            <if test="caseChargeWay != null">#{caseChargeWay},</if>
+            <if test="systemApprovalId != null">#{systemApprovalId},</if>
+            <if test="caseCaseTypeId != null">#{caseCaseTypeId},</if>
+            <if test="caseSealApplyforId != null">#{caseSealApplyforId},</if>
+            <if test="hrEmpId != null">#{hrEmpId},</if>
+            <if test="collectionTime != null">#{collectionTime},</if>
+            <if test="caseParties != null">#{caseParties},</if>
+            <if test="caseFxmoney != null">#{caseFxmoney},</if>
+            <if test="caseWtr != null">#{caseWtr},</if>
+            <if test="caseContract != null">#{caseContract},</if>
+            <if test="caseRecord != null">#{caseRecord},</if>
+            <if test="caseShare != null">#{caseShare},</if>
+            <if test="caseSettleType != null">#{caseSettleType},</if>
+            <if test="caseApprovalEndtime != null">#{caseApprovalEndtime},</if>
+            <if test="caseRecordNum != null">#{caseRecordNum},</if>
+            <if test="standard != null">#{standard},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCaseLawAll" parameterType="CaseLawAll">
+        update case_law
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="caseOppositeParties != null">case_opposite_parties = #{caseOppositeParties},</if>
+            <if test="caseOppositeCardnum != null">case_opposite_cardnum = #{caseOppositeCardnum},</if>
+            <if test="caseThirdParty != null">case_third_party = #{caseThirdParty},</if>
+            <if test="caseSuspect != null">case_suspect = #{caseSuspect},</if>
+            <if test="caseClash != null">case_clash = #{caseClash},</if>
+            <if test="caseCause != null">case_cause = #{caseCause},</if>
+            <if test="caseAccept != null">case_accept = #{caseAccept},</if>
+            <if test="caseLawsuitobj != null">case_lawsuitobj = #{caseLawsuitobj},</if>
+            <if test="caseSubsidy != null">case_subsidy = #{caseSubsidy},</if>
+            <if test="caseSubsidysal != null">case_subsidysal = #{caseSubsidysal},</if>
+            <if test="caseSettleStatus != null">case_settle_status = #{caseSettleStatus},</if>
+            <if test="casePlan != null">case_plan = #{casePlan},</if>
+            <if test="caseApproveStatus != null">case_approve_status = #{caseApproveStatus},</if>
+            <if test="caseAgencyfee != null">case_agencyfee = #{caseAgencyfee},</if>
+            <if test="caseProxysal != null">case_proxysal = #{caseProxysal},</if>
+            <if test="caseTransactionRegion != null">case_transaction_region = #{caseTransactionRegion},</if>
+            <if test="caseAssign != null">case_assign = #{caseAssign},</if>
+            <if test="casePaidsal != null">case_paidsal = #{casePaidsal},</if>
+            <if test="caseUnpaidsal != null">case_unpaidsal = #{caseUnpaidsal},</if>
+            <if test="caseInvoiced != null">case_invoiced = #{caseInvoiced},</if>
+            <if test="caseNotinvoiced != null">case_notinvoiced = #{caseNotinvoiced},</if>
+            <if test="casePropernum != null">case_propernum = #{casePropernum},</if>
+            <if test="caseCourt != null">case_court = #{caseCourt},</if>
+            <if test="caseFilenumber != null">case_filenumber = #{caseFilenumber},</if>
+            <if test="caseCorrelationFile != null">case_correlation_file = #{caseCorrelationFile},</if>
+            <if test="caseSubmitter != null">case_submitter = #{caseSubmitter},</if>
+            <if test="caseSubtime != null">case_subtime = #{caseSubtime},</if>
+            <if test="caseRecycle != null">case_recycle = #{caseRecycle},</if>
+            <if test="caseRemarks != null">case_remarks = #{caseRemarks},</if>
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="caseAttorney != null">case_attorney = #{caseAttorney},</if>
+            <if test="caseStatus != null">case_status = #{caseStatus},</if>
+            <if test="caseLawsuitStatus != null">case_lawsuit_status = #{caseLawsuitStatus},</if>
+            <if test="caseChargeWay != null">case_charge_way = #{caseChargeWay},</if>
+            <if test="systemApprovalId != null">system_approval_id = #{systemApprovalId},</if>
+            <if test="caseCaseTypeId != null">case_case_type_id = #{caseCaseTypeId},</if>
+            <if test="caseSealApplyforId != null">case_seal_applyfor_id = #{caseSealApplyforId},</if>
+            <if test="hrEmpId != null">hr_emp_id = #{hrEmpId},</if>
+            <if test="collectionTime != null">collection_time = #{collectionTime},</if>
+            <if test="caseParties != null">case_parties = #{caseParties},</if>
+            <if test="caseFxmoney != null">case_fxmoney = #{caseFxmoney},</if>
+            <if test="caseWtr != null">case_wtr = #{caseWtr},</if>
+            <if test="caseContract != null">case_contract = #{caseContract},</if>
+            <if test="caseRecord != null">case_record = #{caseRecord},</if>
+            <if test="caseShare != null">case_share = #{caseShare},</if>
+            <if test="caseSettleType != null">case_settle_type = #{caseSettleType},</if>
+            <if test="caseApprovalEndtime != null">case_approval_endtime = #{caseApprovalEndtime},</if>
+            <if test="caseRecordNum != null">case_record_num = #{caseRecordNum},</if>
+            <if test="standard != null">standard = #{standard},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCaseLawAllById" parameterType="Integer">
+        deletfrome  case_law where id = #{id}
+    </delete>
+
+    <delete id="deleteCaseLawAllByIds" parameterType="String">
+        delete from case_law where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
