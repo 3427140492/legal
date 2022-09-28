@@ -32,6 +32,8 @@ public interface ICwInoutService
      */
     public List<FinCwInout> selectCwInoutList(FinCwInout finCwInout);
 
+    public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout);
+
     /**
      * 新增全所收支明细
      * 
