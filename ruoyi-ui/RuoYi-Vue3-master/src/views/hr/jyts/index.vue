@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="" prop="lawCaseId">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="" prop="clientname">
         <el-input
           v-model="queryParams.clientname"
           placeholder="请输入客户名称"
@@ -11,12 +11,12 @@
       </el-form-item>
       
       <el-form-item label="提交日期" prop="complainSubmitTime">
-        <el-date-picker clearable
+        <el-input 
           v-model="queryParams.complainSubmitTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择提交日期">
-        </el-date-picker>
+          placeholder="请选择提交日期"
+        />
       </el-form-item>
      
       <el-form-item>
@@ -25,7 +25,7 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <!-- <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -65,7 +65,7 @@
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    </el-row> -->
 
     <el-table border="1px" v-loading="loading" :data="complainList" @selection-change="handleSelectionChange">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
@@ -143,128 +143,128 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="序号" align="center" prop="index" width="50"/>
           <el-table-column label="客户姓名" prop="client" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.client" placeholder="请输入客户姓名" />
             </template>
           </el-table-column>
           <el-table-column label="手机号" prop="phone" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.phone" placeholder="请输入手机号" />
             </template>
           </el-table-column>
           <el-table-column label="类型" prop="type" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-select v-model="scope.row.type" placeholder="请选择类型">
                 <el-option label="请选择字典生成" value="" />
               </el-select>
             </template>
           </el-table-column>
           <el-table-column label="类型名称" prop="typeinfo" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.typeinfo" placeholder="请输入类型名称" />
             </template>
           </el-table-column>
           <el-table-column label="卡号" prop="cardnum" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.cardnum" placeholder="请输入卡号" />
             </template>
           </el-table-column>
           <el-table-column label="主要" prop="principal" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.principal" placeholder="请输入主要" />
             </template>
           </el-table-column>
           <el-table-column label="联系方式" prop="contact" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.contact" placeholder="请输入联系方式" />
             </template>
           </el-table-column>
           <el-table-column label="邮箱" prop="email" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.email" placeholder="请输入邮箱" />
             </template>
           </el-table-column>
           <el-table-column label="职责" prop="duty" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.duty" placeholder="请输入职责" />
             </template>
           </el-table-column>
           <el-table-column label="地区" prop="affectedareas" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.affectedareas" placeholder="请输入地区" />
             </template>
           </el-table-column>
           <el-table-column label="电话" prop="tel" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.tel" placeholder="请输入电话" />
             </template>
           </el-table-column>
           <el-table-column label="门管区" prop="pertainarea" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.pertainarea" placeholder="请输入门管区" />
             </template>
           </el-table-column>
           <el-table-column label="状态" prop="status" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-select v-model="scope.row.status" placeholder="请选择状态">
                 <el-option label="请选择字典生成" value="" />
               </el-select>
             </template>
           </el-table-column>
           <el-table-column label="法人代表" prop="legalperson" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.legalperson" placeholder="请输入法人代表" />
             </template>
           </el-table-column>
           <el-table-column label="法务人员" prop="legalpersontel" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.legalpersontel" placeholder="请输入法务人员" />
             </template>
           </el-table-column>
           <el-table-column label="民族" prop="nation" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.nation" placeholder="请输入民族" />
             </template>
           </el-table-column>
           <el-table-column label="性别" prop="sex" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-select v-model="scope.row.sex" placeholder="请选择性别">
                 <el-option label="请选择字典生成" value="" />
               </el-select>
             </template>
           </el-table-column>
           <el-table-column label="生日" prop="birth" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.birth" placeholder="请输入生日" />
             </template>
           </el-table-column>
           <el-table-column label="地址" prop="address" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.address" placeholder="请输入地址" />
             </template>
           </el-table-column>
           <el-table-column label="备注" prop="remark" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.remark" placeholder="请输入备注" />
             </template>
           </el-table-column>
           <el-table-column label="添加时间" prop="addtime" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.addtime" placeholder="请输入添加时间" />
             </template>
           </el-table-column>
           <el-table-column label="用户编号" prop="systemUserId" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.systemUserId" placeholder="请输入用户编号" />
             </template>
           </el-table-column>
           <el-table-column label="状态" prop="assign" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.assign" placeholder="请输入状态" />
             </template>
           </el-table-column>
           <el-table-column label="文件地址" prop="fileurl" width="150">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-input v-model="scope.row.fileurl" placeholder="请输入文件地址" />
             </template>
           </el-table-column>
@@ -315,7 +315,8 @@ export default {
         lawCaseId: null,
         clientId: null,
         complainSubmitTime: null,
-        complainReplyNumber: null
+        complainReplyNumber: null,
+        clientname:null
       },
       // 表单参数
       form: {},

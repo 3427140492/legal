@@ -34,7 +34,7 @@ public class CaseSealApplyfor extends BaseEntity
     @Excel(name = "审批状态 1,2,3")
     private String applyforApprovalStatus;
 
-    /** 申请人 */
+    /** 申请人  */
     @Excel(name = "申请人")
     private String applyforRecipient;
 
@@ -53,6 +53,9 @@ public class CaseSealApplyfor extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Integer typeid;
+
+    @Excel(name = "案件类型")
+    private String typeName;
 
     /** $table.subTable.functionName信息 */
     private List<CaseFiles> caseFilesList;
@@ -138,6 +141,15 @@ public class CaseSealApplyfor extends BaseEntity
     {
         return typeid;
     }
+    public void setTypeName(String typeName)
+    {
+        this.typeName = typeName;
+    }
+
+    public String getTypeName()
+    {
+        return typeName;
+    }
 
     public List<CaseFiles> getCaseFilesList()
     {
@@ -162,6 +174,7 @@ public class CaseSealApplyfor extends BaseEntity
             .append("caseid", getCaseid())
             .append("remark", getRemark())
             .append("typeid", getTypeid())
+            .append("typeName", getTypeName())
             .append("caseFilesList", getCaseFilesList())
             .toString();
     }

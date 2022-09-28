@@ -36,6 +36,8 @@ public class AdmNotice extends BaseEntity
     private Date noticeNotificationtime;
 
     /**  */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date noticeNotificationendtime;
 
     /** 公告内容 */
@@ -43,6 +45,22 @@ public class AdmNotice extends BaseEntity
 
     /** 文件 */
     private String noticeFile;
+
+    //系统用户
+    private String userRealname;
+
+
+
+    public void setUserRealname(String userRealname)
+    {
+        this.userRealname = userRealname;
+    }
+
+    public String getUserRealname()
+    {
+        return userRealname;
+    }
+
 
     public void setId(Long id) 
     {

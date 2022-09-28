@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sendPerson"    column="send_person"    />
         <result property="applyforUsingTheItem"    column="applyfor_using_the_item"    />
         <result property="caseid"    column="caseid"    />
+        <result property="caseName"    column="caseName"    />
         <result property="remark"    column="remark"    />
         <result property="typeid"    column="typeid"    />
     </resultMap>

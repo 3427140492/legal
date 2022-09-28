@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="标题" prop="title">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="" prop="title">
         <el-input
           v-model="queryParams.title"
           placeholder="请输入标题"
@@ -10,7 +10,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="创建时间" style="width: 308px">
+      <!-- <el-form-item label="创建时间" style="width: 308px">
         <el-date-picker
           v-model="dateRange"
           value-format="YYYY-MM-DD"
@@ -19,7 +19,26 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-      </el-form-item>
+      </el-form-item> -->
+
+
+      <el-form-item label="开始时间" prop="noticeNotificationtime">
+          <el-input
+            v-model="queryParams.noticeNotificationtime"
+            placeholder="请输入时间"
+            @keyup.enter="handleQuery"
+            type="date"
+          />
+        </el-form-item>
+        <el-form-item label="结束时间" prop="noticeNotificationendtime">
+          <el-input
+            v-model="queryParams.noticeNotificationendtime"
+            placeholder="请输入时间"
+            @keyup.enter="handleQuery"
+            type="date"
+          />
+        </el-form-item>
+
 
      
       <!-- <el-form-item label="" prop="noticeNotificationendtime">
@@ -36,12 +55,11 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <!-- <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
           v-hasPermi="['hr:notice:add']"
@@ -51,7 +69,6 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
           size="mini"
           :disabled="single"
           @click="handleUpdate"
@@ -62,7 +79,6 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
@@ -73,27 +89,27 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
           size="mini"
           @click="handleExport"
           v-hasPermi="['hr:notice:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    </el-row> -->
 
     <el-table border="1px" v-loading="loading" :data="noticeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="时间" align="center" prop="noticeNotificationtime" width="180">
-        <template #scope>
-          <span>{{ parseTime(scope.row.noticeNotificationtime, '{y}-{m}-{d}') }}</span>
-        </template>
+      <!-- <el-table-column type="selection" width="55" align="center" /> -->
+      <!-- <el-table-column label="编号" align="center" prop="id" /> -->
+      <el-table-column label="标题" align="center" prop="title" width="250"/>
+      <el-table-column label="时间" align="center" prop="noticeNotificationtime" :formatter="formatTime">
+        
+        <!-- <template  v-slot="scope">
+          <span>{{ parseTime(scope.row.noticeNotificationtime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template> -->
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template #scope="scope">
-          <el-button
+        <template v-slot="scope">
+          <!-- <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -106,8 +122,17 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['hr:notice:remove']"
-          >删除</el-button>
+          >删除</el-button> -->
+
+          <el-button
+          plain
+          size="mini"
+          @click="Query(scope.row)"
+          v-hasPermi="['hr:notice:query']"
+        >查看</el-button>
+
         </template>
+        
       </el-table-column>
     </el-table>
     
@@ -120,13 +145,20 @@
     />
 
     <!-- 添加或修改公告通知对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      </el-form>
-      <div slot="footer" class="dialog-footer">
+    <el-dialog :title="title"  v-model="open" width="1000px" append-to-body>
+      
+      <div style="width:800px;margin:auto;border:0px solid black;text-align:center;font-size:30px;font-weight:bold;">{{form.title}}</div>
+
+      <div style="width:950px;margin-top:20px;padding-bottom: 20px; border-bottom:1px solid black;text-align:center;font-size:15px;color:gray;">{{parseTime(form.noticeNotificationtime,'{y}年{m}月{d}日')}} 发布人:{{form.userRealname}}</div>
+       
+      <div style="width:800px;margin:30px;border:0px solid black;font-size:16px;">{{form.noticeContent}}</div>
+
+      <div style="width:800px;margin:30px 0px 50px 100px;border:0px solid black;font-size:15px;color:gray;">已阅：{{form.userRealname}}</div>
+
+      <!-- <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div> -->
     </el-dialog>
   </div>
 </template>
@@ -168,8 +200,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      },
-      dateRange:[]
+      }
     };
   },
   created() {
@@ -272,7 +303,47 @@ export default {
       this.download('hr/notice/export', {
         ...this.queryParams
       }, `notice_${new Date().getTime()}.xlsx`)
-    }
+    },
+    Query(row){  //根据id查询
+      this.reset();
+      const id = row.id || this.ids
+      getNotice(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看详情";
+      });
+    },
+    formatTime(row, column) {
+       let date = row[column.property]
+       let dtime = new Date(date)
+       const year = dtime.getFullYear()
+       let month = dtime.getMonth()+1
+       if(month < 10){
+          month = '0' + month
+       }
+
+       let day = dtime.getDate()
+       if(day < 10){
+          day = '0' + day
+       }
+       
+       let hour = dtime.getHours()
+       if(hour < 10){
+        hour = '0' + hour
+       }
+
+       let minute = dtime.getMinutes()
+       if(minute < 10){
+        minute = '0' + minute
+       }
+
+       let second = dtime.getSeconds()
+       if(second < 10){
+        second = '0' + second
+       }
+
+      return year + '年' + month + '月' + day +'日'+' '+hour +':'+minute + ':' +second
+    },
   }
 };
 

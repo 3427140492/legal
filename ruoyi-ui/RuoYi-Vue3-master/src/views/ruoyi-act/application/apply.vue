@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="applyInfoForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="caseNo">
+    <el-form :model="queryParams" ref="applyInfoForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="案号" prop="caseNo">
         <el-input
           v-model="queryParams.caseNo"
-          placeholder="请输入${comment}"
+          placeholder="请输入案号"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -50,74 +50,29 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-<!--
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['ruoyi-act:apply:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['ruoyi-act:apply:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['ruoyi-act:apply:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['ruoyi-act:apply:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row> -->
+
 
     <el-table v-loading="loading" :data="applyList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="caseNo" />
-      <el-table-column label="${comment}" align="center" prop="submiter" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="leader" />
-      <el-table-column label="${comment}" align="center" prop="createtime" width="180">
+      <el-table-column label="案号" align="center" prop="caseNo" />
+      <el-table-column label="提交人" align="center" prop="submiter" />
+      <el-table-column label="业务子类型" align="center" prop="type" />
+      <el-table-column label="审批状态" align="center" prop="status" >
+        <template v-slot="scope">
+          <span v-if="scope.row.status == 1">审批中</span>
+          <span v-if="scope.row.status == 2">审批通过</span>
+          <span v-if="scope.row.status == 3">审批不通过</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="提交时间" align="center" prop="createtime" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.createtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="1,2,3" align="center" prop="status" />
-      <el-table-column label="${comment}" align="center" prop="wid" />
-      <el-table-column label="${comment}" align="center" prop="remark" />
-      <el-table-column label="${comment}" align="center" prop="file" />
-      <el-table-column label="${comment}" align="center" prop="wtr" />
+      
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="printInfoForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="printInfoForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="案号" prop="caseNo">
         <el-input
           v-model="queryParams.caseNo"
@@ -50,16 +50,22 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="applyforList" @selection-change="handleSelectionChange">
       <el-table-column label="案号" align="center" prop="caseNo" />
-      <el-table-column label="业务子类型" align="center" prop="typenName" />
+      <el-table-column label="业务子类型" align="center" prop="typeName" />
       <el-table-column label="文书名称" align="center" prop="applyforUsingTheItem" />
-      <el-table-column label="审批状态 1,2,3" align="center" prop="applyforApprovalStatus" />
+      <el-table-column label="审批状态 1,2,3" align="center" prop="applyforApprovalStatus" >
+        <template v-slot="scope">
+          <span v-if="scope.row.applyforApprovalStatus == 1">审批中</span>
+          <span v-if="scope.row.applyforApprovalStatus == 2">审批通过</span>
+          <span v-if="scope.row.applyforApprovalStatus == 3">审批不通过</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提交时间" align="center" prop="applyforReceive" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.applyforReceive, '{y}-{m}-{d}') }}</span>
