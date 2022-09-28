@@ -69,7 +69,7 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="ViewDetail(scope.row.id)">查看详细信息</el-dropdown-item>
-                <el-dropdown-item @click="revise = true">修改员工信息</el-dropdown-item>
+                <el-dropdown-item>修改员工信息</el-dropdown-item>
                 <el-dropdown-item>查看工作经历</el-dropdown-item>
                 <el-dropdown-item>查看教育经历</el-dropdown-item>
                 <el-dropdown-item>删除员工</el-dropdown-item>
@@ -137,169 +137,6 @@
       </el-descriptions>
     </el-dialog>
 
-    <!-- 添加或修改人事档案对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名" prop="empName">
-          <el-input v-model="form.empName" placeholder="请输入姓名" />
-        </el-form-item>
-        <el-form-item label="出生日期" prop="empBirthdate">
-          <el-date-picker clearable v-model="form.empBirthdate" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择出生日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="证件号" prop="empPapersnum">
-          <el-input v-model="form.empPapersnum" placeholder="请输入证件号" />
-        </el-form-item>
-        <el-form-item label="最高学历" prop="empHigthEducation">
-          <el-input v-model="form.empHigthEducation" placeholder="请输入最高学历" />
-        </el-form-item>
-        <el-form-item label="最高学位" prop="empHigthDegree">
-          <el-input v-model="form.empHigthDegree" placeholder="请输入最高学位" />
-        </el-form-item>
-        <el-form-item label="所内身份" prop="empPosition">
-          <el-input v-model="form.empPosition" placeholder="请输入所内身份" />
-        </el-form-item>
-        <el-form-item label="民族" prop="hrNationId">
-          <el-input v-model="form.hrNationId" placeholder="请输入民族" />
-        </el-form-item>
-        <el-form-item label="政治面貌" prop="hrPoliticalId">
-          <el-input v-model="form.hrPoliticalId" placeholder="请输入政治面貌" />
-        </el-form-item>
-        <el-form-item label="婚姻情况" prop="empMaritalsta">
-          <el-input v-model="form.empMaritalsta" placeholder="请输入婚姻情况" />
-        </el-form-item>
-        <el-form-item label="门禁号" prop="empEntrancenum">
-          <el-input v-model="form.empEntrancenum" placeholder="请输入门禁号" />
-        </el-form-item>
-        <el-form-item label="专业部" prop="hrSpecialtyId">
-          <el-input v-model="form.hrSpecialtyId" placeholder="请输入专业部" />
-        </el-form-item>
-        <el-form-item label="执业类别" prop="hrPractiseId">
-          <el-input v-model="form.hrPractiseId" placeholder="请输入执业类别" />
-        </el-form-item>
-        <el-form-item label="执业证号码" prop="empPracnum">
-          <el-input v-model="form.empPracnum" placeholder="请输入执业证号码" />
-        </el-form-item>
-        <el-form-item label="首次执业时间" prop="empPracdate">
-          <el-date-picker clearable v-model="form.empPracdate" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择首次执业时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="首次执业地" prop="empPracsite">
-          <el-input v-model="form.empPracsite" placeholder="请输入首次执业地" />
-        </el-form-item>
-        <el-form-item label="资格证类别
-" prop="hrCertifyId">
-          <el-input v-model="form.hrCertifyId" placeholder="请输入资格证类别
-" />
-        </el-form-item>
-        <el-form-item label="资格证号码" prop="empCertifynum">
-          <el-input v-model="form.empCertifynum" placeholder="请输入资格证号码" />
-        </el-form-item>
-        <el-form-item label="资格证取得方式" prop="empGainway">
-          <el-input v-model="form.empGainway" placeholder="请输入资格证取得方式" />
-        </el-form-item>
-        <el-form-item label="资格证取得地" prop="empGainsite">
-          <el-input v-model="form.empGainsite" placeholder="请输入资格证取得地" />
-        </el-form-item>
-        <el-form-item label="个人介绍" prop="empIntroduce">
-          <el-input v-model="form.empIntroduce" placeholder="请输入个人介绍" />
-        </el-form-item>
-        <el-form-item label="入职时间" prop="empEntrydate">
-          <el-date-picker clearable v-model="form.empEntrydate" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择入职时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="社保号码" prop="empSocialNum">
-          <el-input v-model="form.empSocialNum" placeholder="请输入社保号码" />
-        </el-form-item>
-        <el-form-item label="合同开始" prop="empContStartdate">
-          <el-date-picker clearable v-model="form.empContStartdate" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择合同开始">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="合同截止" prop="empContEnddate">
-          <el-date-picker clearable v-model="form.empContEnddate" type="date" value-format="yyyy-MM-dd"
-            placeholder="请选择合同截止">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="是否参保" prop="empInsured">
-          <el-input v-model="form.empInsured" placeholder="请输入是否参保" />
-        </el-form-item>
-        <el-form-item label="手机号码" prop="empPhone">
-          <el-input v-model="form.empPhone" placeholder="请输入手机号码" />
-        </el-form-item>
-        <el-form-item label="联系地址" prop="empSite">
-          <el-input v-model="form.empSite" placeholder="请输入联系地址" />
-        </el-form-item>
-        <el-form-item label="联系电话" prop="empContactPhone">
-          <el-input v-model="form.empContactPhone" placeholder="请输入联系电话" />
-        </el-form-item>
-        <el-form-item label="邮箱" prop="empEmail">
-          <el-input v-model="form.empEmail" placeholder="请输入邮箱" />
-        </el-form-item>
-        <el-form-item label="邮政编码" prop="empPostcode">
-          <el-input v-model="form.empPostcode" placeholder="请输入邮政编码" />
-        </el-form-item>
-        <el-form-item label="QQ号码" prop="empQq">
-          <el-input v-model="form.empQq" placeholder="请输入QQ号码" />
-        </el-form-item>
-        <el-form-item label="微信号" prop="empWechat">
-          <el-input v-model="form.empWechat" placeholder="请输入微信号" />
-        </el-form-item>
-        <el-divider content-position="center">${subTable.functionName}信息</el-divider>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddHrLawyerIdentity">添加</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteHrLawyerIdentity">删除
-            </el-button>
-          </el-col>
-        </el-row>
-        <el-table :data="hrLawyerIdentityList" :row-class-name="rowHrLawyerIdentityIndex"
-          @selection-change="handleHrLawyerIdentitySelectionChange" ref="hrLawyerIdentity">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50" />
-          <el-table-column label="$comment" prop="identityTutor" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.identityTutor" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="identityType" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.identityType" placeholder="请选择$comment">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="identityStartdate" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.identityStartdate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="identityEnddate" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.identityEnddate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="identityNum" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.identityNum" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
-
-
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
 
@@ -319,7 +156,6 @@ export default {
       // 遮罩层
       loading: true,
       ViewDetails: false,
-      revise: false,
       // 选中数组
       ids: [],
       // 子表选中数据
