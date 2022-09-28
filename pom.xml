@@ -235,6 +235,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 人事-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-personnelMatters</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -251,6 +258,7 @@
         <module>ruoyi-statistics</module>
         <module>ruoyi-act</module>
         <module>ruoyi-finance</module>
+        <module>ruoyi-personnelMatters</module>
     </modules>
     <packaging>pom</packaging>
 
