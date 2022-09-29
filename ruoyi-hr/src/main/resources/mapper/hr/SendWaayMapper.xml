@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SendWaayMapper">
+
+    <resultMap type="SendWaay" id="SendWaayResult">
+        <result property="id"    column="id"    />
+        <result property="sorting"    column="sorting"    />
+        <result property="sendName"    column="send_name"    />
+    </resultMap>
+
+    <!--    查询快递公司-->
+    <select id="selectSendName"  resultMap="SendWaayResult">
+        select * from send_Waay
+    </select>
+
+</mapper>

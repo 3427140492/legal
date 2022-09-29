@@ -9,6 +9,24 @@ export function listExpressage(query) {
   })
 }
 
+export function sendList(query) {
+  return request({
+    url: '/hr/expressage/slist',
+    method: 'get',
+    params: query
+  })
+}
+
+export function expressList(query) {
+  return request({
+    url: '/hr/expressage/exlist',
+    method: 'get',
+    params: query
+  })
+}
+
+
+
 // 查询快速登记详细
 export function getExpressage(id) {
   return request({
