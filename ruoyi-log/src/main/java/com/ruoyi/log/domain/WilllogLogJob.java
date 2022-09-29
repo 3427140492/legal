@@ -9,16 +9,14 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 工作对象 log_job
+ * 全所日志对象 log_job
  * 
  * @author ruoyi
- * @date 2022-09-21
+ * @date 2022-09-29
  */
-public class LogJob extends BaseEntity
+public class WilllogLogJob<WiClient> extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
-
-
 
 
     /** $column.columnComment */
@@ -33,6 +31,7 @@ public class LogJob extends BaseEntity
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String caseTypeName;
+
 
     public String getCaseNo() {
         return caseNo;
@@ -58,11 +57,11 @@ public class LogJob extends BaseEntity
         this.caseTypeName = caseTypeName;
     }
 
-    /** $column.columnComment */
+    /** ID */
+    @Excel(name = "ID")
     private Integer id;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Integer whatisPerson;
 
     /** $column.columnComment */
@@ -77,36 +76,33 @@ public class LogJob extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Integer clientId;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 开始时间 */
+    @Excel(name = "开始时间")
     private String joblogStarttime;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String joblogEnddtime;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 自报时间 */
+    @Excel(name = "自报时间")
     private String joblogReportedtime;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String joblogUpdatetime;
+    private Date joblogUpdatetime;
 
     /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String joblogFile;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 工作描述 */
+    @Excel(name = "工作描述")
     private String joblogText;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 工作状态 */
+    @Excel(name = "工作状态")
     private String joblogStatus;
 
     /** 客户信息 */
-    private List<LogClient> clientList;
+    private List<WiClient> clientList;
 
     public void setId(Integer id) 
     {
@@ -180,12 +176,12 @@ public class LogJob extends BaseEntity
     {
         return joblogReportedtime;
     }
-    public void setJoblogUpdatetime(String joblogUpdatetime)
+    public void setJoblogUpdatetime(Date joblogUpdatetime) 
     {
         this.joblogUpdatetime = joblogUpdatetime;
     }
 
-    public String getJoblogUpdatetime()
+    public Date getJoblogUpdatetime() 
     {
         return joblogUpdatetime;
     }
@@ -217,12 +213,12 @@ public class LogJob extends BaseEntity
         return joblogStatus;
     }
 
-    public List<LogClient> getClientList()
+    public List<WiClient> getClientList()
     {
         return clientList;
     }
 
-    public void setClientList(List<LogClient> clientList)
+    public void setClientList(List<WiClient> clientList)
     {
         this.clientList = clientList;
     }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.log.mapper.LogJobMapper">
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.log.mapper.WilllogLogJobMapper">
     
-    <resultMap type="LogJob" id="LogJobResult">
+    <resultMap type="WilllogLogJob" id="WilllogLogJobResult">
         <result property="id"    column="id"    />
         <result property="whatisPerson"    column="whatis_person"    />
         <result property="logtypeId"    column="logtype_id"    />
@@ -26,11 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="logTypeLogname" column="log_type_logname"/>
 
         <result property="caseTypeName" column="case_type_name"/>
-
-
     </resultMap>
 
-    <resultMap id="LogJobClientResult" type="LogJob" extends="LogJobResult">
+    <resultMap id="WilllogLogJobClientResult" type="WilllogLogJob" extends="WilllogLogJobResult">
         <collection property="clientList" notNullColumn="sub_id" javaType="java.util.List" resultMap="ClientResult" />
     </resultMap>
 
@@ -63,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fileurl"    column="sub_fileurl"    />
     </resultMap>
 
-    <sql id="selectLogJobVo">
+    <sql id="selectWilllogLogJobVo">
         SELECT log_type_logname,case_no,client,joblog_startTime,joblog_reportedTime,joblog_text,joblog_status FROM log_job lj
        INNER JOIN client c on lj.client_id = c.id
        INNER JOIN case_law cl on lj.case_law_id = cl.id
@@ -72,24 +70,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        INNER JOIN system_user su on su.id = lj.whatis_person
     </sql>
 
-    <select id="selectLogJobList" parameterType="LogJob" resultMap="LogJobResult">
-        <include refid="selectLogJobVo"/>
+    <select id="selectWilllogLogJobList" parameterType="WilllogLogJob" resultMap="WilllogLogJobResult">
+        <include refid="selectWilllogLogJobVo"/>
         <where>  
-            <if test="whatisPerson != null "> and whatis_person = #{whatisPerson}</if>
+            <if test="id != null "> and id = #{id}</if>
             <if test="logtypeId != null "> and logtype_id = #{logtypeId}</if>
             <if test="caseLawId != null  and caseLawId != ''"> and case_law_id = #{caseLawId}</if>
             <if test="clientId != null "> and client_id = #{clientId}</if>
             <if test="joblogStarttime != null  and joblogStarttime != ''"> and joblog_startTime = #{joblogStarttime}</if>
-            <if test="joblogEnddtime != null  and joblogEnddtime != ''"> and joblog_enddTime = #{joblogEnddtime}</if>
             <if test="joblogReportedtime != null  and joblogReportedtime != ''"> and joblog_reportedTime = #{joblogReportedtime}</if>
-            <if test="joblogUpdatetime != null "> and joblog_updatetime = #{joblogUpdatetime}</if>
-            <if test="joblogFile != null  and joblogFile != ''"> and joblog_file = #{joblogFile}</if>
             <if test="joblogText != null  and joblogText != ''"> and joblog_text = #{joblogText}</if>
             <if test="joblogStatus != null  and joblogStatus != ''"> and joblog_status = #{joblogStatus}</if>
         </where>
     </select>
     
-    <select id="selectLogJobById" parameterType="Integer" resultMap="LogJobClientResult">
+    <select id="selectWilllogLogJobById" parameterType="Integer" resultMap="WilllogLogJobClientResult">
         select a.id, a.whatis_person, a.logtype_id, a.case_law_id, a.client_id, a.joblog_startTime, a.joblog_enddTime, a.joblog_reportedTime, a.joblog_updatetime, a.joblog_file, a.joblog_text, a.joblog_status,
  b.id as sub_id, b.client as sub_client, b.phone as sub_phone, b.type as sub_type, b.typeinfo as sub_typeinfo, b.cardnum as sub_cardnum, b.principal as sub_principal, b.contact as sub_contact, b.email as sub_email, b.duty as sub_duty, b.affectedareas as sub_affectedareas, b.tel as sub_tel, b.pertainarea as sub_pertainarea, b.status as sub_status, b.legalperson as sub_legalperson, b.legalpersontel as sub_legalpersontel, b.file as sub_file, b.nation as sub_nation, b.sex as sub_sex, b.birth as sub_birth, b.address as sub_address, b.remark as sub_remark, b.addtime as sub_addtime, b.system_user_id as sub_system_user_id, b.assign as sub_assign, b.fileurl as sub_fileurl
         from log_job a
@@ -97,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where a.id = #{id}
     </select>
         
-    <insert id="insertLogJob" parameterType="LogJob" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertWilllogLogJob" parameterType="WilllogLogJob" useGeneratedKeys="true" keyProperty="id">
         insert into log_job
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="whatisPerson != null">whatis_person,</if>
@@ -127,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateLogJob" parameterType="LogJob">
+    <update id="updateWilllogLogJob" parameterType="WilllogLogJob">
         update log_job
         <trim prefix="SET" suffixOverrides=",">
             <if test="whatisPerson != null">whatis_person = #{whatisPerson},</if>
@@ -145,11 +140,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteLogJobById" parameterType="Integer">
+    <delete id="deleteWilllogLogJobById" parameterType="Integer">
         delete from log_job where id = #{id}
     </delete>
 
-    <delete id="deleteLogJobByIds" parameterType="String">
+    <delete id="deleteWilllogLogJobByIds" parameterType="String">
         delete from log_job where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
