@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="收件人" prop="systemUserRecipients">
         <el-input
           v-model="queryParams.systemUserRecipients"
@@ -9,30 +9,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="领件时间" prop="expressageBringDate">
-        <el-date-picker clearable
-          v-model="queryParams.expressageBringDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择领件时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="快递方式" prop="expressageSendWaayId">
-        <el-input
-          v-model="queryParams.expressageSendWaayId"
-          placeholder="请输入快递方式"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="快件类型" prop="expressageExpressTypeId">
-        <el-input
-          v-model="queryParams.expressageExpressTypeId"
-          placeholder="请输入快件类型"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="领件人" prop="collarPerson">
         <el-input
           v-model="queryParams.collarPerson"
@@ -41,6 +18,47 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
+       
+     
+
+     <el-form-item  prop="expressageSendWaayId">
+      <el-select v-model="queryParams.expressageSendWaayId" placeholder="选择快递公司" style="width: 150px;"  >
+          <el-option v-for="t in sendTypeList" :key="t.id"  :label="t.sendName" :value="t.id"></el-option>
+     </el-select>
+     </el-form-item>
+
+
+     <el-form-item prop="expressageExpressTypeId">
+
+      <el-select v-model="queryParams.expressageExpressTypeId" placeholder="选择快件类型" style="width: 150px;" clearable >
+          <el-option v-for="t in expressList" :key="t.id"  :label="t.expressName" :value="t.id"></el-option>
+     </el-select>
+
+     </el-form-item>
+
+
+     <el-form-item prop="takestatus">
+      <el-select v-model="queryParams.takestatus" placeholder="领取状态">
+        <el-option label="未领取" value="1" />
+        <el-option label="已领取" value="2" />
+      </el-select>
+     </el-form-item>
+
+
+      <el-form-item label="日期" prop="selectStr">
+
+        <el-date-picker clearable v-model="queryParams.selectStr" value-format="YYYY-MM-DD">
+          </el-date-picker>
+
+      </el-form-item>
+  
+      <el-form-item  prop="selectType">
+        <el-select v-model="queryParams.selectType" placeholder="根据收件日期">
+            <el-option label="根据收件日期" value="1" />
+            <el-option label="根据领件日期" value="2" />
+        </el-select>
+      </el-form-item>
+      
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
         <el-button  size="mini" @click="resetQuery">重置</el-button>
@@ -93,14 +111,14 @@
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <!-- <el-table-column label="id" align="center" prop="id" /> -->
       <!-- <el-table-column label="发件人" align="center" prop="systemUserAddresser" /> -->
-      <el-table-column label="收件人" align="center" prop="systemUserRecipients"  width="70"/>
+      <el-table-column label="收件人" align="center" prop="systemUserRecipients"  width="100"/>
       <!-- <el-table-column label="收件单位" align="center" prop="expressageSendaunit" /> -->
       <!-- <el-table-column label="发件日期" align="center" prop="expressageSendadate" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageSendadate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column label="收件日期" align="center" prop="expressageDateofreceipt" width="100">
+      <el-table-column label="收件日期" align="center" prop="expressageDateofreceipt" width="130">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageDateofreceipt, '{y}-{m}-{d}') }}</span>
         </template>
@@ -110,18 +128,29 @@
       <el-table-column label="快件方式" align="center" prop="expressName" width="100" />
       <!-- <el-table-column label="快递单号" align="center" prop="expressageCourierNumber" /> -->
       <!-- <el-table-column label="领件说明" align="center" prop="expressageCollarnote" /> -->
-      <el-table-column label="快递费" align="center" prop="expressFee" width="70"/>
+      <el-table-column label="快递费" align="center" prop="expressFee" >
+        <template v-slot="scope">
+          <span v-if="scope.row.expressFee == null">-</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="领件人" align="center" prop="collarPerson" width="70"/>
-      <el-table-column label="领件状态" align="center" prop="takestatus"  width="100"/>
-      <el-table-column label="领件时间" align="center" prop="expressageBringDate" width="100">
+      <el-table-column label="领件状态" align="center" prop="takestatus"  >
+        <template v-slot="scope">
+          <span v-if="scope.row.takestatus == 1">未领取</span>
+          <span v-if="scope.row.takestatus == 2">已领取</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="领件时间" align="center" prop="expressageBringDate">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageBringDate, '{y}-{m}-{d}') }}</span>
+          <span v-if="scope.row.expressageBringDate == null">-</span>
         </template> 
       </el-table-column>
-      <el-table-column label="备注说明" align="center" prop="expressageRemark" width="100"/>
+      <el-table-column label="备注说明" align="center" prop="expressageRemark"/>
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
+        <!-- <template v-slot="scope">
           <el-button
             size="mini"
             type="text"
@@ -142,7 +171,25 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['hr:expressage:remove']"
           >删除</el-button>
+        </template> -->
+
+        <template v-slot="scope">
+          <el-dropdown trigger="click">
+            <el-button>
+              操作<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="Query(scope.row.id)">查看</el-dropdown-item>
+                <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </template>
+        
       </el-table-column>
     </el-table>
     
@@ -154,8 +201,33 @@
       @pagination="getList"
     />
 
+    <el-dialog :title="title" v-model="this.open" width="1000px" append-to-body>
+        <!-- <div style="margin:0px 0px 0px 20px;color: black;  line-height: 20px; display: inline-block;font-size: 16px;font-weight: bold;">基本资料</div> -->
+        <el-descriptions title="基本资料" :column="3" border>
+        <el-descriptions-item label="收件人" align="center">{{form.systemUserRecipients}}</el-descriptions-item>
+        <el-descriptions-item label="收件日期" align="center">{{form.expressageDateofreceipt}}</el-descriptions-item>
+        <el-descriptions-item label="收件来源" align="center">{{form.sendName}}</el-descriptions-item>
+        <el-descriptions-item label="快件类型" align="center">{{form.expressName}}</el-descriptions-item>
+        <el-descriptions-item label="领取状态" align="center">{{form.takestatus}}</el-descriptions-item>
+        </el-descriptions>
+        <br>
+        <br>
+        <el-descriptions title="详细信息" :column="3" border>
+        <el-descriptions-item label="案件" align="center"></el-descriptions-item>
+        <el-descriptions-item label="快递单号" align="center"></el-descriptions-item>
+        <el-descriptions-item label="快递费" align="center"></el-descriptions-item>
+        <el-descriptions-item label="领件人" align="center"></el-descriptions-item>
+        <el-descriptions-item label="领件时间" align="center"></el-descriptions-item>
+        <el-descriptions-item label="相关文件" align="center"></el-descriptions-item>
+        <el-descriptions-item label="备注说明" align="center"></el-descriptions-item>
+        </el-descriptions>
+
+
+      </el-dialog>
+ 
+
     <!-- 添加或修改快速登记对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="发件人" prop="systemUserAddresser">
           <el-input v-model="form.systemUserAddresser" placeholder="请输入发件人" />
@@ -248,12 +320,15 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> --> 
   </div>
 </template>
 
+
+
 <script>
-import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage } from "@/api/hr/expressage";
+import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList} from "@/api/hr/expressage";
+
 
 export default {
   name: "Expressage",
@@ -275,6 +350,8 @@ export default {
       total: 0,
       // 快速登记表格数据
       expressageList: [],
+      sendTypeList: [],
+      expressList:[],
       // 发送表格数据
       sendWaayList: [],
       // 弹出层标题
@@ -291,12 +368,14 @@ export default {
         expressageExpressTypeId: null,
         takestatus: null,
         collarPerson: null,
+        selectType:null,
+        selectStr:null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-      }
+      },
     };
   },
   created() {
@@ -310,6 +389,16 @@ export default {
         this.expressageList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+      sendList().then(response=>{ //快递公司查询
+        console.log(response.rows);
+         this.sendTypeList = response.rows;
+         console.log(this.sendTypeList);
+      });
+      expressList().then(response=>{  //快件类型查询
+        console.log(response.rows);
+         this.expressList = response.rows;
+         console.log(this.expressList);
       });
     },
     // 取消按钮
@@ -439,7 +528,15 @@ export default {
       this.download('hr/expressage/export', {
         ...this.queryParams
       }, `expressage_${new Date().getTime()}.xlsx`)
-    }
+    },
+    Query(id){  //根据id查询
+          this.open = true;
+          getExpressage(id).then(response => {
+            this.form = response.data;
+            this.title = "收件详情";
+          });
+        },
+
   }
 }
 </script>
