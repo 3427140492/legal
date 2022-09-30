@@ -92,11 +92,7 @@
         </dependency>
 
 
-        <!-- 日志-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-log</artifactId>
-        </dependency>
+
 
 
         <!-- 统计-->
@@ -105,11 +101,7 @@
             <artifactId>ruoyi-statistics</artifactId>
         </dependency>
 
-        <!-- 人事-->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-personnelMatters</artifactId>
-        </dependency>
+
 
     </dependencies>
 

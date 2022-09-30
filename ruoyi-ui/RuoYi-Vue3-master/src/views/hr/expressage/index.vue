@@ -204,11 +204,11 @@
     <el-dialog :title="title" v-model="this.open" width="1000px" append-to-body>
         <!-- <div style="margin:0px 0px 0px 20px;color: black;  line-height: 20px; display: inline-block;font-size: 16px;font-weight: bold;">基本资料</div> -->
         <el-descriptions title="基本资料" :column="3" border>
-        <el-descriptions-item label="收件人" align="center">{{form.empName}}</el-descriptions-item>
-        <el-descriptions-item label="收件日期" align="center"></el-descriptions-item>
-        <el-descriptions-item label="收件来源" align="center"></el-descriptions-item>
-        <el-descriptions-item label="快件类型" align="center"></el-descriptions-item>
-        <el-descriptions-item label="领取状态" align="center"></el-descriptions-item>
+        <el-descriptions-item label="收件人" align="center">{{form.systemUserRecipients}}</el-descriptions-item>
+        <el-descriptions-item label="收件日期" align="center">{{form.expressageDateofreceipt}}</el-descriptions-item>
+        <el-descriptions-item label="收件来源" align="center">{{form.sendName}}</el-descriptions-item>
+        <el-descriptions-item label="快件类型" align="center">{{form.expressName}}</el-descriptions-item>
+        <el-descriptions-item label="领取状态" align="center">{{form.takestatus}}</el-descriptions-item>
         </el-descriptions>
         <br>
         <br>
