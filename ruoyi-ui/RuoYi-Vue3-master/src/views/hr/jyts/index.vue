@@ -10,14 +10,11 @@
         />
       </el-form-item>
       
+
       <el-form-item label="提交日期" prop="complainSubmitTime">
-        <el-input 
-          v-model="queryParams.complainSubmitTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择提交日期"
-        />
-      </el-form-item>
+              <el-date-picker clearable v-model="queryParams.complainSubmitTime" value-format="YYYY-MM-DD" placeholder="请选择提交日期">
+              </el-date-picker>
+        </el-form-item>
      
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>

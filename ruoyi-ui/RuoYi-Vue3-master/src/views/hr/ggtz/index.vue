@@ -22,22 +22,18 @@
       </el-form-item> -->
 
 
-      <el-form-item label="开始时间" prop="noticeNotificationtime">
-          <el-input
-            v-model="queryParams.noticeNotificationtime"
-            placeholder="请输入时间"
-            @keyup.enter="handleQuery"
-            type="date"
-          />
-        </el-form-item>
-        <el-form-item label="结束时间" prop="noticeNotificationendtime">
-          <el-input
-            v-model="queryParams.noticeNotificationendtime"
-            placeholder="请输入时间"
-            @keyup.enter="handleQuery"
-            type="date"
-          />
-        </el-form-item>
+     <el-form-item label="开始时间" prop="noticeNotificationtime">
+     
+          <el-date-picker clearable v-model="queryParams.noticeNotificationtime" value-format="YYYY-MM-DD" placeholder="请输入开始时间">
+          </el-date-picker>
+
+      </el-form-item>
+
+      <el-form-item label="结束时间" prop="noticeNotificationendtime">
+           <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD" placeholder="请输入结束时间">
+           </el-date-picker>
+      </el-form-item>
+
 
 
      

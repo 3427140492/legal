@@ -32,6 +32,10 @@ public interface CwInoutMapper
      */
     public List<FinCwInout> selectCwInoutList(FinCwInout finCwInout);
 
+    public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout);
+
+    public List<FinCwInout> selectCaseCaseTypelist(FinCwInout finCwInout);
+
     /**
      * 新增全所收支明细
      * 
@@ -88,4 +92,6 @@ public interface CwInoutMapper
      * @return 结果
      */
     public int deleteCwInoutTypeById(String id);
+
+
 }

@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAdmSigninrecorVo"/>
         <where>  
             <if test="classify != null "> and classify = #{classify}</if>
-            <if test="signinrecordSign != null "> and signinrecord_sign = #{signinrecordSign}</if>
+            <if test="signinrecordSign != null "> and signinrecord_sign >= #{signinrecordSign}</if>
             <if test="userRealname != null and userRealname != '' "> and su.user_realname like concat('%', #{userRealname}, '%')</if>
         </where>
     </select>

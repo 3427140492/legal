@@ -104,6 +104,29 @@ public class AdmExpressage extends BaseEntity
     @Excel(name = "快件类型")
     private String expressName;
 
+    private String selectStr;
+
+    private String selectType;
+
+    public void setSelectType(String selectType)
+    {
+        this.selectType = selectType;
+    }
+
+    public String getSelectType()
+    {
+        return selectType;
+    }
+
+    public void setSelectStr(String selectStr)
+    {
+        this.selectStr = selectStr;
+    }
+
+    public String getSelectStr()
+    {
+        return selectStr;
+    }
 
     public void setSendName(String sendName)
     {

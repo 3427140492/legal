@@ -12,12 +12,8 @@
       </el-form-item>
 
       <el-form-item label="签到日期" prop="signinrecordSign">
-          <el-input
-            v-model="queryParams.signinrecordSign"
-            placeholder="请选择签到日期"
-            @keyup.enter="handleQuery"
-            type="date"
-          />
+              <el-date-picker clearable v-model="queryParams.signinrecordSign" value-format="YYYY-MM-DD" placeholder="请选择签到日期">
+              </el-date-picker>
         </el-form-item>
 
       <el-form-item >
@@ -31,7 +27,7 @@
 
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
-        <!-- <el-button size="mini" @click="resetQuery">重置</el-button> -->
+        <el-button size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

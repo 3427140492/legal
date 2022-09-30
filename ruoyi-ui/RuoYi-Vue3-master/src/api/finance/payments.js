@@ -9,7 +9,25 @@ export function listPayments(query) {
   })
 }
 
-// 查询全所收支明细列表
+// 查询我的收支
+export function mylistPayments(query) {
+  return request({
+    url: '/finance/payments/mylist',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询案件类型
+export function listType(query) {
+  return request({
+    url: '/finance/payments/anlxlist',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询全所收支明细列表树形菜单
 export function cwInoutlistType() {
   return request({
     url: '/finance/payments/sxlist',

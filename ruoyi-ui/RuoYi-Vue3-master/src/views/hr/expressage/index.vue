@@ -93,32 +93,32 @@
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <!-- <el-table-column label="id" align="center" prop="id" /> -->
       <!-- <el-table-column label="发件人" align="center" prop="systemUserAddresser" /> -->
-      <el-table-column label="收件人" align="center" prop="systemUserRecipients" />
+      <el-table-column label="收件人" align="center" prop="systemUserRecipients"  width="70"/>
       <!-- <el-table-column label="收件单位" align="center" prop="expressageSendaunit" /> -->
       <!-- <el-table-column label="发件日期" align="center" prop="expressageSendadate" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageSendadate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column label="收件日期" align="center" prop="expressageDateofreceipt" width="180">
+      <el-table-column label="收件日期" align="center" prop="expressageDateofreceipt" width="100">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageDateofreceipt, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="案号" align="center" prop="caseNo" />
-      <el-table-column label="快递公司" align="center" prop="sendName" />
-      <el-table-column label="快件方式" align="center" prop="expressName" />
+      <el-table-column label="案号" align="center" prop="caseNo" width="180" />
+      <el-table-column label="快递公司" align="center" prop="sendName" width="100"/>
+      <el-table-column label="快件方式" align="center" prop="expressName" width="100" />
       <!-- <el-table-column label="快递单号" align="center" prop="expressageCourierNumber" /> -->
       <!-- <el-table-column label="领件说明" align="center" prop="expressageCollarnote" /> -->
-      <el-table-column label="快递费" align="center" prop="expressFee" />
-      <el-table-column label="领件人" align="center" prop="collarPerson" />
-      <el-table-column label="领件状态" align="center" prop="takestatus" />
-      <el-table-column label="领件时间" align="center" prop="expressageBringDate" width="180">
+      <el-table-column label="快递费" align="center" prop="expressFee" width="70"/>
+      <el-table-column label="领件人" align="center" prop="collarPerson" width="70"/>
+      <el-table-column label="领件状态" align="center" prop="takestatus"  width="100"/>
+      <el-table-column label="领件时间" align="center" prop="expressageBringDate" width="100">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.expressageBringDate, '{y}-{m}-{d}') }}</span>
         </template> 
       </el-table-column>
-      <el-table-column label="备注说明" align="center" prop="expressageRemark" />
+      <el-table-column label="备注说明" align="center" prop="expressageRemark" width="100"/>
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
@@ -128,6 +128,14 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['hr:expressage:edit']"
           >修改</el-button>
+
+          <el-button
+            size="mini"
+            type="text"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['hr:expressage:edit']"
+          >修改</el-button>
+          
           <el-button
             size="mini"
             type="text"

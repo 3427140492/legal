@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.log.mapper.WilllogLogJobMapper">
+    
+    <resultMap type="WilllogLogJob" id="WilllogLogJobResult">
+        <result property="id"    column="id"    />
+        <result property="whatisPerson"    column="whatis_person"    />
+        <result property="logtypeId"    column="logtype_id"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="joblogStarttime"    column="joblog_startTime"    />
+        <result property="joblogEnddtime"    column="joblog_enddTime"    />
+        <result property="joblogReportedtime"    column="joblog_reportedTime"    />
+        <result property="joblogUpdatetime"    column="joblog_updatetime"    />
+        <result property="joblogFile"    column="joblog_file"    />
+        <result property="joblogText"    column="joblog_text"    />
+        <result property="joblogStatus"    column="joblog_status"    />
+
+
+        <result property="client"    column="client"    />
+
+        <result property="caseNo" column="case_no"/>
+
+        <result property="logTypeLogname" column="log_type_logname"/>
+
+        <result property="caseTypeName" column="case_type_name"/>
+    </resultMap>
+
+    <resultMap id="WilllogLogJobClientResult" type="WilllogLogJob" extends="WilllogLogJobResult">
+        <collection property="clientList" notNullColumn="sub_id" javaType="java.util.List" resultMap="ClientResult" />
+    </resultMap>
+
+    <resultMap type="Client" id="ClientResult">
+        <result property="id"    column="sub_id"    />
+        <result property="client"    column="sub_client"    />
+        <result property="phone"    column="sub_phone"    />
+        <result property="type"    column="sub_type"    />
+        <result property="typeinfo"    column="sub_typeinfo"    />
+        <result property="cardnum"    column="sub_cardnum"    />
+        <result property="principal"    column="sub_principal"    />
+        <result property="contact"    column="sub_contact"    />
+        <result property="email"    column="sub_email"    />
+        <result property="duty"    column="sub_duty"    />
+        <result property="affectedareas"    column="sub_affectedareas"    />
+        <result property="tel"    column="sub_tel"    />
+        <result property="pertainarea"    column="sub_pertainarea"    />
+        <result property="status"    column="sub_status"    />
+        <result property="legalperson"    column="sub_legalperson"    />
+        <result property="legalpersontel"    column="sub_legalpersontel"    />
+        <result property="file"    column="sub_file"    />
+        <result property="nation"    column="sub_nation"    />
+        <result property="sex"    column="sub_sex"    />
+        <result property="birth"    column="sub_birth"    />
+        <result property="address"    column="sub_address"    />
+        <result property="remark"    column="sub_remark"    />
+        <result property="addtime"    column="sub_addtime"    />
+        <result property="systemUserId"    column="sub_system_user_id"    />
+        <result property="assign"    column="sub_assign"    />
+        <result property="fileurl"    column="sub_fileurl"    />
+    </resultMap>
+
+    <sql id="selectWilllogLogJobVo">
+        SELECT log_type_logname,case_no,client,joblog_startTime,joblog_reportedTime,joblog_text,joblog_status FROM log_job lj
+       INNER JOIN client c on lj.client_id = c.id
+       INNER JOIN case_law cl on lj.case_law_id = cl.id
+       INNER JOIN log_type lt on lt.id = lj.logtype_id
+       INNER JOIN case_case_type cct on cct.id = cl.case_case_type_id
+       INNER JOIN system_user su on su.id = lj.whatis_person
+    </sql>
+
+    <select id="selectWilllogLogJobList" parameterType="WilllogLogJob" resultMap="WilllogLogJobResult">
+        <include refid="selectWilllogLogJobVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="logtypeId != null "> and logtype_id = #{logtypeId}</if>
+            <if test="caseLawId != null  and caseLawId != ''"> and case_law_id = #{caseLawId}</if>
+            <if test="clientId != null "> and client_id = #{clientId}</if>
+            <if test="joblogStarttime != null  and joblogStarttime != ''"> and joblog_startTime = #{joblogStarttime}</if>
+            <if test="joblogReportedtime != null  and joblogReportedtime != ''"> and joblog_reportedTime = #{joblogReportedtime}</if>
+            <if test="joblogText != null  and joblogText != ''"> and joblog_text = #{joblogText}</if>
+            <if test="joblogStatus != null  and joblogStatus != ''"> and joblog_status = #{joblogStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectWilllogLogJobById" parameterType="Integer" resultMap="WilllogLogJobClientResult">
+        select a.id, a.whatis_person, a.logtype_id, a.case_law_id, a.client_id, a.joblog_startTime, a.joblog_enddTime, a.joblog_reportedTime, a.joblog_updatetime, a.joblog_file, a.joblog_text, a.joblog_status,
+ b.id as sub_id, b.client as sub_client, b.phone as sub_phone, b.type as sub_type, b.typeinfo as sub_typeinfo, b.cardnum as sub_cardnum, b.principal as sub_principal, b.contact as sub_contact, b.email as sub_email, b.duty as sub_duty, b.affectedareas as sub_affectedareas, b.tel as sub_tel, b.pertainarea as sub_pertainarea, b.status as sub_status, b.legalperson as sub_legalperson, b.legalpersontel as sub_legalpersontel, b.file as sub_file, b.nation as sub_nation, b.sex as sub_sex, b.birth as sub_birth, b.address as sub_address, b.remark as sub_remark, b.addtime as sub_addtime, b.system_user_id as sub_system_user_id, b.assign as sub_assign, b.fileurl as sub_fileurl
+        from log_job a
+        left join client b on b.id = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertWilllogLogJob" parameterType="WilllogLogJob" useGeneratedKeys="true" keyProperty="id">
+        insert into log_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="whatisPerson != null">whatis_person,</if>
+            <if test="logtypeId != null">logtype_id,</if>
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="clientId != null">client_id,</if>
+            <if test="joblogStarttime != null">joblog_startTime,</if>
+            <if test="joblogEnddtime != null">joblog_enddTime,</if>
+            <if test="joblogReportedtime != null">joblog_reportedTime,</if>
+            <if test="joblogUpdatetime != null">joblog_updatetime,</if>
+            <if test="joblogFile != null">joblog_file,</if>
+            <if test="joblogText != null">joblog_text,</if>
+            <if test="joblogStatus != null">joblog_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="whatisPerson != null">#{whatisPerson},</if>
+            <if test="logtypeId != null">#{logtypeId},</if>
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="clientId != null">#{clientId},</if>
+            <if test="joblogStarttime != null">#{joblogStarttime},</if>
+            <if test="joblogEnddtime != null">#{joblogEnddtime},</if>
+            <if test="joblogReportedtime != null">#{joblogReportedtime},</if>
+            <if test="joblogUpdatetime != null">#{joblogUpdatetime},</if>
+            <if test="joblogFile != null">#{joblogFile},</if>
+            <if test="joblogText != null">#{joblogText},</if>
+            <if test="joblogStatus != null">#{joblogStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWilllogLogJob" parameterType="WilllogLogJob">
+        update log_job
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="whatisPerson != null">whatis_person = #{whatisPerson},</if>
+            <if test="logtypeId != null">logtype_id = #{logtypeId},</if>
+            <if test="caseLawId != null">case_law_id = #{caseLawId},</if>
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="joblogStarttime != null">joblog_startTime = #{joblogStarttime},</if>
+            <if test="joblogEnddtime != null">joblog_enddTime = #{joblogEnddtime},</if>
+            <if test="joblogReportedtime != null">joblog_reportedTime = #{joblogReportedtime},</if>
+            <if test="joblogUpdatetime != null">joblog_updatetime = #{joblogUpdatetime},</if>
+            <if test="joblogFile != null">joblog_file = #{joblogFile},</if>
+            <if test="joblogText != null">joblog_text = #{joblogText},</if>
+            <if test="joblogStatus != null">joblog_status = #{joblogStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWilllogLogJobById" parameterType="Integer">
+        delete from log_job where id = #{id}
+    </delete>
+
+    <delete id="deleteWilllogLogJobByIds" parameterType="String">
+        delete from log_job where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteClientByIds" parameterType="String">
+        delete from client where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteClientById" parameterType="Integer">
+        delete from client where id = #{id}
+    </delete>
+
+    <insert id="batchClient">
+        insert into client( id, client, phone, type, typeinfo, cardnum, principal, contact, email, duty, affectedareas, tel, pertainarea, status, legalperson, legalpersontel, file, nation, sex, birth, address, remark, addtime, system_user_id, assign, fileurl) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.client}, #{item.phone}, #{item.type}, #{item.typeinfo}, #{item.cardnum}, #{item.principal}, #{item.contact}, #{item.email}, #{item.duty}, #{item.affectedareas}, #{item.tel}, #{item.pertainarea}, #{item.status}, #{item.legalperson}, #{item.legalpersontel}, #{item.file}, #{item.nation}, #{item.sex}, #{item.birth}, #{item.address}, #{item.remark}, #{item.addtime}, #{item.systemUserId}, #{item.assign}, #{item.fileurl})
+        </foreach>
+    </insert>
+</mapper>

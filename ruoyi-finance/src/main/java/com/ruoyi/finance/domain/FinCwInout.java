@@ -84,8 +84,28 @@ public class FinCwInout extends BaseEntity
 
     private String searchStr;
 
+    private Integer cctid;
+
+    private String caseTypeName;
+
     /** $table.subTable.functionName信息 */
     private List<CwInoutType> cwInoutTypeList;
+
+    public Integer getCctid() {
+        return cctid;
+    }
+
+    public void setCctid(Integer cctid) {
+        this.cctid = cctid;
+    }
+
+    public String getCaseTypeName() {
+        return caseTypeName;
+    }
+
+    public void setCaseTypeName(String caseTypeName) {
+        this.caseTypeName = caseTypeName;
+    }
 
     public Long getCwPid() {
         return cwPid;

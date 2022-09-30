@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.hrClient.mapper.ClientMapper">
+<mapper namespace="com.ruoyi.client.mapper.ClientMapper">
     
     <resultMap type="Client" id="ClientResult">
         <result property="id"    column="id"    />
-        <result property="hrClient"    column="hrClient"    />
+        <result property="client"    column="client"    />
         <result property="phone"    column="phone"    />
         <result property="type"    column="type"    />
         <result property="typeinfo"    column="typeinfo"    />
@@ -34,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectClientVo">
-        select id, hrClient, phone, type, typeinfo, cardnum, principal, contact, email, duty, affectedareas, tel, pertainarea, status, legalperson, legalpersontel, file, nation, sex, birth, address, remark, addtime, system_user_id, assign, fileurl from hrClient
+        select id, client, phone, type, typeinfo, cardnum, principal, contact, email, duty, affectedareas, tel, pertainarea, status, legalperson, legalpersontel, file, nation, sex, birth, address, remark, addtime, system_user_id, assign, fileurl from client
     </sql>
 
     <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
         <include refid="selectClientVo"/>
         <where>  
-            <if test="hrClient != null  and hrClient != ''"> and hrClient = #{hrClient}</if>
+            <if test="client != null  and client != ''"> and client = #{client}</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="typeinfo != null  and typeinfo != ''"> and typeinfo = #{typeinfo}</if>
@@ -73,9 +73,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertClient" parameterType="Client" useGeneratedKeys="true" keyProperty="id">
-        insert into hrClient
+        insert into client
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="hrClient != null">hrClient,</if>
+            <if test="client != null">client,</if>
             <if test="phone != null">phone,</if>
             <if test="type != null">type,</if>
             <if test="typeinfo != null">typeinfo,</if>
@@ -102,7 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="fileurl != null">fileurl,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="hrClient != null">#{hrClient},</if>
+            <if test="client != null">#{client},</if>
             <if test="phone != null">#{phone},</if>
             <if test="type != null">#{type},</if>
             <if test="typeinfo != null">#{typeinfo},</if>
@@ -131,9 +131,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateClient" parameterType="Client">
-        update hrClient
+        update client
         <trim prefix="SET" suffixOverrides=",">
-            <if test="hrClient != null">hrClient = #{hrClient},</if>
+            <if test="client != null">client = #{client},</if>
             <if test="phone != null">phone = #{phone},</if>
             <if test="type != null">type = #{type},</if>
             <if test="typeinfo != null">typeinfo = #{typeinfo},</if>
@@ -163,11 +163,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteClientById" parameterType="Long">
-        delete from hrClient where id = #{id}
+        delete from client where id = #{id}
     </delete>
 
     <delete id="deleteClientByIds" parameterType="String">
-        delete from hrClient where id in
+        delete from client where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

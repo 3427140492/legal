@@ -2,16 +2,14 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.ExpressType;
+import com.ruoyi.system.domain.SendWaay;
+import com.ruoyi.system.service.IExpressTypeService;
+import com.ruoyi.system.service.ISendWaayService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -20,6 +18,7 @@ import com.ruoyi.system.domain.AdmExpressage;
 import com.ruoyi.system.service.IAdmExpressageService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.ui.ModelMap;
 
 /**
  * 快速登记Controller
@@ -33,6 +32,24 @@ public class AdmExpressageController extends BaseController
 {
     @Autowired
     private IAdmExpressageService admExpressageService;
+
+    @Autowired
+    private ISendWaayService sendWaayService;
+
+    @Autowired
+    private IExpressTypeService expressTypeService;
+
+    @GetMapping("/slist")
+    public TableDataInfo slist(){
+        List<SendWaay> list = sendWaayService.selectSendName();
+        return getDataTable(list);
+    }
+
+    @GetMapping("/exlist")
+    public TableDataInfo exlist(){
+        List<ExpressType> list = expressTypeService.selectExpressName();
+        return getDataTable(list);
+    }
 
     /**
      * 查询快速登记列表
