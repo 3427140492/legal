@@ -18,6 +18,17 @@ public class WilllogLogJob<WiClient> extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /** 客户 */
+    @Excel(name = "客户")
+    private String client;
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")

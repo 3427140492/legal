@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="joblogStatus"    column="joblog_status"    />
 
 
-
+        <result property="client"    column="client"    />
 
         <result property="caseNo" column="case_no"/>
 
@@ -145,14 +145,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteWilllogLogJobByIds" parameterType="String">
-        delete from log_job where id in 
+        delete from log_job where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
     <delete id="deleteClientByIds" parameterType="String">
-        delete from client where id in 
+        delete from client where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
