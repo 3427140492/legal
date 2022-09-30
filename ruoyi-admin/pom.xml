@@ -101,6 +101,12 @@
             <artifactId>ruoyi-statistics</artifactId>
         </dependency>
 
+        <!-- 人事-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-personnelMatters</artifactId>
+        </dependency>
+
 
 
     </dependencies>
