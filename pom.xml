@@ -267,6 +267,7 @@
         <module>ruoyi-finance</module>
         <module>ruoyi-personnelMatters</module>
         <module>ruoyi-log</module>
+        <module>ruoyi-personnelMatters</module>
     </modules>
     <packaging>pom</packaging>
 
