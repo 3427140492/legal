@@ -123,7 +123,7 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="Query(scope.row)">查看</el-dropdown-item>
+                <el-dropdown-item @click="Query(scope.row.id)">查看</el-dropdown-item>
                 <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
                 <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
               </el-dropdown-menu>
@@ -170,7 +170,7 @@
       </el-dialog >
 
        <!-- 查看弹出框 -->
-       <el-dialog :title="title"  v-model="queryOpen" width="1000px" append-to-body>
+       <el-dialog :title="title"  v-model="this.queryOpen" width="1000px" append-to-body>
       
       <div style="width:800px;margin:auto;border:0px solid black;text-align:center;font-size:30px;font-weight:bold;">{{form.title}}</div>
 
@@ -378,12 +378,10 @@
 
           return year + '年' + month + '月' + day +'日'+' '+hour +':'+minute + ':' +second
         },
-        Query(row){  //根据id查询
-          this.reset();
-          const id = row.id || this.ids
+        Query(id){  //根据id查询
+          this.queryOpen = true;
           getNotice(id).then(response => {
             this.form = response.data;
-            this.queryOpen = true;
             this.title = "查看详情";
           });
         },
