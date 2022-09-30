@@ -78,11 +78,16 @@ public class CwInoutServiceImpl implements ICwInoutService
     {
         return cwInoutMapper.selectCwInoutList(finCwInout);
     }
-
+    //我的收支
     @Override
     public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout) {
 
         return cwInoutMapper.selectMyCwInout(finCwInout);
+    }
+    //案件类型
+    @Override
+    public List<FinCwInout> selectCaseCaseTypelist(FinCwInout finCwInout) {
+        return cwInoutMapper.selectCaseCaseTypelist(finCwInout);
     }
 
     /**

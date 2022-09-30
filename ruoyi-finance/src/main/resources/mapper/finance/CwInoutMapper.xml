@@ -20,6 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseSubmitter"    column="case_submitter"    />
         <result property="casePaidsal"    column="case_paidsal"    />
         <result property="empName"    column="emp_name"    />
+        <result property="cctid"    column="cctid"    />
+        <result property="caseTypeName"    column="case_type_name"    />
 
     </resultMap>
 
@@ -60,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              from cw_inout ci left join cw_inout_type ct on ci.cw_inout_type_id = ct.id
              where ci.cw_inout_person = 1) t
                 left join
-            (select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id
+            (select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id, cct.id as cctid, cct.case_type_name
              from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
              where case_recycle = 'Y')t1
             on t1.cid = t.case_law_id where 1 = 1
@@ -70,6 +72,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectMyCwInout"/>
         <if test=" caseNo !=null and caseNo !=''"> and t1.case_no like '%${searchStr}%'</if>
         <if test="cwName != null  and cwName != ''"> and t.cw_inout_type_id like '%${cwName}%'</if>
+        <if test="cwPayType != null  and cwPayType != ''"> and t.cw_pay_type = #{cwPayType}</if>
+        <if test="cctid != null  and cctid != ''"> and t1.cctid = #{cctid}</if>
     </select>
 
     <select id="selectCwInoutList" parameterType="FinCwInout" resultMap="CwInoutResult">
@@ -90,10 +94,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
         </if>
         <if test="cwName != null  and cwName != ''"> and a.cw_inout_type_id like '%${cwName}%'</if>
+        <if test="cwPayType != null  and cwPayType != ''"> and a.cw_pay_type = #{cwPayType}</if>
     </select>
 
     <select id="selectCwInoutTypeList" resultMap="CwInoutTypeResult">
         select id, cw_name, cw_pid, type from cw_inout_type where cw_pid is null
+    </select>
+
+    <select id="selectCaseCaseTypelist" resultMap="CwInoutResult">
+        select id as cctid,case_type_name from case_case_type where type_pid is null
     </select>
 
     <select id="selectCwInoutTypeById" parameterType="String" resultMap="CwInoutTypeResult">

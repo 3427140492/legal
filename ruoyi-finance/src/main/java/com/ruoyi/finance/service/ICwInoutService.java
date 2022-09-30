@@ -34,6 +34,8 @@ public interface ICwInoutService
 
     public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout);
 
+    public List<FinCwInout> selectCaseCaseTypelist(FinCwInout finCwInout);
+
     /**
      * 新增全所收支明细
      * 
@@ -65,4 +67,6 @@ public interface ICwInoutService
      * @return 结果
      */
     public int deleteCwInoutById(String id);
+
+
 }

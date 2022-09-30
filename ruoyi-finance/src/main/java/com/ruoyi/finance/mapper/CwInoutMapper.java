@@ -34,6 +34,8 @@ public interface CwInoutMapper
 
     public List<FinCwInout> selectMyCwInout(FinCwInout finCwInout);
 
+    public List<FinCwInout> selectCaseCaseTypelist(FinCwInout finCwInout);
+
     /**
      * 新增全所收支明细
      * 

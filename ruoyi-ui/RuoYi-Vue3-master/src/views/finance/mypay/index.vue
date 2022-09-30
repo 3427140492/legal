@@ -11,8 +11,27 @@
         />
       </el-form-item>
       <el-form-item prop="cwName">
-        <el-tree-select v-model="queryParams.cwName" :data="cwInoutTypeListSelect" :props="{ value: 'id', label: 'cwName', children: 'children' }" :render-after-expand="false" clearable style="width: 400px;"/> 
+        <el-tree-select placeholder="请选择收支类别" v-model="queryParams.cwName" :data="cwInoutTypeListSelect" :props="{ value: 'id', label: 'cwName', children: 'children' }" :render-after-expand="false" clearable style="width: 400px;"/> 
       </el-form-item>
+
+
+      <el-form-item prop="cwPayType">
+        <el-select v-model="queryParams.cwPayType" placeholder="请选择支付方式">
+          <el-option label="转账支票" value="1" />
+          <el-option label="电汇" value="2" />
+          <el-option label="网银" value="3" />
+          <el-option label="Pos机" value="4" />
+          <el-option label="现金" value="5" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item prop="cctid">
+        <el-select v-model="queryParams.cctid" placeholder="请选择案件类型">
+        <el-option v-for="t in caseTypeList" :key="t.cctid" :label="t.caseTypeName" :value="t.cctid" />
+        </el-select>
+      </el-form-item>
+
+
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh"  @click="resetQuery">重置</el-button>
@@ -47,7 +66,7 @@
 </template>
 
 <script>
-import { mylistPayments, getPayments, delPayments, addPayments, updatePayments, cwInoutlistType } from "@/api/finance/payments";
+import { mylistPayments, getPayments, delPayments, addPayments, updatePayments, cwInoutlistType, listType } from "@/api/finance/payments";
 export default {
   name: "Payments",
   data() {
@@ -68,6 +87,7 @@ export default {
       total: 0,
       // 全所收支明细表格数据
       paymentsList: [],
+      caseTypeList: [],
       // ${subTable.functionName}表格数据
       cwInoutTypeList: [],
       // 弹出层标题
@@ -88,7 +108,8 @@ export default {
         cwRemark: null,
         cwPayer: null,
         casePaidsal: null,
-        cwName: null
+        cwName: null,
+        cctid: null
       },
       // 表单参数
       form: {},
@@ -109,8 +130,11 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
-      cwInoutlistType().then(response => {
+      cwInoutlistType().then(response => {//树形菜单
         this.cwInoutTypeListSelect = response.rows;
+      });
+      listType().then(response => {
+        this.caseTypeList = response.rows;
       });
     },
 

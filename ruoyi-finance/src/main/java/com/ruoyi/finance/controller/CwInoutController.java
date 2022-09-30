@@ -51,7 +51,7 @@ public class CwInoutController extends BaseController
     /**
      * 查询我的收支列表
      */
-    @PreAuthorize("@ss.hasPermi('finance:payments:list')")
+    @PreAuthorize("@ss.hasPermi('finance:payments:mylist')")
     @GetMapping("/mylist")
     public TableDataInfo mylist(FinCwInout finCwInout)
     {
@@ -60,7 +60,21 @@ public class CwInoutController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 查询案件类型
+     */
+    @PreAuthorize("@ss.hasPermi('finance:payments:list')")
+    @GetMapping("/anlxlist")
+    public TableDataInfo anlxlist(FinCwInout finCwInout)
+    {
+        List<FinCwInout> list = cwInoutService.selectCaseCaseTypelist(finCwInout);
+        return getDataTable(list);
+    }
 
+
+    /**
+     * 查询树形菜单
+     */
     @GetMapping("/sxlist")
     public TableDataInfo list2()
     {
