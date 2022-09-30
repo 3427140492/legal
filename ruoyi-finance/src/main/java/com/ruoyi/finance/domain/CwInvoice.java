@@ -99,6 +99,7 @@ public class CwInvoice extends BaseEntity
     @Excel(name = "案号")
     private String caseNo;
 
+
     public String getCaseNo() {
         return caseNo;
     }

@@ -91,6 +91,26 @@ public class FinCwInout extends BaseEntity
     /** $table.subTable.functionName信息 */
     private List<CwInoutType> cwInoutTypeList;
 
+    private String caseCaseTypeId;
+
+    private String overTime;
+
+    public String getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(String overTime) {
+        this.overTime = overTime;
+    }
+
+    public String getCaseCaseTypeId() {
+        return caseCaseTypeId;
+    }
+
+    public void setCaseCaseTypeId(String caseCaseTypeId) {
+        this.caseCaseTypeId = caseCaseTypeId;
+    }
+
     public Integer getCctid() {
         return cctid;
     }
