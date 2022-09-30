@@ -9,6 +9,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="审批状态" prop="caseApproveStatus">
+        <el-select>
+          <option value="1">审批中</option>    
+          <option value="2">审批通过</option>
+          <option value="3">审批不通过</option>      
+        </el-select>
+      </el-form-item>
       <el-form-item label="提交时间" prop="caseSubtime">
         <el-date-picker clearable
           v-model="queryParams.caseSubtime"
@@ -26,7 +33,7 @@
         />
       </el-form-item>
       <el-form-item label="类型" prop="caseCaseTypeId">
-        <el-select 
+        <!-- <el-select 
           v-model="queryParams.caseCaseTypeId"
            placeholder="请输入案件类型"
           ><el-option
@@ -35,15 +42,15 @@
             :label="dict.dictLable"
             :value="dict.dictValue"
           >111</el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="案件类型" prop="caseTypeName">
-        <el-input
-          v-model="queryParams.caseTypeName"
-          placeholder="请输入案件类型"
-          clearable
-          @keyup.enter.native="handleQuery"
+        </el-select> -->
+      <el-select v-model="queryParams.caseTypeName" class="m-2" placeholder="案件类型" size="large">
+        <el-option
+          v-for="item in options"
+          :key="item.id"
+          :label="item.caseTypeName"
+          :value="item.id"
         />
+      </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
@@ -178,13 +185,15 @@
 </template>
 
 <script>
-import { listApplication, getApplication, delApplication  } from "@/api/ruoyi-act/application";
+import { listApplication, listApplicationxl, getApplication, delApplication  } from "@/api/ruoyi-act/application";
 
 
 export default {
   name: "Application",
   data() {
     return {
+      //下拉框数据源
+      options:[],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -270,6 +279,12 @@ export default {
     };
   },
   created() {
+    //给下拉框数据源赋值
+    console.log("开始进行赋值");
+    listApplicationxl().then(response => {
+      this.options = response.rows;
+      console.log("赋值完成的下拉框数据"+this.options);
+    });
     this.getList();
   },
   methods: {

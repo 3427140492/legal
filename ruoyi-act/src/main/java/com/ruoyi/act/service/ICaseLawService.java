@@ -1,6 +1,8 @@
 package com.ruoyi.act.service;
 
 import java.util.List;
+
+import com.ruoyi.act.domain.CaseCaseType;
 import com.ruoyi.act.domain.CaseLaw;
 
 /**
@@ -26,6 +28,15 @@ public interface ICaseLawService
      * @return 我的申请集合
      */
     public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
+
+    /**
+     * 查询我的申请列表下拉
+     *
+     *
+     * @return 我的申请集合下拉
+     */
+    public List<CaseCaseType> selectCaseCaseTypeXL(CaseCaseType caseCaseType);
+
 
     /**
      * 新增我的申请

@@ -9,6 +9,13 @@ export function listApplication(query) {
   })
 }
 
+// 查询我的申请列表下拉
+export function listApplicationxl() {
+  return request({
+    url: '/ruoyi-act/application/xl',
+    method: 'get'
+  })
+}
 // 查询我的申请详细
 export function getApplication(id) {
   return request({

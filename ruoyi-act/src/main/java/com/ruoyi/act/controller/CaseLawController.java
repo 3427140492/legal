@@ -2,6 +2,8 @@ package com.ruoyi.act.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.act.domain.CaseCaseType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,19 @@ public class CaseLawController extends BaseController
         List<CaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
         return getDataTable(list);
     }
+
+    /**
+     * 查询我的申请列表下拉
+     */
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:xl')")
+    @GetMapping("/xl")
+    public TableDataInfo selectCaseCaseTypeXL(CaseCaseType caseCaseType)
+    {
+        List<CaseCaseType> list = caseLawService.selectCaseCaseTypeXL(caseCaseType);
+        System.out.println("获取到的下拉数据："+list);
+        return getDataTable(list);
+    }
+
 
     /**
      * 导出我的申请列表

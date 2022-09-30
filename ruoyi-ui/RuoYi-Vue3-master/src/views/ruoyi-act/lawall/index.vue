@@ -228,12 +228,12 @@
         </el-form-item>
         <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
           <el-select v-model="form.caseCaseTypeId" placeholder="请选择案件类型id 外键">
-            <el-option
+            <!-- <el-option
               v-for="dict in dict.type.case_case_type_id"
               :key="dict.value"
               :label="dict.label"
-:value="dict.value"
-            ></el-option>
+              :value="dict.value"
+            ></el-option> -->
           </el-select>
         </el-form-item>
         <el-form-item label="案件文书id 外键" prop="caseSealApplyforId">
