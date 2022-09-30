@@ -73,7 +73,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['hr:expressage:add']"
-        >新增</el-button>
+        >添加收件</el-button>
       </el-col>
       <!-- <el-col :span="1.5">
         <el-button
@@ -201,6 +201,7 @@
       @pagination="getList"
     />
 
+    <!-- 查看对话框 -->
     <el-dialog :title="title" v-model="this.open" width="1000px" append-to-body>
         <!-- <div style="margin:0px 0px 0px 20px;color: black;  line-height: 20px; display: inline-block;font-size: 16px;font-weight: bold;">基本资料</div> -->
         <el-descriptions title="基本资料" :column="3" border>
@@ -208,18 +209,18 @@
         <el-descriptions-item label="收件日期" align="center">{{form.expressageDateofreceipt}}</el-descriptions-item>
         <el-descriptions-item label="收件来源" align="center">{{form.sendName}}</el-descriptions-item>
         <el-descriptions-item label="快件类型" align="center">{{form.expressName}}</el-descriptions-item>
-        <el-descriptions-item label="领取状态" align="center">{{form.takestatus}}</el-descriptions-item>
+        <el-descriptions-item label="领取状态" align="center">{{form.takestatus == 1 ?'未领取':'已领取'}}</el-descriptions-item>
         </el-descriptions>
         <br>
         <br>
         <el-descriptions title="详细信息" :column="3" border>
-        <el-descriptions-item label="案件" align="center"></el-descriptions-item>
-        <el-descriptions-item label="快递单号" align="center"></el-descriptions-item>
-        <el-descriptions-item label="快递费" align="center"></el-descriptions-item>
-        <el-descriptions-item label="领件人" align="center"></el-descriptions-item>
-        <el-descriptions-item label="领件时间" align="center"></el-descriptions-item>
-        <el-descriptions-item label="相关文件" align="center"></el-descriptions-item>
-        <el-descriptions-item label="备注说明" align="center"></el-descriptions-item>
+        <el-descriptions-item label="案件" align="center">{{form.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="快递单号" align="center">{{form.expressageCourierNumber}}</el-descriptions-item>
+        <el-descriptions-item label="快递费" align="center">{{form.expressFee}}</el-descriptions-item>
+        <el-descriptions-item label="领件人" align="center">{{form.collarPerson}}</el-descriptions-item>
+        <el-descriptions-item label="领件时间" align="center">{{form.expressageBringDate}}</el-descriptions-item>
+        <el-descriptions-item label="相关文件" align="center">{{form.expressageFile}}</el-descriptions-item>
+        <el-descriptions-item label="备注说明" align="center">{{form.expressageRemark}}</el-descriptions-item>
         </el-descriptions>
 
 
@@ -227,7 +228,7 @@
  
 
     <!-- 添加或修改快速登记对话框 -->
-    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="AddOpen" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="发件人" prop="systemUserAddresser">
           <el-input v-model="form.systemUserAddresser" placeholder="请输入发件人" />
@@ -320,7 +321,7 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-    </el-dialog> --> 
+    </el-dialog> 
   </div>
 </template>
 
@@ -451,7 +452,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.open = true;
+      this.AddOpen = true;
       this.title = "添加快速登记";
     },
     /** 修改按钮操作 */

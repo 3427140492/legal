@@ -68,10 +68,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectAdmExpressageById" parameterType="Integer" resultMap="AdmExpressageSendWaayResult">
         select a.id, a.system_user_addresser, a.system_user_recipients, a.expressage_sendaunit, a.expressage_sendadate, a.expressage_dateofreceipt, a.expressage_bring_date, a.expressage_send_waay_id, a.expressage_express_type_id, a.expressage_courier_number, a.expressage_file, a.expressage_collarnote, a.expressage_remark, a.takestatus, a.express_fee, a.collar_person, a.expressage_tel, a.expressage_type, a.case_no,
- b.id as sub_id, b.sorting as sub_sorting, b.send_name as sub_send_name
+               a.takestatus,a.case_no,a.expressage_courier_number,b.id as sub_id, b.sorting , b.send_name,c.id,c.express_name
         from adm_expressage a
-        left join send_waay b on b.id = a.id
-        where a.id = #{id}
+                 left join send_waay b on a.expressage_send_waay_id = b.id left join express_type c  on a.expressage_express_type_id = c.id
+        where a.id= #{id}
     </select>
 
 
