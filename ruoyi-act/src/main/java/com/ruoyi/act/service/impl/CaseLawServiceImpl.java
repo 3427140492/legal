@@ -50,7 +50,6 @@ public class CaseLawServiceImpl implements ICaseLawService
     /**
      * 查询我的申请下拉
      *
-     * @param casecasetype 我的申请下拉
      * @return 我的申请下拉
      */
     @Override
