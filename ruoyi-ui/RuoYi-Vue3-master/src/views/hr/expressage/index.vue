@@ -22,7 +22,7 @@
      
 
      <el-form-item  prop="expressageSendWaayId">
-      <el-select v-model="queryParams.expressageSendWaayId" placeholder="选择快递公司" style="width: 150px;"  >
+      <el-select v-model="queryParams.expressageSendWaayId" placeholder="选择快递公司" style="width: 180px;"  >
           <el-option v-for="t in sendTypeList" :key="t.id"  :label="t.sendName" :value="t.id"></el-option>
      </el-select>
      </el-form-item>
@@ -30,7 +30,7 @@
 
      <el-form-item prop="expressageExpressTypeId">
 
-      <el-select v-model="queryParams.expressageExpressTypeId" placeholder="选择快件类型" style="width: 150px;" clearable >
+      <el-select v-model="queryParams.expressageExpressTypeId" placeholder="选择快件类型" style="width: 180px;" clearable >
           <el-option v-for="t in expressList" :key="t.id"  :label="t.expressName" :value="t.id"></el-option>
      </el-select>
 
@@ -229,14 +229,133 @@
 
     <!-- 添加或修改快速登记对话框 -->
     <el-dialog :title="title" v-model="AddOpen" width="1000px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="发件人" prop="systemUserAddresser">
-          <el-input v-model="form.systemUserAddresser" placeholder="请输入发件人" />
-        </el-form-item>
-        <el-form-item label="收件人" prop="systemUserRecipients">
-          <el-input v-model="form.systemUserRecipients" placeholder="请输入收件人" />
-        </el-form-item>
-        <el-form-item label="收件单位" prop="expressageSendaunit">
+      <el-descriptions title="详细信息" :column="3" border>基本信息</el-descriptions>
+      <el-form ref="form" :model="form" :rules="rules" >
+        <el-row style="margin-left:15px;">
+          <el-col :span="12">
+            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+              <label><span style="color:red;">*</span>收件人：</label>
+              <el-input v-model="form.systemUserAddresser"  />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="systemUserRecipients" style="width:450px;">
+              <label><span style="color:red;">*</span>收件日期：</label>
+              <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD"  style="width:450px;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row style="margin-left:15px;">
+          <el-col :span="12">
+            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+              <label><span style="color:red;">*</span>快递公司：</label>
+              <el-input v-model="form.systemUserAddresser"  />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+              <label><span style="color:red;">*</span>快件类型：</label>
+              <el-input v-model="form.systemUserAddresser"  />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row style="margin-left:15px;">
+          <el-col :span="12">
+            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+              <label><span style="color:red;">*</span>领取状态：</label>
+              <el-select v-model="queryParams.takestatus" style="width:450px;">
+              <el-option label="未领取" value="1" />
+              <el-option label="已领取" value="2" />
+            </el-select>
+            </el-form-item>
+          </el-col>
+        
+        </el-row>
+
+        <div class="demo-collapse" style="width:950px;margin:auto;">
+          <el-collapse accordion>
+            <el-collapse-item name="1">
+              <template #title>
+                <span style="font-size:16px;font-weight: bold;">其他选填</span>
+              </template>
+              <el-row style="margin-left:15px;">
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                    <label>案件：</label>
+                    <el-input v-model="form.systemUserAddresser"  />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                    <label>快递单号：</label>
+                    <el-input v-model="form.systemUserAddresser"  />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row style="margin-left:15px;">
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                    <label>快递费：</label>
+                    <el-input v-model="form.systemUserAddresser"  />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                    <label>领件人</label>
+                    <el-input v-model="form.systemUserAddresser"  />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row style="margin-left:15px;">
+                <el-col :span="12">
+                  <el-form-item label="">
+                    <label>相关文件：</label>
+                    <div style="width:450px;"><file-upload v-model="form.expressageFile"/></div>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item prop="expressageSendadate" style="width:450px;">
+                    <label><span style="color:red;">*</span>收件日期：</label>
+                      <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD"  style="width:450px;">
+                      </el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+
+              <el-row style="margin-left:15px;">
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:920px;">
+                    <label>领件说明：</label>
+                    <el-input v-model="form.systemUserAddresser"  />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row style="margin-left:15px;">
+                <el-col :span="12">
+                  <el-form-item  prop="systemUserAddresser" style="width:920px;">
+                    <label>其他备注说明：</label>
+                    <!-- <el-input v-model="form.systemUserAddresser"  /> -->
+                    <textarea rows="3" cols="90" class="form-control" style="width:920px;"></textarea>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+            </el-collapse-item>
+           
+          
+          </el-collapse>
+        </div>
+
+      
+
+        <!-- <el-form-item label="收件单位" prop="expressageSendaunit">
           <el-input v-model="form.expressageSendaunit" placeholder="请输入收件单位" />
         </el-form-item>
         <el-form-item label="发件日期" prop="expressageSendadate">
@@ -315,12 +434,12 @@
               <el-input v-model="scope.row.sendName" placeholder="请输入快递方式" />
             </template>
           </el-table-column>
-        </el-table>
+        </el-table>-->
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" style="margin-left:15px;">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
+        <!-- <el-button @click="cancel">取 消</el-button> -->
+      </div> 
     </el-dialog> 
   </div>
 </template>
