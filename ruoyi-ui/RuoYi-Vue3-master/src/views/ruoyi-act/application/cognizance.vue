@@ -9,41 +9,32 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="审批状态" prop="caseApproveStatus">
+        <el-select  v-model="queryParams.caseApproveStatus" >
+          <el-option label="" value="">请选择审批</el-option>  
+          <el-option label="审批中" value="1">审批中</el-option>    
+          <el-option label="审批通过" value="2">审批通过</el-option>
+          <el-option label="审批不通过" value="3">审批不通过</el-option>      
+        </el-select>
+      </el-form-item>
       <el-form-item label="提交时间" prop="caseSubtime">
         <el-date-picker clearable
           v-model="queryParams.caseSubtime"
           type="date"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           placeholder="请选择提交时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
-        <el-input
-          v-model="queryParams.caseCaseTypeId"
-          placeholder="请输入案件类型id 外键"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="类型" prop="caseCaseTypeId">
-        <el-select 
-          v-model="queryParams.caseCaseTypeId"
-           placeholder="请输入案件类型"
-          ><el-option
-            v-for="dict in typeOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLable"
-            :value="dict.dictValue"
-          >111</el-option>
+      <el-form-item label="案件类型" prop="caseCaseTypeId">
+        <el-select v-model="queryParams.caseCaseTypeId" class="m-2" placeholder="案件类型">
+          <el-option label="" value="">请选择案件类型</el-option>
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.caseTypeName"
+            :value="item.id"
+          />
         </el-select>
-      </el-form-item>
-      <el-form-item label="案件类型" prop="caseTypeName">
-        <el-input
-          v-model="queryParams.caseTypeName"
-          placeholder="请输入案件类型"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
@@ -53,9 +44,8 @@
 
     <el-table v-loading="loading" :data="applicationList" @selection-change="handleSelectionChange">
       <el-table-column label="案号" align="center" prop="caseNo" />
-      <el-table-column label="案件类型id 外键" align="center" prop="caseCaseTypeId" />
       <el-table-column label="案件类型" align="center" prop="caseTypeName" />
-      <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus">
+      <el-table-column label="收案审批状态" align="center" prop="caseApproveStatus">
         <template v-slot="scope">
           <span v-if="scope.row.caseApproveStatus == 1">审批中</span>
           <span v-if="scope.row.caseApproveStatus == 2">审批通过</span>
@@ -90,84 +80,38 @@
 
     <!-- 添加或修改我的申请对话框 -->
     <el-dialog :title="title" v-model="open" width="800px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="案号" prop="caseNo">
-          {{form.caseNo}}
-        </el-form-item>
-        <el-form-item label="提交时间" prop="caseSubtime">
-          <el-date-picker clearable
-            v-model="form.caseSubtime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="空" disabled>
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="案件类型" prop="caseTypeName">
-          {{form.caseTypeName}}
-        </el-form-item>
-        <el-form-item label="收案时间" prop="collectionTime">
-          <el-date-picker clearable
-            v-model="form.collectionTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="空" disabled>
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="委托人" prop="caseParties">
-          {{form.caseParties}}
-        </el-form-item>
-        <el-form-item label="第三方" prop="caseThirdParty">
-          {{form.caseThirdParty}}
-        </el-form-item>
-        <el-form-item label="对方当事人" prop="caseOppositeParties">
-          {{form.caseOppositeParties}}
-        </el-form-item>
-        <el-form-item label="办理地区" prop="caseTransactionRegion">
-          {{form.caseTransactionRegion}}
-        </el-form-item>
-        <el-form-item label="受理法院" prop="caseCourt">
-          {{form.caseCourt}}
-        </el-form-item>
-        <el-form-item label="主办律师" prop="empName">
-          {{form.empName}}
-        </el-form-item>
-        <el-form-item label="诉讼标的" prop="caseLawsuitobj">
-          {{form.caseLawsuitobj}}
-        </el-form-item>
-        <el-form-item label="代理费" prop="caseAgencyfee">
-          {{form.caseAgencyfee}}
-        </el-form-item>
-        <el-form-item label="杂费" prop="caseProxysal">
-          {{form.caseProxysal}}
-        </el-form-item>
-        <el-form-item label="收费方式" prop="caseChargeWay">
-          {{form.caseChargeWay}}
-        </el-form-item>
-        <el-form-item label="补助金额" prop="caseSubsidysal">
-          {{form.caseSubsidysal}}
-        </el-form-item>
-        <el-form-item label="是否指派" prop="caseAssign">
-          {{form.caseAssign}}
-        </el-form-item>
-        <el-form-item label="收案审批状态" prop="caseApproveStatus">
-          {{form.caseApproveStatus}}
-        </el-form-item>
-        <el-form-item label="档案号" prop="caseFilenumber">
-          {{form.caseFilenumber}}
-        </el-form-item>
-        <el-form-item label="专属案号" prop="casePropernum">
-          {{form.casePropernum}}
-        </el-form-item>
-        <el-form-item label="收案审批人" prop="systemApprovalId">
-          {{form.systemApprovalId}}
-        </el-form-item>
-        <el-form-item label="案由" prop="caseCause">
-          {{form.caseCause}}
-        </el-form-item>
-        <el-form-item label="备注" prop="caseRemarks">
-          {{form.caseRemarks}}
-        </el-form-item>
-      </el-form>
+      <el-descriptions :title=form.caseTypeName >
+        
+        <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="提交时间:">{{form.caseSubtime}}</el-descriptions-item>
+        <el-descriptions-item label="案件类型:"> {{form.caseTypeName}}</el-descriptions-item>
+        <el-descriptions-item label="委托人:">{{form.caseParties}}</el-descriptions-item>
+        <el-descriptions-item label="第三方:">{{form.caseThirdParty}}</el-descriptions-item>
+        <el-descriptions-item label="对方当事人:">{{form.caseOppositeParties}}</el-descriptions-item>
+        <el-descriptions-item label="办理地区:">{{form.caseTransactionRegion}}</el-descriptions-item>
+        <el-descriptions-item label="受理法院:">{{form.caseCourt}}</el-descriptions-item>
+        <el-descriptions-item label="主办律师:">{{form.empName}}</el-descriptions-item>
+        <el-descriptions-item label="诉讼标的:">{{form.caseLawsuitobj}}</el-descriptions-item>
+        <el-descriptions-item label="代理费:">{{form.caseAgencyfee}}</el-descriptions-item>
+        <el-descriptions-item label="杂费:">{{form.caseProxysal}}</el-descriptions-item>
+        <el-descriptions-item label="收费方式:">{{form.caseChargeWay}}</el-descriptions-item>
+        <el-descriptions-item label="补助金额:">{{form.caseSubsidysal}}</el-descriptions-item>
+        <el-descriptions-item label="是否指派:">{{form.caseAssign}}</el-descriptions-item>
+        <el-descriptions-item label="收案审批状态:">
+          {{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="档案号:">{{form.caseFilenumber}}</el-descriptions-item>
+        <el-descriptions-item label="专属案号:">{{form.casePropernum}}</el-descriptions-item>
+        <el-descriptions-item label="收案审批人:">{{form.systemApprovalId}}</el-descriptions-item>
+        <el-descriptions-item label="案由:">{{form.caseCause}}</el-descriptions-item>
+        <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="审批结果:">
+        <el-descriptions-item label="">{{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="结案审批时间">{{form.caseApprovalEndtime}}</el-descriptions-item>
+        <el-descriptions-item label="办理人:">{{form.caseApproveStatus != '1' ? form.empName :''}}</el-descriptions-item>
+        
+      </el-descriptions>
       <div slot="footer" class="dialog-footer">
         <!-- <el-button type="primary" @click="submitForm">确 定</el-button> -->
         <el-button @click="cancel">取 消</el-button>
@@ -178,13 +122,15 @@
 </template>
 
 <script>
-import { listApplication, getApplication, delApplication  } from "@/api/ruoyi-act/application";
+import { listApplication, listApplicationxl, getApplication, delApplication  } from "@/api/ruoyi-act/application";
 
 
 export default {
   name: "Application",
   data() {
     return {
+      //下拉框数据源
+      options:[],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -260,7 +206,8 @@ export default {
         caseSettleType: null,
         caseApprovalEndtime: null,
         caseRecordNum: null,
-        standard: null
+        standard: null,
+        empName: null
       },
       // 表单参数
       form: {},
@@ -270,6 +217,12 @@ export default {
     };
   },
   created() {
+    //给下拉框数据源赋值
+    console.log("开始进行赋值");
+    listApplicationxl().then(response => {
+      this.options = response.rows;
+      console.log("赋值完成的下拉框数据"+this.options);
+    });
     this.getList();
   },
   methods: {

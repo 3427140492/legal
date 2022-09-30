@@ -2,6 +2,8 @@ package com.ruoyi.act.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.act.domain.CaseCaseType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,10 +43,28 @@ public class CaseLawController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(CaseLaw caseLaw)
     {
+        System.out.println("接收到的时间"+caseLaw.getCaseSubtime());
         startPage();
         List<CaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
+        for (int a=0;a<list.size();a++){
+            list.get(a).setCaseCaseTypeId(list.get(a).getCaseCaseTypeId().substring(0,4));
+//            System.out.println("<<<<<<<"+list.get(a).getCaseCaseTypeId());
+        }
         return getDataTable(list);
     }
+
+    /**
+     * 查询我的申请列表下拉
+     */
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:xl')")
+    @GetMapping("/xl")
+    public TableDataInfo selectCaseCaseTypeXL(CaseCaseType caseCaseType)
+    {
+        List<CaseCaseType> list = caseLawService.selectCaseCaseTypeXL(caseCaseType);
+//        System.out.println("获取到的下拉数据："+list);
+        return getDataTable(list);
+    }
+
 
     /**
      * 导出我的申请列表

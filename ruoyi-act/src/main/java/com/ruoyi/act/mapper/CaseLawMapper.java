@@ -29,6 +29,15 @@ public interface CaseLawMapper
     public List<CaseLaw> selectCaseLawList(CaseLaw caseLaw);
 
     /**
+     * 查询我的申请下拉
+     *
+     * @param caseCaseType 我的申请下拉
+     * @return 我的申请下拉集合
+     */
+    public List<CaseCaseType> selectCaseCaseTypeXL(CaseCaseType caseCaseType);
+
+
+    /**
      * 新增我的申请
      * 
      * @param caseLaw 我的申请

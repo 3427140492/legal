@@ -48,6 +48,19 @@ public class CaseLawServiceImpl implements ICaseLawService
     }
 
     /**
+     * 查询我的申请下拉
+     *
+     * @return 我的申请下拉
+     */
+    @Override
+    public List<CaseCaseType> selectCaseCaseTypeXL(CaseCaseType caseCaseType)
+    {
+        return caseLawMapper.selectCaseCaseTypeXL(caseCaseType);
+    }
+
+
+
+    /**
      * 新增我的申请
      * 
      * @param caseLaw 我的申请
