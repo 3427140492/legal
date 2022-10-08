@@ -10,8 +10,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
       <el-form-item prop="cwName">
-        <el-tree-select placeholder="请选择收支类别" v-model="queryParams.cwName" :data="cwInoutTypeListSelect" :props="{ value: 'id', label: 'cwName', children: 'children' }" :render-after-expand="false" clearable style="width: 400px;"/> 
+        <el-tree-select placeholder="请选择收支类别" v-model="queryParams.cwName" :data="cwInoutTypeListSelect" :props="{ value: 'id', label: 'cwName', children: 'children' }" :render-after-expand="false" clearable style="width: 270px;"/> 
       </el-form-item>
 
 
@@ -26,11 +27,28 @@
       </el-form-item>
 
       <el-form-item prop="cctid">
-        <el-select v-model="queryParams.cctid" placeholder="请选择案件类型">
+        <el-select v-model="queryParams.cctid" placeholder="请选择案件类型" style="width:150px;">
         <el-option v-for="t in caseTypeList" :key="t.cctid" :label="t.caseTypeName" :value="t.cctid" />
         </el-select>
       </el-form-item>
 
+      <el-form-item label="日期" prop="cwInoutDate">
+        <el-date-picker clearable
+          v-model="queryParams.cwInoutDate"
+          type="date"
+          value-format="YYYY-MM-DD"
+          placeholder="">
+        </el-date-picker>
+      </el-form-item>
+
+      <el-form-item label="" prop="overTime">
+        <el-date-picker clearable
+          v-model="queryParams.overTime"
+          type="date"
+          value-format="YYYY-MM-DD"
+          placeholder="">
+        </el-date-picker>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -109,7 +127,8 @@ export default {
         cwPayer: null,
         casePaidsal: null,
         cwName: null,
-        cctid: null
+        cctid: null,
+        overTime: null
       },
       // 表单参数
       form: {},
@@ -155,7 +174,8 @@ export default {
         caseLawId: null,
         cwEnteringdate: null,
         cwRemark: null,
-        cwPayer: null
+        cwPayer: null,
+        overTime: null
       };
       this.cwInoutTypeList = [];
       this.resetForm("form");
