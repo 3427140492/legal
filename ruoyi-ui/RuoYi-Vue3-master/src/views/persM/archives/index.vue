@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">    
+  <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="姓名" prop="empName">
         <el-input v-model="queryParams.empName" placeholder="请输入姓名" clearable @keyup.enter.native="handleQuery" />
@@ -81,7 +81,6 @@
             </template>
           </el-dropdown>
         </template>
-
 
       </el-table-column>
     </el-table>
@@ -471,6 +470,8 @@ export default {
       total: 0,
       // 人事档案表格数据
       archivesList: [],
+      //工作经历
+      workhistoryList:[],
       // ${subTable.functionName}表格数据
       //hrLawyerIdentityList: [],
       // 弹出层标题
@@ -630,9 +631,9 @@ export default {
             });
           } else {
             addArchives(this.form).then(response => {
-              if(response.code == 200){
+              if (response.code == 200) {
                 this.$modal.msgSuccess("新增成功");
-              }else{
+              } else {
                 this.$modal.msgError("新增失败");
               }
               this.open = false;
@@ -666,23 +667,26 @@ export default {
       this.open = true;
       this.title = "添加人事档案";
       this.form.identityName = type;
-    },
+    }
   }
 }
 </script>
 
 <style>
-  .el-input{
-    width: 200px;
-  }
-  .el-date-editor.el-input, .el-date-editor.el-input__inner {
-    width: 200px;
-  }
+.el-input {
+  width: 200px;
+}
+
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 200px;
+}
+
 .el-textarea {
-    position: relative;
-    display: inline-block;
-    width: 535px;
-    vertical-align: bottom;
-    font-size: var(--el-font-size-base);
+  position: relative;
+  display: inline-block;
+  width: 535px;
+  vertical-align: bottom;
+  font-size: var(--el-font-size-base);
 }
 </style>

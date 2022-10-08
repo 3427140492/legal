@@ -13,19 +13,19 @@ import com.ruoyi.persM.service.IPMHrEmpService;
 
 /**
  * 人事档案Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2022-09-27
  */
 @Service
-public class PMHrEmpServiceImpl implements IPMHrEmpService 
+public class PMHrEmpServiceImpl implements IPMHrEmpService
 {
     @Autowired
     private PMHrEmpMapper pMHrEmpMapper;
 
     /**
      * 查询人事档案
-     * 
+     *
      * @param id 人事档案主键
      * @return 人事档案
      */
@@ -37,7 +37,7 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
 
     /**
      * 查询人事档案列表
-     * 
+     *
      * @param pMHrEmp 人事档案
      * @return 人事档案
      */
@@ -49,7 +49,7 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
 
     /**
      * 新增人事档案
-     * 
+     *
      * @param pMHrEmp 人事档案
      * @return 结果
      */
@@ -63,14 +63,14 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
             HrLawyerIdentity hr = new HrLawyerIdentity();
             hr.setHrEmpId(pMHrEmp.getId());
             hr.setIdentityName(pMHrEmp.getIdentityName());
-             num = pMHrEmpMapper.insertHrLawyerIdentity(hr);
+            num = pMHrEmpMapper.insertHrLawyerIdentity(hr);
         }
         return num;
     }
 
     /**
      * 修改人事档案
-     * 
+     *
      * @param pMHrEmp 人事档案
      * @return 结果
      */
@@ -85,7 +85,7 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
 
     /**
      * 批量删除人事档案
-     * 
+     *
      * @param ids 需要删除的人事档案主键
      * @return 结果
      */
@@ -99,7 +99,7 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
 
     /**
      * 删除人事档案信息
-     * 
+     *
      * @param id 人事档案主键
      * @return 结果
      */
