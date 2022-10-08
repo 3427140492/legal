@@ -17,14 +17,6 @@
           <el-option label="审批不通过" value="3">审批不通过</el-option>      
         </el-select>
       </el-form-item>
-      <el-form-item label="提交时间" prop="caseSubtime">
-        <el-date-picker clearable
-          v-model="queryParams.caseSubtime"
-          type="date"
-          value-format="YYYY-MM-DD"
-          placeholder="请选择提交时间">
-        </el-date-picker>
-      </el-form-item>
       <el-form-item label="案件类型" prop="caseCaseTypeId">
         <el-select v-model="queryParams.caseCaseTypeId" class="m-2" placeholder="案件类型">
           <el-option label="" value="">请选择案件类型</el-option>
@@ -35,6 +27,14 @@
             :value="item.id"
           />
         </el-select>
+      </el-form-item>
+      <el-form-item label="提交时间" prop="caseSubtime">
+        <el-date-picker clearable
+          v-model="queryParams.caseSubtime"
+          type="date"
+          value-format="YYYY-MM-DD"
+          placeholder="请选择提交时间">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
@@ -81,7 +81,6 @@
     <!-- 添加或修改我的申请对话框 -->
     <el-dialog :title="title" v-model="open" width="800px" append-to-body>
       <el-descriptions :title=form.caseTypeName >
-        
         <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
         <el-descriptions-item label="提交时间:">{{form.caseSubtime}}</el-descriptions-item>
         <el-descriptions-item label="案件类型:"> {{form.caseTypeName}}</el-descriptions-item>
@@ -106,21 +105,35 @@
         <el-descriptions-item label="案由:">{{form.caseCause}}</el-descriptions-item>
         <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
       </el-descriptions>
-      <el-descriptions title="审批结果:">
+      <el-descriptions
+        title="审批记录"
+        direction="vertical"
+        :column="4"
+        :size="size"
+        border
+      >
+        <el-descriptions-item label="序号">{{form.caseApproveStatus != '1' ? form.id :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{form.caseApproveStatus != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{form.caseApproveStatus != '1' ? form.empName :''}}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{form.caseApproveStatus != '1' ? form.caseRemarks :''}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="审批结果">
         <el-descriptions-item label="">{{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
-        <el-descriptions-item label="结案审批时间">{{form.caseApprovalEndtime}}</el-descriptions-item>
+        <el-descriptions-item label="结案审批时间:">{{form.caseApproveStatus != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
         <el-descriptions-item label="办理人:">{{form.caseApproveStatus != '1' ? form.empName :''}}</el-descriptions-item>
-        
       </el-descriptions>
       <div slot="footer" class="dialog-footer">
-        <!-- <el-button type="primary" @click="submitForm">确 定</el-button> -->
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
   </div>
 </template>
-
+<style scoped>
+.el-descriptions {
+  margin-top: 20px;
+}
+</style>
 <script>
 import { listApplication, listApplicationxl, getApplication, delApplication  } from "@/api/ruoyi-act/application";
 
@@ -155,6 +168,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        id : 1,
         pageNum: 1,
         pageSize: 10,
         caseNo: null,

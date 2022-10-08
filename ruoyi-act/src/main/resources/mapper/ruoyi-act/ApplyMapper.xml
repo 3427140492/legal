@@ -25,15 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectApplyList" parameterType="Apply" resultMap="ApplyResult">
         <include refid="selectApplyVo"/>
         <where>  
-            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
-            <if test="submiter != null  and submiter != ''"> and submiter = #{submiter}</if>
+            <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="leader != null  and leader != ''"> and leader = #{leader}</if>
-            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="createtime != null  and createtime != ''">and createtime like concat((DATE_FORMAT(#{createtime},'%Y-%m-%d')),'%')</if>
             <if test="status != null "> and status = #{status}</if>
-            <if test="wid != null "> and wid = #{wid}</if>
-            <if test="file != null  and file != ''"> and file = #{file}</if>
-            <if test="wtr != null  and wtr != ''"> and wtr = #{wtr}</if>
         </where>
     </select>
     
@@ -41,60 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectApplyVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertApply" parameterType="Apply" useGeneratedKeys="true" keyProperty="id">
-        insert into apply
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="caseNo != null">case_no,</if>
-            <if test="submiter != null">submiter,</if>
-            <if test="type != null">type,</if>
-            <if test="leader != null">leader,</if>
-            <if test="createtime != null">createtime,</if>
-            <if test="status != null">status,</if>
-            <if test="wid != null">wid,</if>
-            <if test="remark != null">remark,</if>
-            <if test="file != null">file,</if>
-            <if test="wtr != null">wtr,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="caseNo != null">#{caseNo},</if>
-            <if test="submiter != null">#{submiter},</if>
-            <if test="type != null">#{type},</if>
-            <if test="leader != null">#{leader},</if>
-            <if test="createtime != null">#{createtime},</if>
-            <if test="status != null">#{status},</if>
-            <if test="wid != null">#{wid},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="file != null">#{file},</if>
-            <if test="wtr != null">#{wtr},</if>
-         </trim>
-    </insert>
 
-    <update id="updateApply" parameterType="Apply">
-        update apply
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="caseNo != null">case_no = #{caseNo},</if>
-            <if test="submiter != null">submiter = #{submiter},</if>
-            <if test="type != null">type = #{type},</if>
-            <if test="leader != null">leader = #{leader},</if>
-            <if test="createtime != null">createtime = #{createtime},</if>
-            <if test="status != null">status = #{status},</if>
-            <if test="wid != null">wid = #{wid},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="file != null">file = #{file},</if>
-            <if test="wtr != null">wtr = #{wtr},</if>
-        </trim>
-        where id = #{id}
-    </update>
+<!--    <select id="selectApplyListxl" parameterType="Apply" resultMap="ApplyResult">-->
+<!--        select DISTINCT type from apply-->
+<!--    </select>-->
 
-    <delete id="deleteApplyById" parameterType="Integer">
-        delete from apply where id = #{id}
-    </delete>
-
-    <delete id="deleteApplyByIds" parameterType="String">
-        delete from apply where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
 </mapper>

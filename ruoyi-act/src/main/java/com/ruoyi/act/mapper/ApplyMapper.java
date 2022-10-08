@@ -28,6 +28,13 @@ public interface ApplyMapper
     public List<Apply> selectApplyList(Apply apply);
 
     /**
+     * 查询业务申请列表下拉
+     *
+     * @return 业务申请下拉集合
+     */
+//    public List<Apply> selectApplyListxl(Apply apply);
+
+    /**
      * 新增业务申请
      * 
      * @param apply 业务申请

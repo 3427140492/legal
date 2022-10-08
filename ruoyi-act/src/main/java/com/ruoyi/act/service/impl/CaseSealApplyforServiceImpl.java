@@ -1,6 +1,8 @@
 package com.ruoyi.act.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.act.domain.FileType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -46,6 +48,19 @@ public class CaseSealApplyforServiceImpl implements ICaseSealApplyforService
     {
         return caseSealApplyforMapper.selectCaseSealApplyforList(caseSealApplyfor);
     }
+
+    /**
+     * 查询用印申请下拉列表
+     *
+     * @return 用印申请下拉
+     */
+    @Override
+    public List<FileType> listApplyforxl(FileType fileType)
+    {
+        return caseSealApplyforMapper.listApplyforxl(fileType);
+    }
+
+
 
     /**
      * 新增用印申请

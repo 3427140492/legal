@@ -9,45 +9,30 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="submiter">
-        <el-input
-          v-model="queryParams.submiter"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="审批状态" prop="status">
+        <el-select  v-model="queryParams.status" >
+          <el-option label="" value="">请选择审批</el-option>  
+          <el-option label="审批中" value="1">审批中</el-option>    
+          <el-option label="审批通过" value="2">审批通过</el-option>
+          <el-option label="审批不通过" value="3">审批不通过</el-option>      
+        </el-select>
       </el-form-item>
-      <el-form-item label="${comment}" prop="leader">
-        <el-input
-          v-model="queryParams.leader"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      
+      <el-form-item label="审批状态" prop="type">
+        <el-select  v-model="queryParams.type" >
+          <el-option label="" value="">请选择业务子类型</el-option>  
+          <el-option label="费用减免申请" value="费用减免申请">费用减免申请</el-option>    
+          <el-option label="退款申请" value="退款申请">退款申请</el-option>
+          <el-option label="结案申请" value="结案申请">结案申请</el-option>      
+        </el-select>
       </el-form-item>
-      <el-form-item label="${comment}" prop="createtime">
+      <el-form-item label="提交时间" prop="createtime">
         <el-date-picker clearable
           v-model="queryParams.createtime"
           type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
+          value-format="YYYY-MM-DD"
+          placeholder="请选择提交时间">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item label="${comment}" prop="wid">
-        <el-input
-          v-model="queryParams.wid"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="${comment}" prop="wtr">
-        <el-input
-          v-model="queryParams.wtr"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
@@ -81,14 +66,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['ruoyi-act:apply:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['ruoyi-act:apply:remove']"
-          >删除</el-button>
+          >流程查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,8 +79,41 @@
       @pagination="getList"
     />
 
+    <!-- 添加或修改我的申请对话框 -->
+    <el-dialog :title="title" v-model="open" width="800px" append-to-body>
+      <el-descriptions :title=form.caseTypeName >
+        <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="委托人:">{{form.wtr}}</el-descriptions-item>
+        <el-descriptions-item label="提交人:">{{form.submiter}}</el-descriptions-item>
+        <el-descriptions-item label="减免金额:">{{form.decreaseMoney}}</el-descriptions-item>
+        <el-descriptions-item label="申请日期:">{{form.createtime}}</el-descriptions-item>
+        <el-descriptions-item label="减免事由:">{{form.reason}}</el-descriptions-item>
+        <el-descriptions-item label="退费申请单:">{{form.empName}}</el-descriptions-item>
+        <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions
+        title="审批记录"
+        direction="vertical"
+        :column="4"
+        :size="size"
+        border
+      >
+        <el-descriptions-item label="序号">{{form.status != '1' ? form.id :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{form.status != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{form.status != '1' ? form.empName :''}}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{form.status != '1' ? form.caseRemarks :''}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="审批结果">
+        <el-descriptions-item label="">{{form.status == '1' ? '审批中' : (form.status == '2' ? '审批通过' : (form.status == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="结案审批时间:">{{form.status != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人:">{{form.status != '1' ? form.empName :''}}</el-descriptions-item>
+      </el-descriptions>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
     <!-- 添加或修改业务申请对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="${comment}" prop="caseNo">
           <el-input v-model="form.caseNo" placeholder="请输入${comment}" />
@@ -127,10 +138,9 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -141,6 +151,8 @@ export default {
   name: "Apply",
   data() {
     return {
+      //下拉框数据源
+      // options:[],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -181,6 +193,12 @@ export default {
     };
   },
   created() {
+    //给下拉框数据源赋值
+    // console.log("开始进行赋值");
+    // selectApplyListxl().then(response => {
+    //   this.options = response.rows;
+    //   console.log("赋值完成的下拉框数据"+this.options);
+    // });
     this.getList();
   },
   methods: {
@@ -244,7 +262,7 @@ export default {
       getApply(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改业务申请";
+        this.title = "流程查看";
       });
     },
     /** 提交按钮 */

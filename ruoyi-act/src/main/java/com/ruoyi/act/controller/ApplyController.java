@@ -47,6 +47,19 @@ public class ApplyController extends BaseController
     }
 
     /**
+     * 查询业务申请下拉列表
+     */
+//    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:xl')")
+//    @GetMapping("/xl")
+//    public TableDataInfo selectApplyListxl(Apply apply)
+//    {
+//        List<Apply> list = applyService.selectApplyListxl(apply);
+//        return getDataTable(list);
+//    }
+
+
+
+    /**
      * 导出业务申请列表
      */
     @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:export')")

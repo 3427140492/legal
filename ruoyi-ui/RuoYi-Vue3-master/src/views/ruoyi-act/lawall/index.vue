@@ -19,12 +19,6 @@
       </el-form-item>
       <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
         <el-select v-model="queryParams.caseCaseTypeId" placeholder="请选择案件类型id 外键" clearable>
-          <!-- <el-option
-            v-for="dict in dict.type.case_case_type_id"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          /> -->
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -34,75 +28,23 @@
     </el-form>
 
 
-    <el-table v-loading="loading" :data="lawallList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
+    <el-table v-loading="loading" :data="lawallList" @selection-change="handleSelectionChange"> 
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
-      <el-table-column label="对方当事人证件号" align="center" prop="caseOppositeCardnum" />
-      <el-table-column label="第三方" align="center" prop="caseThirdParty" />
-      <el-table-column label="嫌疑人" align="center" prop="caseSuspect" />
-      <el-table-column label="案件冲突" align="center" prop="caseClash" />
-      <el-table-column label="案由" align="center" prop="caseCause" />
-      <el-table-column label="受理机关" align="center" prop="caseAccept" />
       <el-table-column label="诉讼标的" align="center" prop="caseLawsuitobj" />
-      <el-table-column label="补助Y/N" align="center" prop="caseSubsidy" />
-      <el-table-column label="补助金额" align="center" prop="caseSubsidysal" />
-      <el-table-column label="结案情况Y?N" align="center" prop="caseSettleStatus" />
-      <el-table-column label="案件进度A待/B在办/C结案" align="center" prop="casePlan" />
-      <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
+      <el-table-column label="承办律师" align="center" prop="caseAttorney" /> 
       <el-table-column label="代理费" align="center" prop="caseAgencyfee" />
-      <el-table-column label="杂费" align="center" prop="caseProxysal" />
-      <el-table-column label="办理地区" align="center" prop="caseTransactionRegion" />
-      <el-table-column label="是否指派Y?N" align="center" prop="caseAssign" />
-      <el-table-column label="已付金额" align="center" prop="casePaidsal" />
-      <el-table-column label="未付金额" align="center" prop="caseUnpaidsal" />
-      <el-table-column label="已开票金额" align="center" prop="caseInvoiced" />
-      <el-table-column label="未开票金额" align="center" prop="caseNotinvoiced" />
-      <el-table-column label="专属案号" align="center" prop="casePropernum" />
-      <el-table-column label="受理法院" align="center" prop="caseCourt" />
-      <el-table-column label="档案号" align="center" prop="caseFilenumber" />
-      <el-table-column label="相关文件" align="center" prop="caseCorrelationFile" />
+      <el-table-column label="收费方式" align="center" prop="caseChargeWay" />
+      <el-table-column label="案件冲突" align="center" prop="caseClash" />
       <el-table-column label="提交人" align="center" prop="caseSubmitter" />
+      <el-table-column label="收案审批人" align="center" prop="systemApprovalId" />
+      <el-table-column label="" align="center" prop="caseThirdParty" />
+      <el-table-column label="审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
       <el-table-column label="提交时间" align="center" prop="caseSubtime" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.caseSubtime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="案件回收" align="center" prop="caseRecycle" />
-      <el-table-column label="备注" align="center" prop="caseRemarks" />
-      <el-table-column label="客户id 外键" align="center" prop="clientId" />
-      <el-table-column label="承办律师" align="center" prop="caseAttorney" />
-      <el-table-column label="诉讼阶段" align="center" prop="caseStatus" />
-      <el-table-column label="诉讼地位" align="center" prop="caseLawsuitStatus" />
-      <el-table-column label="收费方式" align="center" prop="caseChargeWay" />
-      <el-table-column label="收案审批人" align="center" prop="systemApprovalId" />
-      <el-table-column label="案件类型id 外键" align="center" prop="caseCaseTypeId">
-        <template v-slot="scope">
-          <dict-tag :options="dict.type.case_case_type_id" :value="scope.row.caseCaseTypeId"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="案件文书id 外键" align="center" prop="caseSealApplyforId" />
-      <el-table-column label="主办律师id 外键" align="center" prop="hrEmpId" />
-      <el-table-column label="收案时间" align="center" prop="collectionTime" width="180">
-        <template v-slot="scope">
-          <span>{{ parseTime(scope.row.collectionTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="委托人" align="center" prop="caseParties" />
-      <el-table-column label="风险费" align="center" prop="caseFxmoney" />
-      <el-table-column label="委托人" align="center" prop="caseWtr" />
-      <el-table-column label="合同状态1,2" align="center" prop="caseContract" />
-      <el-table-column label="归档状态1,2" align="center" prop="caseRecord" />
-      <el-table-column label="是否分享1,2" align="center" prop="caseShare" />
-      <el-table-column label="结案方式(0=默认，1=调解，2=判决，3=撤诉，4=其他方式)" align="center" prop="caseSettleType" />
-      <el-table-column label="结案审批时间" align="center" prop="caseApprovalEndtime" width="180">
-        <template v-slot="scope">
-          <span>{{ parseTime(scope.row.caseApprovalEndtime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="归档号" align="center" prop="caseRecordNum" />
-      <el-table-column label="服务人次" align="center" prop="standard" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button
@@ -228,12 +170,6 @@
         </el-form-item>
         <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
           <el-select v-model="form.caseCaseTypeId" placeholder="请选择案件类型id 外键">
-            <!-- <el-option
-              v-for="dict in dict.type.case_case_type_id"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option> -->
           </el-select>
         </el-form-item>
         <el-form-item label="案件文书id 外键" prop="caseSealApplyforId">
@@ -287,7 +223,6 @@ import { listLawall, getLawall, delLawall, addLawall, updateLawall } from "@/api
 
 export default {
   name: "Lawall",
-  dicts: ['case_case_type_id'],
   data() {
     return {
       // 遮罩层

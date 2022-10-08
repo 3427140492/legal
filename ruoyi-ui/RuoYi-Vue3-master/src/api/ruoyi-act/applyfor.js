@@ -9,6 +9,14 @@ export function listApplyfor(query) {
   })
 }
 
+// 查询用印申请列表下拉
+export function listApplyforxl() {
+  return request({
+    url: '/ruoyi-act/applyfor/xl',
+    method: 'get'
+  })
+}
+
 // 查询用印申请详细
 export function getApplyfor(id) {
   return request({

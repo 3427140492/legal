@@ -44,6 +44,18 @@ public class ApplyServiceImpl implements IApplyService
     }
 
     /**
+     * 查询业务申请下拉列表
+     *
+     * @return 业务申请下拉
+     */
+//    @Override
+//    public List<Apply> selectApplyListxl(Apply apply)
+//    {
+//        return applyMapper.selectApplyList(apply);
+//    }
+
+
+    /**
      * 新增业务申请
      * 
      * @param apply 业务申请

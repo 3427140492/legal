@@ -9,46 +9,34 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="申请领用日期" prop="applyforReceive">
+      <el-form-item label="审批状态" prop="applyforApprovalStatus">
+        <el-select  v-model="queryParams.applyforApprovalStatus" >
+          <el-option label="" value="">请选择审批</el-option>  
+          <el-option label="审批中" value="1">审批中</el-option>    
+          <el-option label="审批通过" value="2">审批通过</el-option>
+          <el-option label="审批不通过" value="3">审批不通过</el-option>      
+        </el-select>
+      </el-form-item>
+      <el-form-item label="案件类型" prop="caseCaseTypeId">
+        <el-select v-model="queryParams.typeid" class="m-2" placeholder="案件类型">
+          <el-option label="" value="">请选择案件类型</el-option>
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.typeName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="提交时间" prop="applyforReceive">
         <el-date-picker clearable
           v-model="queryParams.applyforReceive"
           type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择申请领用日期">
+          value-format="YYYY-MM-DD"
+          placeholder="请选择提交时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="申请人" prop="applyforRecipient">
-        <el-input
-          v-model="queryParams.applyforRecipient"
-          placeholder="请输入申请人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收函方" prop="sendPerson">
-        <el-input
-          v-model="queryParams.sendPerson"
-          placeholder="请输入收函方"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="案件id" prop="caseid">
-        <el-input
-          v-model="queryParams.caseid"
-          placeholder="请输入案件id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="${comment}" prop="typeid">
-        <el-input
-          v-model="queryParams.typeid"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -93,87 +81,73 @@
     />
 
     <!-- 添加或修改用印申请对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <h3>{{form.applyforUsingTheItem}} </h3>
-        <el-form-item label="案号" prop="caseNo">
-          {{form.caseNo}}
-        </el-form-item>
-        <el-form-item label="申请领用日期" prop="applyforReceive">
-          <el-date-picker clearable
-            v-model="form.applyforReceive"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择申请领用日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="申请人" prop="applyforRecipient">
-          <el-input v-model="form.applyforRecipient" placeholder="请输入申请人" />
-        </el-form-item>
-        <el-form-item label="收函方" prop="sendPerson">
-          <el-input v-model="form.sendPerson" placeholder="请输入收函方" />
-        </el-form-item>
-        <el-form-item label="用印事项" prop="applyforUsingTheItem">
-          <el-input v-model="form.applyforUsingTheItem" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="案件id" prop="caseid">
-          <el-input v-model="form.caseid" placeholder="请输入案件id" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="typeid">
-          <el-input v-model="form.typeid" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-divider content-position="center">${subTable.functionName}信息</el-divider>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddCaseFiles">添加</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteCaseFiles">删除</el-button>
-          </el-col>
-        </el-row>
-        <el-table :data="caseFilesList" :row-class-name="rowCaseFilesIndex" @selection-change="handleCaseFilesSelectionChange" ref="caseFiles">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50"/>
-          <el-table-column label="用印申请外键" prop="appid" width="150">
-            <template v-slot="scope">
-              <el-input v-model="scope.row.appid" placeholder="请输入用印申请外键" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="filename" width="150">
-            <template v-slot="scope">
-              <el-input v-model="scope.row.filename" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="filepath" width="150">
-            <template v-slot="scope">
-              <el-input v-model="scope.row.filepath" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="文件类型外键" prop="typeid" width="150">
-            <template v-slot="scope">
-              <el-input v-model="scope.row.typeid" placeholder="请输入文件类型外键" />
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form>
+    <el-dialog :title="title" v-model="open" width="800px" append-to-body>
+      <el-descriptions :title=form.typeName >
+        <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="案由:">{{form.caseCause}}</el-descriptions-item>
+        <el-descriptions-item label="委托人/当事人:"> {{form.caseWtr}}</el-descriptions-item>
+        <el-descriptions-item label="诉讼阶段:">{{form.caseStatus}}</el-descriptions-item>
+        <el-descriptions-item label="诉讼地位:">{{form.caseLawsuitStatus}}</el-descriptions-item>
+        <el-descriptions-item label="受理法院:">{{form.caseCourt}}</el-descriptions-item>
+        <el-descriptions-item label="代理费:">{{form.caseAgencyfee}}</el-descriptions-item>
+        <el-descriptions-item label="已开票金额:">{{form.casePaidsal}}</el-descriptions-item>
+        <el-descriptions-item label="已开票金额:">{{form.caseInvoiced}}</el-descriptions-item>
+        <el-descriptions-item label="收费方式:">{{form.caseChargeWay}}</el-descriptions-item>
+        <el-descriptions-item label="收案审批状态:">
+          {{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions
+        title=""
+        direction="vertical"
+        :column="6"
+        :size="size"
+        border
+      >
+        <el-descriptions-item label="序号">1</el-descriptions-item>
+        <el-descriptions-item label="收函方/委托人">{{form.caseWtr}}</el-descriptions-item>
+        <el-descriptions-item label="文书名称">{{form.typeName}}</el-descriptions-item>
+        <el-descriptions-item label="审批状态">{{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="操作" >{{form.applyforApprovalStatus == '1' ? '审批中：无法打印' : (form.applyforApprovalStatus == '2' ? '审批通过：可以打印' : (form.applyforApprovalStatus == '3' ? '审批不通过： 无法打印' :'')) }}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions
+        title="审批记录"
+        direction="vertical"
+        :column="4"
+        :size="size"
+        border
+      >
+        <el-descriptions-item label="序号">{{form.applyforApprovalStatus != '1' ? 1 :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{form.applyforApprovalStatus != '1' ? form.caseSubtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{form.applyforApprovalStatus != '1' ? form.applyforRecipient :''}}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{form.applyforApprovalStatus != '1' ? form.caseRemarks :''}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="审批结果">
+        <el-descriptions-item label="">{{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+      </el-descriptions>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
+
+<style scoped>
+.el-descriptions {
+  margin-top: 20px;
+}
+</style>
 <script>
-import { listApplyfor, getApplyfor, delApplyfor, addApplyfor, updateApplyfor } from "@/api/ruoyi-act/applyfor";
+import { listApplyfor,listApplyforxl, getApplyfor, delApplyfor, addApplyfor, updateApplyfor } from "@/api/ruoyi-act/applyfor";
 
 export default {
   name: "Applyfor",
   data() {
     return {
+      //下拉框数据源
+      options:[],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -206,8 +180,7 @@ export default {
         applyforRecipient: null,
         sendPerson: null,
         applyforUsingTheItem: null,
-        caseid: null,
-        typeid: null
+        caseid: null
       },
       // 表单参数
       form: {},
@@ -220,6 +193,11 @@ export default {
     };
   },
   created() {
+    console.log("开始进行赋值");
+    listApplyforxl().then(response => {
+      this.options = response.rows;
+      console.log("赋值完成的下拉框数据"+this.options);
+    });
     this.getList();
   },
   methods: {
@@ -249,7 +227,8 @@ export default {
         applyforUsingTheItem: null,
         caseid: null,
         remark: null,
-        typeid: null
+        typeid: null,
+        caseWtr: null
       };
       this.caseFilesList = [];
       this.resetForm("form");

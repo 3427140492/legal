@@ -2,6 +2,7 @@ package com.ruoyi.act.service;
 
 import java.util.List;
 import com.ruoyi.act.domain.CaseSealApplyfor;
+import com.ruoyi.act.domain.FileType;
 
 /**
  * 用印申请Service接口
@@ -26,6 +27,14 @@ public interface ICaseSealApplyforService
      * @return 用印申请集合
      */
     public List<CaseSealApplyfor> selectCaseSealApplyforList(CaseSealApplyfor caseSealApplyfor);
+
+    /**
+     * 查询用印申请下拉列表
+     *
+     * @return 用印申请下拉集合
+     */
+    public List<FileType> listApplyforxl(FileType fileType);
+
 
     /**
      * 新增用印申请

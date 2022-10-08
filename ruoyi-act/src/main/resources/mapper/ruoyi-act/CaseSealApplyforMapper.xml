@@ -15,7 +15,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseid"    column="caseid"    />
         <result property="caseName"    column="caseName"    />
         <result property="remark"    column="remark"    />
-        <result property="typeid"    column="typeid"    />
+
+        <result property="caseAgencyfee"    column="case_agencyfee"    />
+        <result property="caseApproveStatus"    column="case_approve_status"    />
+        <result property="caseCause"    column="case_cause"    />
+        <result property="caseChargeWay"    column="case_charge_way"    />
+        <result property="caseCourt"    column="case_court"    />
+        <result property="caseInvoiced"    column="case_invoiced"    />
+        <result property="caseLawsuitStatus"    column="case_lawsuit_status"    />
+        <result property="caseOppositeParties"    column="case_opposite_parties"    />
+        <result property="casePaidsal"    column="case_paidsal"    />
+        <result property="caseRemarks"    column="case_remarks"    />
+        <result property="caseStatus"    column="case_status"    />
+        <result property="caseWtr"    column="case_wtr"    />
+        <result property="typeName"    column="typeName"    />
+        <result property="caseSubtime"    column="case_subtime"    />
     </resultMap>
 
     <resultMap id="CaseSealApplyforCaseFilesResult" type="CaseSealApplyfor" extends="CaseSealApplyforResult">
@@ -30,27 +44,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="typeid"    column="sub_typeid"    />
     </resultMap>
 
+    <resultMap type="FileType" id="FileTypeResult">
+        <result property="id"    column="id"    />
+        <result property="typeName"    column="typeName"    />
+
+    </resultMap>
+
     <sql id="selectCaseSealApplyforVo">
-        select seal.*,type.typeName,files.filename from case_seal_applyfor seal
-            inner join file_type type on seal.typeid = type.id
-            inner join case_files  files on seal.id = files.appid
+        select seal.*,type.typeName,files.filename,law.* from case_seal_applyfor seal
+          inner join file_type type on seal.typeid = type.id
+          inner join case_files  files on seal.id = files.appid
+          inner join case_law law on seal.id = law.id
     </sql>
 
     <select id="selectCaseSealApplyforList" parameterType="CaseSealApplyfor" resultMap="CaseSealApplyforResult">
         <include refid="selectCaseSealApplyforVo"/>
         <where>
-<!--            <if test="caseNo!=null and caseNo!=''">-->
-<!--                and  seal.case_no like "%"#{caseNo}"%"-->
-<!--            </if>-->
-<!--            <if test="applyforApprovalStatus!=null and applyforApprovalStatus!=''">-->
-<!--                and seal.applyfor_approval_status = #{applyforApprovalStatus}-->
-<!--            </if>-->
-<!--            <if test="typeid!=null and typeid!=''">-->
-<!--                and  seal.typeid = #{typeid}-->
-<!--            </if>-->
-<!--            <if test="applyforReceive != null and applyforReceive != ''">-->
-<!--                and seal.applyfor_receive > #{applyforReceive}-->
-<!--            </if>-->
+            <if test="caseNo!=null and caseNo!=''">
+                and  seal.case_no like "%"#{caseNo}"%"
+            </if>
+            <if test="applyforApprovalStatus!=null and applyforApprovalStatus!=''">
+                and seal.applyfor_approval_status = #{applyforApprovalStatus}
+            </if>
+            <if test="typeid!=null and typeid!=''">
+                and  seal.typeid = #{typeid}
+            </if>
+            <if test="applyforReceive != null and applyforReceive != ''">
+                and seal.applyfor_receive like concat((DATE_FORMAT(#{applyforReceive},'%Y-%m-%d')),'%')
+            </if>
 <!--            <if test="caseSubtime2 != null and caseSubtime2 != ''">-->
 <!--                and seal.applyfor_receive &lt; #{caseSubtime2}-->
 <!--            </if>-->
@@ -62,80 +83,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectCaseSealApplyforById" parameterType="Integer" resultMap="CaseSealApplyforCaseFilesResult">
-        select seal.*,files.id as sub_id from case_seal_applyfor seal
+        select seal.*,files.id as sub_id,law.*,type.typeName from case_seal_applyfor seal
                           inner join file_type type on seal.typeid = type.id
                           inner join case_files  files on seal.id = files.appid
+                          inner join case_law law on seal.id = law.id
         where seal.id = #{id}
     </select>
-        
-    <insert id="insertCaseSealApplyfor" parameterType="CaseSealApplyfor" useGeneratedKeys="true" keyProperty="id">
-        insert into case_seal_applyfor
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="caseNo != null">case_no,</if>
-            <if test="applyforReceive != null">applyfor_receive,</if>
-            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">applyfor_approval_status,</if>
-            <if test="applyforRecipient != null">applyfor_recipient,</if>
-            <if test="sendPerson != null">send_person,</if>
-            <if test="applyforUsingTheItem != null">applyfor_using_the_item,</if>
-            <if test="caseid != null">caseid,</if>
-            <if test="remark != null">remark,</if>
-            <if test="typeid != null">typeid,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="caseNo != null">#{caseNo},</if>
-            <if test="applyforReceive != null">#{applyforReceive},</if>
-            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">#{applyforApprovalStatus},</if>
-            <if test="applyforRecipient != null">#{applyforRecipient},</if>
-            <if test="sendPerson != null">#{sendPerson},</if>
-            <if test="applyforUsingTheItem != null">#{applyforUsingTheItem},</if>
-            <if test="caseid != null">#{caseid},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="typeid != null">#{typeid},</if>
-         </trim>
-    </insert>
 
-    <update id="updateCaseSealApplyfor" parameterType="CaseSealApplyfor">
-        update case_seal_applyfor
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="caseNo != null">case_no = #{caseNo},</if>
-            <if test="applyforReceive != null">applyfor_receive = #{applyforReceive},</if>
-            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">applyfor_approval_status = #{applyforApprovalStatus},</if>
-            <if test="applyforRecipient != null">applyfor_recipient = #{applyforRecipient},</if>
-            <if test="sendPerson != null">send_person = #{sendPerson},</if>
-            <if test="applyforUsingTheItem != null">applyfor_using_the_item = #{applyforUsingTheItem},</if>
-            <if test="caseid != null">caseid = #{caseid},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="typeid != null">typeid = #{typeid},</if>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <delete id="deleteCaseSealApplyforById" parameterType="Integer">
-        delete from case_seal_applyfor where id = #{id}
-    </delete>
-
-    <delete id="deleteCaseSealApplyforByIds" parameterType="String">
-        delete from case_seal_applyfor where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-    
-    <delete id="deleteCaseFilesByIds" parameterType="String">
-        delete from case_files where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-
-    <delete id="deleteCaseFilesById" parameterType="Integer">
-        delete from case_files where id = #{id}
-    </delete>
-
-    <insert id="batchCaseFiles">
-        insert into case_files( id, appid, filename, filepath, typeid) values
-		<foreach item="item" index="index" collection="list" separator=",">
-            ( #{item.id}, #{item.appid}, #{item.filename}, #{item.filepath}, #{item.typeid})
-        </foreach>
-    </insert>
+    <select id="listApplyforxl"  parameterType="FileType" resultMap="FileTypeResult">
+        select * from file_type
+    </select>
 </mapper>

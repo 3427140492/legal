@@ -3,6 +3,7 @@ package com.ruoyi.act.mapper;
 import java.util.List;
 import com.ruoyi.act.domain.CaseSealApplyfor;
 import com.ruoyi.act.domain.CaseFiles;
+import com.ruoyi.act.domain.FileType;
 
 /**
  * 用印申请Mapper接口
@@ -27,6 +28,13 @@ public interface CaseSealApplyforMapper
      * @return 用印申请集合
      */
     public List<CaseSealApplyfor> selectCaseSealApplyforList(CaseSealApplyfor caseSealApplyfor);
+
+    /**
+     * 查询用印申请列表下拉
+     *
+     * @return 用印申请下拉集合
+     */
+    public List<FileType> listApplyforxl(FileType  fileType);
 
     /**
      * 新增用印申请

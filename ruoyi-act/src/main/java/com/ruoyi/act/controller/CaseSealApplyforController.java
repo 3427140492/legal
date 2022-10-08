@@ -2,6 +2,9 @@ package com.ruoyi.act.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.act.domain.CaseCaseType;
+import com.ruoyi.act.domain.FileType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,6 +71,19 @@ public class CaseSealApplyforController extends BaseController
     {
         return AjaxResult.success(caseSealApplyforService.selectCaseSealApplyforById(id));
     }
+
+    /**
+     * 查询用印申请下拉
+     */
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:xl')")
+    @GetMapping("/xl")
+    public TableDataInfo listApplyforxl(FileType fileType)
+    {
+        List<FileType> list = caseSealApplyforService.listApplyforxl(fileType);
+        return getDataTable(list);
+    }
+
+
 
     /**
      * 新增用印申请

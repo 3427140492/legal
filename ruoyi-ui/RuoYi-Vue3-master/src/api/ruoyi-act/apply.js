@@ -9,6 +9,14 @@ export function listApply(query) {
   })
 }
 
+// 查询业务申请列表下拉
+// export function selectApplyListxl() {
+//   return request({
+//     url: '/ruoyi-act/apply/xl',
+//     method: 'get'
+//   })
+// }
+
 // 查询业务申请详细
 export function getApply(id) {
   return request({
