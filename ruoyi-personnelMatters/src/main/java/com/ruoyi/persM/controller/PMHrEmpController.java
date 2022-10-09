@@ -3,6 +3,7 @@ package com.ruoyi.persM.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.persM.domain.WorkExperience;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,5 +104,25 @@ public class PMHrEmpController extends BaseController
         return toAjax(pMHrEmpService.deletePMHrEmpByIds(ids));
     }
 
+    /**
+     * 获取工作经历信息
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:queryWork')")
+    @GetMapping(value = "queryWork/{id}")
+    public TableDataInfo getInfoWork(@PathVariable("id") Long id)
+    {
+        List<WorkExperience> list = pMHrEmpService.selectWorkById(id);
+        return getDataTable(list);
+    }
+
+    /**
+     * 获取工作经历详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:queryWorkQuery')")
+    @GetMapping(value = "queryWorkQuery/{id}")
+    public AjaxResult getInfoWorkQuery(@PathVariable("id") Long id)
+    {
+        return AjaxResult.success(pMHrEmpService.selectWorkExperienceById(id));
+    }
 
 }

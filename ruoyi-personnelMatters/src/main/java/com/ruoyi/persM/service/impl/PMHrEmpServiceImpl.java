@@ -1,6 +1,8 @@
 package com.ruoyi.persM.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.persM.domain.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -109,6 +111,24 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
     {
         pMHrEmpMapper.deleteHrLawyerIdentityByHrEmpId(id);
         return pMHrEmpMapper.deletePMHrEmpById(id);
+    }
+
+
+    /**
+     * 查询人事档案
+     *
+     * @param id 人事档案主键
+     * @return 人事档案
+     */
+    @Override
+    public List<WorkExperience> selectWorkById(Long id)
+    {
+        return pMHrEmpMapper.selectWorkById(id);
+    }
+
+    @Override
+    public WorkExperience selectWorkExperienceById(Long id) {
+        return pMHrEmpMapper.selectWorkExperienceById(id);
     }
 
 }

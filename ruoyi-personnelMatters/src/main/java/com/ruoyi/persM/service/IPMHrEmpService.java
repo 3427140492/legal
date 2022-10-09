@@ -2,6 +2,7 @@ package com.ruoyi.persM.service;
 
 import java.util.List;
 import com.ruoyi.persM.domain.PMHrEmp;
+import com.ruoyi.persM.domain.WorkExperience;
 
 /**
  * 人事档案Service接口
@@ -58,4 +59,21 @@ public interface IPMHrEmpService
      * @return 结果
      */
     public int deletePMHrEmpById(Long id);
+
+    /**
+     * 查询工作经历
+     *
+     * @param id 人事档案主键
+     * @return 人事档案
+     */
+    public List<WorkExperience> selectWorkById(Long id);
+
+    /**
+     * 查询工作经历
+     *
+     * @param id 人事档案主键
+     * @return 人事档案
+     */
+    public WorkExperience selectWorkExperienceById(Long id);
+
 }

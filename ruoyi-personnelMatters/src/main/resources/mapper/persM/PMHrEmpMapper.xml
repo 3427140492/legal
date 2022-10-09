@@ -47,6 +47,7 @@
 
     <resultMap id="PMHrEmpHrLawyerIdentityResult" type="PMHrEmp" extends="PMHrEmpResult">
         <collection property="hrLawyerIdentityList" notNullColumn="id" javaType="java.util.List" resultMap="HrLawyerIdentityResult" />
+        <collection property="workExperienceList" notNullColumn="id" javaType="java.util.List" resultMap="WorkExperienceResult" />
     </resultMap>
 
     <resultMap type="HrLawyerIdentity" id="HrLawyerIdentityResult">
@@ -58,6 +59,18 @@
         <result property="identityEnddate"    column="sub_identity_enddate"    />
         <result property="identityNum"    column="sub_identity_num"    />
         <result property="hrEmpId"    column="sub_hr_emp_id"    />
+    </resultMap>
+
+    <resultMap type="WorkExperience" id="WorkExperienceResult">
+        <result property="id"    column="id"    />
+        <result property="workhistoryStartdate"    column="workhistory_startdate"    />
+        <result property="workhistoryEnddate"    column="workhistory_enddate"    />
+        <result property="workhistoryWorkunit"    column="workhistory_workunit"    />
+        <result property="workhistoryJobPosition"    column="workhistory_job_position"    />
+        <result property="workhistoryWorktype"    column="workhistory_worktype"    />
+        <result property="workhistoryWorknature"    column="workhistory_worknature"    />
+        <result property="workhistorySite"    column="workhistory_site"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
     </resultMap>
 
     <sql id="selectPMHrEmpVo">
@@ -74,6 +87,14 @@
 
     <select id="selectPMHrEmpById" parameterType="PMHrEmp" resultMap="PMHrEmpHrLawyerIdentityResult">
         select * from hr_emp where id = ${id}
+    </select>
+
+    <select id="selectWorkExperienceById" parameterType="WorkExperience" resultMap="WorkExperienceResult">
+        select * from hr_workhistory where id = ${id}
+    </select>
+
+    <select id="selectWorkById" parameterType="WorkExperience" resultMap="WorkExperienceResult">
+        select * from hr_workhistory where hr_emp_id = ${hrEmpId}
     </select>
 
     <insert id="insertPMHrEmp" parameterType="PMHrEmp" useGeneratedKeys="true" keyProperty="id">

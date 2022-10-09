@@ -74,7 +74,7 @@
                 <el-dropdown-item @click="ViewDetail(scope.row.id)">查看详细信息</el-dropdown-item>
                 <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息
                 </el-dropdown-item>
-                <el-dropdown-item>查看工作经历</el-dropdown-item>
+                <el-dropdown-item @click="WorkExperience(scope.row.id)">查看工作经历</el-dropdown-item>
                 <el-dropdown-item>查看教育经历</el-dropdown-item>
                 <el-dropdown-item>删除员工</el-dropdown-item>
               </el-dropdown-menu>
@@ -436,16 +436,91 @@
       </div>
     </el-dialog>
 
+    <el-dialog v-model="this.WorkExperiences" title="查看工作经历" width="65%">
+      <div style="height: 50px;">
+        <el-button>添加工作经历</el-button>
+      </div>
+      <el-table v-loading="loading" :data="workhistoryList" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" align="center" />
+        <el-table-column label="序号" align="center" prop="id" width="100" />
+        <el-table-column label="起止时间" align="center" prop="workhistoryStartdate" width="100">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.workhistoryStartdate, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="结束时间" align="center" prop="workhistoryEnddate" width="100">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.workhistoryEnddate, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="工作单位" align="center" prop="workhistoryWorkunit" width="100" />
+        <el-table-column label="工作职务" align="center" prop="workhistoryJobPosition" width="100" />
+        <el-table-column label="工作类别" align="center" prop="workhistoryWorktype" width="100" />
+        <el-table-column label="单位性质" align="center" prop="workhistoryWorknature" width="100" />
+        <el-table-column label="所在地" align="center" prop="workhistorySite" width="100" />
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="100">
+          <template #default="scope">
+            <el-button type="text" @click="handleUpdateWork(scope.row)" v-hasPermi="['persM:archives:edit']"> 修改
+            </el-button>
+            <el-button type="text">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+
+    <!-- 添加或修改工作经历对话框 -->
+    <el-dialog :title="title" v-model="this.openWork">
+      <el-form :inline="true" ref="form" :model="formWork" :rules="rules2" label-width="80px">
+        <el-form-item label="起止时间" prop="workhistoryStartdate">
+          <el-date-picker clearable v-model="formWork.workhistoryStartdate" type="date" value-format="yyyy-MM-dd"
+            placeholder="请选择起止时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束时间" prop="workhistoryEnddate">
+          <el-date-picker clearable v-model="formWork.workhistoryEnddate" type="date" value-format="yyyy-MM-dd"
+            placeholder="请选择结束时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="工作单位" prop="workhistoryWorkunit">
+          <el-input v-model="formWork.workhistoryWorkunit" placeholder="请输入工作单位" />
+        </el-form-item>
+        <el-form-item label="工作职务" prop="workhistoryJobPosition">
+          <el-input v-model="formWork.workhistoryJobPosition" placeholder="请输入工作职务" />
+        </el-form-item>
+        <el-form-item label="工作类别">
+          <el-select v-model="formWork.workhistoryWorktype">
+            <el-option value="">请选择…</el-option>
+            <el-option value="律师工作">律师工作</el-option>
+            <el-option value="法官">法官</el-option>
+            <el-option value="检察官">检察官</el-option>
+            <el-option value="法律工作">法律工作</el-option>
+            <el-option value="警察">警察</el-option>
+            <el-option value="公务员">公务员</el-option>
+            <el-option value="其他">其他</el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="单位性质" prop="workhistoryWorknature">
+          <el-input v-model="formWork.workhistoryWorknature" placeholder="请输入单位性质" />
+        </el-form-item>
+        <el-form-item label="所在地" prop="workhistorySite">
+          <el-input v-model="formWork.workhistorySite" placeholder="请输入所在地" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormWork">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
 
   </div>
 </template>
-  
+
 <script>
 
-import { listArchives, getArchives, delArchives, addArchives, updateArchives } from "@/api/persM/archives";
-
+import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork } from "@/api/persM/archives";
 
 
 export default {
@@ -456,6 +531,7 @@ export default {
       loading: true,
       //律师信息弹出框
       ViewDetails: false,
+      WorkExperiences: false,
       // 选中数组
       ids: [],
       // 子表选中数据
@@ -471,13 +547,14 @@ export default {
       // 人事档案表格数据
       archivesList: [],
       //工作经历
-      workhistoryList:[],
+      workhistoryList: [],
       // ${subTable.functionName}表格数据
       //hrLawyerIdentityList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      openWork: false,
       data: {
 
       },
@@ -490,12 +567,15 @@ export default {
         empContEnddate: null,
         empPhone: null,
         identityName: null,
+
       },
       // 表单参数
       form: {
       },
       // 表单校验
       rules: {
+      },
+      rules2: {
       }
     };
   },
@@ -560,6 +640,20 @@ export default {
       };
       this.hrLawyerIdentityList = [];
       this.resetForm("form");
+    },
+    resetWork() {
+      this.formWork = {
+        id: null,
+        workhistoryStartdate: null,
+        workhistoryEnddate: null,
+        workhistoryWorkunit: null,
+        workhistoryJobPosition: null,
+        workhistoryWorktype: null,
+        workhistoryWorknature: null,
+        workhistorySite: null,
+        hrEmpId: null
+      };
+      this.resetForm("formWork");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -667,7 +761,45 @@ export default {
       this.open = true;
       this.title = "添加人事档案";
       this.form.identityName = type;
-    }
+    },
+    WorkExperience(id) {
+      this.WorkExperiences = true;
+      getWorkArchives(id).then(response => {
+        this.workhistoryList = response.rows;
+        console.log(this.workhistoryList)
+      })
+    },
+    /** 提交按钮 */
+    submitFormWork() {
+      this.$refs["formWork"].validate(valid => {
+        if (valid) {
+          if (this.formWork.id != null) {
+            updateWorkhistory(this.formWork).then(response => {
+              this.$modal.msgSuccess("修改成功");
+              this.openWork = false;
+              this.WorkExperience(this.formWork.hrEmpId);
+            });
+          } else {
+            addWorkhistory(this.formWork).then(response => {
+              this.$modal.msgSuccess("新增成功");
+              this.openWork = false;
+              this.WorkExperience(this.formWork.hrEmpId);
+            });
+          }
+        }
+      });
+    },
+    /** 修改按钮操作 */
+    handleUpdateWork(row) {
+      this.resetWork();
+      const id = row.id || this.ids
+      getWork(id).then(response => {
+        this.formWork = response.data;
+        this.openWork = true;
+        this.title = "修改工作经历";
+        alert(this.formWork.workhistoryStartdate)
+      });
+    },
   }
 }
 </script>
