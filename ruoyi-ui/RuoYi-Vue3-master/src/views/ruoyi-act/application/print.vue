@@ -17,7 +17,7 @@
           <el-option label="审批不通过" value="3">审批不通过</el-option>      
         </el-select>
       </el-form-item>
-      <el-form-item label="案件类型" prop="caseCaseTypeId">
+      <el-form-item label="案件类型" prop="typeid">
         <el-select v-model="queryParams.typeid" class="m-2" placeholder="案件类型">
           <el-option label="" value="">请选择案件类型</el-option>
           <el-option
@@ -141,6 +141,7 @@
 </style>
 <script>
 import { listApplyfor,listApplyforxl, getApplyfor, delApplyfor, addApplyfor, updateApplyfor } from "@/api/ruoyi-act/applyfor";
+import { getUserProfile } from "@/api/system/user";
 
 export default {
   name: "Applyfor",
@@ -180,7 +181,8 @@ export default {
         applyforRecipient: null,
         sendPerson: null,
         applyforUsingTheItem: null,
-        caseid: null
+        caseid: null,
+        typeid: null
       },
       // 表单参数
       form: {},
@@ -198,7 +200,14 @@ export default {
       this.options = response.rows;
       console.log("赋值完成的下拉框数据"+this.options);
     });
-    this.getList();
+    
+
+    getUserProfile().then(response => {
+      this.user = response.data;
+      this.queryParams.applyforRecipient=this.user.nickName;
+      console.log("昵称："+this.queryParams.applyforRecipient);
+      this.getList();
+    });
   },
   methods: {
     /** 查询用印申请列表 */

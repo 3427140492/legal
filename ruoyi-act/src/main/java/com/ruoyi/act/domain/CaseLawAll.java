@@ -224,7 +224,32 @@ public class CaseLawAll extends BaseEntity
     @Excel(name = "服务人次")
     private Integer standard;
 
-    public void setId(Integer id) 
+//----
+    /** 承办律师*/
+    @Excel(name = "承办律师")
+    private String empName;
+
+    /** 业务子类型*/
+    @Excel(name = "业务子类型")
+    private String caseTypeName;
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getCaseTypeName() {
+        return caseTypeName;
+    }
+
+    public void setCaseTypeName(String caseTypeName) {
+        this.caseTypeName = caseTypeName;
+    }
+
+    public void setId(Integer id)
     {
         this.id = id;
     }

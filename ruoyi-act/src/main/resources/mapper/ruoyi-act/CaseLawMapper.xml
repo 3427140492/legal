@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.act.mapper.CaseLawMapper">
-    
+
     <resultMap type="CaseLaw" id="CaseLawResult">
         <result property="id"    column="id"    />
         <result property="caseNo"    column="case_no"    />
@@ -79,33 +79,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCaseLawVo">
-            select case_law.id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard,case_case_type.id, case_case_type.case_type_name,hr_emp.id,hr_emp.emp_name
-            from case_law ,case_case_type ,hr_emp
+--             select case_law.id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard,case_case_type.id, case_case_type.case_type_name,hr_emp.id,hr_emp.emp_name
+--             from case_law ,case_case_type ,hr_emp
+        select case_law.id,case_approve_status,case_approval_endtime,system_approval_id,case_no ,type2.case_type_name,case_approve_status,case_subtime,case_submitter from case_law
+           inner join case_case_type type on type.id = case_law.case_case_type_id
+           inner join case_case_type type2 on type2.id = type.type_pid
 </sql>
 
     <select id="selectCaseLawList" parameterType="CaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
         <where>
+            case_submitter = #{caseSubmitter}
             <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
             <if test="caseSubtime != null"> and case_subtime like concat((DATE_FORMAT(#{caseSubtime},'%Y-%m-%d')),'%')</if>
             <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_law.case_case_type_id like '${caseCaseTypeId}%'</if>
-            and case_case_type.id = LEFT(case_law.case_case_type_id,4) and case_law.hr_emp_id = hr_emp.id
+--             and case_case_type.id = LEFT(case_law.case_case_type_id,4) and case_law.hr_emp_id = hr_emp.id
+                        order by case_subtime desc
         </where>
 
     </select>
-    
+
     <select id="selectCaseLawById" parameterType="Integer" resultMap="CaseLawCaseCaseTypeResult">
-        select a.id, a.case_no, a.case_opposite_parties, a.case_opposite_cardnum, a.case_third_party, a.case_suspect, a.case_clash, a.case_cause, a.case_accept, a.case_lawsuitobj, a.case_subsidy, a.case_subsidysal, a.case_settle_status, a.case_plan, a.case_approve_status, a.case_agencyfee, a.case_proxysal, a.case_transaction_region, a.case_assign, a.case_paidsal, a.case_unpaidsal, a.case_invoiced, a.case_notinvoiced, a.case_propernum, a.case_court, a.case_filenumber, a.case_correlation_file, a.case_submitter, a.case_subtime, a.case_recycle, a.case_remarks, a.client_id, a.case_attorney, a.case_status, a.case_lawsuit_status, a.case_charge_way, a.system_approval_id, a.case_case_type_id, a.case_seal_applyfor_id, a.hr_emp_id, a.collection_time, a.case_parties, a.case_fxmoney, a.case_wtr, a.case_contract, a.case_record, a.case_share, a.case_settle_type, a.case_approval_endtime, a.case_record_num, a.standard,
- b.id as sub_id, b.case_type_name,c.id,c.emp_name
-        from case_law a
-        left join case_case_type b on b.id = a.case_case_type_id
-        left join hr_emp c on a.hr_emp_id = c.id
-        where a.id = #{id}
+       select cas.*,cas.id as sub_id,type2.case_type_name,emp_name,cw.case_attorney from case_law cas
+        inner join case_case_type type on type.id = cas.case_case_type_id
+        inner join case_case_type type2 on type2.id = type.type_pid
+        inner join cw_performancesplit cw on cas.id = cw.case_law_id
+        inner join hr_emp emp on emp.id = cw.hr_emp_id
+       where cas.id = #{id}
     </select>
 
     <select id="selectCaseCaseTypeXL" parameterType="CaseCaseType" resultMap="CaseCaseTypesResult">
         select id,case_type_name from case_case_type limit 0,10
     </select>
-        
+
 </mapper>

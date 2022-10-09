@@ -38,7 +38,7 @@
       <el-table-column label="案件冲突" align="center" prop="caseClash" />
       <el-table-column label="提交人" align="center" prop="caseSubmitter" />
       <el-table-column label="收案审批人" align="center" prop="systemApprovalId" />
-      <el-table-column label="" align="center" prop="caseThirdParty" />
+      <el-table-column label="业务子类型" align="center" prop="caseTypeName" />
       <el-table-column label="审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
       <el-table-column label="提交时间" align="center" prop="caseSubtime" width="180">
         <template v-slot="scope">
@@ -74,7 +74,54 @@
     />
 
     <!-- 添加或修改审批中心对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="800px" append-to-body>
+      <el-descriptions :title=form.caseTypeName >
+        <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="提交时间:">{{form.caseSubtime}}</el-descriptions-item>
+        <el-descriptions-item label="案件类型:"> {{form.caseTypeName}}</el-descriptions-item>
+        <el-descriptions-item label="委托人:">{{form.caseParties}}</el-descriptions-item>
+        <el-descriptions-item label="第三方:">{{form.caseThirdParty}}</el-descriptions-item>
+        <el-descriptions-item label="对方当事人:">{{form.caseOppositeParties}}</el-descriptions-item>
+        <el-descriptions-item label="办理地区:">{{form.caseTransactionRegion}}</el-descriptions-item>
+        <el-descriptions-item label="受理法院:">{{form.caseCourt}}</el-descriptions-item>
+        <el-descriptions-item label="主办律师:">{{form.empName}}</el-descriptions-item>
+        <el-descriptions-item label="诉讼标的:">{{form.caseLawsuitobj}}</el-descriptions-item>
+        <el-descriptions-item label="代理费:">{{form.caseAgencyfee}}</el-descriptions-item>
+        <el-descriptions-item label="杂费:">{{form.caseProxysal}}</el-descriptions-item>
+        <el-descriptions-item label="收费方式:">{{form.caseChargeWay}}</el-descriptions-item>
+        <el-descriptions-item label="补助金额:">{{form.caseSubsidysal}}</el-descriptions-item>
+        <el-descriptions-item label="是否指派:">{{form.caseAssign}}</el-descriptions-item>
+        <el-descriptions-item label="收案审批状态:">
+          {{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="档案号:">{{form.caseFilenumber}}</el-descriptions-item>
+        <el-descriptions-item label="专属案号:">{{form.casePropernum}}</el-descriptions-item>
+        <el-descriptions-item label="收案审批人:">{{form.systemApprovalId}}</el-descriptions-item>
+        <el-descriptions-item label="案由:">{{form.caseCause}}</el-descriptions-item>
+        <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions
+        title="审批记录"
+        direction="vertical"
+        :column="4"
+        :size="size"
+        border
+      >
+        <el-descriptions-item label="序号">{{form.caseApproveStatus != '1' ? form.id :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{form.caseApproveStatus != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{form.caseApproveStatus != '1' ? form.empName :''}}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{form.caseApproveStatus != '1' ? form.caseRemarks :''}}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="审批结果">
+        <el-descriptions-item label="">{{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="结案审批时间:">{{form.caseApproveStatus != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人:">{{form.caseApproveStatus != '1' ? form.empName :''}}</el-descriptions-item>
+      </el-descriptions>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="案号" prop="caseNo">
           <el-input v-model="form.caseNo" placeholder="请输入案号" />
@@ -214,7 +261,7 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 

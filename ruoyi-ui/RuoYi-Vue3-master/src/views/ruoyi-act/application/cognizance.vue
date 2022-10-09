@@ -95,7 +95,9 @@
         <el-descriptions-item label="杂费:">{{form.caseProxysal}}</el-descriptions-item>
         <el-descriptions-item label="收费方式:">{{form.caseChargeWay}}</el-descriptions-item>
         <el-descriptions-item label="补助金额:">{{form.caseSubsidysal}}</el-descriptions-item>
-        <el-descriptions-item label="是否指派:">{{form.caseAssign}}</el-descriptions-item>
+        <el-descriptions-item label="是否指派:">
+          {{form.caseAssign == 'N' ? '否' : (form.caseAssign == 'Y' ? '是' : '') }}
+        </el-descriptions-item>
         <el-descriptions-item label="收案审批状态:">
           {{form.caseApproveStatus == '1' ? '审批中' : (form.caseApproveStatus == '2' ? '审批通过' : (form.caseApproveStatus == '3' ? '审批不通过' :'')) }}
         </el-descriptions-item>
@@ -136,6 +138,7 @@
 </style>
 <script>
 import { listApplication, listApplicationxl, getApplication, delApplication  } from "@/api/ruoyi-act/application";
+import { getUserProfile } from "@/api/system/user";
 
 
 export default {
@@ -237,7 +240,13 @@ export default {
       this.options = response.rows;
       console.log("赋值完成的下拉框数据"+this.options);
     });
-    this.getList();
+
+    getUserProfile().then(response => {
+      this.user = response.data;
+      this.queryParams.caseSubmitter=this.user.nickName;
+      // console.log("昵称："+this.queryParams.caseSubmitter);
+      this.getList();
+    });
   },
   methods: {
     /** 查询我的申请列表 */

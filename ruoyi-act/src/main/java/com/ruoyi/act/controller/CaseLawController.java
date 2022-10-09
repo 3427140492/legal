@@ -46,10 +46,10 @@ public class CaseLawController extends BaseController
         System.out.println("接收到的时间"+caseLaw.getCaseSubtime());
         startPage();
         List<CaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
-        for (int a=0;a<list.size();a++){
-            list.get(a).setCaseCaseTypeId(list.get(a).getCaseCaseTypeId().substring(0,4));
+//        for (int a=0;a<list.size();a++){
+//            list.get(a).setCaseCaseTypeId(list.get(a).getCaseCaseTypeId().substring(0,4));
 //            System.out.println("<<<<<<<"+list.get(a).getCaseCaseTypeId());
-        }
+//        }
         return getDataTable(list);
     }
 
@@ -86,6 +86,7 @@ public class CaseLawController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
+        System.out.println(id);
         return AjaxResult.success(caseLawService.selectCaseLawById(id));
     }
 
