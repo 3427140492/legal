@@ -42,3 +42,30 @@ export function delArchives(id) {
     method: 'delete'
   })
 }
+
+
+// 查询工作经历
+export function getWorkArchives(id) {
+  return request({
+    url: '/persM/archives/queryWork/' + id,
+    method: 'get'
+  })
+}
+
+// 查询工作经历
+export function getWork(id) {
+  return request({
+    url: '/persM/archives/queryWorkQuery/' + id,
+    method: 'get'
+  })
+}
+
+
+// 修改工作经历
+export function updateWorkhistory(data) {
+  return request({
+    url: '/persM/archives/upWork',
+    method: 'put',
+    data: data
+  })
+}

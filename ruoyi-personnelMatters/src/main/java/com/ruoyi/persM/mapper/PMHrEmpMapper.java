@@ -3,6 +3,7 @@ package com.ruoyi.persM.mapper;
 import java.util.List;
 import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.HrLawyerIdentity;
+import com.ruoyi.persM.domain.WorkExperience;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -89,4 +90,14 @@ public interface PMHrEmpMapper
      * @return 结果
      */
     public int deleteHrLawyerIdentityByHrEmpId(Long id);
+
+    /**
+     * 查询工作经历
+     *
+     * @param id 人事档案主键
+     * @return 人事档案
+     */
+    public List<WorkExperience> selectWorkById(Long id);
+
+    public WorkExperience selectWorkExperienceById(Long id);
 }

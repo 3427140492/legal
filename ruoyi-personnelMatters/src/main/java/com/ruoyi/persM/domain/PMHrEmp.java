@@ -178,6 +178,16 @@ public class PMHrEmp extends BaseEntity
     /** $table.subTable.functionName信息 */
     private List<HrLawyerIdentity> hrLawyerIdentityList;
 
+    private List<WorkExperience> workExperienceList;
+
+    public List<WorkExperience> getWorkExperienceList() {
+        return workExperienceList;
+    }
+
+    public void setWorkExperienceList(List<WorkExperience> workExperienceList) {
+        this.workExperienceList = workExperienceList;
+    }
+
     public void setId(Long id)
     {
         this.id = id;
@@ -571,6 +581,7 @@ public class PMHrEmp extends BaseEntity
                 .append("empQq", getEmpQq())
                 .append("empWechat", getEmpWechat())
                 .append("hrLawyerIdentityList", getHrLawyerIdentityList())
+                .append("workExperienceList", getWorkExperienceList())
                 .append("identityName",getIdentityName())
                 .toString();
     }
