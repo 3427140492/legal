@@ -2,6 +2,7 @@ package com.ruoyi.persM.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 人事档案Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-09-27
  */
@@ -96,9 +97,11 @@ public class PMHrEmpController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('persM:archives:remove')")
     @Log(title = "人事档案", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(pMHrEmpService.deletePMHrEmpByIds(ids));
     }
+
+
 }

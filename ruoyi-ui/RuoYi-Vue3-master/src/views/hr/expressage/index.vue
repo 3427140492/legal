@@ -222,26 +222,24 @@
         <el-descriptions-item label="相关文件" align="center">{{form.expressageFile}}</el-descriptions-item>
         <el-descriptions-item label="备注说明" align="center">{{form.expressageRemark}}</el-descriptions-item>
         </el-descriptions>
-
-
       </el-dialog>
  
 
     <!-- 添加或修改快速登记对话框 -->
-    <el-dialog :title="title" v-model="AddOpen" width="1000px" append-to-body>
+    <el-dialog :title="title" v-model="this.AddOpen" width="1000px" append-to-body draggable>
       <el-descriptions title="详细信息" :column="3" border>基本信息</el-descriptions>
       <el-form ref="form" :model="form" :rules="rules" >
         <el-row style="margin-left:15px;">
           <el-col :span="12">
-            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+            <el-form-item  prop="systemUserRecipients" style="width:450px;">
               <label><span style="color:red;">*</span>收件人：</label>
-              <el-input v-model="form.systemUserAddresser"  />
+              <el-input v-model="form.systemUserRecipients"  />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item prop="systemUserRecipients" style="width:450px;">
+            <el-form-item prop="expressageDateofreceipt" style="width:450px;">
               <label><span style="color:red;">*</span>收件日期：</label>
-              <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD"  style="width:450px;">
+              <el-date-picker clearable v-model="queryParams.expressageDateofreceipt" value-format="YYYY-MM-DD"  style="width:450px;">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -249,24 +247,24 @@
 
         <el-row style="margin-left:15px;">
           <el-col :span="12">
-            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+            <el-form-item  prop="expressageSendWaayId" style="width:450px;">
               <label><span style="color:red;">*</span>快递公司：</label>
-              <el-input v-model="form.systemUserAddresser"  />
+              <el-input v-model="form.expressageSendWaayId"  @click="sendWaay=true" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+            <el-form-item  prop="expressageExpressTypeId" style="width:450px;">
               <label><span style="color:red;">*</span>快件类型：</label>
-              <el-input v-model="form.systemUserAddresser"  />
+              <el-input v-model="form.expressageExpressTypeId"  />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row style="margin-left:15px;">
           <el-col :span="12">
-            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+            <el-form-item  prop="takestatus" style="width:450px;">
               <label><span style="color:red;">*</span>领取状态：</label>
-              <el-select v-model="queryParams.takestatus" style="width:450px;">
+              <el-select v-model="form.takestatus" style="width:450px;">
               <el-option label="未领取" value="1" />
               <el-option label="已领取" value="2" />
             </el-select>
@@ -283,45 +281,45 @@
               </template>
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                  <el-form-item  prop="caseNo" style="width:450px;">
                     <label>案件：</label>
-                    <el-input v-model="form.systemUserAddresser"  />
+                    <el-input v-model="form.caseNo"  />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                  <el-form-item  prop="expressageCourierNumber" style="width:450px;">
                     <label>快递单号：</label>
-                    <el-input v-model="form.systemUserAddresser"  />
+                    <el-input v-model="form.expressageCourierNumber"  />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                  <el-form-item  prop="expressFee" style="width:450px;">
                     <label>快递费：</label>
-                    <el-input v-model="form.systemUserAddresser"  />
+                    <el-input v-model="form.expressFee"  />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:450px;">
+                  <el-form-item  prop="collarPerson" style="width:450px;">
                     <label>领件人</label>
-                    <el-input v-model="form.systemUserAddresser"  />
+                    <el-input v-model="form.collarPerson"  />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item label="">
+                  <el-form-item label=""  prop="expressageFile">
                     <label>相关文件：</label>
                     <div style="width:450px;"><file-upload v-model="form.expressageFile"/></div>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item prop="expressageSendadate" style="width:450px;">
-                    <label><span style="color:red;">*</span>收件日期：</label>
-                      <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD"  style="width:450px;">
+                  <el-form-item prop="expressageBringDate" style="width:450px;">
+                    <label><span style="color:red;">*</span>领件时间：</label>
+                      <el-date-picker clearable v-model="queryParams.expressageBringDate" value-format="YYYY-MM-DD"  style="width:450px;">
                       </el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -330,16 +328,16 @@
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:920px;">
+                  <el-form-item  prop="expressageCollarnote" style="width:920px;">
                     <label>领件说明：</label>
-                    <el-input v-model="form.systemUserAddresser"  />
+                    <el-input v-model="form.expressageCollarnote"  />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="systemUserAddresser" style="width:920px;">
+                  <el-form-item  prop="expressageRemark" style="width:920px;">
                     <label>其他备注说明：</label>
                     <!-- <el-input v-model="form.systemUserAddresser"  /> -->
                     <textarea rows="3" cols="90" class="form-control" style="width:920px;"></textarea>
@@ -438,9 +436,26 @@
       </el-form>
       <div slot="footer" class="dialog-footer" style="margin-left:15px;">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <!-- <el-button @click="cancel">取 消</el-button> -->
+        <el-button @click="cancel">取 消</el-button>
       </div> 
     </el-dialog> 
+
+
+    <!-- 快递公司弹出框 -->
+    <el-dialog title="设置管理" v-model="sendWaay" draggable>
+      <el-card>
+        <el-tabs v-model="activeName" >
+          <el-tab-pane label="列表" name="sendwaaylist" >
+            <checkManage-info-form ref="sendwaaylistInfo" :info="info" />
+          </el-tab-pane>
+          <el-tab-pane label="添加/编辑" name="sendwaayAdd">
+            <checkStatis-info-form ref="sendwaayAddInfo" :info="info" />
+          </el-tab-pane>
+        </el-tabs>
+      </el-card>
+        
+    </el-dialog>
+
   </div>
 </template>
 
@@ -448,10 +463,20 @@
 
 <script>
 import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList} from "@/api/hr/expressage";
+ import { getGenTable, updateGenTable } from "@/api/tool/gen";
+ import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
+ import { listMenu as getMenuTreeselect } from "@/api/system/menu";
+ import sendwaaylistInfoForm from "./sendwaaylist.vue";
+ import sendwaayAddInfoForm from "./sendwaayAdd.vue";
 
 
 export default {
   name: "Expressage",
+  name: "GenEdit",
+  components: {
+    sendwaaylistInfoForm,
+    sendwaayAddInfoForm
+  },
   data() {
     return {
       // 遮罩层
@@ -478,6 +503,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      AddOpen: false,
+      sendWaay:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -496,6 +523,20 @@ export default {
       // 表单校验
       rules: {
       },
+      // 选中选项卡的 name
+      activeName: "sendwaaylist",
+      // 表格的高度
+      tableHeight: document.documentElement.scrollHeight - 245 + "px",
+      // 表信息
+      tables: [],
+      // 表列信息
+      columns: [],
+      // 字典信息
+      dictOptions: [],
+      // 菜单信息
+      menus: [],
+      // 表详细信息
+      info: {}
     };
   },
   created() {
@@ -523,7 +564,7 @@ export default {
     },
     // 取消按钮
     cancel() {
-      this.open = false;
+      this.AddOpen = false;
       this.reset();
     },
     // 表单重置

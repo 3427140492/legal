@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.persM.mapper.PMHrEmpMapper">
-    
+
     <resultMap type="PMHrEmp" id="PMHrEmpResult">
         <result property="id"    column="id"    />
         <result property="empName"    column="emp_name"    />
@@ -65,17 +65,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     <select id="selectPMHrEmpList" parameterType="PMHrEmp" resultMap="PMHrEmpResult">
         <include refid="selectPMHrEmpVo"/>
-            <if test="empName != null  and empName != ''"> and emp_name like '%${empName}%' </if>
-            <if test="identityName != null and identityName != ''  "> and identity_name = '${identityName}'</if>
-            <if test="empEntrydate != null "> and emp_entrydate = '${empEntrydate}'</if>
-            <if test="empContEnddate != null "> and emp_cont_enddate = '${empContEnddate}'</if>
-            <if test="empPhone != null  and empPhone != ''"> and emp_phone = '${empPhone}'</if>
+        <if test="empName != null  and empName != ''"> and emp_name like '%${empName}%' </if>
+        <if test="identityName != null and identityName != ''  "> and identity_name = '${identityName}'</if>
+        <if test="empEntrydate != null "> and emp_entrydate = '${empEntrydate}'</if>
+        <if test="empContEnddate != null "> and emp_cont_enddate = '${empContEnddate}'</if>
+        <if test="empPhone != null  and empPhone != ''"> and emp_phone = '${empPhone}'</if>
     </select>
-    
+
     <select id="selectPMHrEmpById" parameterType="PMHrEmp" resultMap="PMHrEmpHrLawyerIdentityResult">
         select * from hr_emp where id = ${id}
     </select>
-        
+
     <insert id="insertPMHrEmp" parameterType="PMHrEmp" useGeneratedKeys="true" keyProperty="id">
         insert into hr_emp
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -115,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="empPostcode != null">emp_postcode,</if>
             <if test="empQq != null">emp_qq,</if>
             <if test="empWechat != null">emp_wechat,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="empName != null">#{empName},</if>
             <if test="empBirthdate != null">#{empBirthdate},</if>
@@ -153,7 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="empPostcode != null">#{empPostcode},</if>
             <if test="empQq != null">#{empQq},</if>
             <if test="empWechat != null">#{empWechat},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updatePMHrEmp" parameterType="PMHrEmp">
@@ -204,14 +204,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deletePMHrEmpByIds" parameterType="String">
-        delete from hr_emp where id in 
+        delete from hr_emp where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
     <delete id="deleteHrLawyerIdentityByHrEmpIds" parameterType="String">
-        delete from hr_lawyer_identity where hr_emp_id in 
+        delete from hr_lawyer_identity where hr_emp_id in
         <foreach item="hrEmpId" collection="array" open="(" separator="," close=")">
             #{hrEmpId}
         </foreach>
