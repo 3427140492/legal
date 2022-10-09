@@ -233,7 +233,7 @@
           <el-col :span="12">
             <el-form-item  prop="systemUserRecipients" style="width:450px;">
               <label><span style="color:red;">*</span>收件人：</label>
-              <el-input v-model="form.systemUserRecipients"  />
+              <el-input v-model="form.systemUserRecipients"   @click="sjr=true" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -249,7 +249,7 @@
           <el-col :span="12">
             <el-form-item  prop="expressageSendWaayId" style="width:450px;">
               <label><span style="color:red;">*</span>快递公司：</label>
-              <el-input v-model="form.expressageSendWaayId"  @click="sendWaay=true" />
+              <el-input v-model="form.expressageSendWaayId"  @click="openSendWaayFun" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -440,17 +440,103 @@
       </div> 
     </el-dialog> 
 
+    <!-- 收件人弹出框 -->
+    <el-dialog title="收件人" v-model="sjr" draggable>
+      <el-form :inline="true">
+        <el-form-item prop="SearchStr">
+          <el-input/>
+        </el-form-item>
+        <el-form-item prop="SearchType">
+          <el-select >
+            <el-option label="案号搜索" value="1"/>
+            <el-option label="委托人搜索" value="2"/>
+            <el-option label="对方当事人搜索" value="3"/>
+            <el-option label="案由搜索" value="4"/>
+            <el-option label="承办律师搜索" value="5"/>
+            <el-option label="受理法院搜索" value="6"/>
+          </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+          </el-form-item>
+        </el-form>
+        <el-table :data="lawlist" border >
+          <el-table-column label="案号" align="center" prop="caseNo" />
+          <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
+          <el-table-column label="委托人" align="center" prop="caseWtr" />
+      </el-table>
+         
+    </el-dialog>
+
 
     <!-- 快递公司弹出框 -->
-    <el-dialog title="设置管理" v-model="sendWaay" draggable>
+    <el-dialog title="设置管理" v-model="sendWaayDia" draggable width="1000px">
       <el-card>
         <el-tabs v-model="activeName" >
           <el-tab-pane label="列表" name="sendwaaylist" >
-            <checkManage-info-form ref="sendwaaylistInfo" :info="info" />
+              <el-table border="1px" v-loading="loading" :data="sendWaayList" @selection-change="handleSelectionChange">
+                <el-table-column type="selection" width="55" align="center" />
+                <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
+                <el-table-column label="排序" align="center" prop="sorting" />
+                <el-table-column label="名称" align="center" prop="sendName" />
+                <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
+
+                    <template v-slot="scope">
+                    <el-dropdown trigger="click">
+                      <el-button>
+                        操作<el-icon class="el-icon--right">
+                          <arrow-down />
+                        </el-icon>
+                      </el-button>
+                      <template #dropdown>
+                        <el-dropdown-menu>
+                          <el-dropdown-item @click="handleUpdateSendwaay(scope.row)">修改</el-dropdown-item>
+                          <el-dropdown-item @click="handleDeleteSendWaay(scope.row)">删除</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </template>
+                    </el-dropdown>
+                  </template>
+
+                </el-table-column>
+               
+              </el-table> 
+              <pagination
+                  v-show="total>0"
+                  :total="total"
+                  v-model="queryParams.pageNum"
+                  v-model:limit="queryParams.pageSize"
+                  @pagination="openSendWaayFun"
+                />
           </el-tab-pane>
+
           <el-tab-pane label="添加/编辑" name="sendwaayAdd">
-            <checkStatis-info-form ref="sendwaayAddInfo" :info="info" />
+             <div style="width:1000px;height:30px;border-bottom:1px solid gainsboro;margin-bottom: 20px;">
+              <span style="font-size:15px;font-weight:bold;">基本信息</span>
+            </div>
+            <el-form :inline="true">
+            <el-row style="margin-left:15px;">
+              <el-col :span="12">
+                <el-form-item  prop="sendName" style="width:400px;">
+                  <label><span style="color:red;">*</span>名称：</label>
+                  <el-input v-model="form.sendName"/>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item prop="sorting" style="width:400px;">
+                  <label><span style="color:red;">*</span>排序：</label>
+                  <el-input v-model="form.sorting"/>
+                </el-form-item>
+              </el-col>
+            </el-row>
+              
+            <el-form-item style="margin-left:15px;">
+              <el-button type="primary"  size="mini" @click="SendWaaysubmitForm">确定提交</el-button>
+            </el-form-item>
+
+            </el-form>
+
           </el-tab-pane>
+
         </el-tabs>
       </el-card>
         
@@ -462,29 +548,21 @@
 
 
 <script>
-import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList} from "@/api/hr/expressage";
- import { getGenTable, updateGenTable } from "@/api/tool/gen";
- import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
- import { listMenu as getMenuTreeselect } from "@/api/system/menu";
- import sendwaaylistInfoForm from "./sendwaaylist.vue";
- import sendwaayAddInfoForm from "./sendwaayAdd.vue";
+import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList,addSendwaay,updateSendwaay,delSendwaay} from "@/api/hr/expressage";
 
 
 export default {
-  name: "Expressage",
-  name: "GenEdit",
-  components: {
-    sendwaaylistInfoForm,
-    sendwaayAddInfoForm
-  },
+  name: "expressage",
   data() {
     return {
+      // 选中选项卡的 name
+      activeName: "sendwaaylist",
       // 遮罩层
       loading: true,
       // 选中数组
       ids: [],
       // 子表选中数据
-      checkedSendWaay: [],
+      sendwaaylist: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -504,7 +582,8 @@ export default {
       // 是否显示弹出层
       open: false,
       AddOpen: false,
-      sendWaay:false,
+      sendWaayDia:false,
+      sjr:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -523,20 +602,7 @@ export default {
       // 表单校验
       rules: {
       },
-      // 选中选项卡的 name
-      activeName: "sendwaaylist",
-      // 表格的高度
-      tableHeight: document.documentElement.scrollHeight - 245 + "px",
-      // 表信息
-      tables: [],
-      // 表列信息
-      columns: [],
-      // 字典信息
-      dictOptions: [],
-      // 菜单信息
-      menus: [],
-      // 表详细信息
-      info: {}
+     
     };
   },
   created() {
@@ -588,10 +654,22 @@ export default {
         collarPerson: null,
         expressageTel: null,
         expressageType: null,
-        caseNo: null
+        caseNo: null,
+        sendName:null,
+        sorting:null,
       };
       this.sendWaayList = [];
       this.resetForm("form");
+    },
+    openSendWaayFun(){
+      this.sendWaayDia=true;
+      sendList().then(response=>{ //快递公司查询
+        console.log(response.rows);
+         this.sendWaayList = response.rows;
+         this.total = response.total;
+         console.log(this.sendWaayList);
+      });
+
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -669,20 +747,51 @@ export default {
       this.sendWaayList.push(obj);
     },
     /** 发送删除按钮操作 */
-    handleDeleteSendWaay() {
-      if (this.checkedSendWaay.length == 0) {
-        this.$modal.msgError("请先选择要删除的发送数据");
-      } else {
-        const sendWaayList = this.sendWaayList;
-        const checkedSendWaay = this.checkedSendWaay
-        this.sendWaayList = sendWaayList.filter(function(item) {
-          return checkedSendWaay.indexOf(item.index) == -1
-        });
-      }
+    handleDeleteSendWaay(row) {
+        const ids = row.id || this.ids;
+        this.$modal.confirm('是否确认删除快速登记编号为"' + ids + '"的数据项？').then(function() {
+          return delSendwaay(ids);
+        }).then(() => {
+          this.openSendWaayFun();
+          this.$modal.msgSuccess("删除成功");
+        }).catch(() => {});
+     
     },
+      /** 修改按钮操作 */
+      handleUpdateSendwaay(row) {
+        this.reset();
+        const id = row.id || this.ids
+        getSendwaay(id).then(response => {
+          this.form = response.data;
+          this.sendWaayList = response.data.sendWaayList;
+        });
+    },
+    /** 快递公司提交按钮 */
+    SendWaaysubmitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.form.sendWaayList = this.sendWaayList;
+          if (this.form.id != null) {
+            updateSendwaay(this.form).then(response => {
+              this.$modal.msgSuccess("修改成功");
+              this.open = false;
+              this.openSendWaayFun();
+            });
+          } else {
+            addSendwaay(this.form).then(response => {
+              this.$modal.msgSuccess("新增成功");
+              this.open = false;
+              this.openSendWaayFun();
+              this.reset();
+            });
+          }
+        }
+      });
+    },
+
     /** 复选框选中数据 */
     handleSendWaaySelectionChange(selection) {
-      this.checkedSendWaay = selection.map(item => item.index)
+      this.sendwaaylist = selection.map(item => item.index)
     },
     /** 导出按钮操作 */
     handleExport() {

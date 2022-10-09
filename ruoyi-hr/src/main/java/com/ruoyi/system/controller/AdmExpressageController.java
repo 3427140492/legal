@@ -39,12 +39,14 @@ public class AdmExpressageController extends BaseController
     @Autowired
     private IExpressTypeService expressTypeService;
 
+    //快递公司
     @GetMapping("/slist")
-    public TableDataInfo slist(){
-        List<SendWaay> list = sendWaayService.selectSendName();
+    public TableDataInfo slist(SendWaay sendWaay){
+        List<SendWaay> list = sendWaayService.selectSendWaayList(sendWaay);
         return getDataTable(list);
     }
 
+    //快递类型
     @GetMapping("/exlist")
     public TableDataInfo exlist(){
         List<ExpressType> list = expressTypeService.selectExpressName();
@@ -118,4 +120,7 @@ public class AdmExpressageController extends BaseController
     {
         return toAjax(admExpressageService.deleteAdmExpressageByIds(ids));
     }
+
+
+
 }

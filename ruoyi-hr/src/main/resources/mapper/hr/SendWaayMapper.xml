@@ -1,18 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SendWaayMapper">
 
-    <resultMap type="SendWaay" id="SendWaayResult">
-        <result property="id"    column="id"    />
-        <result property="sorting"    column="sorting"    />
-        <result property="sendName"    column="send_name"    />
-    </resultMap>
+<resultMap type="SendWaay" id="SendWaayResult">
+    <result property="id"    column="id"    />
+    <result property="sorting"    column="sorting"    />
+    <result property="sendName"    column="send_name"    />
+</resultMap>
 
-    <!--    查询快递公司-->
-    <select id="selectSendName"  resultMap="SendWaayResult">
-        select * from send_Waay
-    </select>
+<sql id="selectSendWaayVo">
+    select id, sorting, send_name from send_waay
+</sql>
 
+<select id="selectSendWaayList" parameterType="SendWaay" resultMap="SendWaayResult">
+    <include refid="selectSendWaayVo"/>
+    <where>
+        <if test="sorting != null  and sorting != ''"> and sorting = #{sorting}</if>
+        <if test="sendName != null  and sendName != ''"> and send_name like concat('%', #{sendName}, '%')</if>
+    </where>
+</select>
+
+<select id="selectSendWaayById" parameterType="Integer" resultMap="SendWaayResult">
+    <include refid="selectSendWaayVo"/>
+    where id = #{id}
+</select>
+
+<insert id="insertSendWaay" parameterType="SendWaay" useGeneratedKeys="true" keyProperty="id">
+    insert into send_waay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="sorting != null and sorting != ''">sorting,</if>
+        <if test="sendName != null">send_name,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="sorting != null and sorting != ''">#{sorting},</if>
+        <if test="sendName != null">#{sendName},</if>
+    </trim>
+</insert>
+
+<update id="updateSendWaay" parameterType="SendWaay">
+    update send_waay
+    <trim prefix="SET" suffixOverrides=",">
+        <if test="sorting != null and sorting != ''">sorting = #{sorting},</if>
+        <if test="sendName != null">send_name = #{sendName},</if>
+    </trim>
+    where id = #{id}
+</update>
+
+<delete id="deleteSendWaayById" parameterType="Integer">
+    delete from send_waay where id = #{id}
+</delete>
+
+<delete id="deleteSendWaayByIds" parameterType="String">
+    delete from send_waay where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+</delete>
 </mapper>

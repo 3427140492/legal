@@ -6,7 +6,7 @@ spring:
         druid:
             # 主库数据源
             master:    #8.210.245.120
-                url: jdbc:mysql://localhost:3306/rrrr?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                url: jdbc:mysql://localhost:3306/ruoyi?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
                 password: root
 

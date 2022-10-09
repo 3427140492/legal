@@ -9,6 +9,7 @@ export function listExpressage(query) {
   })
 }
 
+//快递公司
 export function sendList(query) {
   return request({
     url: '/hr/expressage/slist',
@@ -17,6 +18,7 @@ export function sendList(query) {
   })
 }
 
+//快递类型
 export function expressList(query) {
   return request({
     url: '/hr/expressage/exlist',
@@ -60,3 +62,34 @@ export function delExpressage(id) {
     method: 'delete'
   })
 }
+
+
+
+// 新增发送
+export function addSendwaay(data) {
+  return request({
+    url: '/hr/sendwaay',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改发送
+export function updateSendwaay(data) {
+  return request({
+    url: '/hr/sendwaay',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除发送
+export function delSendwaay(id) {
+  return request({
+    url: '/hr/sendwaay/' + id,
+    method: 'delete'
+  })
+}
+
+
+
