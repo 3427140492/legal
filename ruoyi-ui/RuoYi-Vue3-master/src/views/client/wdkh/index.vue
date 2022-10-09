@@ -95,7 +95,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['client:wdkh:edit']"
+            v-hasPermi="['client:client:edit']"
           >修改</el-button>
           <el-button
             size="mini"

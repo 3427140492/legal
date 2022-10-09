@@ -2,171 +2,90 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="案号搜索" prop="caseNo">
-        <el-input
-          v-model="queryParams.whatisPerson"
-          placeholder="请输入案号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.whatisPerson" placeholder="请输入案号" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="日志类型" prop="logtypeId">
-        <el-input
-          v-model="queryParams.logtypeId"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.logtypeId" placeholder="请输入${comment}" clearable
+          @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="${comment}" prop="caseLawId">
-        <el-input
-          v-model="queryParams.caseLawId"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="${comment}" prop="clientId">
-        <el-input
-          v-model="queryParams.clientId"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
+
       <el-form-item label="${comment}" prop="joblogStarttime">
-        <el-date-picker clearable
-          v-model="queryParams.joblogStarttime"
-          type="date"
-          value-format="yyyy-MM-dd"
+        <el-date-picker clearable v-model="queryParams.joblogStarttime" type="date" value-format="yyyy-MM-dd"
           placeholder="请选择${comment}">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="${comment}" prop="joblogEnddtime">
-        <el-date-picker clearable
-          v-model="queryParams.joblogEnddtime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
-        </el-date-picker>
-      </el-form-item>
+
       <el-form-item label="${comment}" prop="joblogReportedtime">
-        <el-input
-          v-model="queryParams.joblogReportedtime"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.joblogReportedtime" placeholder="请输入${comment}" clearable
+          @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="${comment}" prop="joblogUpdatetime">
-        <el-date-picker clearable
-          v-model="queryParams.joblogUpdatetime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="${comment}" prop="joblogText">
-        <el-input
-          v-model="queryParams.joblogText"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['log:job:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['log:job:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['log:job:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @clfick="handleExport"
-          v-hasPermi="['log:job:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
     <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="日志类型" align="center" prop="logTypeLogname" />
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="客户" align="center" prop="client" />
-     
 
-      <el-table-column label="开始时间" align="center" prop="joblogStarttime" width="180"/>
-        
-    
+
+      <el-table-column label="开始时间" align="center" prop="joblogStarttime" width="180" />
+
+
       <el-table-column label="自报时间" align="center" prop="joblogReportedtime" />
-     
-      
+
+
       <el-table-column label="工作描述" align="center" prop="joblogText" />
       <el-table-column label="工作状态" align="center" prop="joblogStatus" />
+
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['log:job:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['log:job:remove']"
-          >删除</el-button>
+        <template #default="scope">
+          <el-dropdown trigger="click">
+            <el-button>
+              操作<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="ViewDetail(scope.row.id)">查看</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </template>
+
       </el-table-column>
     </el-table>
-    
-    <pagination
-      v-show="total>0"
-      :total="total"
-      v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
-      @pagination="getList"
-    />
+
+    <pagination v-show="total>0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
+      @pagination="getList" />
+
+    <el-dialog v-model="this.ViewDetails" title="查看日志">
+      <el-descriptions title="" :column="3" border>
+                      
+
+
+
+        <el-descriptions-item label="日志类型" align="center">{{data.logTypeLogname}}</el-descriptions-item>
+        
+        <el-descriptions-item label="归属人" align="center">{{data.caseSubmitter}}</el-descriptions-item>
+        <el-descriptions-item label="公开状态" align="center">{{data.joblogStatus}}</el-descriptions-item>
+        <el-descriptions-item label="案件" align="center">{{data.caseNo}}</el-descriptions-item>
+        <el-descriptions-item label="客户名称" align="center">{{data.client}}</el-descriptions-item>
+        <el-descriptions-item label="起始时间" align="center">{{data.joblogStarttime}}</el-descriptions-item>
+        <el-descriptions-item label="自报时间" align="center">{{data.joblogReportedtime}}</el-descriptions-item>
+        <el-descriptions-item label="更新时间" align="center">{{data.joblogUpdatetime}}</el-descriptions-item>
+        <el-descriptions-item label="备注" align="center">{{data.joblogText}}</el-descriptions-item>
+      </el-descriptions>
+    </el-dialog>
+
 
     <!-- 添加或修改工作对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
@@ -184,18 +103,12 @@
           <el-input v-model="form.clientId" placeholder="请输入${comment}" />
         </el-form-item>
         <el-form-item label="${comment}" prop="joblogStarttime">
-          <el-date-picker clearable
-            v-model="form.joblogStarttime"
-            type="date"
-            value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.joblogStarttime" type="date" value-format="yyyy-MM-dd"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="${comment}" prop="joblogEnddtime">
-          <el-date-picker clearable
-            v-model="form.joblogEnddtime"
-            type="date"
-            value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.joblogEnddtime" type="date" value-format="yyyy-MM-dd"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
@@ -203,15 +116,12 @@
           <el-input v-model="form.joblogReportedtime" placeholder="请输入${comment}" />
         </el-form-item>
         <el-form-item label="${comment}" prop="joblogUpdatetime">
-          <el-date-picker clearable
-            v-model="form.joblogUpdatetime"
-            type="date"
-            value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.joblogUpdatetime" type="date" value-format="yyyy-MM-dd"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="${comment}">
-          <file-upload v-model="form.joblogFile"/>
+          <file-upload v-model="form.joblogFile" />
         </el-form-item>
         <el-form-item label="${comment}" prop="joblogText">
           <el-input v-model="form.joblogText" placeholder="请输入${comment}" />
@@ -225,9 +135,10 @@
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteClient">删除</el-button>
           </el-col>
         </el-row>
-        <el-table :data="clientList" :row-class-name="rowClientIndex" @selection-change="handleClientSelectionChange" ref="client">
+        <el-table :data="clientList" :row-class-name="rowClientIndex" @selection-change="handleClientSelectionChange"
+          ref="client">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50"/>
+          <el-table-column label="序号" align="center" prop="index" width="50" />
           <el-table-column label="客户" prop="client" width="150">
             <template slot-scope="scope">
               <el-input v-model="scope.row.client" placeholder="请输入客户" />
@@ -336,7 +247,8 @@
           </el-table-column>
           <el-table-column label="$comment" prop="addtime" width="240">
             <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.addtime" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
+              <el-date-picker clearable v-model="scope.row.addtime" type="date" value-format="yyyy-MM-dd"
+                placeholder="请选择$comment" />
             </template>
           </el-table-column>
           <el-table-column label="$comment" prop="systemUserId" width="150">
@@ -365,6 +277,12 @@
 </template>
 
 <script>
+
+
+
+
+
+
 import { listJob, getJob, delJob, addJob, updateJob } from "@/api/log/job";
 
 export default {
@@ -373,6 +291,7 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      ViewDetails: false,
       // 选中数组
       ids: [],
       // 子表选中数据
@@ -393,6 +312,9 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      data: {
+
+      },
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -463,10 +385,24 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
+    ViewDetail(id) {
+      this.ViewDetails = true;
+      getJob(id).then(response => {
+        this.data.logTypeLogname = response.data.logTypeLogname;
+        this.data.caseSubmitter = response.data.caseSubmitter;
+        this.data.joblogStatus = response.data.joblogStatus;
+        this.data.caseNo = response.data.caseNo;
+        this.data.client = response.data.client;
+        this.data.joblogStarttime = response.data.joblogStarttime;
+        this.data.joblogReportedtime = response.data.joblogReportedtime;
+        this.data.joblogUpdatetime = response.data.joblogUpdatetime;
+        this.data.joblogText = response.data.joblogText;
+      })
+    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -510,14 +446,14 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除工作编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除工作编号为"' + ids + '"的数据项？').then(function () {
         return delJob(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     },
-	/** 客户序号 */
+    /** 客户序号 */
     rowClientIndex({ row, rowIndex }) {
       row.index = rowIndex + 1;
     },
@@ -558,7 +494,7 @@ export default {
       } else {
         const clientList = this.clientList;
         const checkedClient = this.checkedClient;
-        this.clientList = clientList.filter(function(item) {
+        this.clientList = clientList.filter(function (item) {
           return checkedClient.indexOf(item.index) == -1
         });
       }
@@ -575,4 +511,19 @@ export default {
     }
   }
 };
+
+
+
+
+
+
+
+
+
 </script>
+
+
+
+
+
+

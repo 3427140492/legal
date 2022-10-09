@@ -17,9 +17,17 @@ import com.ruoyi.common.core.domain.BaseEntity;
 public class LogJob extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String caseSubmitter;
 
+    public String getCaseSubmitter() {
+        return caseSubmitter;
+    }
 
-
+    public void setCaseSubmitter(String caseSubmitter) {
+        this.caseSubmitter = caseSubmitter;
+    }
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")

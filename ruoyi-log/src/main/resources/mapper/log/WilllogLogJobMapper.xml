@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="logTypeLogname" column="log_type_logname"/>
 
         <result property="caseTypeName" column="case_type_name"/>
+        <result property="caseSubmitter" column="case_submitter"/>
     </resultMap>
 
     <resultMap id="WilllogLogJobClientResult" type="WilllogLogJob" extends="WilllogLogJobResult">
@@ -62,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectWilllogLogJobVo">
-        SELECT log_type_logname,case_no,client,joblog_startTime,joblog_reportedTime,joblog_text,joblog_status FROM log_job lj
+        SELECT lj.id,log_type_logname,case_no,client,joblog_startTime,joblog_reportedTime,joblog_text,joblog_status FROM log_job lj
        INNER JOIN client c on lj.client_id = c.id
        INNER JOIN case_law cl on lj.case_law_id = cl.id
        INNER JOIN log_type lt on lt.id = lj.logtype_id
@@ -84,12 +85,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectWilllogLogJobById" parameterType="Integer" resultMap="WilllogLogJobClientResult">
-        select a.id, a.whatis_person, a.logtype_id, a.case_law_id, a.client_id, a.joblog_startTime, a.joblog_enddTime, a.joblog_reportedTime, a.joblog_updatetime, a.joblog_file, a.joblog_text, a.joblog_status,
- b.id as sub_id, b.client as sub_client, b.phone as sub_phone, b.type as sub_type, b.typeinfo as sub_typeinfo, b.cardnum as sub_cardnum, b.principal as sub_principal, b.contact as sub_contact, b.email as sub_email, b.duty as sub_duty, b.affectedareas as sub_affectedareas, b.tel as sub_tel, b.pertainarea as sub_pertainarea, b.status as sub_status, b.legalperson as sub_legalperson, b.legalpersontel as sub_legalpersontel, b.file as sub_file, b.nation as sub_nation, b.sex as sub_sex, b.birth as sub_birth, b.address as sub_address, b.remark as sub_remark, b.addtime as sub_addtime, b.system_user_id as sub_system_user_id, b.assign as sub_assign, b.fileurl as sub_fileurl
-        from log_job a
-        left join client b on b.id = a.id
-        where a.id = #{id}
+    <select id="selectWilllogLogJobById" parameterType="WilllogLogJob" resultMap="WilllogLogJobResult">
+        select lj.id,log_type_logname,case_submitter,joblog_status,case_no,client,joblog_startTime,joblog_reportedTime,joblog_updatetime,joblog_text FROM log_job lj
+          INNER JOIN client c on lj.client_id = c.id
+          INNER JOIN case_law cl on lj.case_law_id = cl.id
+          INNER JOIN log_type lt on lt.id = lj.logtype_id
+          INNER JOIN case_case_type cct on cct.id = cl.case_case_type_id
+          INNER JOIN system_user su on su.id = lj.whatis_person
+        where lj.id = ${id}
     </select>
         
     <insert id="insertWilllogLogJob" parameterType="WilllogLogJob" useGeneratedKeys="true" keyProperty="id">
