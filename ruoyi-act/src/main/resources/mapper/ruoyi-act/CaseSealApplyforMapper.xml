@@ -77,12 +77,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by applyfor_receive desc
     </select>
     
-    <select id="selectCaseSealApplyforById" parameterType="Integer" resultMap="CaseSealApplyforCaseFilesResult">
-        select seal.*,files.id as sub_id,law.*,type.typeName from case_seal_applyfor seal
-                          inner join file_type type on seal.typeid = type.id
-                          inner join case_files  files on seal.id = files.appid
-                          inner join case_law law on seal.id = law.id
-        where seal.id = #{id}
+    <select id="selectCaseSealApplyforById" parameterType="Integer" resultMap="CaseSealApplyforResult">
+        select cas.*,cas.id as sub_id,type2.case_type_name,emp_name,cw.case_attorney from case_law cas
+          inner join case_case_type type on type.id = cas.case_case_type_id
+          inner join case_case_type type2 on type2.id = type.type_pid
+          inner join cw_performancesplit cw on cas.id = cw.case_law_id
+          inner join hr_emp emp on emp.id = cw.hr_emp_id
+        where cas.id = (
+            select caseid from case_seal_applyfor seal
+                                                                inner join file_type type on seal.typeid = type.id
+                                                                inner join case_files  files on seal.id = files.appid
+            where seal.id=#{id}
+            )
+          and cw.case_attorney = '主办律师'
+
+
     </select>
 
     <select id="listApplyforxl"  parameterType="FileType" resultMap="FileTypeResult">
