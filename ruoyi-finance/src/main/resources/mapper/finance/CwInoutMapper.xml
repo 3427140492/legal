@@ -138,7 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cwInoutTypeId != null">#{cwInoutTypeId},</if>
-            <if test="cwInoutDate != null">#{cwInoutDate},</if>
+            <if test="cwInoutDate != null">#{cwEnteringdate},</if>
             <if test="cwInoutPerson != null">#{cwInoutPerson},</if>
             <if test="cwInoutMoney != null">#{cwInoutMoney},</if>
             <if test="cwPayType != null">#{cwPayType},</if>

@@ -28,6 +28,8 @@ public interface CwInvoiceMapper
      */
     public List<CwInvoice> selectCwInvoiceList(CwInvoice cwInvoice);
 
+    public List<CwInvoice> selectCaseCaseTypelist(CwInvoice cwInvoice);
+
     /**
      * 新增我的发票
      * 

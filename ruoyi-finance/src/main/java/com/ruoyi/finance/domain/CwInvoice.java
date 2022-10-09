@@ -1,5 +1,6 @@
 package com.ruoyi.finance.domain;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -32,12 +33,12 @@ public class CwInvoice extends BaseEntity
     /** 申请日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "申请日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date cwApplicationDate;
+    private String cwApplicationDate;
 
     /** 开票日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "开票日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date cwInvoiceDate;
+    private String cwInvoiceDate;
 
     /** 开票状态 */
     @Excel(name = "开票状态")
@@ -99,6 +100,101 @@ public class CwInvoice extends BaseEntity
     @Excel(name = "案号")
     private String caseNo;
 
+    /** 代理费 */
+    @Excel(name = "代理费")
+    private BigDecimal caseAgencyfee;
+
+    /** 已开票金额 */
+    @Excel(name = "已开票金额")
+    private BigDecimal caseInvoiced;
+
+    /** 已付金额 */
+    @Excel(name = "已付金额")
+    private BigDecimal casePaidsal;
+
+    private String empName;
+
+    private Integer cctid;
+
+    private String caseTypeName;
+
+    private String overTime;
+
+    private String searchType;
+
+    private String serchText;
+
+    public String getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(String overTime) {
+        this.overTime = overTime;
+    }
+
+    public Integer getCctid() {
+        return cctid;
+    }
+
+    public void setCctid(Integer cctid) {
+        this.cctid = cctid;
+    }
+
+    public String getCaseTypeName() {
+        return caseTypeName;
+    }
+
+    public void setCaseTypeName(String caseTypeName) {
+        this.caseTypeName = caseTypeName;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public String getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getSerchText() {
+        return serchText;
+    }
+
+    public void setSerchText(String serchText) {
+        this.serchText = serchText;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public BigDecimal getCaseAgencyfee() {
+        return caseAgencyfee;
+    }
+
+    public void setCaseAgencyfee(BigDecimal caseAgencyfee) {
+        this.caseAgencyfee = caseAgencyfee;
+    }
+
+    public BigDecimal getCaseInvoiced() {
+        return caseInvoiced;
+    }
+
+    public void setCaseInvoiced(BigDecimal caseInvoiced) {
+        this.caseInvoiced = caseInvoiced;
+    }
+
+    public BigDecimal getCasePaidsal() {
+        return casePaidsal;
+    }
+
+    public void setCasePaidsal(BigDecimal casePaidsal) {
+        this.casePaidsal = casePaidsal;
+    }
 
     public String getCaseNo() {
         return caseNo;
@@ -138,21 +234,21 @@ public class CwInvoice extends BaseEntity
     {
         return cwInvoiceMoney;
     }
-    public void setCwApplicationDate(Date cwApplicationDate) 
+    public void setCwApplicationDate(String cwApplicationDate)
     {
         this.cwApplicationDate = cwApplicationDate;
     }
 
-    public Date getCwApplicationDate() 
+    public String getCwApplicationDate()
     {
         return cwApplicationDate;
     }
-    public void setCwInvoiceDate(Date cwInvoiceDate) 
+    public void setCwInvoiceDate(String cwInvoiceDate)
     {
         this.cwInvoiceDate = cwInvoiceDate;
     }
 
-    public Date getCwInvoiceDate() 
+    public String getCwInvoiceDate()
     {
         return cwInvoiceDate;
     }

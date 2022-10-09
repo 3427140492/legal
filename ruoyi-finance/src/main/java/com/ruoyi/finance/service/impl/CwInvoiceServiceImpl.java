@@ -47,6 +47,12 @@ public class CwInvoiceServiceImpl implements ICwInvoiceService
         return cwInvoiceMapper.selectCwInvoiceList(cwInvoice);
     }
 
+    @Override
+    public List<CwInvoice> selectCaseCaseTypelist(CwInvoice cwInvoice) {
+
+        return cwInvoiceMapper.selectCaseCaseTypelist(cwInvoice);
+    }
+
     /**
      * 新增我的发票
      * 

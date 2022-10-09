@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-// 查询我的发票列表
-export function listInvoice(query) {
+// 查询开具发票列表
+export function listKinvoice(query) {
   return request({
-    url: '/finance/invoice/list',
+    url: '/finance/kinvoice/list',
     method: 'get',
     params: query
   })
@@ -18,36 +18,36 @@ export function listType(query) {
   })
 }
 
-// 查询我的发票详细
-export function getInvoice(id) {
+// 查询开具发票详细
+export function getKinvoice(id) {
   return request({
-    url: '/finance/invoice/' + id,
+    url: '/finance/kinvoice/' + id,
     method: 'get'
   })
 }
 
-// 新增我的发票
-export function addInvoice(data) {
+// 新增开具发票
+export function addKinvoice(data) {
   return request({
-    url: '/finance/invoice',
+    url: '/finance/kinvoice',
     method: 'post',
     data: data
   })
 }
 
-// 修改我的发票
-export function updateInvoice(data) {
+// 修改开具发票
+export function updateKinvoice(data) {
   return request({
-    url: '/finance/invoice',
+    url: '/finance/kinvoice',
     method: 'put',
     data: data
   })
 }
 
-// 删除我的发票
-export function delInvoice(id) {
+// 删除开具发票
+export function delKinvoice(id) {
   return request({
-    url: '/finance/invoice/' + id,
+    url: '/finance/kinvoice/' + id,
     method: 'delete'
   })
 }

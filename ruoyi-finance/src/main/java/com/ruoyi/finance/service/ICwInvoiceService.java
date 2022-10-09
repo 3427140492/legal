@@ -27,6 +27,9 @@ public interface ICwInvoiceService
      */
     public List<CwInvoice> selectCwInvoiceList(CwInvoice cwInvoice);
 
+    //查询案件类型
+    public List<CwInvoice> selectCaseCaseTypelist(CwInvoice cwInvoice);
+
     /**
      * 新增我的发票
      * 

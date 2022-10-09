@@ -47,6 +47,17 @@ public class CwInvoiceController extends BaseController
     }
 
     /**
+     * 查询案件类型
+     */
+    @PreAuthorize("@ss.hasPermi('finance:payments:anlxlist')")
+    @GetMapping("/anlxlist")
+    public TableDataInfo anlxlist(CwInvoice cwInvoice)
+    {
+        List<CwInvoice> list = cwInvoiceService.selectCaseCaseTypelist(cwInvoice);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出我的发票列表
      */
     @PreAuthorize("@ss.hasPermi('finance:invoice:export')")
