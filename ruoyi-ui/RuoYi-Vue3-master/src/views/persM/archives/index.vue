@@ -438,7 +438,7 @@
 
     <el-dialog v-model="this.WorkExperiences" title="查看工作经历" width="65%">
       <div style="height: 50px;">
-        <el-button>添加工作经历</el-button>
+        <el-button @click="handleAddWork">添加工作经历</el-button>
       </div>
       <el-table v-loading="loading" :data="workhistoryList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" align="center" />
@@ -460,24 +460,24 @@
         <el-table-column label="所在地" align="center" prop="workhistorySite" width="100" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="100">
           <template #default="scope">
-            <el-button type="text" @click="handleUpdateWork(scope.row)" v-hasPermi="['persM:archives:edit']"> 修改
+            <el-button type="text" @click="handleUpdateWork(scope.row)"> 修改
             </el-button>
-            <el-button type="text">删除</el-button>
+            <el-button type="text" @click="handleDeleteWork(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
 
     <!-- 添加或修改工作经历对话框 -->
-    <el-dialog :title="title" v-model="this.openWork">
-      <el-form :inline="true" ref="form" :model="formWork" :rules="rules2" label-width="80px">
+    <el-dialog :title="title" v-model="openWork">
+      <el-form :inline="true" ref="formWork" :model="formWork" :rules="rules" label-width="80px">
         <el-form-item label="起止时间" prop="workhistoryStartdate">
-          <el-date-picker clearable v-model="formWork.workhistoryStartdate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="formWork.workhistoryStartdate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择起止时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间" prop="workhistoryEnddate">
-          <el-date-picker clearable v-model="formWork.workhistoryEnddate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="formWork.workhistoryEnddate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择结束时间">
           </el-date-picker>
         </el-form-item>
@@ -499,14 +499,28 @@
             <el-option value="其他">其他</el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="单位性质" prop="workhistoryWorknature">
-          <el-input v-model="formWork.workhistoryWorknature" placeholder="请输入单位性质" />
+        <el-form-item label="单位性质">
+          <el-select v-model="formWork.workhistoryWorknature">
+            <el-option value="">请选择…</el-option>
+            <el-option value="党委">党委</el-option>
+            <el-option value="政府">政府</el-option>
+            <el-option value="人大">人大</el-option>
+            <el-option value="政协">政协</el-option>
+            <el-option value="公安">公安</el-option>
+            <el-option value="检察院">检察院</el-option>
+            <el-option value="法院">法院</el-option>
+            <el-option value="司法行政机关">司法行政机关</el-option>
+            <el-option value="群团组织">群团组织</el-option>
+            <el-option value="企业">企业</el-option>
+            <el-option value="社会团体">社会团体</el-option>
+            <el-option value="其他">其他</el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="所在地" prop="workhistorySite">
           <el-input v-model="formWork.workhistorySite" placeholder="请输入所在地" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" style="text-align: center;">
         <el-button type="primary" @click="submitFormWork">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -520,7 +534,7 @@
 
 <script>
 
-import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork } from "@/api/persM/archives";
+import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork, addWorkhistory,delWorkhistory } from "@/api/persM/archives";
 
 
 export default {
@@ -576,7 +590,19 @@ export default {
       rules: {
       },
       rules2: {
-      }
+      },
+      formWork: {
+        id: null,
+        workhistoryStartdate: null,
+        workhistoryEnddate: null,
+        workhistoryWorkunit: null,
+        workhistoryJobPosition: null,
+        workhistoryWorktype: null,
+        workhistoryWorknature: null,
+        workhistorySite: null,
+        hrEmpId: null
+      },
+      hrEmpId: undefined
     };
   },
   created() {
@@ -595,6 +621,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.openWork = false;
       this.reset();
     },
     // 表单重置
@@ -761,9 +788,11 @@ export default {
       this.open = true;
       this.title = "添加人事档案";
       this.form.identityName = type;
+
     },
     WorkExperience(id) {
       this.WorkExperiences = true;
+      this.hrEmpId = id;
       getWorkArchives(id).then(response => {
         this.workhistoryList = response.rows;
         console.log(this.workhistoryList)
@@ -771,6 +800,7 @@ export default {
     },
     /** 提交按钮 */
     submitFormWork() {
+      this.formWork.hrEmpId = this.hrEmpId;
       this.$refs["formWork"].validate(valid => {
         if (valid) {
           if (this.formWork.id != null) {
@@ -783,7 +813,7 @@ export default {
             addWorkhistory(this.formWork).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.openWork = false;
-              this.WorkExperience(this.formWork.hrEmpId);
+              this.WorkExperience(this.hrEmpId);
             });
           }
         }
@@ -797,9 +827,23 @@ export default {
         this.formWork = response.data;
         this.openWork = true;
         this.title = "修改工作经历";
-        alert(this.formWork.workhistoryStartdate)
       });
     },
+    /** 新增按钮操作 */
+    handleAddWork() {
+      this.resetWork();
+      this.openWork = true;
+      this.title = "添加人事档案";
+    },
+    handleDeleteWork(row){
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除工作经历编号为"' + ids + '"的数据项？').then(function() {
+        return delWorkhistory(ids);
+      }).then(() => {
+        this.WorkExperience(this.hrEmpId);
+        this.$modal.msgSuccess("删除成功");
+      }).catch(() => {});
+    }
   }
 }
 </script>

@@ -125,4 +125,37 @@ public class PMHrEmpController extends BaseController
         return AjaxResult.success(pMHrEmpService.selectWorkExperienceById(id));
     }
 
+    /**
+     * 修改工作经历
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:updateWork:edit')")
+    @Log(title = "工作经历", businessType = BusinessType.UPDATE)
+    @PutMapping(value = "updateWork")
+    public AjaxResult edit(@RequestBody WorkExperience workExperience)
+    {
+        return toAjax(pMHrEmpService.updateWorkExperience(workExperience));
+    }
+
+    /**
+     * 新增工作经历
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:addWork:add')")
+    @Log(title = "工作经历", businessType = BusinessType.INSERT)
+    @PostMapping(value = "addWork")
+    public AjaxResult add(@RequestBody WorkExperience  workExperience )
+    {
+        return toAjax(pMHrEmpService.insertWorkExperience(workExperience));
+    }
+
+    /**
+     * 删除工作经历
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:removeWork:remove')")
+    @Log(title = "工作经历", businessType = BusinessType.DELETE)
+    @DeleteMapping("removeWork/{id}")
+    public AjaxResult removeWork(@PathVariable Integer id)
+    {
+        return toAjax(pMHrEmpService.deleteWorkExperienceByIds(id));
+    }
+
 }

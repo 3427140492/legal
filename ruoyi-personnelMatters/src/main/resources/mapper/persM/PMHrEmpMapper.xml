@@ -263,4 +263,47 @@
             <if test="hrEmpId != null">#{hrEmpId},</if>
         </trim>
     </insert>
+
+    <update id="updateWorkExperience" parameterType="WorkExperience">
+        update hr_workhistory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="workhistoryStartdate != null">workhistory_startdate = #{workhistoryStartdate},</if>
+            <if test="workhistoryEnddate != null">workhistory_enddate = #{workhistoryEnddate},</if>
+            <if test="workhistoryWorkunit != null">workhistory_workunit = #{workhistoryWorkunit},</if>
+            <if test="workhistoryJobPosition != null">workhistory_job_position = #{workhistoryJobPosition},</if>
+            <if test="workhistoryWorktype != null">workhistory_worktype = #{workhistoryWorktype},</if>
+            <if test="workhistoryWorknature != null">workhistory_worknature = #{workhistoryWorknature},</if>
+            <if test="workhistorySite != null">workhistory_site = #{workhistorySite},</if>
+            <if test="hrEmpId != null">hr_emp_id = #{hrEmpId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <insert id="insertWorkExperience" parameterType="WorkExperience" useGeneratedKeys="true" keyProperty="id">
+        insert into hr_workhistory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="workhistoryStartdate != null">workhistory_startdate,</if>
+            <if test="workhistoryEnddate != null">workhistory_enddate,</if>
+            <if test="workhistoryWorkunit != null">workhistory_workunit,</if>
+            <if test="workhistoryJobPosition != null">workhistory_job_position,</if>
+            <if test="workhistoryWorktype != null">workhistory_worktype,</if>
+            <if test="workhistoryWorknature != null">workhistory_worknature,</if>
+            <if test="workhistorySite != null">workhistory_site,</if>
+            <if test="hrEmpId != null">hr_emp_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="workhistoryStartdate != null">#{workhistoryStartdate},</if>
+            <if test="workhistoryEnddate != null">#{workhistoryEnddate},</if>
+            <if test="workhistoryWorkunit != null">#{workhistoryWorkunit},</if>
+            <if test="workhistoryJobPosition != null">#{workhistoryJobPosition},</if>
+            <if test="workhistoryWorktype != null">#{workhistoryWorktype},</if>
+            <if test="workhistoryWorknature != null">#{workhistoryWorknature},</if>
+            <if test="workhistorySite != null">#{workhistorySite},</if>
+            <if test="hrEmpId != null">#{hrEmpId},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteWorkExperienceByIds" parameterType="Integer">
+        delete from hr_workhistory where id = ${id}
+    </delete>
 </mapper>

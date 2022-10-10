@@ -100,4 +100,10 @@ public interface PMHrEmpMapper
     public List<WorkExperience> selectWorkById(Long id);
 
     public WorkExperience selectWorkExperienceById(Long id);
+
+    public int updateWorkExperience(WorkExperience workExperience);
+
+    public int insertWorkExperience(WorkExperience workExperience);
+
+    public int deleteWorkExperienceByIds(Integer id);
 }
