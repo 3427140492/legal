@@ -25,8 +25,23 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+
       </el-form-item>
     </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['log:job:add']"
+        >新增</el-button>
+      </el-col>
+      </el-row>
+
 
     <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
@@ -56,6 +71,8 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="ViewDetail(scope.row.id)">查看</el-dropdown-item>
+                <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                <el-dropdown-item @click="handleDelete(scope.row.id)">删除</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -69,12 +86,12 @@
 
     <el-dialog v-model="this.ViewDetails" title="查看日志">
       <el-descriptions title="" :column="3" border>
-                      
+
 
 
 
         <el-descriptions-item label="日志类型" align="center">{{data.logTypeLogname}}</el-descriptions-item>
-        
+
         <el-descriptions-item label="归属人" align="center">{{data.caseSubmitter}}</el-descriptions-item>
         <el-descriptions-item label="公开状态" align="center">{{data.joblogStatus}}</el-descriptions-item>
         <el-descriptions-item label="案件" align="center">{{data.caseNo}}</el-descriptions-item>
@@ -88,185 +105,41 @@
 
 
     <!-- 添加或修改工作对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="this.open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="whatisPerson">
-          <el-input v-model="form.whatisPerson" placeholder="请输入${comment}" />
+        <el-form-item label="日志类型" prop="logTypeLogname">
+          <el-input v-model="form.logTypeLogname" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="logtypeId">
-          <el-input v-model="form.logtypeId" placeholder="请输入${comment}" />
+        <el-form-item label="案件" prop="caseNo">
+          <el-input v-model="form.caseNo" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="caseLawId">
-          <el-input v-model="form.caseLawId" placeholder="请输入${comment}" />
+        <el-form-item label="客户名称" prop="client">
+          <el-input v-model="form.client" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="clientId">
-          <el-input v-model="form.clientId" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="joblogStarttime">
-          <el-date-picker clearable v-model="form.joblogStarttime" type="date" value-format="yyyy-MM-dd"
+       
+        <el-form-item label="开始时间" prop="joblogStarttime">
+          <el-date-picker clearable v-model="form.joblogStarttime" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}" prop="joblogEnddtime">
-          <el-date-picker clearable v-model="form.joblogEnddtime" type="date" value-format="yyyy-MM-dd"
+        <el-form-item label="结束时间" prop="joblogEnddtime">
+          <el-date-picker clearable v-model="form.joblogEnddtime" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}" prop="joblogReportedtime">
+        <el-form-item label="自报时长" prop="joblogReportedtime">
           <el-input v-model="form.joblogReportedtime" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="joblogUpdatetime">
-          <el-date-picker clearable v-model="form.joblogUpdatetime" type="date" value-format="yyyy-MM-dd"
+        <el-form-item label="更新时间" prop="joblogUpdatetime">
+          <el-date-picker clearable v-model="form.joblogUpdatetime" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}">
-          <file-upload v-model="form.joblogFile" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="joblogText">
+        
+        <el-form-item label="工作描述" prop="joblogText">
           <el-input v-model="form.joblogText" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-divider content-position="center">客户信息</el-divider>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddClient">添加</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteClient">删除</el-button>
-          </el-col>
-        </el-row>
-        <el-table :data="clientList" :row-class-name="rowClientIndex" @selection-change="handleClientSelectionChange"
-          ref="client">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50" />
-          <el-table-column label="客户" prop="client" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.client" placeholder="请输入客户" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="phone" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.phone" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="type" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.type" placeholder="请选择$comment">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="typeinfo" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.typeinfo" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="cardnum" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.cardnum" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="principal" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.principal" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="contact" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.contact" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="email" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.email" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="duty" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.duty" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="affectedareas" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.affectedareas" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="tel" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.tel" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="pertainarea" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.pertainarea" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="status" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.status" placeholder="请选择$comment">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="legalperson" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.legalperson" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="legalpersontel" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.legalpersontel" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="nation" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.nation" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="sex" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.sex" placeholder="请选择$comment">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="birth" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.birth" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="address" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.address" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="remark" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.remark" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="addtime" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.addtime" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="systemUserId" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.systemUserId" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-          <el-table-column label="状态" prop="assign" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.assign" placeholder="请输入状态" />
-            </template>
-          </el-table-column>
-          <el-table-column label="$comment" prop="fileurl" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.fileurl" placeholder="请输入$comment" />
-            </template>
-          </el-table-column>
-        </el-table>
+     
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
