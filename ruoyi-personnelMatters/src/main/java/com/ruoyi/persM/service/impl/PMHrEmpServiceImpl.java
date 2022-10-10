@@ -131,4 +131,34 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
         return pMHrEmpMapper.selectWorkExperienceById(id);
     }
 
+    /**
+     * 修改工作经历
+     *
+     * @param workExperience 工作经历
+     * @return 结果
+     */
+    @Transactional
+    @Override
+    public int updateWorkExperience(WorkExperience workExperience)
+    {
+        return pMHrEmpMapper.updateWorkExperience(workExperience);
+    }
+
+    /**
+     * 新增工作经历
+     *
+     * @param workExperience workExperience 工作经历
+     * @return 结果
+     */
+    @Transactional
+    @Override
+    public int insertWorkExperience(WorkExperience workExperience)
+    {
+        return pMHrEmpMapper.insertWorkExperience(workExperience);
+    }
+
+    @Override
+    public int deleteWorkExperienceByIds(Integer id) {
+        return pMHrEmpMapper.deleteWorkExperienceByIds(id);
+    }
 }
