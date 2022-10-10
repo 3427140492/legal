@@ -40,11 +40,25 @@ public class AdmExpressageServiceImpl implements IAdmExpressageService
      * 
      * @param admExpressage 快速登记
      * @return 快速登记
+     * 收件管理
      */
     @Override
     public List<AdmExpressage> selectAdmExpressageList(AdmExpressage admExpressage)
     {
         return admExpressageMapper.selectAdmExpressageList(admExpressage);
+    }
+
+    /**
+     * 查询快速登记列表
+     *
+     * @param admExpressage 快速登记
+     * @return 快速登记
+     * 发件管理
+     */
+    @Override
+    public List<AdmExpressage> selectAdmExpressageListS(AdmExpressage admExpressage)
+    {
+        return admExpressageMapper.selectAdmExpressageListS(admExpressage);
     }
 
     /**

@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+ /** 收件管理 */
 // 查询快速登记列表
 export function listExpressage(query) {
   return request({
@@ -8,6 +9,7 @@ export function listExpressage(query) {
     params: query
   })
 }
+
 
 //快递公司
 export function sendList(query) {
@@ -72,8 +74,19 @@ export function getSendwaay(id) {
   })
 }
 
+ /** 发件管理 */
+// 查询列表
+export function flistExpressage(query) {
+  return request({
+    url: '/hr/expressage/flist',
+    method: 'get',
+    params: query
+  })
+}
 
 
+
+ /** 快递公司 */
 // 新增发送
 export function addSendwaay(data) {
   return request({

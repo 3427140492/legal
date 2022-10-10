@@ -57,6 +57,7 @@ public class AdmExpressageController extends BaseController
 
     /**
      * 查询快速登记列表
+     * 收件管理
      */
     @PreAuthorize("@ss.hasPermi('hr:expressage:list')")
     @GetMapping("/list")
@@ -66,6 +67,21 @@ public class AdmExpressageController extends BaseController
         List<AdmExpressage> list = admExpressageService.selectAdmExpressageList(admExpressage);
         return getDataTable(list);
     }
+
+
+    /**
+     * 查询快速登记列表
+     * 发件管理
+     */
+    @PreAuthorize("@ss.hasPermi('hr:expressage:flist')")
+    @GetMapping("/flist")
+    public TableDataInfo flist(AdmExpressage admExpressage)
+    {
+        startPage();
+        List<AdmExpressage> list = admExpressageService.selectAdmExpressageListS(admExpressage);
+        return getDataTable(list);
+    }
+
 
     /**
      * 导出快速登记列表
@@ -79,6 +95,9 @@ public class AdmExpressageController extends BaseController
         ExcelUtil<AdmExpressage> util = new ExcelUtil<AdmExpressage>(AdmExpressage.class);
         util.exportExcel(response, list, "快速登记数据");
     }
+
+
+
 
     /**
      * 获取快速登记详细信息
