@@ -85,8 +85,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           inner join hr_emp emp on emp.id = cw.hr_emp_id
         where cas.id = (
             select caseid from case_seal_applyfor seal
-                                                                inner join file_type type on seal.typeid = type.id
-                                                                inner join case_files  files on seal.id = files.appid
+                inner join file_type type on seal.typeid = type.id
+                inner join case_files  files on seal.id = files.appid
             where seal.id=#{id}
             )
           and cw.case_attorney = '主办律师'
