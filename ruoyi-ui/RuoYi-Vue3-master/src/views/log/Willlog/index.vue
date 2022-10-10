@@ -41,7 +41,14 @@
       <el-table-column label="开始时间" align="center" prop="joblogStarttime" width="180" />
       <el-table-column label="自报时间" align="center" prop="joblogReportedtime" />
       <el-table-column label="工作描述" align="center" prop="joblogText" />
-      <el-table-column label="工作状态" align="center" prop="joblogStatus" />
+      <el-table-column label="工作状态" align="center" prop="joblogStatus" >
+       
+      <template v-slot="scope">
+          <span v-if="scope.row.joblogStatus == 'Y'">公开</span>
+          <span v-if="scope.row.joblogStatus == 'N'">不公开</span>
+        </template>
+        </el-table-column>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button type="info" plain @click="ViewDetail(scope.row.id)">查看</el-button>

@@ -5,19 +5,19 @@
         <el-input v-model="queryParams.whatisPerson" placeholder="请输入案号" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="日志类型" prop="logtypeId">
-        <el-input v-model="queryParams.logtypeId" placeholder="请输入${comment}" clearable
+        <el-input v-model="queryParams.logtypeId" placeholder="请输入日志类型" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
 
 
-      <el-form-item label="${comment}" prop="joblogStarttime">
-        <el-date-picker clearable v-model="queryParams.joblogStarttime" type="date" value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
+      <el-form-item label="开始时间" prop="joblogStarttime">
+        <el-date-picker clearable v-model="queryParams.joblogStarttime" type="date" value-format="YYYY-MM-DD"
+          placeholder="请选择开始时间">
         </el-date-picker>
       </el-form-item>
 
-      <el-form-item label="${comment}" prop="joblogReportedtime">
-        <el-input v-model="queryParams.joblogReportedtime" placeholder="请输入${comment}" clearable
+      <el-form-item label="自报时间" prop="joblogReportedtime">
+        <el-input v-model="queryParams.joblogReportedtime" placeholder="请输入自报时间" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
 
@@ -53,12 +53,17 @@
       <el-table-column label="开始时间" align="center" prop="joblogStarttime" width="180" />
 
 
-      <el-table-column label="自报时间" align="center" prop="joblogReportedtime" />
+      <el-table-column label="自报时间" align="center" prop="joblogReportedtime"/>
+        
 
 
       <el-table-column label="工作描述" align="center" prop="joblogText" />
-      <el-table-column label="工作状态" align="center" prop="joblogStatus" />
-
+      <el-table-column label="工作状态" align="center" prop="joblogStatus" >
+      <template v-slot="scope">
+          <span v-if="scope.row.joblogStatus == 'Y'">公开</span>
+          <span v-if="scope.row.joblogStatus == 'N'">不公开</span>
+        </template>
+        </el-table-column>
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
@@ -108,31 +113,31 @@
     <el-dialog :title="title" v-model="this.open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="日志类型" prop="logTypeLogname">
-          <el-input v-model="form.logTypeLogname" placeholder="请输入${comment}" />
+          <el-input v-model="form.logTypeLogname" placeholder="请输入日志类型" />
         </el-form-item>
         <el-form-item label="案件" prop="caseNo">
-          <el-input v-model="form.caseNo" placeholder="请输入${comment}" />
+          <el-input v-model="form.caseNo" placeholder="请输入案件" />
         </el-form-item>
         <el-form-item label="客户名称" prop="client">
-          <el-input v-model="form.client" placeholder="请输入${comment}" />
+          <el-input v-model="form.client" placeholder="请输入客户名称" />
         </el-form-item>
        
         <el-form-item label="开始时间" prop="joblogStarttime">
           <el-date-picker clearable v-model="form.joblogStarttime" type="date" value-format="YYYY-MM-DD"
-            placeholder="请选择${comment}">
+            placeholder="请选择开始时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间" prop="joblogEnddtime">
           <el-date-picker clearable v-model="form.joblogEnddtime" type="date" value-format="YYYY-MM-DD"
-            placeholder="请选择${comment}">
+            placeholder="请选择结束时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="自报时长" prop="joblogReportedtime">
-          <el-input v-model="form.joblogReportedtime" placeholder="请输入${comment}" />
+          <el-input v-model="form.joblogReportedtime" placeholder="请输入自报时长" />
         </el-form-item>
         <el-form-item label="更新时间" prop="joblogUpdatetime">
           <el-date-picker clearable v-model="form.joblogUpdatetime" type="date" value-format="YYYY-MM-DD"
-            placeholder="请选择${comment}">
+            placeholder="请选择更新时间">
           </el-date-picker>
         </el-form-item>
         
