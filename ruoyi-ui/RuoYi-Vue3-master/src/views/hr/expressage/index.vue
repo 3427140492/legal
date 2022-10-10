@@ -233,7 +233,7 @@
           <el-col :span="12">
             <el-form-item  prop="systemUserRecipients" style="width:450px;">
               <label><span style="color:red;">*</span>收件人：</label>
-              <el-input v-model="form.systemUserRecipients"   @click="sjr=true" />
+              <el-input v-model="form.systemUserRecipients"   @click="openSystemUser" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -442,30 +442,27 @@
 
     <!-- 收件人弹出框 -->
     <el-dialog title="收件人" v-model="sjr" draggable>
-      <el-form :inline="true">
-        <el-form-item prop="SearchStr">
-          <el-input/>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
+        <el-form-item prop="userRealname">
+          <el-input v-model="form.userRealname"  />
         </el-form-item>
-        <el-form-item prop="SearchType">
-          <el-select >
-            <el-option label="案号搜索" value="1"/>
-            <el-option label="委托人搜索" value="2"/>
-            <el-option label="对方当事人搜索" value="3"/>
-            <el-option label="案由搜索" value="4"/>
-            <el-option label="承办律师搜索" value="5"/>
-            <el-option label="受理法院搜索" value="6"/>
-          </el-select>
-          </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button type="primary"  @click="SystemhandleQuery">搜索</el-button>
           </el-form-item>
         </el-form>
-        <el-table :data="lawlist" border >
-          <el-table-column label="案号" align="center" prop="caseNo" />
-          <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
-          <el-table-column label="委托人" align="center" prop="caseWtr" />
+        <el-table :data="systemlist" border >
+          <el-table-column label="姓名" align="center" prop="userRealname" />
+          <el-table-column label="手机号" align="center" prop="empPhone" />
+          <el-table-column label="提成组" align="center" prop="" />
+          <el-table-column label="权限组" align="center" prop="roleName" />
       </el-table>
-         
+      <pagination
+          v-show="total>0"
+          :total="total"
+          v-model="queryParams.pageNum"
+          v-model:limit="queryParams.pageSize"
+          @pagination="openSystemUser"
+        />
     </el-dialog>
 
 
@@ -548,8 +545,8 @@
 
 
 <script>
-import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList,addSendwaay,updateSendwaay,delSendwaay} from "@/api/hr/expressage";
-
+import { listExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList,getSendwaay,addSendwaay,updateSendwaay,delSendwaay} from "@/api/hr/expressage";
+import { listUser } from "@/api/hr/user";
 
 export default {
   name: "expressage",
@@ -575,6 +572,8 @@ export default {
       expressageList: [],
       sendTypeList: [],
       expressList:[],
+      //收件人
+      systemlist:[],
       // 发送表格数据
       sendWaayList: [],
       // 弹出层标题
@@ -596,6 +595,7 @@ export default {
         collarPerson: null,
         selectType:null,
         selectStr:null,
+        userRealname:null,
       },
       // 表单参数
       form: {},
@@ -657,13 +657,14 @@ export default {
         caseNo: null,
         sendName:null,
         sorting:null,
+        userRealname:null,
       };
       this.sendWaayList = [];
       this.resetForm("form");
     },
-    openSendWaayFun(){
+    openSendWaayFun(){//快递公司查询
       this.sendWaayDia=true;
-      sendList().then(response=>{ //快递公司查询
+      sendList().then(response=>{ 
         console.log(response.rows);
          this.sendWaayList = response.rows;
          this.total = response.total;
@@ -671,10 +672,24 @@ export default {
       });
 
     },
+    openSystemUser(){//收件人查询
+      this.sjr=true;
+      listUser(this.queryParams).then(response=>{ 
+        console.log(response.rows);
+         this.systemlist = response.rows;
+         this.total = response.total;
+         console.log(this.systemlist);
+         console.log(111+this.queryParams.userRealname);
+      });
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+    },
+    SystemhandleQuery() { //收件人
+      this.queryParams.pageNum = 1;
+      this.openSystemUser();
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -760,10 +775,12 @@ export default {
       /** 修改按钮操作 */
       handleUpdateSendwaay(row) {
         this.reset();
-        const id = row.id || this.ids
+        const id = row.id || this.ids;
+        this.activeName = "sendwaayAdd";
         getSendwaay(id).then(response => {
           this.form = response.data;
           this.sendWaayList = response.data.sendWaayList;
+
         });
     },
     /** 快递公司提交按钮 */
@@ -775,12 +792,15 @@ export default {
             updateSendwaay(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
+              this.activeName = "sendwaaylist";
               this.openSendWaayFun();
+              this.reset();
             });
           } else {
             addSendwaay(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
+              this.activeName = "sendwaaylist";
               this.openSendWaayFun();
               this.reset();
             });

@@ -64,6 +64,15 @@ export function delExpressage(id) {
 }
 
 
+// 查询发送详细
+export function getSendwaay(id) {
+  return request({
+    url: '/hr/sendwaay/' + id,
+    method: 'get'
+  })
+}
+
+
 
 // 新增发送
 export function addSendwaay(data) {
@@ -90,6 +99,8 @@ export function delSendwaay(id) {
     method: 'delete'
   })
 }
+
+
 
 
 

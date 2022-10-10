@@ -40,6 +40,7 @@ public class AdmExpressageController extends BaseController
     private IExpressTypeService expressTypeService;
 
     //快递公司
+    @PreAuthorize("@ss.hasPermi('hr:expressage:slist')")
     @GetMapping("/slist")
     public TableDataInfo slist(SendWaay sendWaay){
         List<SendWaay> list = sendWaayService.selectSendWaayList(sendWaay);
@@ -47,6 +48,7 @@ public class AdmExpressageController extends BaseController
     }
 
     //快递类型
+    @PreAuthorize("@ss.hasPermi('hr:expressage:exlist')")
     @GetMapping("/exlist")
     public TableDataInfo exlist(){
         List<ExpressType> list = expressTypeService.selectExpressName();

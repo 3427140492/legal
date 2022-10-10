@@ -1,17 +1,19 @@
 package com.ruoyi.system.domain;
 
+import java.util.List;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.domain.SystemUserRole;
 
 /**
  * 系统用户对象 system_user
  * 
  * @author ruoyi
- * @date 2022-09-22
+ * @date 2022-10-10
  */
 public class SystemUser extends BaseEntity
 {
@@ -60,6 +62,32 @@ public class SystemUser extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String userStatus;
 
+    private String roleName;
+
+    private String empPhone;
+
+
+    public void setRoleName(String roleName)
+    {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName()
+    {
+        return roleName;
+    }
+
+    public void setEmpPhone(String empPhone)
+    {
+        this.empPhone = empPhone;
+    }
+
+    public String getEmpPhone()
+    {
+        return empPhone;
+    }
+
+
     public void setId(Integer id)
     {
         this.id = id;
@@ -69,6 +97,19 @@ public class SystemUser extends BaseEntity
     {
         return id;
     }
+
+    /** 用户角色信息 */
+    private List<SystemUserRole> systemUserRoleList;
+//
+//    public void setId(String id)
+//    {
+//        this.id = id;
+//    }
+//
+//    public String getId()
+//    {
+//        return id;
+//    }
     public void setUserName(String userName) 
     {
         this.userName = userName;
@@ -160,6 +201,16 @@ public class SystemUser extends BaseEntity
         return userStatus;
     }
 
+    public List<SystemUserRole> getSystemUserRoleList()
+    {
+        return systemUserRoleList;
+    }
+
+    public void setSystemUserRoleList(List<SystemUserRole> systemUserRoleList)
+    {
+        this.systemUserRoleList = systemUserRoleList;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -174,6 +225,9 @@ public class SystemUser extends BaseEntity
             .append("userLoginNum", getUserLoginNum())
             .append("hrEmpId", getHrEmpId())
             .append("userStatus", getUserStatus())
+            .append("systemUserRoleList", getSystemUserRoleList())
+            .append("roleName", getRoleName())
+            .append("empPhone", getEmpPhone())
             .toString();
     }
 }
