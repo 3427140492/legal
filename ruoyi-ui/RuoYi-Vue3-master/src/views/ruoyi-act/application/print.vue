@@ -82,7 +82,7 @@
 
     <!-- 添加或修改用印申请对话框 -->
     <el-dialog :title="title" v-model="open" width="800px" append-to-body>
-      <el-descriptions :title=form.typeName >
+      <el-descriptions :title="typeName">
         <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
         <el-descriptions-item label="案由:">{{form.caseCause}}</el-descriptions-item>
         <el-descriptions-item label="委托人/当事人:"> {{form.caseWtr}}</el-descriptions-item>
@@ -94,7 +94,7 @@
         <el-descriptions-item label="已开票金额:">{{form.caseInvoiced}}</el-descriptions-item>
         <el-descriptions-item label="收费方式:">{{form.caseChargeWay}}</el-descriptions-item>
         <el-descriptions-item label="收案审批状态:">
-          {{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}
+          {{applyforApprovalStatus == '1' ? '审批中' :(applyforApprovalStatus == '2' ?'审批通过' :applyforApprovalStatus == '3' ?'审批不通过' :'' ) }}
         </el-descriptions-item>
         <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
       </el-descriptions>
@@ -105,11 +105,11 @@
         :size="size"
         border
       >
-        <el-descriptions-item label="序号">1</el-descriptions-item>
+        <el-descriptions-item label="序号">{{form.caseApproveStatus != '1' ? '' : '1'}}</el-descriptions-item>
         <el-descriptions-item label="收函方/委托人">{{form.caseWtr}}</el-descriptions-item>
-        <el-descriptions-item label="文书名称">{{form.typeName}}</el-descriptions-item>
-        <el-descriptions-item label="审批状态">{{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
-        <el-descriptions-item label="操作" >{{form.applyforApprovalStatus == '1' ? '审批中：无法打印' : (form.applyforApprovalStatus == '2' ? '审批通过：可以打印' : (form.applyforApprovalStatus == '3' ? '审批不通过： 无法打印' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="文书名称">{{typeName}}</el-descriptions-item>
+        <el-descriptions-item label="审批状态">{{applyforApprovalStatus == '1' ? '审批中' :(applyforApprovalStatus == '2' ?'审批通过' :applyforApprovalStatus == '3' ?'审批不通过' :'' ) }}</el-descriptions-item>
+        <el-descriptions-item label="操作" >{{applyforApprovalStatus == '1' ? '审批中：无法打印' : (applyforApprovalStatus == '2' ? '审批通过：可以打印' : (applyforApprovalStatus == '3' ? '审批不通过： 无法打印' :'')) }}</el-descriptions-item>
       </el-descriptions>
       <el-descriptions
         title="审批记录"
@@ -118,13 +118,13 @@
         :size="size"
         border
       >
-        <el-descriptions-item label="序号">{{form.applyforApprovalStatus != '1' ? 1 :''}}</el-descriptions-item>
-        <el-descriptions-item label="审批时间">{{form.applyforApprovalStatus != '1' ? form.caseSubtime :''}}</el-descriptions-item>
-        <el-descriptions-item label="办理人">{{form.applyforApprovalStatus != '1' ? form.applyforRecipient :''}}</el-descriptions-item>
-        <el-descriptions-item label="备注">{{form.applyforApprovalStatus != '1' ? form.caseRemarks :''}}</el-descriptions-item>
+        <el-descriptions-item label="序号">{{applyforApprovalStatus != '1' ? 1 :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{applyforApprovalStatus != '1' ? applyforReceive :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{applyforApprovalStatus != '1' ? '刘爽' :''}}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{applyforApprovalStatus != '1' ? form.caseRemarks :''}}</el-descriptions-item>
       </el-descriptions>
       <el-descriptions title="审批结果">
-        <el-descriptions-item label="">{{form.applyforApprovalStatus == '1' ? '审批中' : (form.applyforApprovalStatus == '2' ? '审批通过' : (form.applyforApprovalStatus == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
+        <el-descriptions-item label="">{{applyforApprovalStatus == '1' ? '审批中' :(applyforApprovalStatus == '2' ?'审批通过' :applyforApprovalStatus == '3' ?'审批不通过' :'' ) }}</el-descriptions-item>
       </el-descriptions>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
@@ -147,6 +147,10 @@ export default {
   name: "Applyfor",
   data() {
     return {
+      //审批类型
+      applyforApprovalStatus: null,
+      //文书名称
+      typeName: null,
       //下拉框数据源
       options:[],
       // 遮罩层
@@ -266,6 +270,10 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      // alert(row.typeName);
+      this.typeName=row.typeName;
+      this.applyforApprovalStatus = row.applyforApprovalStatus;
+      this.applyforReceive = row.applyforReceive;
       this.reset();
       const id = row.id || this.ids
       getApplyfor(id).then(response => {
