@@ -81,31 +81,24 @@
 
       <el-table-column label="地区" align="center" prop="address" />
      
-      <el-table-column label="状态" align="center" prop="assign" />
+      <el-table-column label="状态" align="center" prop="assign" >
+        <template v-slot="scope">
+          <span v-if="scope.row.assign == '1'">是</span>
+          <span v-if="scope.row.assign == '0'">否</span>
+        </template>
+        </el-table-column>
+
       
      
       <el-table-column label="入库时间" align="center" prop="addtime" />
       
      
       
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['client:client:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['client:client:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
+
+
+       
+     
+     
     </el-table>
     
     <pagination
@@ -119,14 +112,14 @@
     <!-- 添加或修改客户管理对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="委托人" prop="client">
-          <el-input v-model="form.client" placeholder="请输入委托人" />
+        <el-form-item label="客户" prop="client">
+          <el-input v-model="form.client" placeholder="请输入客户" />
         </el-form-item>
-        <el-form-item label="电话" prop="phone">
+        <el-form-item label="手机号码" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="typeinfo">
-          <el-input v-model="form.typeinfo" placeholder="请输入${comment}" />
+        <el-form-item label="" prop="typeinfo">
+          <el-input v-model="form.typeinfo" placeholder="请输入挖掘" />
         </el-form-item>
         <el-form-item label="身份证号码 " prop="cardnum">
           <el-input v-model="form.cardnum" placeholder="请输入身份证号码 " />
@@ -143,14 +136,14 @@
         <el-form-item label="职责" prop="duty">
           <el-input v-model="form.duty" placeholder="请输入职责" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="affectedareas">
-          <el-input v-model="form.affectedareas" placeholder="请输入${comment}" />
+        <el-form-item label="受影响区" prop="affectedareas">
+          <el-input v-model="form.affectedareas" placeholder="请输入受影响区" />
         </el-form-item>
         <el-form-item label="联系电话" prop="tel">
           <el-input v-model="form.tel" placeholder="请输入联系电话" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pertainarea">
-          <el-input v-model="form.pertainarea" placeholder="请输入${comment}" />
+        <el-form-item label="汇管区" prop="pertainarea">
+          <el-input v-model="form.pertainarea" placeholder="请输入汇管区" />
         </el-form-item>
         <el-form-item label="法人代表" prop="legalperson">
           <el-input v-model="form.legalperson" placeholder="请输入法人代表" />
@@ -162,7 +155,65 @@
           <file-upload v-model="form.file"/>
         </el-form-item>
         <el-form-item label="民族" prop="nation">
-          <el-input v-model="form.nation" placeholder="请输入民族" />
+          <el-select v-model="form.nation">
+            <el-option value="">选择民族</el-option>
+            <el-option value="汉族">汉族</el-option>
+            <el-option value="壮族">壮族</el-option>
+            <el-option value="满族">满族</el-option>
+            <el-option value="回族">回族</el-option>
+            <el-option value="苗族">苗族</el-option>
+            <el-option value="维吾尔族">维吾尔族</el-option>
+            <el-option value="土家族">土家族</el-option>
+            <el-option value="彝族">彝族</el-option>
+            <el-option value="蒙古族">蒙古族</el-option>
+            <el-option value="藏族">藏族</el-option>
+            <el-option value="布依族">布依族</el-option>
+            <el-option value="侗族">侗族</el-option>
+            <el-option value="瑶族">瑶族</el-option>
+            <el-option value="朝鲜族">朝鲜族</el-option>
+            <el-option value="白族">白族</el-option>
+            <el-option value="哈尼族">哈尼族</el-option>
+            <el-option value="哈萨克族">哈萨克族</el-option>
+            <el-option value="黎族">黎族</el-option>
+            <el-option value="傣族">傣族</el-option>
+            <el-option value="畲族">畲族</el-option>
+            <el-option value="傈僳族">傈僳族</el-option>
+            <el-option value="仡佬族">仡佬族</el-option>
+            <el-option value="东乡族">东乡族</el-option>
+            <el-option value="高山族">高山族</el-option>
+            <el-option value="拉祜族">拉祜族</el-option>
+            <el-option value="水族">水族</el-option>
+            <el-option value="佤族">佤族</el-option>
+            <el-option value="纳西族">纳西族</el-option>
+            <el-option value="羌族">羌族</el-option>
+            <el-option value="土族">土族</el-option>
+            <el-option value="仫佬族">仫佬族</el-option>
+            <el-option value="锡伯族">锡伯族</el-option>
+            <el-option value="柯尔克孜族">柯尔克孜族</el-option>
+            <el-option value="达斡尔族">达斡尔族</el-option>
+            <el-option value="景颇族">景颇族</el-option>
+            <el-option value="毛南族">毛南族</el-option>
+            <el-option value="撒拉族">撒拉族</el-option>
+            <el-option value="布朗族">布朗族</el-option>
+            <el-option value="塔吉克族">塔吉克族</el-option>
+            <el-option value="阿昌族">阿昌族</el-option>
+            <el-option value="普米族">普米族</el-option>
+            <el-option value="鄂温克族">鄂温克族</el-option>
+            <el-option value="怒族">怒族</el-option>
+            <el-option value="京族">京族</el-option>
+            <el-option value="基诺族">基诺族</el-option>
+            <el-option value="德昂族">德昂族</el-option>
+            <el-option value="保安族">保安族</el-option>
+            <el-option value="俄罗斯族">俄罗斯族</el-option>
+            <el-option value="裕固族">裕固族</el-option>
+            <el-option value="乌孜别克族">乌孜别克族</el-option>
+            <el-option value="门巴族">门巴族</el-option>
+            <el-option value="鄂伦春族">鄂伦春族</el-option>
+            <el-option value="独龙族">独龙族</el-option>
+            <el-option value="塔塔尔族">塔塔尔族</el-option>
+            <el-option value="赫哲族">赫哲族</el-option>
+            <el-option value="珞巴族">珞巴族</el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="出生" prop="birth">
           <el-input v-model="form.birth" placeholder="请输入出生" />
@@ -170,8 +221,8 @@
         <el-form-item label="地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入${comment}" />
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="发布时间" prop="addtime">
           <el-input v-model="form.addtime" placeholder="请输入发布时间" />

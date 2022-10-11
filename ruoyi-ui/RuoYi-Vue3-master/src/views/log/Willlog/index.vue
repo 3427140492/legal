@@ -1,29 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="logtypeId">
-        <el-input v-model="queryParams.logtypeId" placeholder="请输入${comment}" clearable
+      <el-form-item label="案号搜索" prop="caseNo">
+        <el-input v-model="queryParams.whatisPerson" placeholder="请输入案号" clearable @keyup.enter.native="handleQuery" />
+      </el-form-item>
+      <el-form-item label="日志类型" prop="logtypeId">
+        <el-input v-model="queryParams.logtypeId" placeholder="请输入日志类型" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="${comment}" prop="caseLawId">
-        <el-input v-model="queryParams.caseLawId" placeholder="请输入${comment}" clearable
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="${comment}" prop="clientId">
-        <el-input v-model="queryParams.clientId" placeholder="请输入${comment}" clearable
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
+
+
       <el-form-item label="开始时间" prop="joblogStarttime">
-        <el-date-picker clearable v-model="queryParams.joblogStarttime" type="date" value-format="yyyy-MM-dd"
+        <el-date-picker clearable v-model="queryParams.joblogStarttime" type="date" value-format="YYYY-MM-DD"
           placeholder="请选择开始时间">
         </el-date-picker>
       </el-form-item>
+
       <el-form-item label="自报时间" prop="joblogReportedtime">
         <el-input v-model="queryParams.joblogReportedtime" placeholder="请输入自报时间" clearable
           @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="工作描述" prop="joblogText">
-        <el-input v-model="queryParams.joblogText" placeholder="请输入工作描述" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <br />
       <el-form-item>
