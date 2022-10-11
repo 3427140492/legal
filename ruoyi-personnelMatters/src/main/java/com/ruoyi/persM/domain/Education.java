@@ -1,16 +1,15 @@
 package com.ruoyi.persM.domain;
 
+import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.util.Date;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 教育经历对象 hr_degree
- * 
+ *
  * @author ruoyi
  * @date 2022-10-10
  */
@@ -63,102 +62,102 @@ public class Education extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Long hrEmpId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setDegreeStartdate(Date degreeStartdate) 
+    public void setDegreeStartdate(Date degreeStartdate)
     {
         this.degreeStartdate = degreeStartdate;
     }
 
-    public Date getDegreeStartdate() 
+    public Date getDegreeStartdate()
     {
         return degreeStartdate;
     }
-    public void setDegreeEnddate(Date degreeEnddate) 
+    public void setDegreeEnddate(Date degreeEnddate)
     {
         this.degreeEnddate = degreeEnddate;
     }
 
-    public Date getDegreeEnddate() 
+    public Date getDegreeEnddate()
     {
         return degreeEnddate;
     }
-    public void setDegreeSchool(String degreeSchool) 
+    public void setDegreeSchool(String degreeSchool)
     {
         this.degreeSchool = degreeSchool;
     }
 
-    public String getDegreeSchool() 
+    public String getDegreeSchool()
     {
         return degreeSchool;
     }
-    public void setDegreeMajor(String degreeMajor) 
+    public void setDegreeMajor(String degreeMajor)
     {
         this.degreeMajor = degreeMajor;
     }
 
-    public String getDegreeMajor() 
+    public String getDegreeMajor()
     {
         return degreeMajor;
     }
-    public void setDegreeEducation(String degreeEducation) 
+    public void setDegreeEducation(String degreeEducation)
     {
         this.degreeEducation = degreeEducation;
     }
 
-    public String getDegreeEducation() 
+    public String getDegreeEducation()
     {
         return degreeEducation;
     }
-    public void setDegreeDegrees(String degreeDegrees) 
+    public void setDegreeDegrees(String degreeDegrees)
     {
         this.degreeDegrees = degreeDegrees;
     }
 
-    public String getDegreeDegrees() 
+    public String getDegreeDegrees()
     {
         return degreeDegrees;
     }
-    public void setDegreeCrednum(String degreeCrednum) 
+    public void setDegreeCrednum(String degreeCrednum)
     {
         this.degreeCrednum = degreeCrednum;
     }
 
-    public String getDegreeCrednum() 
+    public String getDegreeCrednum()
     {
         return degreeCrednum;
     }
-    public void setDegreeFulltime(String degreeFulltime) 
+    public void setDegreeFulltime(String degreeFulltime)
     {
         this.degreeFulltime = degreeFulltime;
     }
 
-    public String getDegreeFulltime() 
+    public String getDegreeFulltime()
     {
         return degreeFulltime;
     }
-    public void setDegreeSite(String degreeSite) 
+    public void setDegreeSite(String degreeSite)
     {
         this.degreeSite = degreeSite;
     }
 
-    public String getDegreeSite() 
+    public String getDegreeSite()
     {
         return degreeSite;
     }
-    public void setHrEmpId(Long hrEmpId) 
+    public void setHrEmpId(Long hrEmpId)
     {
         this.hrEmpId = hrEmpId;
     }
 
-    public Long getHrEmpId() 
+    public Long getHrEmpId()
     {
         return hrEmpId;
     }
@@ -166,17 +165,17 @@ public class Education extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("degreeStartdate", getDegreeStartdate())
-            .append("degreeEnddate", getDegreeEnddate())
-            .append("degreeSchool", getDegreeSchool())
-            .append("degreeMajor", getDegreeMajor())
-            .append("degreeEducation", getDegreeEducation())
-            .append("degreeDegrees", getDegreeDegrees())
-            .append("degreeCrednum", getDegreeCrednum())
-            .append("degreeFulltime", getDegreeFulltime())
-            .append("degreeSite", getDegreeSite())
-            .append("hrEmpId", getHrEmpId())
-            .toString();
+                .append("id", getId())
+                .append("degreeStartdate", getDegreeStartdate())
+                .append("degreeEnddate", getDegreeEnddate())
+                .append("degreeSchool", getDegreeSchool())
+                .append("degreeMajor", getDegreeMajor())
+                .append("degreeEducation", getDegreeEducation())
+                .append("degreeDegrees", getDegreeDegrees())
+                .append("degreeCrednum", getDegreeCrednum())
+                .append("degreeFulltime", getDegreeFulltime())
+                .append("degreeSite", getDegreeSite())
+                .append("hrEmpId", getHrEmpId())
+                .toString();
     }
 }

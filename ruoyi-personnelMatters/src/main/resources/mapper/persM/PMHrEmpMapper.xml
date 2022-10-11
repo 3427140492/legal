@@ -88,10 +88,10 @@
         <result property="hrEmpId"    column="hr_emp_id"    />
     </resultMap>
 
-
     <sql id="selectPMHrEmpVo">
         select law.identity_name,emp.* from hr_emp emp,hr_lawyer_identity law where law.hr_emp_id = emp.id
     </sql>
+
     <select id="selectPMHrEmpList" parameterType="PMHrEmp" resultMap="PMHrEmpResult">
         <include refid="selectPMHrEmpVo"/>
         <if test="empName != null  and empName != ''"> and emp_name like '%${empName}%' </if>
@@ -244,6 +244,10 @@
         delete from hr_emp where id = #{id}
     </delete>
 
+    <delete id="deleteHrLawyerIdentityByHrEmpId" parameterType="Long">
+        delete from hr_lawyer_identity where hr_emp_id = #{id}
+    </delete>
+
     <delete id="deletePMHrEmpByIds" parameterType="String">
         delete from hr_emp where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
@@ -258,9 +262,7 @@
         </foreach>
     </delete>
 
-    <delete id="deleteHrLawyerIdentityByHrEmpId" parameterType="Long">
-        delete from hr_lawyer_identity where hr_emp_id = #{hrEmpId}
-    </delete>
+
 
     <insert id="insertHrLawyerIdentity" parameterType="hrLawyerIdentity" useGeneratedKeys="true" keyProperty="id">
         insert into hr_lawyer_identity

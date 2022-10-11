@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.persM.mapper.TeamVoMapper">
+
+    <resultMap type="TeamVo" id="TeamVoResult">
+        <result property="id"    column="id"    />
+        <result property="teamName"    column="team_name"    />
+        <result property="teamPrincipal"    column="team_principal"    />
+        <result property="teamMember"    column="team_member"    />
+        <result property="teamIntro"    column="team_intro"    />
+    </resultMap>
+
+    <sql id="selectTeamVoVo">
+        select * from hr_team
+    </sql>
+
+    <select id="selectTeamVoList" parameterType="TeamVo" resultMap="TeamVoResult">
+        <include refid="selectTeamVoVo"/>
+        <where>
+            <if test="teamName != null  and teamName != ''"> and team_name = '${teamName}'</if>
+            <if test="teamPrincipal != null  and teamPrincipal != ''"> and team_principal like '%${teamPrincipal}%'</if>
+            <if test="teamMember != null  and teamMember != ''"> and team_member like '%${teamMember}%'</if>
+        </where>
+    </select>
+
+    <select id="selectTeamVoById" parameterType="Long" resultMap="TeamVoResult">
+        <include refid="selectTeamVoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTeamVo" parameterType="TeamVo" useGeneratedKeys="true" keyProperty="id">
+        insert into hr_team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">team_name,</if>
+            <if test="teamPrincipal != null and teamPrincipal != ''">team_principal,</if>
+            <if test="teamMember != null and teamMember != ''">team_member,</if>
+            <if test="teamIntro != null">team_intro,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">#{teamName},</if>
+            <if test="teamPrincipal != null and teamPrincipal != ''">#{teamPrincipal},</if>
+            <if test="teamMember != null and teamMember != ''">#{teamMember},</if>
+            <if test="teamIntro != null">#{teamIntro},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTeamVo" parameterType="TeamVo">
+        update hr_team
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">team_name = #{teamName},</if>
+            <if test="teamPrincipal != null and teamPrincipal != ''">team_principal = #{teamPrincipal},</if>
+            <if test="teamMember != null and teamMember != ''">team_member = #{teamMember},</if>
+            <if test="teamIntro != null">team_intro = #{teamIntro},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeamVoById" parameterType="Long">
+        delete from hr_team where id = #{id}
+    </delete>
+
+    <delete id="deleteTeamVoByIds" parameterType="String">
+        delete from hr_team where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

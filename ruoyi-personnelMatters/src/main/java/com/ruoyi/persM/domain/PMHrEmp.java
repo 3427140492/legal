@@ -180,6 +180,16 @@ public class PMHrEmp extends BaseEntity
 
     private List<WorkExperience> workExperienceList;
 
+    private List<Education> educationsList;
+
+    public List<Education> getEducationsList() {
+        return educationsList;
+    }
+
+    public void setEducationsList(List<Education> educationsList) {
+        this.educationsList = educationsList;
+    }
+
     public List<WorkExperience> getWorkExperienceList() {
         return workExperienceList;
     }

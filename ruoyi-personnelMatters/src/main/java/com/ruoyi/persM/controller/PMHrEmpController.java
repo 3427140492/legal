@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.WorkExperience;
+import com.ruoyi.persM.service.IPMHrEmpService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,6 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.persM.domain.PMHrEmp;
-import com.ruoyi.persM.service.IPMHrEmpService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
@@ -99,10 +99,10 @@ public class PMHrEmpController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('persM:archives:remove')")
     @Log(title = "人事档案", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    @DeleteMapping("/{id}")
+    public AjaxResult remove(@PathVariable Long id)
     {
-        return toAjax(pMHrEmpService.deletePMHrEmpByIds(ids));
+        return toAjax(pMHrEmpService.deletePMHrEmpById(id));
     }
 
     /**

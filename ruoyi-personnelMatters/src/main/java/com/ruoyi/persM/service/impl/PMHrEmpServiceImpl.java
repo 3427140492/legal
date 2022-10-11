@@ -4,15 +4,13 @@ import java.util.List;
 
 import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.WorkExperience;
+import com.ruoyi.persM.service.IPMHrEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.persM.domain.HrLawyerIdentity;
 import com.ruoyi.persM.mapper.PMHrEmpMapper;
 import com.ruoyi.persM.domain.PMHrEmp;
-import com.ruoyi.persM.service.IPMHrEmpService;
 
 /**
  * 人事档案Service业务层处理

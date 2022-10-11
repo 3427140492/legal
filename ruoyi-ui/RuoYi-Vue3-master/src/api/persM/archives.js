@@ -33,7 +33,7 @@ export function updateArchives(data) {
     method: 'put',
     data: data
   })
-} 
+}
 
 // 删除人事档案
 export function delArchives(id) {

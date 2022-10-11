@@ -75,7 +75,7 @@
                 <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息</el-dropdown-item>
                 <el-dropdown-item @click="WorkExperience(scope.row.id)">查看工作经历</el-dropdown-item>
                 <el-dropdown-item @click="Education(scope.row.id)">查看教育经历</el-dropdown-item>
-                <el-dropdown-item>删除员工</el-dropdown-item>
+                <el-dropdown-item @click="delArchivesUser(scope.row)">删除员工</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -150,7 +150,7 @@
           <el-input v-model="form.empName" placeholder="请输入姓名" />
         </el-form-item>
         <el-form-item label="出生日期" prop="empBirthdate">
-          <el-date-picker clearable v-model="form.empBirthdate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.empBirthdate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择出生日期">
           </el-date-picker>
         </el-form-item>
@@ -347,7 +347,7 @@
           <el-input v-model="form.empPracnum" placeholder="请输入执业证号码" />
         </el-form-item>
         <el-form-item label="首次执业时间" prop="empPracdate">
-          <el-date-picker clearable v-model="form.empPracdate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.empPracdate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择首次执业时间">
           </el-date-picker>
         </el-form-item>
@@ -381,7 +381,7 @@
           <h2>入职情况</h2>
         </div>
         <el-form-item label="入职时间" prop="empEntrydate">
-          <el-date-picker clearable v-model="form.empEntrydate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.empEntrydate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择入职时间">
           </el-date-picker>
         </el-form-item>
@@ -389,12 +389,12 @@
           <el-input v-model="form.empSocialNum" placeholder="请输入社保号码" />
         </el-form-item>
         <el-form-item label="合同开始" prop="empContStartdate">
-          <el-date-picker clearable v-model="form.empContStartdate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.empContStartdate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择合同开始">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="合同截止" prop="empContEnddate">
-          <el-date-picker clearable v-model="form.empContEnddate" type="date" value-format="yyyy-MM-dd"
+          <el-date-picker clearable v-model="form.empContEnddate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择合同截止">
           </el-date-picker>
         </el-form-item>
@@ -878,6 +878,15 @@ export default {
         return delWorkhistory(ids);
       }).then(() => {
         this.WorkExperience(this.hrEmpId);
+        this.$modal.msgSuccess("删除成功");
+      }).catch(() => {});
+    },
+    delArchivesUser(row){
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除编号为"' + ids + '"的员工？').then(function() {
+        return delArchives(ids);
+      }).then(() => {
+        this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     }
