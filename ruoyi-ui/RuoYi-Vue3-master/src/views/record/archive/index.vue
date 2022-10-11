@@ -28,7 +28,7 @@
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
       <el-table-column label="委托人" align="center" prop="caseWtr" />
-    </el-table>
+    </el-table> 
 </el-dialog>
 </div>
 </template>
