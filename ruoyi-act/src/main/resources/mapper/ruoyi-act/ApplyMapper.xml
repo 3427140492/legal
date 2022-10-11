@@ -56,8 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectApplyById" parameterType="Integer" resultMap="ApplyResult">
-        select case_no,wtr,submiter,decrease_money,createtime,reason,remark,type from apply app
-            inner join case_decrease de on de.id = app.wid
+        select case_no,wtr,submiter,decrease_money,createtime,reason,remark,type,app.status from apply app
+                 inner join case_decrease de on de.id = app.wid
             where app.id = #{id}
     </select>
 

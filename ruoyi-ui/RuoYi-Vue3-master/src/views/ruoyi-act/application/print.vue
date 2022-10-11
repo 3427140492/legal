@@ -47,7 +47,7 @@
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="业务子类型" align="center" prop="typeName" />
       <el-table-column label="文书名称" align="center" prop="applyforUsingTheItem" />
-      <el-table-column label="审批状态 1,2,3" align="center" prop="applyforApprovalStatus" >
+      <el-table-column label="审批状态" align="center" prop="applyforApprovalStatus" >
         <template v-slot="scope">
           <span v-if="scope.row.applyforApprovalStatus == 1">审批中</span>
           <span v-if="scope.row.applyforApprovalStatus == 2">审批通过</span>

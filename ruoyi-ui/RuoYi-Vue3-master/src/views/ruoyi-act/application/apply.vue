@@ -103,15 +103,14 @@
         :size="size"
         border
       >
-        <el-descriptions-item label="序号">{{form.status != '1' ? form.id :''}}</el-descriptions-item>
-        <el-descriptions-item label="审批时间">{{form.status != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
-        <el-descriptions-item label="办理人">{{form.status != '1' ? form.empName :''}}</el-descriptions-item>
+        <el-descriptions-item label="序号">{{form.status != '1' ? '1' :''}}</el-descriptions-item>
+        <el-descriptions-item label="审批时间">{{form.status != '1' ? form.createtime :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人">{{form.status != '1' ? form.submiter :''}}</el-descriptions-item>
         <el-descriptions-item label="备注">{{form.status != '1' ? form.caseRemarks :''}}</el-descriptions-item>
       </el-descriptions>
       <el-descriptions title="审批结果">
         <el-descriptions-item label="">{{form.status == '1' ? '审批中' : (form.status == '2' ? '审批通过' : (form.status == '3' ? '审批不通过' :'')) }}</el-descriptions-item>
-        <el-descriptions-item label="结案审批时间:">{{form.status != '1' ? form.caseApprovalEndtime :''}}</el-descriptions-item>
-        <el-descriptions-item label="办理人:">{{form.status != '1' ? form.empName :''}}</el-descriptions-item>
+        <el-descriptions-item label="办理人:">{{form.status != '1' ? form.submiter :''}}</el-descriptions-item>
       </el-descriptions>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
@@ -130,6 +129,7 @@ export default {
     return {
       //下拉框数据源
       // options:[],
+      
       // 遮罩层
       loading: true,
       // 选中数组
