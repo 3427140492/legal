@@ -48,6 +48,7 @@
     <resultMap id="PMHrEmpHrLawyerIdentityResult" type="PMHrEmp" extends="PMHrEmpResult">
         <collection property="hrLawyerIdentityList" notNullColumn="id" javaType="java.util.List" resultMap="HrLawyerIdentityResult" />
         <collection property="workExperienceList" notNullColumn="id" javaType="java.util.List" resultMap="WorkExperienceResult" />
+        <collection property="educationsList" notNullColumn="id" javaType="java.util.List" resultMap="EducationResult" />
     </resultMap>
 
     <resultMap type="HrLawyerIdentity" id="HrLawyerIdentityResult">
@@ -73,6 +74,21 @@
         <result property="hrEmpId"    column="hr_emp_id"    />
     </resultMap>
 
+    <resultMap type="Education" id="EducationResult">
+        <result property="id"    column="id"    />
+        <result property="degreeStartdate"    column="degree_startdate"    />
+        <result property="degreeEnddate"    column="degree_enddate"    />
+        <result property="degreeSchool"    column="degree_school"    />
+        <result property="degreeMajor"    column="degree_major"    />
+        <result property="degreeEducation"    column="degree_education"    />
+        <result property="degreeDegrees"    column="degree_degrees"    />
+        <result property="degreeCrednum"    column="degree_crednum"    />
+        <result property="degreeFulltime"    column="degree_fulltime"    />
+        <result property="degreeSite"    column="degree_site"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
+    </resultMap>
+
+
     <sql id="selectPMHrEmpVo">
         select law.identity_name,emp.* from hr_emp emp,hr_lawyer_identity law where law.hr_emp_id = emp.id
     </sql>
@@ -87,6 +103,10 @@
 
     <select id="selectPMHrEmpById" parameterType="PMHrEmp" resultMap="PMHrEmpHrLawyerIdentityResult">
         select * from hr_emp where id = ${id}
+    </select>
+
+    <select id="selectEducationById" parameterType="Education" resultMap="EducationResult">
+        select * from hr_degree where id = ${id}
     </select>
 
     <select id="selectWorkExperienceById" parameterType="WorkExperience" resultMap="WorkExperienceResult">

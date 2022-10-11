@@ -1,6 +1,8 @@
 package com.ruoyi.persM.service;
 
 import java.util.List;
+
+import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.WorkExperience;
 
@@ -93,4 +95,6 @@ public interface IPMHrEmpService
     public int insertWorkExperience(WorkExperience workExperience);
 
     public int deleteWorkExperienceByIds(Integer id);
+
+    public List<Education> selectEducationById(Long id);
 }

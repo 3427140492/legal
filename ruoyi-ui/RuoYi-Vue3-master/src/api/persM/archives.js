@@ -33,7 +33,7 @@ export function updateArchives(data) {
     method: 'put',
     data: data
   })
-}
+} 
 
 // 删除人事档案
 export function delArchives(id) {
@@ -84,5 +84,13 @@ export function delWorkhistory(id) {
   return request({
     url: '/persM/archives/removeWork/' + id,
     method: 'delete'
+  })
+}
+
+// 查询教育经历详细
+export function getDegree(id) {
+  return request({
+    url: '/persM/archives/Degree/' + id,
+    method: 'get'
   })
 }

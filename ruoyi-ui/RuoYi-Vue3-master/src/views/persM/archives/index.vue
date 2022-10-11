@@ -72,10 +72,9 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="ViewDetail(scope.row.id)">查看详细信息</el-dropdown-item>
-                <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息
-                </el-dropdown-item>
+                <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息</el-dropdown-item>
                 <el-dropdown-item @click="WorkExperience(scope.row.id)">查看工作经历</el-dropdown-item>
-                <el-dropdown-item>查看教育经历</el-dropdown-item>
+                <el-dropdown-item @click="Education(scope.row.id)">查看教育经历</el-dropdown-item>
                 <el-dropdown-item>删除员工</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -526,15 +525,43 @@
       </div>
     </el-dialog>
 
+    <el-dialog v-model="this.Educations" title="查看教育经历" width="65%">
+      <el-table v-loading="loading" :data="degreeList" @selection-change="handleSelectionChange">
+      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="开始日期" align="center" prop="degreeStartdate" width="100">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.degreeStartdate, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="结束日期" align="center" prop="degreeEnddate" width="100">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.degreeEnddate, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="毕业学校" align="center" prop="degreeSchool" />
+      <el-table-column label="主修专业" align="center" prop="degreeMajor" />
+      <el-table-column label="获得学历" align="center" prop="degreeEducation" />
+      <el-table-column label="获得学位" align="center" prop="degreeDegrees" />
+      <el-table-column label="证书编号" align="center" prop="degreeCrednum" />
+      <el-table-column label="全日制" align="center" prop="degreeFulltime">
+        <template v-slot="scope">
+          <span v-if="scope.row.degreeFulltime == 'Y'">是</span>
+          <span v-if="scope.row.degreeFulltime == 'N'">否</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="所在地" align="center" prop="degreeSite" />
+      </el-table>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
 
   </div>
 </template>
-
+  
 <script>
 
-import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork, addWorkhistory,delWorkhistory } from "@/api/persM/archives";
+import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork, addWorkhistory,delWorkhistory,getDegree} from "@/api/persM/archives";
 
 
 export default {
@@ -546,6 +573,7 @@ export default {
       //律师信息弹出框
       ViewDetails: false,
       WorkExperiences: false,
+      Educations: false,
       // 选中数组
       ids: [],
       // 子表选中数据
@@ -562,6 +590,8 @@ export default {
       archivesList: [],
       //工作经历
       workhistoryList: [],
+      //学历经历
+      degreeList: [],
       // ${subTable.functionName}表格数据
       //hrLawyerIdentityList: [],
       // 弹出层标题
@@ -796,6 +826,13 @@ export default {
       getWorkArchives(id).then(response => {
         this.workhistoryList = response.rows;
         console.log(this.workhistoryList)
+      })
+    },
+    Education(id) {
+      this.Educations = true;
+      this.hrEmpId = id;
+      getDegree(id).then(response => {
+        this.degreeList  = response.rows;
       })
     },
     /** 提交按钮 */

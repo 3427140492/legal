@@ -3,6 +3,7 @@ package com.ruoyi.persM.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.WorkExperience;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +157,17 @@ public class PMHrEmpController extends BaseController
     public AjaxResult removeWork(@PathVariable Integer id)
     {
         return toAjax(pMHrEmpService.deleteWorkExperienceByIds(id));
+    }
+
+    /**
+     * 获取教育经历信息
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:Degree')")
+    @GetMapping(value = "Degree/{id}")
+    public TableDataInfo getInfoDegree(@PathVariable("id") Long id)
+    {
+        List<Education> list = pMHrEmpService.selectEducationById(id);
+        return getDataTable(list);
     }
 
 }

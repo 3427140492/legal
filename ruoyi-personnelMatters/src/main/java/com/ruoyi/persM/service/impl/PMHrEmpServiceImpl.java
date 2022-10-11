@@ -2,6 +2,7 @@ package com.ruoyi.persM.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -160,5 +161,10 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
     @Override
     public int deleteWorkExperienceByIds(Integer id) {
         return pMHrEmpMapper.deleteWorkExperienceByIds(id);
+    }
+
+    @Override
+    public List<Education> selectEducationById(Long id) {
+        return pMHrEmpMapper.selectEducationById(id);
     }
 }
