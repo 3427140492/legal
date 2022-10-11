@@ -7,9 +7,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 快递类型对象 express_type
- *
+ * 
  * @author ruoyi
- * @date 2022-09-29
+ * @date 2022-10-11
  */
 public class ExpressType extends BaseEntity
 {
@@ -26,30 +26,30 @@ public class ExpressType extends BaseEntity
     @Excel(name = "快件类型")
     private String expressName;
 
-    public void setId(Long id)
+    public void setId(Long id) 
     {
         this.id = id;
     }
 
-    public Long getId()
+    public Long getId() 
     {
         return id;
     }
-    public void setSorting(String sorting)
+    public void setSorting(String sorting) 
     {
         this.sorting = sorting;
     }
 
-    public String getSorting()
+    public String getSorting() 
     {
         return sorting;
     }
-    public void setExpressName(String expressName)
+    public void setExpressName(String expressName) 
     {
         this.expressName = expressName;
     }
 
-    public String getExpressName()
+    public String getExpressName() 
     {
         return expressName;
     }
@@ -57,9 +57,9 @@ public class ExpressType extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("sorting", getSorting())
-                .append("expressName", getExpressName())
-                .toString();
+            .append("id", getId())
+            .append("sorting", getSorting())
+            .append("expressName", getExpressName())
+            .toString();
     }
 }

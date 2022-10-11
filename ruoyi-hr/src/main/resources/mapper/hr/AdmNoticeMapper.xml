@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="noticeReleasetime"    column="notice_releasetime"    />
         <result property="systemUserId"    column="system_user_id"    />
         <result property="noticeNotificationtime"    column="notice_notificationtime"    />
+        <result property="noticeNotificationtime2"    column="noticeNotificationtime2"    />
         <result property="noticeNotificationendtime"    column="notice_notificationendtime"    />
         <result property="noticeContent"    column="notice_content"    />
         <result property="noticeFile"    column="notice_file"    />
@@ -25,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
             <if test="noticeNotificationtime != null "> and notice_notificationtime &gt;= #{noticeNotificationtime} </if>
-            <if test="noticeNotificationendtime != null "> and notice_notificationendtime &lt;= #{noticeNotificationendtime}</if>
+            <if test="noticeNotificationtime2 != null "> and notice_notificationtime &lt;= #{noticeNotificationtime2}</if>
 
         </where>
     </select>

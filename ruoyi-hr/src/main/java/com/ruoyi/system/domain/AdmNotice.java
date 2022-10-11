@@ -35,6 +35,8 @@ public class AdmNotice extends BaseEntity
     @Excel(name = "时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date noticeNotificationtime;
 
+    private Date noticeNotificationtime2;
+
     /**  */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -107,6 +109,17 @@ public class AdmNotice extends BaseEntity
     {
         return noticeNotificationtime;
     }
+
+    public void setNoticeNotificationtime2(Date noticeNotificationtime2)
+    {
+        this.noticeNotificationtime2 = noticeNotificationtime2;
+    }
+
+    public Date getNoticeNotificationtime2()
+    {
+        return noticeNotificationtime2;
+    }
+
     public void setNoticeNotificationendtime(Date noticeNotificationendtime) 
     {
         this.noticeNotificationendtime = noticeNotificationendtime;
@@ -143,6 +156,7 @@ public class AdmNotice extends BaseEntity
             .append("noticeReleasetime", getNoticeReleasetime())
             .append("systemUserId", getSystemUserId())
             .append("noticeNotificationtime", getNoticeNotificationtime())
+            .append("noticeNotificationtime2", getNoticeNotificationtime2())
             .append("noticeNotificationendtime", getNoticeNotificationendtime())
             .append("noticeContent", getNoticeContent())
             .append("noticeFile", getNoticeFile())

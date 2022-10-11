@@ -3,16 +3,57 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.ExpressTypeMapper">
-
+    
     <resultMap type="ExpressType" id="ExpressTypeResult">
         <result property="id"    column="id"    />
         <result property="sorting"    column="sorting"    />
-        <result property="expressName"    column="express_Name"    />
+        <result property="expressName"    column="express_name"    />
     </resultMap>
 
-    <!--    查询快件类型-->
-    <select id="selectExpressName"  resultMap="ExpressTypeResult">
-        select * from express_Type
-    </select>
+    <sql id="selectExpressTypeVo">
+        select id, sorting, express_name from express_type
+    </sql>
 
+    <select id="selectExpressTypeList" parameterType="ExpressType" resultMap="ExpressTypeResult">
+        <include refid="selectExpressTypeVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectExpressTypeById" parameterType="Long" resultMap="ExpressTypeResult">
+        <include refid="selectExpressTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExpressType" parameterType="ExpressType" useGeneratedKeys="true" keyProperty="id">
+        insert into express_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sorting != null">sorting,</if>
+            <if test="expressName != null">express_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sorting != null">#{sorting},</if>
+            <if test="expressName != null">#{expressName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExpressType" parameterType="ExpressType">
+        update express_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sorting != null">sorting = #{sorting},</if>
+            <if test="expressName != null">express_name = #{expressName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExpressTypeById" parameterType="Long">
+        delete from express_type where id = #{id}
+    </delete>
+
+    <delete id="deleteExpressTypeByIds" parameterType="String">
+        delete from express_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

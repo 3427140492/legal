@@ -29,8 +29,8 @@
 
       </el-form-item>
 
-      <el-form-item label="结束时间" prop="noticeNotificationendtime">
-           <el-date-picker clearable v-model="queryParams.noticeNotificationendtime" value-format="YYYY-MM-DD" placeholder="请输入结束时间">
+      <el-form-item label="结束时间" prop="noticeNotificationtime2">
+           <el-date-picker clearable v-model="queryParams.noticeNotificationtime2" value-format="YYYY-MM-DD" placeholder="请输入结束时间">
            </el-date-picker>
       </el-form-item>
 
@@ -190,7 +190,7 @@ export default {
         pageSize: 10,
         title: null,
         noticeNotificationtime: null,
-        noticeNotificationendtime: null,
+        noticeNotificationtime2: null,
       },
       // 表单参数
       form: {},

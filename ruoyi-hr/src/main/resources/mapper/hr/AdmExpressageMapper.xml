@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sendName"    column="send_name"    />
         <result property="expressName"    column="express_name"    />
         <result property="selectStr"    column="selectStr"    />
+        <result property="selectStrs"    column="selectStrs"    />
         <result property="selectType"    column="selectType"    />
     </resultMap>
 
@@ -54,14 +55,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="collarPerson != null  and collarPerson != ''"> and ae.collar_person like '%${collarPerson}%'</if>
 
             <if test="selectType == 1">
+
                 <if test="selectStr != null and selectStr != '' ">
-                    and expressage_dateofreceipt >= '${selectStr}'
+                    and expressage_dateofreceipt &gt;= '${selectStr}'
+                </if>
+
+                <if test="selectStrs != null and selectStrs != '' ">
+                    and expressage_dateofreceipt &lt;= '${selectStrs}'
                 </if>
             </if>
 
+
             <if test="selectType == 2">
                 <if test="selectStr != null and selectStr != '' ">
-                    and expressage_bring_date >= '${selectStr}'
+                    and expressage_bring_date &gt;= '${selectStr}'
+                </if>
+
+                <if test="selectStrs != null and selectStrs != '' ">
+                    and expressage_bring_date &lt;= '${selectStrs}'
                 </if>
             </if>
 

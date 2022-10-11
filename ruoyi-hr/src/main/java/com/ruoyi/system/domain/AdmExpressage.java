@@ -104,6 +104,8 @@ public class AdmExpressage extends BaseEntity
 
     private String selectStr;
 
+    private String selectStrs;
+
     private String selectType;
 
     public void setSelectType(String selectType)
@@ -124,6 +126,16 @@ public class AdmExpressage extends BaseEntity
     public String getSelectStr()
     {
         return selectStr;
+    }
+
+    public void setSelectStrs(String selectStrs)
+    {
+        this.selectStrs = selectStrs;
+    }
+
+    public String getSelectStrs()
+    {
+        return selectStrs;
     }
 
 

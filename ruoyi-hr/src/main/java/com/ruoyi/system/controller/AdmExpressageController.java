@@ -50,8 +50,8 @@ public class AdmExpressageController extends BaseController
     //快递类型
     @PreAuthorize("@ss.hasPermi('hr:expressage:exlist')")
     @GetMapping("/exlist")
-    public TableDataInfo exlist(){
-        List<ExpressType> list = expressTypeService.selectExpressName();
+    public TableDataInfo exlist(ExpressType expressType){
+        List<ExpressType> list = expressTypeService.selectExpressTypeList(expressType);
         return getDataTable(list);
     }
 
