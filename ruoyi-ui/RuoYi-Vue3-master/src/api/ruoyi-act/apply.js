@@ -9,11 +9,12 @@ export function listApply(query) {
   })
 }
 
-// 查询业务申请列表下拉
-// export function selectApplyListxl() {
+//查询业务申请回显表
+// export function selapphxb(query) {
 //   return request({
-//     url: '/ruoyi-act/apply/xl',
-//     method: 'get'
+//     url: '/ruoyi-act/apply/hxb',
+//     method: 'get',  
+//     params: query
 //   })
 // }
 

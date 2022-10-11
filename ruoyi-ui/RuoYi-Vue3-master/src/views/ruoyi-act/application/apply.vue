@@ -81,7 +81,7 @@
 
     <!-- 添加或修改我的申请对话框 -->
     <el-dialog :title="title" v-model="open" width="800px" append-to-body>
-      <el-descriptions :title=form.caseTypeName >
+      <el-descriptions :title=form.type >
         <el-descriptions-item label="案号:">{{form.caseNo}}</el-descriptions-item>
         <el-descriptions-item label="委托人:">{{form.wtr}}</el-descriptions-item>
         <el-descriptions-item label="提交人:">{{form.submiter}}</el-descriptions-item>
@@ -91,6 +91,11 @@
         <el-descriptions-item label="退费申请单:">{{form.empName}}</el-descriptions-item>
         <el-descriptions-item label="备注:">{{form.caseRemarks}}</el-descriptions-item>
       </el-descriptions>
+      <!-- <el-table :data="ActHiCommentList">
+        <el-table-column label="提交人" align="center" prop="time" />
+        <el-table-column label="办理人" align="center" prop="userId" />
+        <el-table-column label="备注" align="center" prop="message" />
+      </el-table> -->
       <el-descriptions
         title="审批记录"
         direction="vertical"
@@ -112,40 +117,12 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <!-- 添加或修改业务申请对话框 -->
-    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="caseNo">
-          <el-input v-model="form.caseNo" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="submiter">
-          <el-input v-model="form.submiter" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="leader">
-          <el-input v-model="form.leader" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="wid">
-          <el-input v-model="form.wid" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="${comment}">
-          <file-upload v-model="form.file"/>
-        </el-form-item>
-        <el-form-item label="${comment}" prop="wtr">
-          <el-input v-model="form.wtr" placeholder="请输入${comment}" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import { listApply, getApply, delApply, addApply, updateApply } from "@/api/ruoyi-act/apply";
+import { getUserProfile } from "@/api/system/user";
 
 export default {
   name: "Apply",
@@ -167,6 +144,8 @@ export default {
       total: 0,
       // 业务申请表格数据
       applyList: [],
+      //业务申请表格数据
+      ActHiCommentList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -193,13 +172,14 @@ export default {
     };
   },
   created() {
-    //给下拉框数据源赋值
-    // console.log("开始进行赋值");
-    // selectApplyListxl().then(response => {
-    //   this.options = response.rows;
-    //   console.log("赋值完成的下拉框数据"+this.options);
-    // });
-    this.getList();
+    //传值
+    getUserProfile().then(response => {
+      this.user = response.data;
+      this.queryParams.submiter=this.user.nickName;
+      console.log("昵称："+this.queryParams.submiter);
+
+      this.getList();
+    });
   },
   methods: {
     /** 查询业务申请列表 */
@@ -233,6 +213,10 @@ export default {
       };
       this.resetForm("form");
     },
+    /** 查询业务申请回显表 */
+    getListhxb() {
+      
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -264,6 +248,11 @@ export default {
         this.open = true;
         this.title = "流程查看";
       });
+      /** 查询业务申请回显表 */
+      // selapphxb(this.queryParams).then(response => {
+      //   console.log(response.rows);
+      //   this.ActHiCommentList = response.rows;
+      // });
     },
     /** 提交按钮 */
     submitForm() {

@@ -93,8 +93,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="caseSubtime != null"> and case_subtime like concat((DATE_FORMAT(#{caseSubtime},'%Y-%m-%d')),'%')</if>
             <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_law.case_case_type_id like '${caseCaseTypeId}%'</if>
 --             and case_case_type.id = LEFT(case_law.case_case_type_id,4) and case_law.hr_emp_id = hr_emp.id
-                        order by case_subtime desc
+
         </where>
+        order by case_subtime desc
 
     </select>
 

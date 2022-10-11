@@ -16,29 +16,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="file"    column="file"    />
         <result property="wtr"    column="wtr"    />
+        <result property="reason"    column="reason"    />
+        <result property="decreaseMoney"    column="decrease_money"    />
+    </resultMap>
+
+    <resultMap type="ActHiComment" id="ActHiCommentResult">
+        <result property="id"    column="ID_"    />
+        <result property="type"    column="TYPE_"    />
+        <result property="time"    column="TIME_"    />
+        <result property="userId"    column="USER_ID_"    />
+        <result property="taskId"    column="TASK_ID_"    />
+        <result property="procInstId"    column="PROC_INST_ID_"    />
+        <result property="action"    column="ACTION_"    />
+        <result property="message"    column="MESSAGE_"    />
+        <result property="fullMsg"    column="FULL_MSG_"    />
     </resultMap>
 
     <sql id="selectApplyVo">
-        select id, case_no, submiter, type, leader, createtime, status, wid, remark, file, wtr from apply
+--         select id, case_no, submiter, type, leader, createtime, status, wid, remark, file, wtr from apply
+            select * from ( select app.id,wid,case_no,submiter,type,app.status,createtime from apply app
+                inner join case_decrease de on de.id = app.wid
+            where type = '费用减免申请' UNION all
+            select app.id,wid,case_no,submiter,type,app.status,createtime from apply app
+                inner join cw_inout cw on cw.id = app.wid where type = '退款申请' UNION all
+            select app.id,wid,app.case_no,submiter,type,app.status,createtime from apply app
+                inner join case_law law on law.id = app.wid where type = '结案申请' ) t1
     </sql>
 
     <select id="selectApplyList" parameterType="Apply" resultMap="ApplyResult">
         <include refid="selectApplyVo"/>
-        <where>  
+        <where>
+            t1.submiter = #{submiter}
             <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="createtime != null  and createtime != ''">and createtime like concat((DATE_FORMAT(#{createtime},'%Y-%m-%d')),'%')</if>
             <if test="status != null "> and status = #{status}</if>
         </where>
+        order by t1.createtime desc
     </select>
     
     <select id="selectApplyById" parameterType="Integer" resultMap="ApplyResult">
-        <include refid="selectApplyVo"/>
-        where id = #{id}
+        select case_no,wtr,submiter,decrease_money,createtime,reason,remark,type from apply app
+            inner join case_decrease de on de.id = app.wid
+            where app.id = #{id}
     </select>
 
-<!--    <select id="selectApplyListxl" parameterType="Apply" resultMap="ApplyResult">-->
-<!--        select DISTINCT type from apply-->
+<!--    <select id="selapphxb" parameterType="Integer" resultMap="ApplyResult">-->
+<!--        select * from ACT_HI_COMMENT where PROC_INST_ID_ =-->
+<!--            (select act_ru_execution_id from case_service_historytask where apply_id =-->
+<!--            (select app.id from apply app inner join case_decrease de on de.id = app.wid where app.id = #{id}))-->
+<!--            order by TIME_ desc-->
 <!--    </select>-->
 
 </mapper>

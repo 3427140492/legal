@@ -64,31 +64,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectCaseLawAllVo">
 --         select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
-select cas.id,case_no,case_wtr,case_opposite_parties,case_lawsuitobj,emp.emp_name,case_agencyfee,case_charge_way, case_clash,case_submitter,case_case_type_id,type2.case_type_name,system_approval_id,case_approve_status,case_subtime ,cas.case_approval_endtime from case_law cas
-           inner join case_case_type type on type.id = cas.case_case_type_id
-           inner join case_case_type type2 on type2.id = type.type_pid
-           inner join cw_performancesplit cw on cas.id = cw.case_law_id
-           inner join hr_emp emp on emp.id = cw.hr_emp_id order by case_subtime
+            select * from case_law
+                inner join case_case_type type on type.id = case_law.case_case_type_id
+                inner join case_case_type type2 on type2.id = type.type_pid
     </sql>
 
     <select id="selectCaseLawAllList" parameterType="CaseLawAll" resultMap="CaseLawAllResult">
         <include refid="selectCaseLawAllVo"/>
-        <where>  
-            <if test="caseNo != null  and caseNo != ''"> and case_no like concat('%', #{caseNo}, '%')</if>
+        <where>
+            <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
-            <if test="caseSubtime != null "> and case_subtime = #{caseSubtime}</if>
-            <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_case_type_id = #{caseCaseTypeId}</if>
+            <if test="caseSubtime != null"> and case_subtime like concat((DATE_FORMAT(#{caseSubtime},'%Y-%m-%d')),'%')</if>
+            <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_law.case_case_type_id like '${caseCaseTypeId}%'</if>
         </where>
+        order by case_subtime desc
     </select>
     
     <select id="selectCaseLawAllById" parameterType="Integer" resultMap="CaseLawAllResult">
-        select cas.id,case_no,case_wtr,case_opposite_parties,case_lawsuitobj,emp.emp_name,case_agencyfee,case_charge_way, case_clash,case_submitter,case_case_type_id,type2.case_type_name,system_approval_id,case_approve_status,case_subtime ,cas.case_approval_endtime from case_law cas
-                inner join case_case_type type on type.id = cas.case_case_type_id
-                inner join case_case_type type2 on type2.id = type.type_pid
-                inner join cw_performancesplit cw on cas.id = cw.case_law_id
-                inner join hr_emp emp on emp.id = cw.hr_emp_id
-            where cas.id = #{id}
-        order by case_subtime
+        select cas.*,cas.id as sub_id,type2.case_type_name,emp_name,cw.case_attorney from case_law cas
+              inner join case_case_type type on type.id = cas.case_case_type_id
+              inner join case_case_type type2 on type2.id = type.type_pid
+              inner join cw_performancesplit cw on cas.id = cw.case_law_id
+              inner join hr_emp emp on emp.id = cw.hr_emp_id
+        where cas.id = #{id}
+          and cw.case_attorney = '主办律师'
     </select>
         
     <insert id="insertCaseLawAll" parameterType="CaseLawAll" useGeneratedKeys="true" keyProperty="id">

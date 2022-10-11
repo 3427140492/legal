@@ -1,6 +1,8 @@
 package com.ruoyi.act.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.act.domain.ActHiComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.act.mapper.ApplyMapper;
@@ -44,14 +46,14 @@ public class ApplyServiceImpl implements IApplyService
     }
 
     /**
-     * 查询业务申请下拉列表
+     * 查询业务申请回显表
      *
-     * @return 业务申请下拉
+     * @return 业务申请回显表
      */
 //    @Override
-//    public List<Apply> selectApplyListxl(Apply apply)
+//    public List<ActHiComment> selapphxb(ActHiComment actHiComment)
 //    {
-//        return applyMapper.selectApplyList(apply);
+//        return applyMapper.selapphxb(actHiComment);
 //    }
 
 

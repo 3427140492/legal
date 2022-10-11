@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="案号" prop="caseNo">
         <el-input
           v-model="queryParams.caseNo"
@@ -8,6 +8,25 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item label="审批状态" prop="caseApproveStatus">
+        <el-select  v-model="queryParams.caseApproveStatus" >
+          <el-option label="" value="">请选择审批</el-option>  
+          <el-option label="审批中" value="1">审批中</el-option>    
+          <el-option label="审批通过" value="2">审批通过</el-option>
+          <el-option label="审批不通过" value="3">审批不通过</el-option>      
+        </el-select>
+      </el-form-item>
+      <el-form-item label="案件类型" prop="caseCaseTypeId">
+        <el-select v-model="queryParams.caseCaseTypeId" class="m-2" placeholder="案件类型">
+          <el-option label="" value="">请选择案件类型</el-option>
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.caseTypeName"
+            :value="item.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="提交时间" prop="caseSubtime">
         <el-date-picker clearable
@@ -17,13 +36,9 @@
           placeholder="请选择提交时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="案件类型id 外键" prop="caseCaseTypeId">
-        <el-select v-model="queryParams.caseCaseTypeId" placeholder="请选择案件类型id 外键" clearable>
-        </el-select>
-      </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -39,7 +54,13 @@
       <el-table-column label="提交人" align="center" prop="caseSubmitter" />
       <el-table-column label="收案审批人" align="center" prop="systemApprovalId" />
       <el-table-column label="业务子类型" align="center" prop="caseTypeName" />
-      <el-table-column label="审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" />
+      <el-table-column label="审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" >
+         <template v-slot="scope">
+          <span v-if="scope.row.caseApproveStatus == 1">审批中</span>
+          <span v-if="scope.row.caseApproveStatus == 2">审批通过</span>
+          <span v-if="scope.row.caseApproveStatus == 3">审批不通过</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提交时间" align="center" prop="caseSubtime" width="180">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.caseSubtime, '{y}-{m}-{d}') }}</span>
@@ -53,14 +74,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['ruoyi-act:lawall:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['ruoyi-act:lawall:remove']"
-          >删除</el-button>
+          >查看流程</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -267,11 +281,14 @@
 
 <script>
 import { listLawall, getLawall, delLawall, addLawall, updateLawall } from "@/api/ruoyi-act/lawall";
+import {listApplicationxl} from "@/api/ruoyi-act/application";//下拉
 
 export default {
   name: "Lawall",
   data() {
     return {
+      //下拉框数据源
+      options:[],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -307,6 +324,12 @@ export default {
     };
   },
   created() {
+    //给下拉框数据源赋值
+    console.log("开始进行赋值");
+    listApplicationxl().then(response => {
+      this.options = response.rows;
+      console.log("赋值完成的下拉框数据"+this.options);
+    });
     this.getList();
   },
   methods: {
@@ -377,7 +400,8 @@ export default {
         caseSettleType: null,
         caseApprovalEndtime: null,
         caseRecordNum: null,
-        standard: null
+        standard: null,
+        caseTypeName : null
       };
       this.resetForm("form");
     },

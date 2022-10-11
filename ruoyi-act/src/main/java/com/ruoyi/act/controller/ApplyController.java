@@ -2,6 +2,8 @@ package com.ruoyi.act.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.act.domain.ActHiComment;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,13 +49,13 @@ public class ApplyController extends BaseController
     }
 
     /**
-     * 查询业务申请下拉列表
+     * 查询业务申请回显表
      */
-//    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:xl')")
-//    @GetMapping("/xl")
-//    public TableDataInfo selectApplyListxl(Apply apply)
+//    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:hxb')")
+//    @GetMapping("/hxb")
+//    public TableDataInfo selapphxb(ActHiComment actHiComment)
 //    {
-//        List<Apply> list = applyService.selectApplyListxl(apply);
+//        List<ActHiComment> list = applyService.selapphxb(actHiComment);
 //        return getDataTable(list);
 //    }
 

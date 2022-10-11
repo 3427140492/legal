@@ -54,7 +54,30 @@ public class Apply extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String wtr;
 
-    public void setId(Integer id) 
+
+    @Excel(name = "reason")
+    private String reason;
+
+    public String getDecreaseMoney() {
+        return decreaseMoney;
+    }
+
+    public void setDecreaseMoney(String decreaseMoney) {
+        this.decreaseMoney = decreaseMoney;
+    }
+
+    @Excel(name = "reason")
+    private String decreaseMoney;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setId(Integer id)
     {
         this.id = id;
     }

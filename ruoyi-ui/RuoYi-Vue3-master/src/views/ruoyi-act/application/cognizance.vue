@@ -240,7 +240,7 @@ export default {
       this.options = response.rows;
       console.log("赋值完成的下拉框数据"+this.options);
     });
-
+    //传值
     getUserProfile().then(response => {
       this.user = response.data;
       this.queryParams.caseSubmitter=this.user.nickName;

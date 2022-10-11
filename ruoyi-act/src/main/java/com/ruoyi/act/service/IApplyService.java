@@ -1,6 +1,8 @@
 package com.ruoyi.act.service;
 
 import java.util.List;
+
+import com.ruoyi.act.domain.ActHiComment;
 import com.ruoyi.act.domain.Apply;
 
 /**
@@ -28,11 +30,11 @@ public interface IApplyService
     public List<Apply> selectApplyList(Apply apply);
 
     /**
-     * 查询业务申请列表下拉
+     * 查询业务申请回显表
      *
-     * @return 业务申请下拉集合
+     * @return 业务申请回显表
      */
-//    public List<Apply> selectApplyListxl(Apply apply);
+//    public List<ActHiComment> selapphxb(ActHiComment actHiComment);
 
 
     /**
