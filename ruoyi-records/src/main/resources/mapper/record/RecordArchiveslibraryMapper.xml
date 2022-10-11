@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="borrowDate != null">#{borrowDate},</if>
             <if test="giveBackDate != null">#{giveBackDate},</if>
             <if test="remark != null">#{remark},</if>
-            <if test="borrowStatus != null">#{borrowStatus},</if>
+            <if test="borrowStatus != null">"N",</if>
          </trim>
     </insert>
 

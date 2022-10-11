@@ -72,7 +72,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="invoiceList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="invoiceList" @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="发票抬头" align="center" prop="cwInvoiceTitle" />

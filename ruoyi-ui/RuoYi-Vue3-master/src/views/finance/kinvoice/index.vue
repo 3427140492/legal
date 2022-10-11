@@ -73,14 +73,14 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="kinvoiceList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="kinvoiceList" @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="案号" align="center" prop="caseNo" />
+      <el-table-column label="案号" align="center" prop="caseNo" width="180" />
       <el-table-column label="办案律师" align="center" prop="empName" />
       <el-table-column label="发票抬头" align="center" prop="cwInvoiceTitle" />
       <el-table-column label="代理费(元)" align="center" prop="caseAgencyfee" />
       <el-table-column label="发票金额" align="center" prop="cwInvoiceMoney" />
-      <el-table-column label="已开发票金额(元)" align="center" prop="caseInvoiced" />
+      <el-table-column label="已开发票金额(元)" align="center" prop="caseInvoiced" width="150" />
       <el-table-column label="已付款(元)" align="center" prop="casePaidsal" />
       <el-table-column label="开票日期" align="center" prop="cwInvoiceDate" width="180">
         <template v-slot="scope">

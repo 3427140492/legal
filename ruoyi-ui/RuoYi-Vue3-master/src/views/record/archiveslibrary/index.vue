@@ -57,10 +57,10 @@
         >批量删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          plain
-          :disabled="multiple"
-          @click="updatezt"
+        <el-button 
+        plain
+        :disabled="single" 
+        @click="updatezty"
         >设为已归还</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,9 +73,9 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="archiveslibraryList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="archiveslibraryList" @selection-change="handleSelectionChange" border>
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="案号" align="center" prop="caseNo" />
+      <el-table-column label="案号" align="center" prop="caseNo" width="180" />
       <el-table-column label="档案号" align="center" prop="recordNum" />
       <el-table-column label="档案名称" align="center" prop="recordName" />
       <el-table-column label="借档人" align="center" prop="empName" />
@@ -97,21 +97,21 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-slot="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['record:archiveslibrary:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['record:archiveslibrary:remove']"
-          >删除</el-button>
+        <template #default="scope">
+          <el-dropdown trigger="click">
+            <el-button>
+              操作<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                <el-dropdown-item @click="updatezty(scope.row)">设置为已归还</el-dropdown-item>
+                <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>
@@ -202,7 +202,8 @@
     <el-dialog title="案件选择" v-model="ajcx" draggable>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
       </el-form>
-      <el-table :data="caselist" border  >
+      <el-table :data="caselist" border ref="ajlist" @select="ajhandleSelectionChange" >
+        <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="案号" align="center" prop="caseNo" width="180" />
         <el-table-column label="委托人" align="center" prop="caseWtr" />
         <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" width="150" />
@@ -215,6 +216,8 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-button @click="ajcx = false">取消</el-button>
+      <el-button @click="quding">确定</el-button>
       <pagination
           v-show="total>0"
           :total="total"
@@ -224,8 +227,9 @@
         />
     </el-dialog>
 
-    <el-dialog title="人员选择" v-model="jdrxc" draggable>
-      <el-table :data="namelist" border  >
+    <el-dialog title="人员选择" v-model="jdrcx" draggable>
+      <el-table :data="namelist" border ref="jdrlist" @select="jdrhandleSelectionChange" >
+      <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="姓名" align="center" prop="userRealname" />
         <el-table-column label="手机号码" align="center" prop="userPhone">
           <template v-slot="scope">
@@ -238,6 +242,12 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-row>
+        <el-col :span="10">
+          <el-button @click="jdrcx = false">取消</el-button>
+          <el-button @click="quding2">确定</el-button>
+        </el-col>
+      </el-row>
       <pagination
           v-show="total>0"
           :total="total"
@@ -250,7 +260,7 @@
 </template>
 
 <script>
-import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary } from "@/api/record/archiveslibrary";
+import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary, updatey } from "@/api/record/archiveslibrary";
 import { selectCaseLawList, selectNameList } from "@/api/record/law";
 
 export default {
@@ -285,7 +295,7 @@ export default {
       // 是否显示弹出层
       open: false,
       ajcx: false,
-      jdrxc: false,
+      jdrcx: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -303,7 +313,13 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      //案件复选框
+      ajlist: [],
+      qudings: {},
+      //借档人复选框
+      jdrlist: [],
+      qudings2: {},
     };
   },
   created() {
@@ -373,19 +389,62 @@ export default {
         this.title = "修改档案借阅";
       });
     },
+    //修改状态
+    updatezty(row){
+      const id = row.id;
+      this.$modal.confirm('是否将状态认改为已归还？').then(function() {
+        return updatey(id);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("修改成功");
+      }).catch(() => {});
+    },
     selectcase(){//案件查询
       this.ajcx=true;
       selectCaseLawList(this.queryParams).then(response=>{
          this.caselist = response.rows;
          this.total = response.total;
+          this.$nextTick(()=>{
+            this.$refs.ajlist.toggleRowSelection(this.caselist)
+         })
       });
     },
     selectjdrname(){//借档人查询
-      this.jdrxc=true;
+      this.jdrcx=true;
       selectNameList(this.queryParams).then(response=>{
          this.namelist = response.rows;
          this.total = response.total;
       });
+    },
+    //案件复选框
+    ajhandleSelectionChange(selection,row){
+       if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.ajlist.toggleRowSelection(del_row,false);
+       }
+       this.systemlist = selection[0];
+       console.log(selection);
+       this.quding1 = selection;
+    },
+    //案件复选框
+    quding(){
+      this.form.caseLawId = this.quding1[0].id;
+      this.ajcx = false;
+    },
+    //借档人复选框
+    jdrhandleSelectionChange(selection,row){
+       if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.jdrlist.toggleRowSelection(del_row,false);
+       }
+       this.systemlist = selection[0];
+       console.log(selection);
+       this.quding1 = selection;
+    },
+    //借档人复选框
+    quding2(){
+      this.form.borrowFilePeople = this.quding1[0].id;
+      this.jdrcx = false;
     },
     /** 提交按钮 */
     submitForm() {
@@ -417,14 +476,6 @@ export default {
         this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
-    },
-	/** 审批中心序号 */
-    rowCaseLawIndex({ row, rowIndex }) {
-      row.index = rowIndex + 1;
-    },
-    /** 复选框选中数据 */
-    handleCaseLawSelectionChange(selection) {
-      this.checkedCaseLaw = selection.map(item => item.index)
     },
     /** 导出按钮操作 */
     handleExport() {
