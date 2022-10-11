@@ -126,6 +126,7 @@ public class AdmExpressage extends BaseEntity
         return selectStr;
     }
 
+
     public void setSendName(String sendName)
     {
         this.sendName = sendName;

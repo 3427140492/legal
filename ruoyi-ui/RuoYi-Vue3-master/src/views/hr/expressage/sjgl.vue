@@ -50,7 +50,7 @@
       <el-form-item label="日期" prop="selectStr">
 
         <el-date-picker clearable v-model="queryParams.selectStr" value-format="YYYY-MM-DD">
-          </el-date-picker>
+        </el-date-picker>
 
       </el-form-item>
   
@@ -452,7 +452,7 @@
             <el-button type="primary"  @click="SystemhandleQuery">搜索</el-button>
           </el-form-item>
         </el-form>
-        <el-table :data="systemlist" border >
+        <el-table :data="systemlist" ref="sjrlist" border @select="SjrhandleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="姓名" align="center" prop="userRealname" />
           <el-table-column label="手机号" align="center" prop="empPhone" />
@@ -461,6 +461,8 @@
           </el-table-column>
           <el-table-column label="权限组" align="center" prop="roleName" />
       </el-table>
+        <el-button @click="sjr = false">取消</el-button>
+        <el-button @click="quding">确定</el-button>
       <pagination
           v-show="total>0"
           :total="total"
@@ -476,7 +478,7 @@
       <el-card>
         <el-tabs v-model="activeName" >
           <el-tab-pane label="列表" name="sendwaaylist" >
-              <el-table border="1px" v-loading="loading" :data="sendWaayList" @selection-change="handleSelectionChange">
+              <el-table border="1px" v-loading="loading" ref="sendlist" :data="sendWaayList" @select="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center" />
                 <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
                 <el-table-column label="排序" align="center" prop="sorting" />
@@ -502,6 +504,10 @@
                 </el-table-column>
                
               </el-table> 
+
+              <el-button @click="sendWaayDia = false">取消</el-button>
+              <el-button @click="quding2">确定</el-button>
+
               <pagination
                   v-show="total>0"
                   :total="total"
@@ -607,7 +613,12 @@ export default {
       // 表单校验
       rules: {
       },
-     
+      //收件人复选框
+      sjrlist:[],
+      qudings: {},
+      //快递公司复选框
+      sendlist:[],
+      qudings2: {}
     };
   },
   created() {
@@ -669,21 +680,27 @@ export default {
     },
     openSendWaayFun(){//快递公司查询
       this.sendWaayDia=true;
-      sendList().then(response=>{ 
-        console.log(response.rows);
-         this.sendWaayList = response.rows;
-         this.total = response.total;
-         console.log(this.sendWaayList);
+      sendList().then(res=>{ 
+        console.log(res.rows);
+         this.sendWaayList = res.rows
+         this.total = res.total;
+         this.$nextTick(()=>{
+            this.$refs.sendlist.toggleRowSelection(this.sendWaayList)
+         })
       });
 
     },
     openSystemUser(){//收件人查询
       this.sjr=true;
-      listUser(this.queryParams).then(response=>{ 
-        console.log(response.rows);
-         this.systemlist = response.rows;
-         this.total = response.total;
-         console.log(this.systemlist);
+      listUser(this.queryParams).then(res =>{ 
+        console.log(res.rows);
+        //  this.systemlist = res.rows;
+        this.systemlist = res.rows
+         this.total = res.total;
+        //  this.checklist = this.systemlist[0]
+         this.$nextTick(()=>{
+            this.$refs.sjrlist.toggleRowSelection(this.systemlist)
+         })
       });
     },
     /** 搜索按钮操作 */
@@ -699,12 +716,6 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -830,6 +841,36 @@ export default {
             this.title = "收件详情";
           });
         },
+        //收件人复选框
+    SjrhandleSelectionChange(selection,row){
+       if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.sjrlist.toggleRowSelection(del_row,false);
+       }
+       this.systemlist = selection[0];
+       console.log(selection);
+       this.quding1 = selection;
+    },
+     // 快递公司多选框选中数据
+     handleSelectionChange(selection,row) {
+      if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.sjrlist.toggleRowSelection(del_row,false);
+       }
+       this.sendWaayList = selection[0];
+       console.log(selection);
+       this.quding1s = selection;
+    },
+    //收件人复选框
+    quding(){
+      this.form.systemUserRecipients = this.quding1[0].userRealname;
+      this.sjr = false;
+    },
+     //快递公司复选框
+     quding2(){
+      this.form.systemUserRecipients = this.quding1s[0].userRealname;
+      this.sendWaayDia = false;
+    },
 
   }
 }
