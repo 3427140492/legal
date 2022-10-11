@@ -87,7 +87,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCaseLawList" parameterType="CaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
         <where>
+            <if test="caseSubmitter!=null and caseSubmitter!=''">
             case_submitter = #{caseSubmitter}
+            </if>
             <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
             <if test="caseSubtime != null"> and case_subtime like concat((DATE_FORMAT(#{caseSubtime},'%Y-%m-%d')),'%')</if>

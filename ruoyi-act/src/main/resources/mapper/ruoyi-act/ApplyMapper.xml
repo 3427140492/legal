@@ -46,7 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectApplyList" parameterType="Apply" resultMap="ApplyResult">
         <include refid="selectApplyVo"/>
         <where>
+            <if test="submiter!=null and submiter!=''">
             t1.submiter = #{submiter}
+            </if>
             <if test="caseNo != null  and caseNo != ''"> and case_no like '%${caseNo}%'</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="createtime != null  and createtime != ''">and createtime like concat((DATE_FORMAT(#{createtime},'%Y-%m-%d')),'%')</if>

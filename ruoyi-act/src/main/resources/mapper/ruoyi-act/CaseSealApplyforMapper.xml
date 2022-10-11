@@ -60,7 +60,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCaseSealApplyforVo"/>
 
         <where>
-            seal.applyfor_recipient = #{applyforRecipient}
+            <if test="applyforRecipient!=null and applyforRecipient!=''">
+                seal.applyfor_recipient = #{applyforRecipient}
+            </if>
             <if test="caseNo!=null and caseNo!=''">
                 and  seal.case_no like "%"#{caseNo}"%"
             </if>
