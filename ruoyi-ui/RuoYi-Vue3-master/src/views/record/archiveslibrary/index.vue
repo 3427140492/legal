@@ -125,295 +125,133 @@
     />
 
     <!-- 添加或修改档案借阅对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="案件id 外键" prop="caseLawId">
-          <el-input v-model="form.caseLawId" placeholder="请输入案件id 外键" />
-        </el-form-item>
-        <el-form-item label="档案号" prop="recordNum">
-          <el-input v-model="form.recordNum" placeholder="请输入档案号" />
-        </el-form-item>
-        <el-form-item label="档案名称" prop="recordName">
-          <el-input v-model="form.recordName" placeholder="请输入档案名称" />
-        </el-form-item>
-        <el-form-item label="借档人" prop="borrowFilePeople">
-          <el-input v-model="form.borrowFilePeople" placeholder="请输入借档人" />
-        </el-form-item>
-        <el-form-item label="借出时间" prop="borrowDate">
-          <el-date-picker clearable
-            v-model="form.borrowDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择借出时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="归还时间" prop="giveBackDate">
-          <el-date-picker clearable
-            v-model="form.giveBackDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择归还时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
-        </el-form-item>
-        <el-divider content-position="center">审批中心信息</el-divider>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddCaseLaw">添加</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="handleDeleteCaseLaw">删除</el-button>
+    <el-dialog :title="title" v-model="open" width="760px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" >
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>案件：</label>
+            <el-form-item  prop="caseLawId">
+              <el-input v-model="form.caseLawId" @click="selectcase" />
+            </el-form-item>
           </el-col>
         </el-row>
-        <el-table :data="caseLawList" :row-class-name="rowCaseLawIndex" @selection-change="handleCaseLawSelectionChange" ref="caseLaw">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="序号" align="center" prop="index" width="50"/>
-          <el-table-column label="案号" prop="caseNo" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseNo" placeholder="请输入案号" />
-            </template>
-          </el-table-column>
-          <el-table-column label="对方当事人" prop="caseOppositeParties" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseOppositeParties" placeholder="请输入对方当事人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="对方当事人证件号" prop="caseOppositeCardnum" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseOppositeCardnum" placeholder="请输入对方当事人证件号" />
-            </template>
-          </el-table-column>
-          <el-table-column label="第三方" prop="caseThirdParty" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseThirdParty" placeholder="请输入第三方" />
-            </template>
-          </el-table-column>
-          <el-table-column label="嫌疑人" prop="caseSuspect" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseSuspect" placeholder="请输入嫌疑人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="案件冲突" prop="caseClash" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseClash" placeholder="请输入案件冲突" />
-            </template>
-          </el-table-column>
-          <el-table-column label="案由" prop="caseCause" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseCause" placeholder="请输入案由" />
-            </template>
-          </el-table-column>
-          <el-table-column label="受理机关" prop="caseAccept" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseAccept" placeholder="请输入受理机关" />
-            </template>
-          </el-table-column>
-          <el-table-column label="诉讼标的" prop="caseLawsuitobj" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseLawsuitobj" placeholder="请输入诉讼标的" />
-            </template>
-          </el-table-column>
-          <el-table-column label="补助金额" prop="caseSubsidysal" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseSubsidysal" placeholder="请输入补助金额" />
-            </template>
-          </el-table-column>
-          <el-table-column label="结案情况Y?N" prop="caseSettleStatus" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseSettleStatus" placeholder="请选择结案情况Y?N">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="收案审批状态:1:审批中2:审批通过3:审批不通过" prop="caseApproveStatus" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseApproveStatus" placeholder="请选择收案审批状态:1:审批中2:审批通过3:审批不通过">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="代理费" prop="caseAgencyfee" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseAgencyfee" placeholder="请输入代理费" />
-            </template>
-          </el-table-column>
-          <el-table-column label="杂费" prop="caseProxysal" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseProxysal" placeholder="请输入杂费" />
-            </template>
-          </el-table-column>
-          <el-table-column label="办理地区" prop="caseTransactionRegion" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseTransactionRegion" placeholder="请输入办理地区" />
-            </template>
-          </el-table-column>
-          <el-table-column label="已付金额" prop="casePaidsal" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.casePaidsal" placeholder="请输入已付金额" />
-            </template>
-          </el-table-column>
-          <el-table-column label="未付金额" prop="caseUnpaidsal" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseUnpaidsal" placeholder="请输入未付金额" />
-            </template>
-          </el-table-column>
-          <el-table-column label="已开票金额" prop="caseInvoiced" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseInvoiced" placeholder="请输入已开票金额" />
-            </template>
-          </el-table-column>
-          <el-table-column label="未开票金额" prop="caseNotinvoiced" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseNotinvoiced" placeholder="请输入未开票金额" />
-            </template>
-          </el-table-column>
-          <el-table-column label="专属案号" prop="casePropernum" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.casePropernum" placeholder="请输入专属案号" />
-            </template>
-          </el-table-column>
-          <el-table-column label="受理法院" prop="caseCourt" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseCourt" placeholder="请输入受理法院" />
-            </template>
-          </el-table-column>
-          <el-table-column label="档案号" prop="caseFilenumber" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseFilenumber" placeholder="请输入档案号" />
-            </template>
-          </el-table-column>
-          <el-table-column label="提交人" prop="caseSubmitter" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseSubmitter" placeholder="请输入提交人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="提交时间" prop="caseSubtime" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.caseSubtime" type="date" value-format="yyyy-MM-dd" placeholder="请选择提交时间" />
-            </template>
-          </el-table-column>
-          <el-table-column label="案件回收" prop="caseRecycle" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseRecycle" placeholder="请输入案件回收" />
-            </template>
-          </el-table-column>
-          <el-table-column label="备注" prop="caseRemarks" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseRemarks" placeholder="请输入备注" />
-            </template>
-          </el-table-column>
-          <el-table-column label="客户id 外键" prop="clientId" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.clientId" placeholder="请输入客户id 外键" />
-            </template>
-          </el-table-column>
-          <el-table-column label="承办律师" prop="caseAttorney" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseAttorney" placeholder="请输入承办律师" />
-            </template>
-          </el-table-column>
-          <el-table-column label="诉讼阶段" prop="caseStatus" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseStatus" placeholder="请选择诉讼阶段">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="诉讼地位" prop="caseLawsuitStatus" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseLawsuitStatus" placeholder="请选择诉讼地位">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="收费方式" prop="caseChargeWay" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseChargeWay" placeholder="请输入收费方式" />
-            </template>
-          </el-table-column>
-          <el-table-column label="收案审批人" prop="systemApprovalId" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.systemApprovalId" placeholder="请输入收案审批人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="案件类型id 外键" prop="caseCaseTypeId" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseCaseTypeId" placeholder="请选择案件类型id 外键">
-                <el-option
-                  v-for="dict in dict.type.case_case_type_id"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="案件文书id 外键" prop="caseSealApplyforId" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseSealApplyforId" placeholder="请输入案件文书id 外键" />
-            </template>
-          </el-table-column>
-          <el-table-column label="主办律师id 外键" prop="hrEmpId" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.hrEmpId" placeholder="请输入主办律师id 外键" />
-            </template>
-          </el-table-column>
-          <el-table-column label="收案时间" prop="collectionTime" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.collectionTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择收案时间" />
-            </template>
-          </el-table-column>
-          <el-table-column label="委托人" prop="caseParties" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseParties" placeholder="请输入委托人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="风险费" prop="caseFxmoney" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseFxmoney" placeholder="请输入风险费" />
-            </template>
-          </el-table-column>
-          <el-table-column label="委托人" prop="caseWtr" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseWtr" placeholder="请输入委托人" />
-            </template>
-          </el-table-column>
-          <el-table-column label="结案方式(0=默认，1=调解，2=判决，3=撤诉，4=其他方式)" prop="caseSettleType" width="150">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.caseSettleType" placeholder="请选择结案方式(0=默认，1=调解，2=判决，3=撤诉，4=其他方式)">
-                <el-option label="请选择字典生成" value="" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="结案审批时间" prop="caseApprovalEndtime" width="240">
-            <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.caseApprovalEndtime" type="date" value-format="yyyy-MM-dd" placeholder="请选择结案审批时间" />
-            </template>
-          </el-table-column>
-          <el-table-column label="归档号" prop="caseRecordNum" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.caseRecordNum" placeholder="请输入归档号" />
-            </template>
-          </el-table-column>
-          <el-table-column label="服务人次" prop="standard" width="150">
-            <template slot-scope="scope">
-              <el-input v-model="scope.row.standard" placeholder="请输入服务人次" />
-            </template>
-          </el-table-column>
-        </el-table>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>档案号：</label>
+            <el-form-item  prop="recordNum">
+              <el-input v-model="form.recordNum" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>档案名称：</label>
+            <el-form-item  prop="recordName">
+              <el-input v-model="form.recordName" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="2">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>借档人：</label>
+            <el-form-item  prop="borrowFilePeople">
+              <el-input v-model="form.borrowFilePeople" @click="selectjdrname" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>借出时间：</label>
+            <el-form-item  prop="borrowDate" style="width:450px;">
+              <el-date-picker clearable v-model="form.borrowDate" value-format="YYYY-MM-DD">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="2">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>归还时间：</label>
+            <el-form-item  prop="giveBackDate" style="width:450px;">
+              <el-date-picker clearable v-model="form.giveBackDate" value-format="YYYY-MM-DD">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label>备注：</label>
+            <el-form-item  prop="remark" style="width:1100px;">
+              <textarea rows="5" cols="90" class="form-control" style="width:570px;" v-model="form.remark"></textarea>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
+    </el-dialog> 
+
+    <!-- 案件查询 -->
+    <el-dialog title="案件选择" v-model="ajcx" draggable>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
+      </el-form>
+      <el-table :data="caselist" border  >
+        <el-table-column label="案号" align="center" prop="caseNo" width="180" />
+        <el-table-column label="委托人" align="center" prop="caseWtr" />
+        <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" width="150" />
+        <el-table-column label="已到款" align="center" prop="casePaidsal" width="150" />
+        <el-table-column label="已开票" align="center" prop="caseInvoiced" width="150"/>
+        <el-table-column label="承办律师" align="center" prop="caseAttorney" width="180"/>
+        <el-table-column label="收案日期" align="center" prop="collectionTime" width="180">
+          <template v-slot="scope">
+            <span>{{ parseTime(scope.row.collectionTime, '{yyyy}-{mm}-{dd}') }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+          v-show="total>0"
+          :total="total"
+          v-model="queryParams.pageNum"
+          v-model:limit="queryParams.pageSize"
+          @pagination="selectcase"
+        />
+    </el-dialog>
+
+    <el-dialog title="人员选择" v-model="jdrxc" draggable>
+      <el-table :data="namelist" border  >
+        <el-table-column label="姓名" align="center" prop="userRealname" />
+        <el-table-column label="手机号码" align="center" prop="userPhone">
+          <template v-slot="scope">
+            <span v-if="scope.row.userPhone == null">-</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" align="center" prop="userStatus">
+         <template v-slot="scope">
+            <span v-if="scope.row.userStatus == 'Y'">在职</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+          v-show="total>0"
+          :total="total"
+          v-model="queryParams.pageNum"
+          v-model:limit="queryParams.pageSize"
+          @pagination="selectjdrname"
+        />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary, updateStatus } from "@/api/record/archiveslibrary";
+import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary } from "@/api/record/archiveslibrary";
+import { selectCaseLawList, selectNameList } from "@/api/record/law";
 
 export default {
   name: "Archiveslibrary",
@@ -436,12 +274,18 @@ export default {
       total: 0,
       // 档案借阅表格数据
       archiveslibraryList: [],
+      //查询案件
+      caselist: [],
+      //查询借档人
+      namelist: [],
       // 审批中心表格数据
       caseLawList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      ajcx: false,
+      jdrxc: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -516,7 +360,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加档案借阅";
+      this.title = "借档管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -529,18 +373,19 @@ export default {
         this.title = "修改档案借阅";
       });
     },
-    /** 修改状态为Y */
-    updatezt(row) {
-      const id = row.id
-       updateStatus(id).then(response => {
-        this.form = response.data;
+    selectcase(){//案件查询
+      this.ajcx=true;
+      selectCaseLawList(this.queryParams).then(response=>{
+         this.caselist = response.rows;
+         this.total = response.total;
       });
-      this.$modal.confirm('是否确认修改档案借阅状态为"' + id + '"的数据项？').then(function() {
-        return updateStatus(id);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("修改成功");
-      }).catch(() => {});
+    },
+    selectjdrname(){//借档人查询
+      this.jdrxc=true;
+      selectNameList(this.queryParams).then(response=>{
+         this.namelist = response.rows;
+         this.total = response.total;
+      });
     },
     /** 提交按钮 */
     submitForm() {
@@ -576,73 +421,6 @@ export default {
 	/** 审批中心序号 */
     rowCaseLawIndex({ row, rowIndex }) {
       row.index = rowIndex + 1;
-    },
-    /** 审批中心添加按钮操作 */
-    handleAddCaseLaw() {
-      let obj = {};
-      obj.caseNo = "";
-      obj.caseOppositeParties = "";
-      obj.caseOppositeCardnum = "";
-      obj.caseThirdParty = "";
-      obj.caseSuspect = "";
-      obj.caseClash = "";
-      obj.caseCause = "";
-      obj.caseAccept = "";
-      obj.caseLawsuitobj = "";
-      obj.caseSubsidy = "";
-      obj.caseSubsidysal = "";
-      obj.caseSettleStatus = "";
-      obj.casePlan = "";
-      obj.caseApproveStatus = "";
-      obj.caseAgencyfee = "";
-      obj.caseProxysal = "";
-      obj.caseTransactionRegion = "";
-      obj.caseAssign = "";
-      obj.casePaidsal = "";
-      obj.caseUnpaidsal = "";
-      obj.caseInvoiced = "";
-      obj.caseNotinvoiced = "";
-      obj.casePropernum = "";
-      obj.caseCourt = "";
-      obj.caseFilenumber = "";
-      obj.caseCorrelationFile = "";
-      obj.caseSubmitter = "";
-      obj.caseSubtime = "";
-      obj.caseRecycle = "";
-      obj.caseRemarks = "";
-      obj.clientId = "";
-      obj.caseAttorney = "";
-      obj.caseStatus = "";
-      obj.caseLawsuitStatus = "";
-      obj.caseChargeWay = "";
-      obj.systemApprovalId = "";
-      obj.caseCaseTypeId = "";
-      obj.caseSealApplyforId = "";
-      obj.hrEmpId = "";
-      obj.collectionTime = "";
-      obj.caseParties = "";
-      obj.caseFxmoney = "";
-      obj.caseWtr = "";
-      obj.caseContract = "";
-      obj.caseRecord = "";
-      obj.caseShare = "";
-      obj.caseSettleType = "";
-      obj.caseApprovalEndtime = "";
-      obj.caseRecordNum = "";
-      obj.standard = "";
-      this.caseLawList.push(obj);
-    },
-    /** 审批中心删除按钮操作 */
-    handleDeleteCaseLaw() {
-      if (this.checkedCaseLaw.length == 0) {
-        this.$modal.msgError("请先选择要删除的审批中心数据");
-      } else {
-        const caseLawList = this.caseLawList;
-        const checkedCaseLaw = this.checkedCaseLaw
-        this.caseLawList = caseLawList.filter(function(item) {
-          return checkedCaseLaw.indexOf(item.index) == -1
-        });
-      }
     },
     /** 复选框选中数据 */
     handleCaseLawSelectionChange(selection) {

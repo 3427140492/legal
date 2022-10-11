@@ -36,4 +36,12 @@ public class RecordCaseLawController extends BaseController
         List<RecordCaseLaw> list = caseLawService.selectCaseLawList(caseLaw);
         return getDataTable(list);
     }
+    //查询借档人
+    @GetMapping("/selectNameList")
+    public TableDataInfo selectname(RecordCaseLaw caseLaw)
+    {
+        startPage();
+        List<RecordCaseLaw> list = caseLawService.selectname(caseLaw);
+        return getDataTable(list);
+    }
 }

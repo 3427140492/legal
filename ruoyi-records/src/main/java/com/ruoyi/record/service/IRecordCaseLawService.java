@@ -18,4 +18,6 @@ public interface IRecordCaseLawService
      * @return 归档集合
      */
     public List<RecordCaseLaw> selectCaseLawList(RecordCaseLaw caseLaw);
+
+    public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw);
 }

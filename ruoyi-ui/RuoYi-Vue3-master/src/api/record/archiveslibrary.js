@@ -43,11 +43,3 @@ export function delArchiveslibrary(id) {
     method: 'delete'
   })
 }
-
-// 修改状态为Y
-export function updateStatus(id) {
-  return request({
-    url: '/record/archiveslibrary/' + id,
-    method: 'post'
-  })
-}

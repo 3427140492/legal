@@ -20,5 +20,7 @@ public interface RecordCaseLawMapper {
      */
     public List<RecordCaseLaw> selectCaseLawList(RecordCaseLaw caseLaw);
 
+    public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw);
+
 
 }
