@@ -54,7 +54,7 @@
       <el-table-column label="提交人" align="center" prop="caseSubmitter" />
       <el-table-column label="收案审批人" align="center" prop="systemApprovalId" />
       <el-table-column label="业务子类型" align="center" prop="caseTypeName" />
-      <el-table-column label="审批状态:1:审批中2:审批通过3:审批不通过" align="center" prop="caseApproveStatus" >
+      <el-table-column label="审批状态" align="center" prop="caseApproveStatus" >
          <template v-slot="scope">
           <span v-if="scope.row.caseApproveStatus == 1">审批中</span>
           <span v-if="scope.row.caseApproveStatus == 2">审批通过</span>
