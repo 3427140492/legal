@@ -36,17 +36,15 @@ public class AdmExpressage extends BaseEntity
     /** 发件日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "发件日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date expressageSendadate;
+    private String expressageSendadate;
 
     /** 收件日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "收件日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date expressageDateofreceipt;
+    private String expressageDateofreceipt;
 
     /** 领件时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "领件时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date expressageBringDate;
+    private String expressageBringDate;
 
     /** 快递方式 */
     @Excel(name = "快递方式")
@@ -128,6 +126,7 @@ public class AdmExpressage extends BaseEntity
         return selectStr;
     }
 
+
     public void setSendName(String sendName)
     {
         this.sendName = sendName;
@@ -188,30 +187,30 @@ public class AdmExpressage extends BaseEntity
     {
         return expressageSendaunit;
     }
-    public void setExpressageSendadate(Date expressageSendadate) 
+    public void setExpressageSendadate(String expressageSendadate)
     {
         this.expressageSendadate = expressageSendadate;
     }
 
-    public Date getExpressageSendadate() 
+    public String getExpressageSendadate()
     {
         return expressageSendadate;
     }
-    public void setExpressageDateofreceipt(Date expressageDateofreceipt) 
+    public void setExpressageDateofreceipt(String expressageDateofreceipt)
     {
         this.expressageDateofreceipt = expressageDateofreceipt;
     }
 
-    public Date getExpressageDateofreceipt() 
+    public String getExpressageDateofreceipt()
     {
         return expressageDateofreceipt;
     }
-    public void setExpressageBringDate(Date expressageBringDate) 
+    public void setExpressageBringDate(String expressageBringDate)
     {
         this.expressageBringDate = expressageBringDate;
     }
 
-    public Date getExpressageBringDate() 
+    public String getExpressageBringDate()
     {
         return expressageBringDate;
     }

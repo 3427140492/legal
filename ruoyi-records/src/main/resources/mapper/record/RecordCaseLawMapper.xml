@@ -12,11 +12,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseCause" column="case_cause"/>
         <result property="caseCourt" column="case_court" />
         <result property="caseAttorney" column="case_attorney" />
+        <result property="caseParties" column="case_parties" />
+        <result property="casePaidsal" column="case_paidsal" />
+        <result property="caseInvoiced" column="case_invoiced" />
+        <result property="caseAttorney" column="case_attorney" />
+        <result property="collectionTime" column="collection_time" />
+        <result property="nid" column="id" />
+        <result property="userRealname" column="user_realname" />
+        <result property="userPhone" column="user_phone" />
+        <result property="userStatus" column="user_status" />
     </resultMap>
 
     <sql id="selectCaseLawVo">
-        select id, case_no, case_opposite_parties,case_wtr from case_law
+        select id,case_no,case_wtr,case_opposite_parties,
+               case_paidsal,case_invoiced,case_attorney,collection_time
+        from case_law
     </sql>
+
+    <select id="selectname" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
+        select he.id,su.user_realname,su.user_phone,su.user_status
+        from hr_emp he inner join system_user su on su.hr_emp_id = he.id
+    </select>
 
     <select id="selectCaseLawList" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>

@@ -226,6 +226,46 @@ public class RecordCaseLaw extends BaseEntity
 
     private String searchType;
 
+    private Integer nid;
+
+    private String userRealname;
+
+    private String userPhone;
+
+    private String userStatus;
+
+    public Integer getNid() {
+        return nid;
+    }
+
+    public void setNid(Integer nid) {
+        this.nid = nid;
+    }
+
+    public String getUserRealname() {
+        return userRealname;
+    }
+
+    public void setUserRealname(String userRealname) {
+        this.userRealname = userRealname;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
     public String getSearchType() {
         return searchType;
     }

@@ -30,4 +30,9 @@ public class RecordCaseLawServiceImpl implements IRecordCaseLawService
     {
         return caseLawMapper.selectCaseLawList(caseLaw);
     }
+
+    @Override
+    public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw) {
+        return caseLawMapper.selectname(caseLaw);
+    }
 }

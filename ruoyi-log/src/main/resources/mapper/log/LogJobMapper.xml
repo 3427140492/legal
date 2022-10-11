@@ -91,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectLogJobById" parameterType="LogJob" resultMap="LogJobResult">
-        select lj.id,log_type_logname,case_submitter,joblog_status,case_no,client,joblog_startTime,joblog_reportedTime,joblog_updatetime,joblog_text FROM log_job lj
+        select * FROM log_job lj
           INNER JOIN client c on lj.client_id = c.id
           INNER JOIN case_law cl on lj.case_law_id = cl.id
           INNER JOIN log_type lt on lt.id = lj.logtype_id

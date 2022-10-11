@@ -1,6 +1,8 @@
 package com.ruoyi.persM.mapper;
 
 import java.util.List;
+
+import com.ruoyi.persM.domain.Education;
 import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.HrLawyerIdentity;
 import com.ruoyi.persM.domain.WorkExperience;
@@ -100,4 +102,12 @@ public interface PMHrEmpMapper
     public List<WorkExperience> selectWorkById(Long id);
 
     public WorkExperience selectWorkExperienceById(Long id);
+
+    public int updateWorkExperience(WorkExperience workExperience);
+
+    public int insertWorkExperience(WorkExperience workExperience);
+
+    public int deleteWorkExperienceByIds(Integer id);
+
+    public List<Education> selectEducationById(Long id);
 }

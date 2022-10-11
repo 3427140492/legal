@@ -40,8 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sendName"    column="sub_send_name"    />
     </resultMap>
 
+    <!--    收件管理-->
     <sql id="selectAdmExpressageVo">
-        select * from adm_expressage ae  left join send_waay sw on sw.id = ae.expressage_send_waay_id  left join express_type et on et.id =expressage_express_type_id  where 1 = 1
+        select * from adm_expressage ae  left join send_waay sw on sw.id = ae.expressage_send_waay_id  left join express_type et on et.id =expressage_express_type_id  where 1 = 1 and ae.expressage_type = 'S'
     </sql>
 
     <select id="selectAdmExpressageList" parameterType="AdmExpressage" resultMap="AdmExpressageResult">
@@ -65,6 +66,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
 
     </select>
+
+    <!--    发件管理-->
+    <sql id="selectAdmExpressageVoS">
+        select * from adm_expressage ae  left join send_waay sw on sw.id = ae.expressage_send_waay_id  left join express_type et on et.id =expressage_express_type_id  where 1 = 1 and ae.expressage_type = 'F'
+    </sql>
+
+    <select id="selectAdmExpressageListS" parameterType="AdmExpressage" resultMap="AdmExpressageResult">
+        <include refid="selectAdmExpressageVoS"/>
+        <if test="systemUserRecipients != null  and systemUserRecipients != ''"> and  ae.system_user_recipients like '%${systemUserRecipients}%' </if>
+        <if test="expressageSendWaayId != null "> and expressage_send_waay_id = #{expressageSendWaayId}</if>
+        <if test="expressageExpressTypeId != null "> and expressage_express_type_id = #{expressageExpressTypeId}</if>
+        <if test="takestatus != null "> and takestatus = #{takestatus}</if>
+        <if test="collarPerson != null  and collarPerson != ''"> and ae.collar_person like '%${collarPerson}%'</if>
+        <if test="expressageSendadate != null and expressageSendadate != '' ">
+            and expressage_sendaunit >= '${expressageSendadate}'
+        </if>
+        <if test="expressageDateofreceipt != null and expressageDateofreceipt != '' ">
+            and expressage_dateofreceipt >= '${expressageDateofreceipt}'
+        </if>
+
+
+    </select>
+
+
     
     <select id="selectAdmExpressageById" parameterType="Integer" resultMap="AdmExpressageSendWaayResult">
         select a.id, a.system_user_addresser, a.system_user_recipients, a.expressage_sendaunit, a.expressage_sendadate, a.expressage_dateofreceipt, a.expressage_bring_date, a.expressage_send_waay_id, a.expressage_express_type_id, a.expressage_courier_number, a.expressage_file, a.expressage_collarnote, a.expressage_remark, a.takestatus, a.express_fee, a.collar_person, a.expressage_tel, a.expressage_type, a.case_no,

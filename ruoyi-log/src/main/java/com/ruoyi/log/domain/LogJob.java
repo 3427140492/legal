@@ -18,6 +18,7 @@ public class LogJob extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
     /** $column.columnComment */
+
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private String caseSubmitter;
 

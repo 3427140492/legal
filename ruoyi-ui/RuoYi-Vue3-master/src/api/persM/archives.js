@@ -33,7 +33,7 @@ export function updateArchives(data) {
     method: 'put',
     data: data
   })
-}
+} 
 
 // 删除人事档案
 export function delArchives(id) {
@@ -61,11 +61,36 @@ export function getWork(id) {
 }
 
 
+// 新增工作经历
+export function addWorkhistory(data) {
+  return request({
+    url: '/persM/archives/addWork',
+    method: 'post',
+    data: data
+  })
+}
+
 // 修改工作经历
 export function updateWorkhistory(data) {
   return request({
-    url: '/persM/archives/upWork',
+    url: '/persM/archives/updateWork',
     method: 'put',
     data: data
+  })
+}
+
+// 删除工作经历
+export function delWorkhistory(id) {
+  return request({
+    url: '/persM/archives/removeWork/' + id,
+    method: 'delete'
+  })
+}
+
+// 查询教育经历详细
+export function getDegree(id) {
+  return request({
+    url: '/persM/archives/Degree/' + id,
+    method: 'get'
   })
 }
