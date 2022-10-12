@@ -1,15 +1,16 @@
 package com.ruoyi.persM.domain;
 
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
 
 /**
  * 工作经历对象 hr_workhistory
- *
+ * 
  * @author ruoyi
  * @date 2022-10-06
  */
@@ -54,84 +55,84 @@ public class WorkExperience extends BaseEntity
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Long hrEmpId;
 
-    public void setId(Long id)
+    public void setId(Long id) 
     {
         this.id = id;
     }
 
-    public Long getId()
+    public Long getId() 
     {
         return id;
     }
-    public void setWorkhistoryStartdate(Date workhistoryStartdate)
+    public void setWorkhistoryStartdate(Date workhistoryStartdate) 
     {
         this.workhistoryStartdate = workhistoryStartdate;
     }
 
-    public Date getWorkhistoryStartdate()
+    public Date getWorkhistoryStartdate() 
     {
         return workhistoryStartdate;
     }
-    public void setWorkhistoryEnddate(Date workhistoryEnddate)
+    public void setWorkhistoryEnddate(Date workhistoryEnddate) 
     {
         this.workhistoryEnddate = workhistoryEnddate;
     }
 
-    public Date getWorkhistoryEnddate()
+    public Date getWorkhistoryEnddate() 
     {
         return workhistoryEnddate;
     }
-    public void setWorkhistoryWorkunit(String workhistoryWorkunit)
+    public void setWorkhistoryWorkunit(String workhistoryWorkunit) 
     {
         this.workhistoryWorkunit = workhistoryWorkunit;
     }
 
-    public String getWorkhistoryWorkunit()
+    public String getWorkhistoryWorkunit() 
     {
         return workhistoryWorkunit;
     }
-    public void setWorkhistoryJobPosition(String workhistoryJobPosition)
+    public void setWorkhistoryJobPosition(String workhistoryJobPosition) 
     {
         this.workhistoryJobPosition = workhistoryJobPosition;
     }
 
-    public String getWorkhistoryJobPosition()
+    public String getWorkhistoryJobPosition() 
     {
         return workhistoryJobPosition;
     }
-    public void setWorkhistoryWorktype(String workhistoryWorktype)
+    public void setWorkhistoryWorktype(String workhistoryWorktype) 
     {
         this.workhistoryWorktype = workhistoryWorktype;
     }
 
-    public String getWorkhistoryWorktype()
+    public String getWorkhistoryWorktype() 
     {
         return workhistoryWorktype;
     }
-    public void setWorkhistoryWorknature(String workhistoryWorknature)
+    public void setWorkhistoryWorknature(String workhistoryWorknature) 
     {
         this.workhistoryWorknature = workhistoryWorknature;
     }
 
-    public String getWorkhistoryWorknature()
+    public String getWorkhistoryWorknature() 
     {
         return workhistoryWorknature;
     }
-    public void setWorkhistorySite(String workhistorySite)
+    public void setWorkhistorySite(String workhistorySite) 
     {
         this.workhistorySite = workhistorySite;
     }
 
-    public String getWorkhistorySite()
+    public String getWorkhistorySite() 
     {
         return workhistorySite;
     }
-    public void setHrEmpId(Long hrEmpId)
+    public void setHrEmpId(Long hrEmpId) 
     {
         this.hrEmpId = hrEmpId;
     }
 
-    public Long getHrEmpId()
+    public Long getHrEmpId() 
     {
         return hrEmpId;
     }
@@ -139,15 +140,15 @@ public class WorkExperience extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("workhistoryStartdate", getWorkhistoryStartdate())
-                .append("workhistoryEnddate", getWorkhistoryEnddate())
-                .append("workhistoryWorkunit", getWorkhistoryWorkunit())
-                .append("workhistoryJobPosition", getWorkhistoryJobPosition())
-                .append("workhistoryWorktype", getWorkhistoryWorktype())
-                .append("workhistoryWorknature", getWorkhistoryWorknature())
-                .append("workhistorySite", getWorkhistorySite())
-                .append("hrEmpId", getHrEmpId())
-                .toString();
+            .append("id", getId())
+            .append("workhistoryStartdate", getWorkhistoryStartdate())
+            .append("workhistoryEnddate", getWorkhistoryEnddate())
+            .append("workhistoryWorkunit", getWorkhistoryWorkunit())
+            .append("workhistoryJobPosition", getWorkhistoryJobPosition())
+            .append("workhistoryWorktype", getWorkhistoryWorktype())
+            .append("workhistoryWorknature", getWorkhistoryWorknature())
+            .append("workhistorySite", getWorkhistorySite())
+            .append("hrEmpId", getHrEmpId())
+            .toString();
     }
 }

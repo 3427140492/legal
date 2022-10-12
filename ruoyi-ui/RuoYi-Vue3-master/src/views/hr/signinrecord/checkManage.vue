@@ -35,7 +35,7 @@
 
       <el-form-item>
         <el-button type="primary"  size="mini" @click="handleQuery">搜索</el-button>
-        <el-button size="mini" @click="resetQuery">重置</el-button>
+        <!-- <el-button size="mini" @click="resetQuery">重置</el-button> -->
       </el-form-item>
     </el-form>
 

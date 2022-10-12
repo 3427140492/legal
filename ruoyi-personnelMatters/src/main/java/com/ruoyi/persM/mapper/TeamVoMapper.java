@@ -1,21 +1,22 @@
 package com.ruoyi.persM.mapper;
 
-import java.util.List;
 import com.ruoyi.persM.domain.TeamVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 团队Mapper接口
- *
+ * 
  * @author ruoyi
  * @date 2022-10-11
  */
 @Mapper
-public interface TeamVoMapper
+public interface TeamVoMapper 
 {
     /**
      * 查询团队
-     *
+     * 
      * @param id 团队主键
      * @return 团队
      */
@@ -23,7 +24,7 @@ public interface TeamVoMapper
 
     /**
      * 查询团队列表
-     *
+     * 
      * @param teamVo 团队
      * @return 团队集合
      */
@@ -31,7 +32,7 @@ public interface TeamVoMapper
 
     /**
      * 新增团队
-     *
+     * 
      * @param teamVo 团队
      * @return 结果
      */
@@ -39,7 +40,7 @@ public interface TeamVoMapper
 
     /**
      *
-     *
+     * 
      * @param teamVo 团队
      * @return 结果
      */
@@ -47,7 +48,7 @@ public interface TeamVoMapper
 
     /**
      * 删除团队
-     *
+     * 
      * @param id 团队主键
      * @return 结果
      */
@@ -55,7 +56,7 @@ public interface TeamVoMapper
 
     /**
      * 批量删除团队
-     *
+     * 
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

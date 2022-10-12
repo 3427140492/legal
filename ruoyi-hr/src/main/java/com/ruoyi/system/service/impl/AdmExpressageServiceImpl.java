@@ -86,8 +86,8 @@ public class AdmExpressageServiceImpl implements IAdmExpressageService
     @Override
     public int updateAdmExpressage(AdmExpressage admExpressage)
     {
-        admExpressageMapper.deleteSendWaayById(admExpressage.getId());
-        insertSendWaay(admExpressage);
+//        admExpressageMapper.deleteSendWaayById(admExpressage.getId());
+//        insertSendWaay(admExpressage);
         return admExpressageMapper.updateAdmExpressage(admExpressage);
     }
 

@@ -56,6 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="caseApprovalEndtime"    column="case_approval_endtime"    />
         <result property="caseRecordNum"    column="case_record_num"    />
         <result property="standard"    column="standard"    />
+        <result property="caseStr"    column="caseStr"    />
+        <result property="caseType"    column="caseType"    />
     </resultMap>
 
     <sql id="selectHrCaseLawVo">
@@ -115,6 +117,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="caseApprovalEndtime != null "> and case_approval_endtime = #{caseApprovalEndtime}</if>
             <if test="caseRecordNum != null  and caseRecordNum != ''"> and case_record_num = #{caseRecordNum}</if>
             <if test="standard != null "> and standard = #{standard}</if>
+
+            <if test="caseType == 1">
+                <if test="caseStr != null "> and case_no like '%${caseStr}%' </if>
+            </if>
+
+            <if test="caseType == 2">
+                <if test="caseStr != null "> and case_parties like '%${caseStr}%'</if>
+            </if>
+
+            <if test="caseType == 3">
+                <if test="caseStr != null "> and case_opposite_parties like '%${caseStr}%'</if>
+            </if>
+
+            <if test="caseType == 4">
+                <if test="caseStr != null "> and case_cause like '%${caseStr}%'</if>
+            </if>
+
+            <if test="caseType == 5">
+                <if test="caseStr != null "> and case_attorney like '%${caseStr}%'</if>
+            </if>
+
+            <if test="caseType == 6">
+                <if test="caseStr != null "> and case_court = #{caseStr}</if>
+            </if>
+
         </where>
     </select>
     

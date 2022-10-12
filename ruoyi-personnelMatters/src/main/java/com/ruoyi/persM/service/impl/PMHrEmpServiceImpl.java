@@ -1,32 +1,32 @@
 package com.ruoyi.persM.service.impl;
 
-import java.util.List;
-
 import com.ruoyi.persM.domain.Education;
+import com.ruoyi.persM.domain.HrLawyerIdentity;
+import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.WorkExperience;
+import com.ruoyi.persM.mapper.PMHrEmpMapper;
 import com.ruoyi.persM.service.IPMHrEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.persM.domain.HrLawyerIdentity;
-import com.ruoyi.persM.mapper.PMHrEmpMapper;
-import com.ruoyi.persM.domain.PMHrEmp;
+
+import java.util.List;
 
 /**
  * 人事档案Service业务层处理
- *
+ * 
  * @author ruoyi
  * @date 2022-09-27
  */
 @Service
-public class PMHrEmpServiceImpl implements IPMHrEmpService
+public class PMHrEmpServiceImpl implements IPMHrEmpService 
 {
     @Autowired
     private PMHrEmpMapper pMHrEmpMapper;
 
     /**
      * 查询人事档案
-     *
+     * 
      * @param id 人事档案主键
      * @return 人事档案
      */
@@ -64,7 +64,7 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
             HrLawyerIdentity hr = new HrLawyerIdentity();
             hr.setHrEmpId(pMHrEmp.getId());
             hr.setIdentityName(pMHrEmp.getIdentityName());
-            num = pMHrEmpMapper.insertHrLawyerIdentity(hr);
+             num = pMHrEmpMapper.insertHrLawyerIdentity(hr);
         }
         return num;
     }
@@ -164,5 +164,10 @@ public class PMHrEmpServiceImpl implements IPMHrEmpService
     @Override
     public List<Education> selectEducationById(Long id) {
         return pMHrEmpMapper.selectEducationById(id);
+    }
+
+    @Override
+    public List<PMHrEmp> selectPMHrEmpUserList() {
+        return pMHrEmpMapper.selectPMHrEmpUserList();
     }
 }
