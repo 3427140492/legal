@@ -151,7 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="expressFee != null">#{expressFee},</if>
             <if test="collarPerson != null">#{collarPerson},</if>
             <if test="expressageTel != null">#{expressageTel},</if>
-            <if test="expressageType != null">#{expressageType},</if>
+            <if test="expressageType != null">"S",</if>
             <if test="caseNo != null">#{caseNo},</if>
          </trim>
     </insert>

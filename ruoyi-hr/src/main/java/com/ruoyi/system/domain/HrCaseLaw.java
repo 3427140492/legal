@@ -223,6 +223,33 @@ public class HrCaseLaw extends BaseEntity
     @Excel(name = "服务人次")
     private Integer standard;
 
+    private String caseStr;
+
+    private String caseType;
+
+
+    public void setCaseType(String caseType)
+    {
+        this.caseType = caseType;
+    }
+
+    public String getCaseType()
+    {
+        return caseType;
+    }
+
+
+    public void setCaseStr(String caseStr)
+    {
+        this.caseStr = caseStr;
+    }
+
+    public String getCaseStr()
+    {
+        return caseStr;
+    }
+
+
     public void setId(Integer id) 
     {
         this.id = id;
