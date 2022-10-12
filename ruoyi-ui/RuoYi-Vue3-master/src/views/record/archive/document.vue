@@ -27,7 +27,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="案号" align="center" prop="caseNo" />
       <el-table-column label="归档文件" align="center" prop="documentFile" />
-      <el-table-column label="上传人" align="center" prop="caseSubmitter" />
+      <el-table-column label="上传人" align="center" prop="userRealname" />
       <el-table-column label="最后更新日期" align="center" prop="upddate" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">

@@ -234,6 +234,26 @@ public class RecordCaseLaw extends BaseEntity
 
     private String userStatus;
 
+    private Integer fid;
+
+    private String folderName;
+
+    public Integer getFid() {
+        return fid;
+    }
+
+    public void setFid(Integer fid) {
+        this.fid = fid;
+    }
+
+    public String getFolderName() {
+        return folderName;
+    }
+
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
+    }
+
     public Integer getNid() {
         return nid;
     }

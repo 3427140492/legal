@@ -22,5 +22,12 @@ public interface RecordCaseLawMapper {
 
     public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw);
 
+    public List<RecordCaseLaw> selectfolder(RecordCaseLaw caseLaw);
+
+    /**
+     * 新增文件夹
+     */
+    int insertRecordFolder(RecordCaseLaw recordFolder);
+
 
 }

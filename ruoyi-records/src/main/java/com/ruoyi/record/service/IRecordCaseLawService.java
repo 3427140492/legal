@@ -20,4 +20,11 @@ public interface IRecordCaseLawService
     public List<RecordCaseLaw> selectCaseLawList(RecordCaseLaw caseLaw);
 
     public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw);
+
+    public List<RecordCaseLaw> selectfolder(RecordCaseLaw caseLaw);
+
+    /**
+     * 新增文件夹
+     */
+    public int insertRecordFolder(RecordCaseLaw recordFolder);
 }

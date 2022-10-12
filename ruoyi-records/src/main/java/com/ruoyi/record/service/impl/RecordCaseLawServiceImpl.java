@@ -35,4 +35,14 @@ public class RecordCaseLawServiceImpl implements IRecordCaseLawService
     public List<RecordCaseLaw> selectname(RecordCaseLaw caseLaw) {
         return caseLawMapper.selectname(caseLaw);
     }
+
+    @Override
+    public List<RecordCaseLaw> selectfolder(RecordCaseLaw caseLaw) {
+        return caseLawMapper.selectfolder(caseLaw);
+    }
+
+    @Override
+    public int insertRecordFolder(RecordCaseLaw recordFolder) {
+        return caseLawMapper.insertRecordFolder(recordFolder);
+    }
 }

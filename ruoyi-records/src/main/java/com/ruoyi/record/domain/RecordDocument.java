@@ -35,10 +35,6 @@ public class RecordDocument extends BaseEntity
     @Excel(name = "案号")
     private String caseNo;
 
-    /** 提交人 */
-    @Excel(name = "提交人")
-    private String caseSubmitter;
-
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
     private Integer folderId;
@@ -47,6 +43,8 @@ public class RecordDocument extends BaseEntity
     @Excel(name = "归档文件")
     private String documentFile;
 
+    private String userRealname;
+
     /** 归档信息 */
     private List<RecordCaseLaw> caseLawList;
 
@@ -54,20 +52,20 @@ public class RecordDocument extends BaseEntity
 
     private String searchStr;
 
+    public String getUserRealname() {
+        return userRealname;
+    }
+
+    public void setUserRealname(String userRealname) {
+        this.userRealname = userRealname;
+    }
+
     public String getCaseNo() {
         return caseNo;
     }
 
     public void setCaseNo(String caseNo) {
         this.caseNo = caseNo;
-    }
-
-    public String getCaseSubmitter() {
-        return caseSubmitter;
-    }
-
-    public void setCaseSubmitter(String caseSubmitter) {
-        this.caseSubmitter = caseSubmitter;
     }
 
     public String getSearchType() {

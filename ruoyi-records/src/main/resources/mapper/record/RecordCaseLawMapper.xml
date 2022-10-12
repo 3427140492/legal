@@ -21,6 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userRealname" column="user_realname" />
         <result property="userPhone" column="user_phone" />
         <result property="userStatus" column="user_status" />
+        <result property="fid" column="id" />
+        <result property="folderName" column="folder_name" />
     </resultMap>
 
     <sql id="selectCaseLawVo">
@@ -32,6 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectname" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
         select he.id,su.user_realname,su.user_phone,su.user_status
         from hr_emp he inner join system_user su on su.hr_emp_id = he.id
+    </select>
+
+    <select id="selectfolder" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
+        select id,folder_name from record_folder
     </select>
 
     <select id="selectCaseLawList" parameterType="RecordCaseLaw" resultMap="CaseLawResult">
@@ -67,6 +73,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
         </if>
     </select>
+
+    <insert id="insertRecordFolder" parameterType="RecordCaseLaw" useGeneratedKeys="true" keyProperty="fid">
+        insert into record_folder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="folderName != null">folder_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="folderName != null">#{folderName},</if>
+        </trim>
+    </insert>
     
 
 </mapper>

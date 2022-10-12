@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="folderId"    column="folder_id"    />
         <result property="documentFile"    column="document_file"    />
         <result property="caseNo"    column="case_no"    />
-        <result property="caseSubmitter"    column="case_submitter"    />
+        <result property="userRealname"    column="user_realname"    />
     </resultMap>
 
     <resultMap id="RecordDocumentCaseLawResult" type="RecordDocument" extends="RecordDocumentResult">
@@ -26,9 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRecordDocumentVo">
-        select rd.id,cl.case_no,rd.document_file,cl.case_submitter,rd.upddate,rd.case_law_id
-        from record_document rd, case_law cl
-        where cl.id = rd.case_law_id
+        select rd.id,cl.case_no,rd.document_file,su.user_realname,rd.upddate,rd.case_law_id
+        from record_document rd
+        left join system_user su on su.id = rd.system_user_id
+        left join case_law cl on cl.id = rd.case_law_id
+        where 1 = 1
     </sql>
 
     <select id="selectRecordDocumentList" parameterType="RecordDocument" resultMap="RecordDocumentResult">
@@ -69,8 +71,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="caseLawId != null">#{caseLawId},</if>
-            <if test="systemUserId != null">#{systemUserId},</if>
-            <if test="upddate != null">#{upddate},</if>
+            <if test="systemUserId != null">10,</if>
+            <if test="upddate != null">sysdate(),</if>
             <if test="folderId != null">#{folderId},</if>
             <if test="documentFile != null">#{documentFile},</if>
          </trim>

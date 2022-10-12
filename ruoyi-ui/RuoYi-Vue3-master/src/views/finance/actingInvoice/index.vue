@@ -86,7 +86,7 @@
 
   </div>
 </template>
-
+<script>
 import { listInvoice, getInvoice, delInvoice, addInvoice } from "@/api/finance/invoice";
 
 export default {
