@@ -60,11 +60,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectCaseLawVo">
         select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
+
     </sql>
 
     <select id="selectCaseLawList" parameterType="ClientCaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
-        <where>  
+
             <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
             <if test="caseOppositeParties != null  and caseOppositeParties != ''"> and case_opposite_parties = #{caseOppositeParties}</if>
             <if test="caseOppositeCardnum != null  and caseOppositeCardnum != ''"> and case_opposite_cardnum = #{caseOppositeCardnum}</if>
@@ -115,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="caseApprovalEndtime != null "> and case_approval_endtime = #{caseApprovalEndtime}</if>
             <if test="caseRecordNum != null  and caseRecordNum != ''"> and case_record_num = #{caseRecordNum}</if>
             <if test="standard != null "> and standard = #{standard}</if>
-        </where>
+
     </select>
     
     <select id="selectCaseLawById" parameterType="Integer" resultMap="CaseLawResult">

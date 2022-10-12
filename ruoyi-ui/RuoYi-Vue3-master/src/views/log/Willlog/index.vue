@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="案号搜索" prop="caseNo">
         <el-input v-model="queryParams.whatisPerson" placeholder="请输入案号" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
@@ -58,7 +58,7 @@
       <el-descriptions title="" :column="3" border>
         <el-descriptions-item label="日志类型" align="center">{{data.logTypeLogname}}</el-descriptions-item>
         <el-descriptions-item label="归属人" align="center">{{data.caseSubmitter}}</el-descriptions-item>
-        <el-descriptions-item label="公开状态" align="center">{{data.joblogStatus}}</el-descriptions-item>
+        <el-descriptions-item label="公开状态" align="center">{{data.joblogStatus == 'Y'?'公开':'未公开'}}</el-descriptions-item>
         <el-descriptions-item label="案件" align="center">{{data.caseNo}}</el-descriptions-item>
         <el-descriptions-item label="客户名称" align="center">{{data.client}}</el-descriptions-item>
         <el-descriptions-item label="起始时间" align="center">{{data.joblogStarttime}}</el-descriptions-item>

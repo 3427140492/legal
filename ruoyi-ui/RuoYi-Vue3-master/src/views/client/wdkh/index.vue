@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="委托人" prop="client">
         <el-input
           v-model="queryParams.client"
@@ -118,8 +118,8 @@
         <el-form-item label="手机号码" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
         </el-form-item>
-        <el-form-item label="" prop="typeinfo">
-          <el-input v-model="form.typeinfo" placeholder="请输入挖掘" />
+        <el-form-item label="类型" prop="typeinfo">
+          <el-input v-model="form.typeinfo" placeholder="请输入类型" />
         </el-form-item>
         <el-form-item label="身份证号码 " prop="cardnum">
           <el-input v-model="form.cardnum" placeholder="请输入身份证号码 " />
