@@ -1,25 +1,25 @@
 package com.ruoyi.persM.mapper;
 
-import java.util.List;
-
 import com.ruoyi.persM.domain.Education;
-import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.HrLawyerIdentity;
+import com.ruoyi.persM.domain.PMHrEmp;
 import com.ruoyi.persM.domain.WorkExperience;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 人事档案Mapper接口
- *
+ * 
  * @author ruoyi
  * @date 2022-09-27
  */
 @Mapper
-public interface PMHrEmpMapper
+public interface PMHrEmpMapper 
 {
     /**
      * 查询人事档案
-     *
+     * 
      * @param id 人事档案主键
      * @return 人事档案
      */
@@ -110,4 +110,6 @@ public interface PMHrEmpMapper
     public int deleteWorkExperienceByIds(Integer id);
 
     public List<Education> selectEducationById(Long id);
+
+    public List<PMHrEmp> selectPMHrEmpUserList();
 }

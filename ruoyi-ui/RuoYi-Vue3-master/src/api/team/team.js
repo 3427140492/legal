@@ -42,3 +42,11 @@ export function delTeam(id) {
     method: 'delete'
   })
 }
+
+// 查询团队列表
+export function listUser() {
+  return request({
+    url: '/persM/archives/Userlist',
+    method: 'get'
+  })
+}

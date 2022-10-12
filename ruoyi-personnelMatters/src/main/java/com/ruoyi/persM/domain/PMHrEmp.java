@@ -1,16 +1,17 @@
 package com.ruoyi.persM.domain;
 
-import java.util.List;
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 人事档案对象 hr_emp
- *
+ * 
  * @author ruoyi
  * @date 2022-09-27
  */
@@ -96,7 +97,7 @@ public class PMHrEmp extends BaseEntity
     private String empPracsite;
 
     /** 资格证类别
-     */
+ */
     @Excel(name = "资格证类别 ")
     private String hrCertifyId;
 
@@ -203,214 +204,214 @@ public class PMHrEmp extends BaseEntity
         this.id = id;
     }
 
-    public Long getId()
+    public Long getId() 
     {
         return id;
     }
-    public void setEmpName(String empName)
+    public void setEmpName(String empName) 
     {
         this.empName = empName;
     }
 
-    public String getEmpName()
+    public String getEmpName() 
     {
         return empName;
     }
-    public void setEmpBirthdate(Date empBirthdate)
+    public void setEmpBirthdate(Date empBirthdate) 
     {
         this.empBirthdate = empBirthdate;
     }
 
-    public Date getEmpBirthdate()
+    public Date getEmpBirthdate() 
     {
         return empBirthdate;
     }
-    public void setEmpSex(String empSex)
+    public void setEmpSex(String empSex) 
     {
         this.empSex = empSex;
     }
 
-    public String getEmpSex()
+    public String getEmpSex() 
     {
         return empSex;
     }
-    public void setEmpWorkstatus(String empWorkstatus)
+    public void setEmpWorkstatus(String empWorkstatus) 
     {
         this.empWorkstatus = empWorkstatus;
     }
 
-    public String getEmpWorkstatus()
+    public String getEmpWorkstatus() 
     {
         return empWorkstatus;
     }
-    public void setEmpPaperstype(String empPaperstype)
+    public void setEmpPaperstype(String empPaperstype) 
     {
         this.empPaperstype = empPaperstype;
     }
 
-    public String getEmpPaperstype()
+    public String getEmpPaperstype() 
     {
         return empPaperstype;
     }
-    public void setEmpPapersnum(String empPapersnum)
+    public void setEmpPapersnum(String empPapersnum) 
     {
         this.empPapersnum = empPapersnum;
     }
 
-    public String getEmpPapersnum()
+    public String getEmpPapersnum() 
     {
         return empPapersnum;
     }
-    public void setEmpHigthEducation(String empHigthEducation)
+    public void setEmpHigthEducation(String empHigthEducation) 
     {
         this.empHigthEducation = empHigthEducation;
     }
 
-    public String getEmpHigthEducation()
+    public String getEmpHigthEducation() 
     {
         return empHigthEducation;
     }
-    public void setEmpHigthDegree(String empHigthDegree)
+    public void setEmpHigthDegree(String empHigthDegree) 
     {
         this.empHigthDegree = empHigthDegree;
     }
 
-    public String getEmpHigthDegree()
+    public String getEmpHigthDegree() 
     {
         return empHigthDegree;
     }
-    public void setEmpPosition(String empPosition)
+    public void setEmpPosition(String empPosition) 
     {
         this.empPosition = empPosition;
     }
 
-    public String getEmpPosition()
+    public String getEmpPosition() 
     {
         return empPosition;
     }
-    public void setHrNationId(String hrNationId)
+    public void setHrNationId(String hrNationId) 
     {
         this.hrNationId = hrNationId;
     }
 
-    public String getHrNationId()
+    public String getHrNationId() 
     {
         return hrNationId;
     }
-    public void setHrPoliticalId(String hrPoliticalId)
+    public void setHrPoliticalId(String hrPoliticalId) 
     {
         this.hrPoliticalId = hrPoliticalId;
     }
 
-    public String getHrPoliticalId()
+    public String getHrPoliticalId() 
     {
         return hrPoliticalId;
     }
-    public void setEmpMaritalsta(String empMaritalsta)
+    public void setEmpMaritalsta(String empMaritalsta) 
     {
         this.empMaritalsta = empMaritalsta;
     }
 
-    public String getEmpMaritalsta()
+    public String getEmpMaritalsta() 
     {
         return empMaritalsta;
     }
-    public void setEmpEntrancenum(String empEntrancenum)
+    public void setEmpEntrancenum(String empEntrancenum) 
     {
         this.empEntrancenum = empEntrancenum;
     }
 
-    public String getEmpEntrancenum()
+    public String getEmpEntrancenum() 
     {
         return empEntrancenum;
     }
-    public void setHrSpecialtyId(String hrSpecialtyId)
+    public void setHrSpecialtyId(String hrSpecialtyId) 
     {
         this.hrSpecialtyId = hrSpecialtyId;
     }
 
-    public String getHrSpecialtyId()
+    public String getHrSpecialtyId() 
     {
         return hrSpecialtyId;
     }
-    public void setHrPractiseId(String hrPractiseId)
+    public void setHrPractiseId(String hrPractiseId) 
     {
         this.hrPractiseId = hrPractiseId;
     }
 
-    public String getHrPractiseId()
+    public String getHrPractiseId() 
     {
         return hrPractiseId;
     }
-    public void setEmpPracnum(String empPracnum)
+    public void setEmpPracnum(String empPracnum) 
     {
         this.empPracnum = empPracnum;
     }
 
-    public String getEmpPracnum()
+    public String getEmpPracnum() 
     {
         return empPracnum;
     }
-    public void setEmpPracdate(Date empPracdate)
+    public void setEmpPracdate(Date empPracdate) 
     {
         this.empPracdate = empPracdate;
     }
 
-    public Date getEmpPracdate()
+    public Date getEmpPracdate() 
     {
         return empPracdate;
     }
-    public void setEmpPracsite(String empPracsite)
+    public void setEmpPracsite(String empPracsite) 
     {
         this.empPracsite = empPracsite;
     }
 
-    public String getEmpPracsite()
+    public String getEmpPracsite() 
     {
         return empPracsite;
     }
-    public void setHrCertifyId(String hrCertifyId)
+    public void setHrCertifyId(String hrCertifyId) 
     {
         this.hrCertifyId = hrCertifyId;
     }
 
-    public String getHrCertifyId()
+    public String getHrCertifyId() 
     {
         return hrCertifyId;
     }
-    public void setEmpCertifynum(String empCertifynum)
+    public void setEmpCertifynum(String empCertifynum) 
     {
         this.empCertifynum = empCertifynum;
     }
 
-    public String getEmpCertifynum()
+    public String getEmpCertifynum() 
     {
         return empCertifynum;
     }
-    public void setEmpGainway(String empGainway)
+    public void setEmpGainway(String empGainway) 
     {
         this.empGainway = empGainway;
     }
 
-    public String getEmpGainway()
+    public String getEmpGainway() 
     {
         return empGainway;
     }
-    public void setEmpGainsite(String empGainsite)
+    public void setEmpGainsite(String empGainsite) 
     {
         this.empGainsite = empGainsite;
     }
 
-    public String getEmpGainsite()
+    public String getEmpGainsite() 
     {
         return empGainsite;
     }
-    public void setEmpIntroduce(String empIntroduce)
+    public void setEmpIntroduce(String empIntroduce) 
     {
         this.empIntroduce = empIntroduce;
     }
 
-    public String getEmpIntroduce()
+    public String getEmpIntroduce() 
     {
         return empIntroduce;
     }
@@ -423,21 +424,21 @@ public class PMHrEmp extends BaseEntity
     {
         return empEntrydate;
     }
-    public void setEmpSocialNum(String empSocialNum)
+    public void setEmpSocialNum(String empSocialNum) 
     {
         this.empSocialNum = empSocialNum;
     }
 
-    public String getEmpSocialNum()
+    public String getEmpSocialNum() 
     {
         return empSocialNum;
     }
-    public void setEmpContStartdate(Date empContStartdate)
+    public void setEmpContStartdate(Date empContStartdate) 
     {
         this.empContStartdate = empContStartdate;
     }
 
-    public Date getEmpContStartdate()
+    public Date getEmpContStartdate() 
     {
         return empContStartdate;
     }
@@ -450,84 +451,84 @@ public class PMHrEmp extends BaseEntity
     {
         return empContEnddate;
     }
-    public void setEmpInsured(String empInsured)
+    public void setEmpInsured(String empInsured) 
     {
         this.empInsured = empInsured;
     }
 
-    public String getEmpInsured()
+    public String getEmpInsured() 
     {
         return empInsured;
     }
-    public void setEmpPhone(String empPhone)
+    public void setEmpPhone(String empPhone) 
     {
         this.empPhone = empPhone;
     }
 
-    public String getEmpPhone()
+    public String getEmpPhone() 
     {
         return empPhone;
     }
-    public void setEmpPicture(String empPicture)
+    public void setEmpPicture(String empPicture) 
     {
         this.empPicture = empPicture;
     }
 
-    public String getEmpPicture()
+    public String getEmpPicture() 
     {
         return empPicture;
     }
-    public void setEmpSite(String empSite)
+    public void setEmpSite(String empSite) 
     {
         this.empSite = empSite;
     }
 
-    public String getEmpSite()
+    public String getEmpSite() 
     {
         return empSite;
     }
-    public void setEmpContactPhone(String empContactPhone)
+    public void setEmpContactPhone(String empContactPhone) 
     {
         this.empContactPhone = empContactPhone;
     }
 
-    public String getEmpContactPhone()
+    public String getEmpContactPhone() 
     {
         return empContactPhone;
     }
-    public void setEmpEmail(String empEmail)
+    public void setEmpEmail(String empEmail) 
     {
         this.empEmail = empEmail;
     }
 
-    public String getEmpEmail()
+    public String getEmpEmail() 
     {
         return empEmail;
     }
-    public void setEmpPostcode(String empPostcode)
+    public void setEmpPostcode(String empPostcode) 
     {
         this.empPostcode = empPostcode;
     }
 
-    public String getEmpPostcode()
+    public String getEmpPostcode() 
     {
         return empPostcode;
     }
-    public void setEmpQq(String empQq)
+    public void setEmpQq(String empQq) 
     {
         this.empQq = empQq;
     }
 
-    public String getEmpQq()
+    public String getEmpQq() 
     {
         return empQq;
     }
-    public void setEmpWechat(String empWechat)
+    public void setEmpWechat(String empWechat) 
     {
         this.empWechat = empWechat;
     }
 
-    public String getEmpWechat()
+    public String getEmpWechat() 
     {
         return empWechat;
     }
@@ -553,46 +554,46 @@ public class PMHrEmp extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("empName", getEmpName())
-                .append("empBirthdate", getEmpBirthdate())
-                .append("empSex", getEmpSex())
-                .append("empWorkstatus", getEmpWorkstatus())
-                .append("empPaperstype", getEmpPaperstype())
-                .append("empPapersnum", getEmpPapersnum())
-                .append("empHigthEducation", getEmpHigthEducation())
-                .append("empHigthDegree", getEmpHigthDegree())
-                .append("empPosition", getEmpPosition())
-                .append("hrNationId", getHrNationId())
-                .append("hrPoliticalId", getHrPoliticalId())
-                .append("empMaritalsta", getEmpMaritalsta())
-                .append("empEntrancenum", getEmpEntrancenum())
-                .append("hrSpecialtyId", getHrSpecialtyId())
-                .append("hrPractiseId", getHrPractiseId())
-                .append("empPracnum", getEmpPracnum())
-                .append("empPracdate", getEmpPracdate())
-                .append("empPracsite", getEmpPracsite())
-                .append("hrCertifyId", getHrCertifyId())
-                .append("empCertifynum", getEmpCertifynum())
-                .append("empGainway", getEmpGainway())
-                .append("empGainsite", getEmpGainsite())
-                .append("empIntroduce", getEmpIntroduce())
-                .append("empEntrydate", getEmpEntrydate())
-                .append("empSocialNum", getEmpSocialNum())
-                .append("empContStartdate", getEmpContStartdate())
-                .append("empContEnddate", getEmpContEnddate())
-                .append("empInsured", getEmpInsured())
-                .append("empPhone", getEmpPhone())
-                .append("empPicture", getEmpPicture())
-                .append("empSite", getEmpSite())
-                .append("empContactPhone", getEmpContactPhone())
-                .append("empEmail", getEmpEmail())
-                .append("empPostcode", getEmpPostcode())
-                .append("empQq", getEmpQq())
-                .append("empWechat", getEmpWechat())
-                .append("hrLawyerIdentityList", getHrLawyerIdentityList())
+            .append("id", getId())
+            .append("empName", getEmpName())
+            .append("empBirthdate", getEmpBirthdate())
+            .append("empSex", getEmpSex())
+            .append("empWorkstatus", getEmpWorkstatus())
+            .append("empPaperstype", getEmpPaperstype())
+            .append("empPapersnum", getEmpPapersnum())
+            .append("empHigthEducation", getEmpHigthEducation())
+            .append("empHigthDegree", getEmpHigthDegree())
+            .append("empPosition", getEmpPosition())
+            .append("hrNationId", getHrNationId())
+            .append("hrPoliticalId", getHrPoliticalId())
+            .append("empMaritalsta", getEmpMaritalsta())
+            .append("empEntrancenum", getEmpEntrancenum())
+            .append("hrSpecialtyId", getHrSpecialtyId())
+            .append("hrPractiseId", getHrPractiseId())
+            .append("empPracnum", getEmpPracnum())
+            .append("empPracdate", getEmpPracdate())
+            .append("empPracsite", getEmpPracsite())
+            .append("hrCertifyId", getHrCertifyId())
+            .append("empCertifynum", getEmpCertifynum())
+            .append("empGainway", getEmpGainway())
+            .append("empGainsite", getEmpGainsite())
+            .append("empIntroduce", getEmpIntroduce())
+            .append("empEntrydate", getEmpEntrydate())
+            .append("empSocialNum", getEmpSocialNum())
+            .append("empContStartdate", getEmpContStartdate())
+            .append("empContEnddate", getEmpContEnddate())
+            .append("empInsured", getEmpInsured())
+            .append("empPhone", getEmpPhone())
+            .append("empPicture", getEmpPicture())
+            .append("empSite", getEmpSite())
+            .append("empContactPhone", getEmpContactPhone())
+            .append("empEmail", getEmpEmail())
+            .append("empPostcode", getEmpPostcode())
+            .append("empQq", getEmpQq())
+            .append("empWechat", getEmpWechat())
+            .append("hrLawyerIdentityList", getHrLawyerIdentityList())
                 .append("workExperienceList", getWorkExperienceList())
-                .append("identityName",getIdentityName())
-                .toString();
+            .append("identityName",getIdentityName())
+            .toString();
     }
 }

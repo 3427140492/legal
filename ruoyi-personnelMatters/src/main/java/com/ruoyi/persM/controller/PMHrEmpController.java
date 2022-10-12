@@ -1,32 +1,25 @@
 package com.ruoyi.persM.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import com.ruoyi.persM.domain.Education;
-import com.ruoyi.persM.domain.WorkExperience;
-import com.ruoyi.persM.service.IPMHrEmpService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.persM.domain.PMHrEmp;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.persM.domain.Education;
+import com.ruoyi.persM.domain.PMHrEmp;
+import com.ruoyi.persM.domain.WorkExperience;
+import com.ruoyi.persM.service.IPMHrEmpService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 人事档案Controller
- *
+ * 
  * @author ruoyi
  * @date 2022-09-27
  */
@@ -99,7 +92,7 @@ public class PMHrEmpController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('persM:archives:remove')")
     @Log(title = "人事档案", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")
     public AjaxResult remove(@PathVariable Long id)
     {
         return toAjax(pMHrEmpService.deletePMHrEmpById(id));
@@ -167,6 +160,17 @@ public class PMHrEmpController extends BaseController
     public TableDataInfo getInfoDegree(@PathVariable("id") Long id)
     {
         List<Education> list = pMHrEmpService.selectEducationById(id);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询人事档案列表
+     */
+    @PreAuthorize("@ss.hasPermi('persM:archives:Userlist')")
+    @GetMapping("/Userlist")
+    public TableDataInfo Userlist()
+    {
+        List<PMHrEmp> list = pMHrEmpService.selectPMHrEmpUserList();
         return getDataTable(list);
     }
 

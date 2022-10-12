@@ -1,27 +1,28 @@
 package com.ruoyi.persM.service.impl;
 
-import java.util.List;
+import com.ruoyi.persM.domain.TeamVo;
+import com.ruoyi.persM.mapper.TeamVoMapper;
+import com.ruoyi.persM.service.ITeamVoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.persM.mapper.TeamVoMapper;
-import com.ruoyi.persM.domain.TeamVo;
-import com.ruoyi.persM.service.ITeamVoService;
+
+import java.util.List;
 
 /**
  * 团队Service业务层处理
- *
+ * 
  * @author ruoyi
  * @date 2022-10-11
  */
 @Service
-public class TeamVoServiceImpl implements ITeamVoService
+public class TeamVoServiceImpl implements ITeamVoService 
 {
     @Autowired
     private TeamVoMapper teamVoMapper;
 
     /**
      * 查询团队
-     *
+     * 
      * @param id 团队主键
      * @return 团队
      */
@@ -33,7 +34,7 @@ public class TeamVoServiceImpl implements ITeamVoService
 
     /**
      * 查询团队列表
-     *
+     * 
      * @param teamVo 团队
      * @return 团队
      */
@@ -45,7 +46,7 @@ public class TeamVoServiceImpl implements ITeamVoService
 
     /**
      * 新增团队
-     *
+     * 
      * @param teamVo 团队
      * @return 结果
      */
@@ -57,7 +58,7 @@ public class TeamVoServiceImpl implements ITeamVoService
 
     /**
      * 修改团队
-     *
+     * 
      * @param teamVo 团队
      * @return 结果
      */
@@ -69,7 +70,7 @@ public class TeamVoServiceImpl implements ITeamVoService
 
     /**
      * 批量删除团队
-     *
+     * 
      * @param ids 需要删除的团队主键
      * @return 结果
      */
@@ -81,7 +82,7 @@ public class TeamVoServiceImpl implements ITeamVoService
 
     /**
      * 删除团队信息
-     *
+     * 
      * @param id 团队主键
      * @return 结果
      */
