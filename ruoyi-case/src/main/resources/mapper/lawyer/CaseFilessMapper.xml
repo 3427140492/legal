@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CaseFilessMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CaseFiless" id="CaseFilesResult">
+        <result property="id"    column="id"    />
+        <result property="appid"    column="appid"    />
+        <result property="filename"    column="filename"    />
+        <result property="filepath"    column="filepath"    />
+        <result property="typeid"    column="typeid"    />
+    </resultMap>
+
+    <insert id="insertCaseFiles" parameterType="com.ruoyi.lawyer.domain.CaseFiless" useGeneratedKeys="true" keyProperty="id">
+        insert into case_files
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appid != null">appid,</if>
+            <if test="filename != null">filename,</if>
+            <if test="filepath != null">filepath,</if>
+            <if test="typeid != null">typeid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appid != null">#{appid},</if>
+            <if test="filename != null">#{filename},</if>
+            <if test="filepath != null">#{filepath},</if>
+            <if test="typeid != null">#{typeid},</if>
+         </trim>
+    </insert>
+
+</mapper>

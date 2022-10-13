@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CwPerformancesplitsMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CwPerformancesplits" id="CwPerformancesplitResult">
+        <result property="id"    column="id"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
+        <result property="caseAttorney"    column="case_attorney"    />
+        <result property="cwPerformancesplit"    column="cw_performancesplit"    />
+        <result property="cwSplitType"    column="cw_split_type"    />
+        <result property="cwRealSplitMoney"    column="cw_real_split_money"    />
+        <result property="type"    column="type"    />
+        <result property="empName"    column="emp_name"    />
+    </resultMap>
+
+    <sql id="selectCwPerformancesplitVo">
+        select id, case_law_id, hr_emp_id, case_attorney, cw_performancesplit, cw_split_type, cw_real_split_money, type from cw_performancesplit
+    </sql>
+
+    <select id="selectCwPerformancesplitById" parameterType="String" resultMap="CwPerformancesplitResult">
+        select hr.emp_name,cp.* from cw_performancesplit cp,hr_emp hr where cp.hr_emp_id = hr.id and
+            case_law_id = #{id}
+    </select>
+
+    <insert id="insertCwPerformancesplit" parameterType="com.ruoyi.lawyer.domain.CwPerformancesplits" useGeneratedKeys="true" keyProperty="id">
+        insert into cw_performancesplit
+            (case_law_id,hr_emp_id,case_attorney,cw_performancesplit,cw_split_type,cw_real_split_money,type)
+        values
+        <foreach collection="list" item="l" separator=",">
+            (#{l.caseLawId},#{l.hrEmpId},#{l.caseAttorney},#{l.cwPerformancesplit},#{l.cwSplitType},#{l.cwRealSplitMoney},#{l.type})
+        </foreach>
+    </insert>
+
+    <delete id="deleteCwPerformancesplitById" parameterType="String">
+        delete from cw_performancesplit where case_law_id = #{id}
+    </delete>
+
+</mapper>

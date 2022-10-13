@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CaseDecreasesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CaseDecreases" id="CaseDecreaseResult">
+        <result property="id"    column="id"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="person"    column="person"    />
+        <result property="decreaseMoney"    column="decrease_money"    />
+        <result property="applyDate"    column="apply_date"    />
+        <result property="reason"    column="reason"    />
+        <result property="status"    column="status"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+        <association property="caseLaw" javaType="com.ruoyi.lawyer.domain.CaseLaws">
+            <result property="id"    column="id"    />
+            <result property="caseNo"    column="case_no"    />
+            <result property="caseWtr"    column="case_wtr"    />
+        </association>
+    </resultMap>
+
+    <select id="selectCaseDecreaseList1" parameterType="String" resultMap="CaseDecreaseResult">
+        select
+            de.*,cl.case_wtr,cl.case_no
+        from
+            case_decrease de
+        inner join
+            case_law cl on de.case_law_id = cl.id
+        where
+            cl.case_recycle = 'Y'
+        <if test="caseSubmitter != null and caseSubmitter != ''"> and cl.case_submitter = #{caseSubmitter}</if>
+    </select>
+
+    <select id="selectCaseDecreaseList" parameterType="com.ruoyi.lawyer.domain.CaseDecreases" resultMap="CaseDecreaseResult">
+        select
+            de.*,cl.case_wtr,cl.case_no,cl.case_submitter
+        from
+            case_decrease de
+        inner join
+            case_law cl on de.case_law_id = cl.id
+        where
+            cl.case_recycle = 'Y'
+        <if test="caseSubmitter != null and caseSubmitter != ''"> and cl.case_submitter = #{caseSubmitter}</if>
+        <if test="person != null and person != ''"> and de.person like concat('%', #{person}, '%')</if>
+        <if test="caseNo != null and caseNo !=''">
+            and cl.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="status != null and status != ''"> and de.status = #{status}</if>
+    </select>
+
+    <insert id="insertCaseDecrease" parameterType="com.ruoyi.lawyer.domain.CaseDecreases" useGeneratedKeys="true" keyProperty="id">
+        insert into case_decrease
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="person != null">person,</if>
+            <if test="decreaseMoney != null">decrease_money,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="reason != null">reason,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="person != null">#{person},</if>
+            <if test="decreaseMoney != null">#{decreaseMoney},</if>
+            <if test="applyDate != null">#{applyDate},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <delete id="deleteCaseDecreaseById" parameterType="Long">
+        delete from case_decrease where id = #{id}
+    </delete>
+
+</mapper>

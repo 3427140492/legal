@@ -114,6 +114,11 @@
             <artifactId>ruoyi-log</artifactId>
         </dependency>
 
+        <!-- 案件-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-case</artifactId>
+        </dependency>
 
 
     </dependencies>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.ClientTypesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.ClientTypes" id="ClientTypeResult">
+        <result property="id"    column="id"    />
+        <result property="clientType"    column="client_type"    />
+    </resultMap>
+
+    <sql id="selectClientTypeVo">
+        select id, client_type from client_type
+    </sql>
+
+    <select id="listClientType" parameterType="com.ruoyi.lawyer.domain.ClientTypes" resultMap="ClientTypeResult">
+        <include refid="selectClientTypeVo"/>
+        <where>  
+            <if test="clientType != null  and clientType != ''"> and client_type = #{clientType}</if>
+        </where>
+    </select>
+
+</mapper>

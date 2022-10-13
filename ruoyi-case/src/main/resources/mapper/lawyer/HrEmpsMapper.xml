@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.HrEmpsMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.HrEmps" id="HrEmpResult">
+        <result property="id"    column="id"    />
+        <result property="empName"    column="emp_name"    />
+        <result property="empBirthdate"    column="emp_birthdate"    />
+        <result property="empSex"    column="emp_sex"    />
+        <result property="empWorkstatus"    column="emp_workstatus"    />
+        <result property="empPaperstype"    column="emp_paperstype"    />
+        <result property="empPapersnum"    column="emp_papersnum"    />
+        <result property="empHigthEducation"    column="emp_higth_education"    />
+        <result property="empHigthDegree"    column="emp_higth_degree"    />
+        <result property="empPosition"    column="emp_position"    />
+        <result property="hrNationId"    column="hr_nation_id"    />
+        <result property="hrPoliticalId"    column="hr_political_id"    />
+        <result property="empMaritalsta"    column="emp_maritalsta"    />
+        <result property="empEntrancenum"    column="emp_entrancenum"    />
+        <result property="hrSpecialtyId"    column="hr_specialty_id"    />
+        <result property="hrPractiseId"    column="hr_practise_id"    />
+        <result property="empPracnum"    column="emp_pracnum"    />
+        <result property="empPracdate"    column="emp_pracdate"    />
+        <result property="empPracsite"    column="emp_pracsite"    />
+        <result property="hrCertifyId"    column="hr_certify_id"    />
+        <result property="empCertifynum"    column="emp_certifynum"    />
+        <result property="empGainway"    column="emp_gainway"    />
+        <result property="empGainsite"    column="emp_gainsite"    />
+        <result property="empIntroduce"    column="emp_introduce"    />
+        <result property="empEntrydate"    column="emp_entrydate"    />
+        <result property="empSocialNum"    column="emp_social_num"    />
+        <result property="empContStartdate"    column="emp_cont_startdate"    />
+        <result property="empContEnddate"    column="emp_cont_enddate"    />
+        <result property="empInsured"    column="emp_insured"    />
+        <result property="empPhone"    column="emp_phone"    />
+        <result property="empPicture"    column="emp_picture"    />
+        <result property="empSite"    column="emp_site"    />
+        <result property="empContactPhone"    column="emp_contact_phone"    />
+        <result property="empEmail"    column="emp_email"    />
+        <result property="empPostcode"    column="emp_postcode"    />
+        <result property="empQq"    column="emp_qq"    />
+        <result property="empWechat"    column="emp_wechat"    />
+    </resultMap>
+
+    <sql id="selectHrEmpVo">
+        select id, emp_name, emp_birthdate, emp_sex, emp_workstatus, emp_paperstype, emp_papersnum, emp_higth_education, emp_higth_degree, emp_position, hr_nation_id, hr_political_id, emp_maritalsta, emp_entrancenum, hr_specialty_id, hr_practise_id, emp_pracnum, emp_pracdate, emp_pracsite, hr_certify_id, emp_certifynum, emp_gainway, emp_gainsite, emp_introduce, emp_entrydate, emp_social_num, emp_cont_startdate, emp_cont_enddate, emp_insured, emp_phone, emp_picture, emp_site, emp_contact_phone, emp_email, emp_postcode, emp_qq, emp_wechat from hr_emp
+    </sql>
+
+    <select id="selectHrEmpById" parameterType="Long" resultMap="HrEmpResult">
+        <include refid="selectHrEmpVo"/>
+        where id = #{id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CwInvoicesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CwInvoices" id="CwInvoiceResult">
+        <result property="id"    column="id"    />
+        <result property="cwInvoiceTitle"    column="cw_invoice_title"    />
+        <result property="cwInvoiceMoney"    column="cw_invoice_money"    />
+        <result property="cwApplicationDate"    column="cw_application_date"    />
+        <result property="cwInvoiceDate"    column="cw_invoice_date"    />
+        <result property="cwInvoiceStatus"    column="cw_invoice_status"    />
+        <result property="cwInvoiceNumber"    column="cw_invoice_number"    />
+        <result property="cwOpenType"    column="cw_open_type"    />
+        <result property="cwInvoiceType"    column="cw_invoice_type"    />
+        <result property="cwInvoiceItem"    column="cw_invoice_item"    />
+        <result property="cwTaxpayerIdentityNumber"    column="cw_taxpayer_identity_number"    />
+        <result property="cwBasicBankofdeposit"    column="cw_basic_bankofdeposit"    />
+        <result property="cwRegisteredAddress"    column="cw_registered_address"    />
+        <result property="cwFixedlineTelephone"    column="cw_fixedline_telephone"    />
+        <result property="recordFileId"    column="record_file_id"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="cwApplicationRemark"    column="cw_application_remark"    />
+        <result property="cwInvoiceRemark"    column="cw_invoice_remark"    />
+        <result property="cwAccountNumber"    column="cw_account_number"    />
+    </resultMap>
+
+    <sql id="selectCwInvoiceVo">
+        select id, cw_invoice_title, cw_invoice_money, cw_application_date, cw_invoice_date, cw_invoice_status, cw_invoice_number, cw_open_type, cw_invoice_type, cw_invoice_item, cw_taxpayer_identity_number, cw_basic_bankofdeposit, cw_registered_address, cw_fixedline_telephone, record_file_id, case_law_id, cw_application_remark, cw_invoice_remark, cw_account_number from cw_invoice
+    </sql>
+        
+    <insert id="insertCwInvoice" parameterType="com.ruoyi.lawyer.domain.CwInvoices" useGeneratedKeys="true" keyProperty="id">
+        insert into cw_invoice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cwInvoiceTitle != null">cw_invoice_title,</if>
+            <if test="cwInvoiceMoney != null">cw_invoice_money,</if>
+<!--            <if test="cwApplicationDate != null">cw_application_date,</if>-->
+            cw_application_date,
+            <if test="cwInvoiceDate != null">cw_invoice_date,</if>
+            <if test="cwInvoiceStatus != null">cw_invoice_status,</if>
+            <if test="cwInvoiceNumber != null">cw_invoice_number,</if>
+            <if test="cwOpenType != null">cw_open_type,</if>
+            <if test="cwInvoiceType != null">cw_invoice_type,</if>
+            <if test="cwInvoiceItem != null">cw_invoice_item,</if>
+            <if test="cwTaxpayerIdentityNumber != null">cw_taxpayer_identity_number,</if>
+            <if test="cwBasicBankofdeposit != null">cw_basic_bankofdeposit,</if>
+            <if test="cwRegisteredAddress != null">cw_registered_address,</if>
+            <if test="cwFixedlineTelephone != null">cw_fixedline_telephone,</if>
+            <if test="recordFileId != null">record_file_id,</if>
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="cwApplicationRemark != null">cw_application_remark,</if>
+            <if test="cwInvoiceRemark != null">cw_invoice_remark,</if>
+            <if test="cwAccountNumber != null">cw_account_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cwInvoiceTitle != null">#{cwInvoiceTitle},</if>
+            <if test="cwInvoiceMoney != null">#{cwInvoiceMoney},</if>
+<!--            <if test="cwApplicationDate != null">#{cwApplicationDate},</if>-->
+            NOW(),
+            <if test="cwInvoiceDate != null">#{cwInvoiceDate},</if>
+            <if test="cwInvoiceStatus != null">#{cwInvoiceStatus},</if>
+            <if test="cwInvoiceNumber != null">#{cwInvoiceNumber},</if>
+            <if test="cwOpenType != null">#{cwOpenType},</if>
+            <if test="cwInvoiceType != null">#{cwInvoiceType},</if>
+            <if test="cwInvoiceItem != null">#{cwInvoiceItem},</if>
+            <if test="cwTaxpayerIdentityNumber != null">#{cwTaxpayerIdentityNumber},</if>
+            <if test="cwBasicBankofdeposit != null">#{cwBasicBankofdeposit},</if>
+            <if test="cwRegisteredAddress != null">#{cwRegisteredAddress},</if>
+            <if test="cwFixedlineTelephone != null">#{cwFixedlineTelephone},</if>
+            <if test="recordFileId != null">#{recordFileId},</if>
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="cwApplicationRemark != null">#{cwApplicationRemark},</if>
+            <if test="cwInvoiceRemark != null">#{cwInvoiceRemark},</if>
+            <if test="cwAccountNumber != null">#{cwAccountNumber},</if>
+         </trim>
+    </insert>
+
+</mapper>

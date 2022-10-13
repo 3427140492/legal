@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CaseLawsMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CaseLaws" id="CaseLawResult">
+        <result property="id"    column="id"    />
+        <result property="id"    column="case_id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="caseOppositeParties"    column="case_opposite_parties"    />
+        <result property="caseOppositeCardnum"    column="case_opposite_cardnum"    />
+        <result property="caseThirdParty"    column="case_third_party"    />
+        <result property="caseSuspect"    column="case_suspect"    />
+        <result property="caseClash"    column="case_clash"    />
+        <result property="caseCause"    column="case_cause"    />
+        <result property="caseAccept"    column="case_accept"    />
+        <result property="caseLawsuitobj"    column="case_lawsuitobj"    />
+        <result property="caseSubsidy"    column="case_subsidy"    />
+        <result property="caseSubsidysal"    column="case_subsidysal"    />
+        <result property="caseSettleStatus"    column="case_settle_status"    />
+        <result property="casePlan"    column="case_plan"    />
+        <result property="caseApproveStatus"    column="case_approve_status"    />
+        <result property="caseAgencyfee"    column="case_agencyfee"    />
+        <result property="caseProxysal"    column="case_proxysal"    />
+        <result property="caseTransactionRegion"    column="case_transaction_region"    />
+        <result property="caseAssign"    column="case_assign"    />
+        <result property="casePaidsal"    column="case_paidsal"    />
+        <result property="caseUnpaidsal"    column="case_unpaidsal"    />
+        <result property="caseInvoiced"    column="case_invoiced"    />
+        <result property="caseNotinvoiced"    column="case_notinvoiced"    />
+        <result property="casePropernum"    column="case_propernum"    />
+        <result property="caseCourt"    column="case_court"    />
+        <result property="caseFilenumber"    column="case_filenumber"    />
+        <result property="caseCorrelationFile"    column="case_correlation_file"    />
+        <result property="caseSubmitter"    column="case_submitter"    />
+        <result property="caseSubtime"    column="case_subtime"    />
+        <result property="caseRecycle"    column="case_recycle"    />
+        <result property="caseRemarks"    column="case_remarks"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="caseAttorney"    column="case_attorney"    />
+        <result property="caseStatus"    column="case_status"    />
+        <result property="caseLawsuitStatus"    column="case_lawsuit_status"    />
+        <result property="caseChargeWay"    column="case_charge_way"    />
+        <result property="systemApprovalId"    column="system_approval_id"    />
+        <result property="caseCaseTypeId"    column="case_case_type_id"    />
+        <result property="caseSealApplyforId"    column="case_seal_applyfor_id"    />
+        <result property="hrEmpId"    column="hr_emp_id"    />
+        <result property="collectionTime"    column="collection_time"    />
+        <result property="caseParties"    column="case_parties"    />
+        <result property="caseFxmoney"    column="case_fxmoney"    />
+        <result property="caseWtr"    column="case_wtr"    />
+        <result property="caseContract"    column="case_contract"    />
+        <result property="caseRecord"    column="case_record"    />
+        <result property="caseShare"    column="case_share"    />
+        <result property="caseSettleType"    column="case_settle_type"    />
+        <result property="caseApprovalEndtime"    column="case_approval_endtime"    />
+        <result property="caseRecordNum"    column="case_record_num"    />
+        <result property="standard"    column="standard"    />
+
+        <association property="caseCaseType" javaType="com.ruoyi.lawyer.domain.CaseCaseTypes">
+            <result property="id"    column="id"    />
+            <result property="caseTypeName"    column="case_type_name"    />
+            <result property="typePid"    column="type_pid"    />
+            <result property="typeMoneyMin"    column="type_money_min"    />
+            <result property="typeMoneyMax"    column="type_money_max"    />
+        </association>
+
+        <association property="caseDecrease" javaType="com.ruoyi.lawyer.domain.CaseDecreases">
+            <result property="decreaseMoney" column="decrease_money"  />
+        </association>
+
+        <association property="client" javaType="com.ruoyi.lawyer.domain.Clients">
+            <result property="id"    column="id"    />
+            <result property="client"    column="client"    />
+            <result property="phone"    column="phone"    />
+            <result property="type"    column="type"    />
+            <result property="typeinfo"    column="typeinfo"    />
+            <result property="cardnum"    column="cardnum"    />
+            <result property="principal"    column="principal"    />
+            <result property="contact"    column="contact"    />
+            <result property="email"    column="email"    />
+            <result property="duty"    column="duty"    />
+            <result property="affectedareas"    column="affectedareas"    />
+            <result property="tel"    column="tel"    />
+            <result property="pertainarea"    column="pertainarea"    />
+            <result property="status"    column="status"    />
+            <result property="legalperson"    column="legalperson"    />
+            <result property="legalpersontel"    column="legalpersontel"    />
+            <result property="file"    column="file"    />
+            <result property="nation"    column="nation"    />
+            <result property="sex"    column="sex"    />
+            <result property="birth"    column="birth"    />
+            <result property="address"    column="address"    />
+            <result property="remark"    column="remark"    />
+            <result property="addtime"    column="addtime"    />
+            <result property="sysUserId"    column="sys_user_id"    />
+            <result property="assign"    column="assign"    />
+            <result property="fileurl"    column="fileurl"    />
+        </association>
+
+        <association property="hrEmp" javaType="com.ruoyi.lawyer.domain.HrEmps">
+            <result property="id"    column="id"    />
+            <result property="id"    column="emp_id"    />
+            <result property="empName"    column="emp_name"    />
+            <result property="empBirthdate"    column="emp_birthdate"    />
+            <result property="empSex"    column="emp_sex"    />
+            <result property="empWorkstatus"    column="emp_workstatus"    />
+            <result property="empPaperstype"    column="emp_paperstype"    />
+            <result property="empPapersnum"    column="emp_papersnum"    />
+            <result property="empHigthEducation"    column="emp_higth_education"    />
+            <result property="empHigthDegree"    column="emp_higth_degree"    />
+            <result property="empPosition"    column="emp_position"    />
+            <result property="hrNationId"    column="hr_nation_id"    />
+            <result property="hrPoliticalId"    column="hr_political_id"    />
+            <result property="empMaritalsta"    column="emp_maritalsta"    />
+            <result property="empEntrancenum"    column="emp_entrancenum"    />
+            <result property="hrSpecialtyId"    column="hr_specialty_id"    />
+            <result property="hrPractiseId"    column="hr_practise_id"    />
+            <result property="empPracnum"    column="emp_pracnum"    />
+            <result property="empPracdate"    column="emp_pracdate"    />
+            <result property="empPracsite"    column="emp_pracsite"    />
+            <result property="hrCertifyId"    column="hr_certify_id"    />
+            <result property="empCertifynum"    column="emp_certifynum"    />
+            <result property="empGainway"    column="emp_gainway"    />
+            <result property="empGainsite"    column="emp_gainsite"    />
+            <result property="empIntroduce"    column="emp_introduce"    />
+            <result property="empEntrydate"    column="emp_entrydate"    />
+            <result property="empSocialNum"    column="emp_social_num"    />
+            <result property="empContStartdate"    column="emp_cont_startdate"    />
+            <result property="empContEnddate"    column="emp_cont_enddate"    />
+            <result property="empInsured"    column="emp_insured"    />
+            <result property="empPhone"    column="emp_phone"    />
+            <result property="empPicture"    column="emp_picture"    />
+            <result property="empSite"    column="emp_site"    />
+            <result property="empContactPhone"    column="emp_contact_phone"    />
+            <result property="empEmail"    column="emp_email"    />
+            <result property="empPostcode"    column="emp_postcode"    />
+            <result property="empQq"    column="emp_qq"    />
+            <result property="empWechat"    column="emp_wechat"    />
+        </association>
+    </resultMap>
+
+    <resultMap type="com.ruoyi.lawyer.domain.CaseLaws" id="CLAndDecResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo" column="case_no"  />
+        <result property="caseWtr"    column="case_wtr"    />
+        <result property="caseCause"    column="case_cause"    />
+        <result property="caseLawsuitStatus"    column="case_lawsuit_status"    />
+        <result property="caseStatus"    column="case_status"    />
+        <result property="caseAgencyfee" column="case_agencyfee"  />
+
+        <association property="caseCaseType" javaType="com.ruoyi.lawyer.domain.CaseCaseTypes">
+            <result property="id"    column="id"    />
+            <result property="caseTypeName"    column="case_type_name"    />
+            <result property="typePid"    column="type_pid"    />
+            <result property="typeMoneyMin"    column="type_money_min"    />
+            <result property="typeMoneyMax"    column="type_money_max"    />
+        </association>
+
+        <association property="caseDecrease" javaType="com.ruoyi.lawyer.domain.CaseDecreases">
+            <result property="decreaseMoney" column="decrease_money"  />
+        </association>
+
+    </resultMap>
+
+    <sql id="selectCaseLawVo">
+        select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
+    </sql>
+
+    <select id="consultagency" parameterType="Long" resultMap="CaseLawResult">
+        select
+            cl.*,ct.id tid, ct.case_type_name,ct.type_pid,ct.type_money_min,ct.type_money_max,hr.emp_name
+        from
+            case_law cl
+        inner join
+            hr_emp hr on hr.id = cl.hr_emp_id
+        inner join
+            case_case_type ct on ct.id = cl.case_case_type_id
+        WHERE ct.type_pid = '1011'
+        <if test="caseSubmitter != null and caseSubmitter !=''">
+            and cl.case_submitter = #{caseSubmitter}
+        </if>
+        <if test="collectionTime != null and collectionTime !=''">
+            and cl.collection_time = #{collectionTime}
+        </if>
+    </select>
+
+    <select id="selectCaseRecycleList" parameterType="Long" resultMap="CaseLawResult">
+        select tab.* from case_case_type t,
+            (select
+                id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,
+                case_opposite_parties,case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+                case_lawsuitobj,case_settle_type,hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,
+                case_approve_status, system_approval_id,case_contract, case_record,case_share,case_subtime,case_charge_way,case_submitter
+            from case_law where case_recycle = 'N')tab
+        where
+            t.id = tab.case_case_type_id
+        <if test="caseWtr != null and caseWtr !=''">
+            and tab.case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and tab.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and tab.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and tab.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and tab.case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and tab.case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseCaseTypeId != null and caseCaseTypeId !=''">
+            and t.type_pid = #{caseCaseTypeId}
+        </if>
+
+    </select>
+
+    <select id="myCaseSummary" parameterType="Long" resultMap="CaseLawResult">
+        select tab.* from case_case_type t ,
+            (select cl.id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,
+            case_opposite_parties,cl.case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+            case_lawsuitobj,case_settle_type ,cl.hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,
+            case_approve_status, system_approval_id,case_contract, case_record,case_share,case_subtime,case_charge_way,case_submitter
+            from case_law cl where case_recycle = 'Y')tab
+        where t.id = tab.case_case_type_id
+        <if test="hrEmpId != null and hrEmpId !=''">
+            and tab.hr_emp_id = #{hrEmpId}
+        </if>
+        <if test="caseWtr != null and caseWtr !=''">
+            and tab.case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and tab.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and tab.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and tab.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and tab.case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and tab.case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseRecordNum != null and caseRecordNum !=''">
+            and tab.case_record_num like concat('%', #{caseRecordNum}, '%')
+        </if>
+        <if test="caseApproveStatus != null and caseApproveStatus !=''">
+            and tab.case_approve_status = #{caseApproveStatus}
+        </if>
+        <if test="caseCaseTypeId != null and caseCaseTypeId !=''">
+            and t.type_pid = #{caseCaseTypeId}
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus !=''">
+            and tab.case_settle_status = #{caseSettleStatus}
+        </if>
+        <if test="collectionTime != null and collectionTime !=''">
+            and tab.collection_time like concat('%', #{collectionTime}, '%')
+        </if>
+        <if test="caseChargeWay != null and caseChargeWay !=''">
+            and tab.case_charge_way = #{caseChargeWay}
+        </if>
+        <if test="caseSubmitter != null and caseSubmitter !=''">
+            and tab.case_submitter = #{caseSubmitter}
+        </if>
+        <if test="caseSubtime2 == 'desc'">
+            order by tab.case_subtime desc
+        </if>
+        <if test="caseSubtime2 == 'asc'">
+            order by tab.case_subtime asc
+        </if>
+        <if test="collectionTime2 == 'desc'">
+            order by tab.collection_time desc
+        </if>
+        <if test="collectionTime2 == 'asc'">
+            order by tab.collection_time asc
+        </if>
+        <if test="casePropernum == 'desc'">
+            order by tab.id desc
+        </if>
+        <if test="casePropernum == 'asc'">
+            order by tab.id asc
+        </if>
+    </select>
+
+    <select id="myStayYear" resultMap="CaseLawResult">
+        select distinct YEAR(collection_time) as collection_time from case_law having collection_time is not null order by YEAR(collection_time) desc
+    </select>
+
+    <select id="myStayProceedsCase" parameterType="com.ruoyi.lawyer.domain.CaseLaws" resultMap="CaseLawResult">
+        select
+            cl.id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,
+            case_opposite_parties,cl.case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+            case_lawsuitobj,case_settle_type ,cl.hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,
+            case_approve_status, system_approval_id,case_contract, case_record,case_share,case_subtime,case_fxmoney,case_proxysal,case_unpaidsal
+        from
+            case_law cl
+        where
+            case_unpaidsal > 0
+        and
+            case_recycle = 'Y'
+        <if test="hrEmpId != null and hrEmpId !=''">
+            and hr_emp_id = #{hrEmpId}
+        </if>
+        <if test="collectionTime != null and collectionTime !=''">
+            and collection_time like concat('%', #{collectionTime}, '%')
+        </if>
+        <if test="caseWtr != null and caseWtr !=''">
+            and case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseRecordNum != null and caseRecordNum !=''">
+            and case_record_num like concat('%', #{caseRecordNum}, '%')
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus !=''">
+            and case_settle_status = #{caseSettleStatus}
+        </if>
+        <if test="payment == 1">
+            and (case_agencyfee + case_proxysal + case_fxmoney - case_subsidysal) &gt;= case_paidsal and case_unpaidsal > 0
+        </if>
+        <if test="payment == 2">
+            and (case_agencyfee + case_proxysal + case_fxmoney - case_subsidysal) &lt;= case_paidsal and case_unpaidsal > 0
+        </if>
+        <if test="payment == 3">
+            and (case_agencyfee + case_proxysal + case_fxmoney - case_subsidysal) &gt; case_invoiced and case_unpaidsal > 0
+        </if>
+        <if test="payment == 4">
+            and (case_agencyfee + case_proxysal + case_fxmoney - case_subsidysal) &lt;= case_invoiced and case_unpaidsal > 0
+        </if>
+        <if test="caseSubtime2 == 'desc'">
+            order by case_subtime desc
+        </if>
+        <if test="caseSubtime2 == 'asc'">
+            order by case_subtime asc
+        </if>
+        <if test="collectionTime2 == 'desc'">
+            order by collection_time desc
+        </if>
+        <if test="collectionTime2 == 'asc'">
+            order by collection_time asc
+        </if>
+        <if test="casePropernum == 'desc'">
+            order by id desc
+        </if>
+        <if test="casePropernum == 'asc'">
+            order by id asc
+        </if>
+    </select>
+
+    <select id="shareTheCaseList" parameterType="Long" resultMap="CaseLawResult">
+        select tab.* from case_case_type t ,
+        (select
+        cl.id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,
+        case_opposite_parties,cl.case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+        case_lawsuitobj,case_settle_type ,cl.hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,
+        case_approve_status, system_approval_id,case_contract, case_record,case_share,case_subtime
+        from case_law cl where case_share = 2 and case_recycle = 'Y') tab
+        where
+        t.id = tab.case_case_type_id
+        <if test="caseWtr != null and caseWtr !=''">
+            and tab.case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and tab.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and tab.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and tab.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and tab.case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and tab.case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseRecordNum != null and caseRecordNum !=''">
+            and tab.case_record_num like concat('%', #{caseRecordNum}, '%')
+        </if>
+        <if test="caseApproveStatus != null and caseApproveStatus !=''">
+            and tab.case_approve_status = #{caseApproveStatus}
+        </if>
+        <if test="caseCaseTypeId != null and caseCaseTypeId !=''">
+            and t.type_pid = #{caseCaseTypeId}
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus !=''">
+            and tab.case_settle_status = #{caseSettleStatus}
+        </if>
+        <if test="caseSubtime2 == 'desc'">
+            order by tab.case_subtime desc
+        </if>
+        <if test="caseSubtime2 == 'asc'">
+            order by tab.case_subtime asc
+        </if>
+        <if test="collectionTime2 == 'desc'">
+            order by tab.collection_time desc
+        </if>
+        <if test="collectionTime2 == 'asc'">
+            order by tab.collection_time asc
+        </if>
+        <if test="casePropernum == 'desc'">
+            order by tab.id desc
+        </if>
+        <if test="casePropernum == 'asc'">
+            order by tab.id asc
+        </if>
+    </select>
+
+    <select id="selectMyCaseLawLists" parameterType="Long" resultMap="CaseLawResult">
+        select tab.* from case_case_type t ,
+            (select cl.id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,
+                case_opposite_parties,cl.case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+                case_lawsuitobj,case_settle_type ,cl.hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,
+                case_approve_status, system_approval_id,case_contract, case_record,case_share,case_subtime
+            from case_law cl
+            left join (select * from cw_performancesplit cw inner join (select case_law_id cid from cw_performancesplit cp group by case_law_id HAVING count(case_law_id) > 1 ) t1
+                on cw.case_law_id = t1.cid where cw.hr_emp_id = #{hrEmpId}) cp on cp.case_law_id = cl.id where case_recycle = 'Y') tab
+        where t.id = tab.case_case_type_id
+        <if test="caseWtr != null and caseWtr !=''">
+            and tab.case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and tab.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and tab.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and tab.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and tab.case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and tab.case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseRecordNum != null and caseRecordNum !=''">
+            and tab.case_record_num like concat('%', #{caseRecordNum}, '%')
+        </if>
+        <if test="caseApproveStatus != null and caseApproveStatus !=''">
+            and tab.case_approve_status = #{caseApproveStatus}
+        </if>
+        <if test="caseCaseTypeId != null and caseCaseTypeId !=''">
+            and t.type_pid = #{caseCaseTypeId}
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus !=''">
+            and tab.case_settle_status = #{caseSettleStatus}
+        </if>
+        <if test="caseSubtime2 == 'desc'">
+            order by tab.case_subtime desc
+        </if>
+        <if test="caseSubtime2 == 'asc'">
+            order by tab.case_subtime asc
+        </if>
+        <if test="collectionTime2 == 'desc'">
+            order by tab.collection_time desc
+        </if>
+        <if test="collectionTime2 == 'asc'">
+            order by tab.collection_time asc
+        </if>
+        <if test="casePropernum == 'desc'">
+            order by tab.id desc
+        </if>
+        <if test="casePropernum == 'asc'">
+            order by tab.id asc
+        </if>
+    </select>
+
+    <select id="getCaseLawId" resultMap="CaseLawResult">
+        select max(id) as id from case_law
+    </select>
+
+    <select id="selectCaseLawParamList" parameterType="com.ruoyi.lawyer.domain.CaseLaws" resultMap="CaseLawResult">
+        select
+            l.id,
+            l.case_wtr,
+            l.case_suspect,
+            l.case_opposite_parties,
+            l.case_attorney,
+            l.case_cause,
+            l.collection_time,
+            l.case_settle_status
+        from
+            case_law l,client c
+        where l.client_id = c.id
+        <if test="cardnum != null and cardnum != ''">
+            and c.cardnum = #{cardnum}
+        </if>
+
+        <if test="caseOppositeCardnum != null and caseOppositeCardnum != ''">
+            and l.case_opposite_cardnum = #{caseOppositeCardnum}
+        </if>
+    </select>
+
+    <insert id="addCaseLaw" parameterType="com.ruoyi.lawyer.domain.CaseLaws" useGeneratedKeys="true" keyProperty="id">
+        insert into case_law
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="caseNo != null">case_no,</if>
+            <if test="caseOppositeParties != null">case_opposite_parties,</if>
+            <if test="caseOppositeCardnum != null">case_opposite_cardnum,</if>
+            <if test="caseThirdParty != null">case_third_party,</if>
+            <if test="caseSuspect != null">case_suspect,</if>
+            <if test="caseClash != null">case_clash,</if>
+            <if test="caseCause != null">case_cause,</if>
+            <if test="caseAccept != null">case_accept,</if>
+            <if test="caseLawsuitobj != null">case_lawsuitobj,</if>
+            <if test="caseSubsidy != null">case_subsidy,</if>
+            <if test="caseSubsidysal != null">case_subsidysal,</if>
+            <if test="caseSettleStatus != null">case_settle_status,</if>
+            <if test="casePlan != null">case_plan,</if>
+            <if test="caseApproveStatus != null">case_approve_status,</if>
+            <if test="caseAgencyfee != null">case_agencyfee,</if>
+            <if test="caseProxysal != null">case_proxysal,</if>
+            <if test="caseTransactionRegion != null">case_transaction_region,</if>
+            <if test="caseAssign != null">case_assign,</if>
+            <if test="casePaidsal != null">case_paidsal,</if>
+            <if test="caseUnpaidsal != null">case_unpaidsal,</if>
+            <if test="caseInvoiced != null">case_invoiced,</if>
+            <if test="caseNotinvoiced != null">case_notinvoiced,</if>
+            <if test="casePropernum != null">case_propernum,</if>
+            <if test="caseCourt != null">case_court,</if>
+            <if test="caseFilenumber != null">case_filenumber,</if>
+            <if test="caseCorrelationFile != null">case_correlation_file,</if>
+            <if test="caseSubmitter != null">case_submitter,</if>
+<!--            <if test="caseSubtime != null">case_subtime,</if>-->
+            case_subtime,
+            <if test="caseRecycle != null">case_recycle,</if>
+            <if test="caseRemarks != null">case_remarks,</if>
+            <if test="clientId != null">client_id,</if>
+            <if test="caseAttorney != null">case_attorney,</if>
+            <if test="caseStatus != null">case_status,</if>
+            <if test="caseLawsuitStatus != null">case_lawsuit_status,</if>
+            <if test="caseChargeWay != null">case_charge_way,</if>
+            <if test="systemApprovalId != null">system_approval_id,</if>
+            <if test="caseCaseTypeId != null">case_case_type_id,</if>
+            <if test="caseSealApplyforId != null">case_seal_applyfor_id,</if>
+            <if test="hrEmpId != null">hr_emp_id,</if>
+            <if test="collectionTime != null">collection_time,</if>
+            <if test="caseParties != null">case_parties,</if>
+            <if test="caseFxmoney != null">case_fxmoney,</if>
+            <if test="caseWtr != null">case_wtr,</if>
+            <if test="caseContract != null">case_contract,</if>
+            <if test="caseRecord != null">case_record,</if>
+            <if test="caseShare != null">case_share,</if>
+            <if test="caseSettleType != null">case_settle_type,</if>
+            <if test="caseApprovalEndtime != null">case_approval_endtime,</if>
+            <if test="caseRecordNum != null">case_record_num,</if>
+            <if test="standard != null">standard,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="caseOppositeParties != null">#{caseOppositeParties},</if>
+            <if test="caseOppositeCardnum != null">#{caseOppositeCardnum},</if>
+            <if test="caseThirdParty != null">#{caseThirdParty},</if>
+            <if test="caseSuspect != null">#{caseSuspect},</if>
+            <if test="caseClash != null">#{caseClash},</if>
+            <if test="caseCause != null">#{caseCause},</if>
+            <if test="caseAccept != null">#{caseAccept},</if>
+            <if test="caseLawsuitobj != null">#{caseLawsuitobj},</if>
+            <if test="caseSubsidy != null">#{caseSubsidy},</if>
+            <if test="caseSubsidysal != null">#{caseSubsidysal},</if>
+            <if test="caseSettleStatus != null">#{caseSettleStatus},</if>
+            <if test="casePlan != null">#{casePlan},</if>
+            <if test="caseApproveStatus != null">#{caseApproveStatus},</if>
+            <if test="caseAgencyfee != null">#{caseAgencyfee},</if>
+            <if test="caseProxysal != null">#{caseProxysal},</if>
+            <if test="caseTransactionRegion != null">#{caseTransactionRegion},</if>
+            <if test="caseAssign != null">#{caseAssign},</if>
+            <if test="casePaidsal != null">#{casePaidsal},</if>
+            <if test="caseUnpaidsal != null">#{caseUnpaidsal},</if>
+            <if test="caseInvoiced != null">#{caseInvoiced},</if>
+            <if test="caseNotinvoiced != null">#{caseNotinvoiced},</if>
+            <if test="casePropernum != null">#{casePropernum},</if>
+            <if test="caseCourt != null">#{caseCourt},</if>
+            <if test="caseFilenumber != null">#{caseFilenumber},</if>
+            <if test="caseCorrelationFile != null">#{caseCorrelationFile},</if>
+            <if test="caseSubmitter != null">#{caseSubmitter},</if>
+<!--            <if test="caseSubtime != null">#{caseSubtime},</if>-->
+            NOW(),
+            <if test="caseRecycle != null">#{caseRecycle},</if>
+            <if test="caseRemarks != null">#{caseRemarks},</if>
+            <if test="clientId != null">#{clientId},</if>
+            <if test="caseAttorney != null">#{caseAttorney},</if>
+            <if test="caseStatus != null">#{caseStatus},</if>
+            <if test="caseLawsuitStatus != null">#{caseLawsuitStatus},</if>
+            <if test="caseChargeWay != null">#{caseChargeWay},</if>
+            <if test="systemApprovalId != null">#{systemApprovalId},</if>
+            <if test="caseCaseTypeId != null">#{caseCaseTypeId},</if>
+            <if test="caseSealApplyforId != null">#{caseSealApplyforId},</if>
+            <if test="hrEmpId != null">#{hrEmpId},</if>
+            <if test="collectionTime != null">#{collectionTime},</if>
+            <if test="caseParties != null">#{caseParties},</if>
+            <if test="caseFxmoney != null">#{caseFxmoney},</if>
+            <if test="caseWtr != null">#{caseWtr},</if>
+            <if test="caseContract != null">#{caseContract},</if>
+            <if test="caseRecord != null">#{caseRecord},</if>
+            <if test="caseShare != null">#{caseShare},</if>
+            <if test="caseSettleType != null">#{caseSettleType},</if>
+            <if test="caseApprovalEndtime != null">#{caseApprovalEndtime},</if>
+            <if test="caseRecordNum != null">#{caseRecordNum},</if>
+            <if test="standard != null">#{standard},</if>
+        </trim>
+    </insert>
+
+    <select id="getCLAndDecById" parameterType="Long" resultMap="CaseLawResult">
+        select
+            cl.id, cl.case_no ,cl.case_wtr,cl.case_cause ,cl.case_lawsuit_status,cl.case_status,
+            ct2.type_money_min,ct2.type_money_max,cl.case_agencyfee,IFNULL(cd2.cutMoney,0) decrease_money
+        from
+            case_law cl
+                left join
+            case_case_type ct on cl.case_case_type_id = ct.id
+                inner join
+            case_case_type ct2 on ct2.id = ct.type_pid
+                left join
+            (select IFNULL(sum(decrease_money),0) cutMoney ,cd.case_law_id from case_decrease cd group by case_law_id) cd2 on cd2.case_law_id = cl.id
+        where
+            cl.id = #{id}
+    </select>
+
+    <select id="selectMyCaseLawList" parameterType="Long" resultMap="CaseLawResult">
+        select tab.* from case_case_type t , (select
+          cl.id,case_no,case_wtr,case_cause,case_accept,case_record_num,case_case_type_id,collection_time,case_opposite_parties,cl.case_attorney,case_settle_status, case_plan,case_status,case_lawsuit_status,
+          case_lawsuitobj,case_settle_type ,cl.hr_emp_id, case_agencyfee,case_paidsal,case_invoiced,case_notinvoiced,case_approve_status,
+          system_approval_id,case_contract, case_record,case_share,case_subtime
+        from
+          case_law cl
+        left join
+          (select count(case_law_id) count,case_law_id cid from cw_performancesplit cp group by case_law_id) cw
+        on
+          cw.cid = cl.id where cw.count = 1 and case_recycle = 'Y' and cl.hr_emp_id = #{hrEmpId}) tab where t.id = tab.case_case_type_id
+        <if test="caseWtr != null and caseWtr !=''">
+            and tab.case_wtr like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and tab.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and tab.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and tab.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and tab.case_attorney like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseAccept != null and caseAccept !=''">
+            and tab.case_accept like concat('%', #{caseAccept}, '%')
+        </if>
+        <if test="caseRecordNum != null and caseRecordNum !=''">
+            and tab.case_record_num like concat('%', #{caseRecordNum}, '%')
+        </if>
+        <if test="caseApproveStatus != null and caseApproveStatus !=''">
+            and tab.case_approve_status = #{caseApproveStatus}
+        </if>
+        <if test="caseCaseTypeId != null and caseCaseTypeId !=''">
+            and t.type_pid = #{caseCaseTypeId}
+        </if>
+        <if test="caseSettleStatus != null and caseSettleStatus !=''">
+            and tab.case_settle_status = #{caseSettleStatus}
+        </if>
+        <if test="caseSubtime2 == 'desc'">
+            order by tab.case_subtime desc
+        </if>
+        <if test="caseSubtime2 == 'asc'">
+            order by tab.case_subtime asc
+        </if>
+        <if test="collectionTime2 == 'desc'">
+            order by tab.collection_time desc
+        </if>
+        <if test="collectionTime2 == 'asc'">
+            order by tab.collection_time asc
+        </if>
+        <if test="casePropernum == 'desc'">
+            order by tab.id desc
+        </if>
+        <if test="casePropernum == 'asc'">
+            order by tab.id asc
+        </if>
+    </select>
+
+    <select id="getCaseLawInfo" parameterType="String" resultMap="CaseLawResult">
+        select * from case_law cl inner join case_case_type ct on ct.id = cl.case_case_type_id where cl.id = #{id}
+    </select>
+
+    <select id="selectInvoiceCaseLawList" parameterType="com.ruoyi.lawyer.domain.CaseLaws" resultMap="CaseLawResult">
+        select
+            cl.id case_id,hr.id emp_id,case_no,client,case_opposite_parties,emp_name,case_subtime,case_cause,
+            collection_time,case_accept,case_lawsuitobj,case_agencyfee,case_paidsal,
+            case_invoiced,case_settle_type, case_record,case_record_num,cl.case_court
+        from
+            case_law cl
+        inner join hr_emp hr on cl.hr_emp_id = hr.id
+        inner join client c on cl.client_id = c.id
+        where
+            cl.case_recycle = 'Y'
+          and
+            cl.case_paidsal > 0
+        <if test="hrEmpId != null and hrEmpId !=''">
+            and cl.hr_emp_id = #{hrEmpId}
+        </if>
+        <if test="caseNo != null and caseNo !=''">
+            and cl.case_no like concat('%', #{caseNo}, '%')
+        </if>
+        <if test="caseWtr != null and caseWtr !=''">
+            and c.client like concat('%', #{caseWtr}, '%')
+        </if>
+        <if test="caseOppositeParties != null and caseOppositeParties !=''">
+            and cl.case_opposite_parties like concat('%', #{caseOppositeParties}, '%')
+        </if>
+        <if test="caseCause != null and caseCause !=''">
+            and cl.case_cause like concat('%', #{caseCause}, '%')
+        </if>
+        <if test="caseAttorney != null and caseAttorney !=''">
+            and hr.emp_name like concat('%', #{caseAttorney}, '%')
+        </if>
+        <if test="caseCourt != null and caseCourt != ''">
+            and cl.case_court like concat('%', #{caseCourt}, '%')
+        </if>
+    </select>
+
+    <select id="selectCaseLawById" parameterType="Integer" resultMap="CaseLawResult">
+        <include refid="selectCaseLawVo"/>
+        where id = #{id}
+    </select>
+
+    <update id="updateCaseLaw" parameterType="com.ruoyi.lawyer.domain.CaseLaws">
+        update case_law
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseNo != null">case_no = #{caseNo},</if>
+            <if test="caseOppositeParties != null">case_opposite_parties = #{caseOppositeParties},</if>
+            <if test="caseOppositeCardnum != null">case_opposite_cardnum = #{caseOppositeCardnum},</if>
+            <if test="caseThirdParty != null">case_third_party = #{caseThirdParty},</if>
+            <if test="caseSuspect != null">case_suspect = #{caseSuspect},</if>
+            <if test="caseClash != null">case_clash = #{caseClash},</if>
+            <if test="caseCause != null">case_cause = #{caseCause},</if>
+            <if test="caseAccept != null">case_accept = #{caseAccept},</if>
+            <if test="caseLawsuitobj != null">case_lawsuitobj = #{caseLawsuitobj},</if>
+            <if test="caseSubsidy != null">case_subsidy = #{caseSubsidy},</if>
+            <if test="caseSubsidysal != null">case_subsidysal = #{caseSubsidysal},</if>
+            <if test="caseSettleStatus != null">case_settle_status = #{caseSettleStatus},</if>
+            <if test="casePlan != null">case_plan = #{casePlan},</if>
+            <if test="caseApproveStatus != null">case_approve_status = #{caseApproveStatus},</if>
+            <if test="caseAgencyfee != null">case_agencyfee = #{caseAgencyfee},</if>
+            <if test="caseProxysal != null">case_proxysal = #{caseProxysal},</if>
+            <if test="caseTransactionRegion != null">case_transaction_region = #{caseTransactionRegion},</if>
+            <if test="caseAssign != null">case_assign = #{caseAssign},</if>
+            <if test="casePaidsal != null">case_paidsal = #{casePaidsal},</if>
+            <if test="caseUnpaidsal != null">case_unpaidsal = #{caseUnpaidsal},</if>
+            <if test="caseInvoiced != null">case_invoiced = #{caseInvoiced},</if>
+            <if test="caseNotinvoiced != null">case_notinvoiced = #{caseNotinvoiced},</if>
+            <if test="casePropernum != null">case_propernum = #{casePropernum},</if>
+            <if test="caseCourt != null">case_court = #{caseCourt},</if>
+            <if test="caseFilenumber != null">case_filenumber = #{caseFilenumber},</if>
+            <if test="caseCorrelationFile != null">case_correlation_file = #{caseCorrelationFile},</if>
+            <if test="caseSubmitter != null">case_submitter = #{caseSubmitter},</if>
+            <if test="caseSubtime != null">case_subtime = #{caseSubtime},</if>
+            <if test="caseRecycle != null">case_recycle = #{caseRecycle},</if>
+            <if test="caseRemarks != null">case_remarks = #{caseRemarks},</if>
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="caseAttorney != null">case_attorney = #{caseAttorney},</if>
+            <if test="caseStatus != null">case_status = #{caseStatus},</if>
+            <if test="caseLawsuitStatus != null">case_lawsuit_status = #{caseLawsuitStatus},</if>
+            <if test="caseChargeWay != null">case_charge_way = #{caseChargeWay},</if>
+            <if test="systemApprovalId != null">system_approval_id = #{systemApprovalId},</if>
+            <if test="caseCaseTypeId != null">case_case_type_id = #{caseCaseTypeId},</if>
+            <if test="caseSealApplyforId != null">case_seal_applyfor_id = #{caseSealApplyforId},</if>
+            <if test="hrEmpId != null">hr_emp_id = #{hrEmpId},</if>
+            <if test="collectionTime != null">collection_time = #{collectionTime},</if>
+            <if test="caseParties != null">case_parties = #{caseParties},</if>
+            <if test="caseFxmoney != null">case_fxmoney = #{caseFxmoney},</if>
+            <if test="caseWtr != null">case_wtr = #{caseWtr},</if>
+            <if test="caseContract != null">case_contract = #{caseContract},</if>
+            <if test="caseRecord != null">case_record = #{caseRecord},</if>
+            <if test="caseShare != null">case_share = #{caseShare},</if>
+            <if test="caseSettleType != null">case_settle_type = #{caseSettleType},</if>
+            <if test="caseApprovalEndtime != null">case_approval_endtime = #{caseApprovalEndtime},</if>
+            <if test="caseRecordNum != null">case_record_num = #{caseRecordNum},</if>
+            <if test="standard != null">standard = #{standard},</if>
+        </trim>
+        where id = #{id}
+    </update>
+</mapper>
