@@ -39,7 +39,7 @@ public class CaseLawController extends BaseController
     /**
      * 查询我的申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:list')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/list")
     public TableDataInfo list(CaseLaw caseLaw)
     {
@@ -56,7 +56,7 @@ public class CaseLawController extends BaseController
     /**
      * 查询我的申请列表下拉
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:xl')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/xl")
     public TableDataInfo selectCaseCaseTypeXL(CaseCaseType caseCaseType)
     {
@@ -69,7 +69,7 @@ public class CaseLawController extends BaseController
     /**
      * 导出我的申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:export')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "我的申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CaseLaw caseLaw)
@@ -82,7 +82,7 @@ public class CaseLawController extends BaseController
     /**
      * 获取我的申请详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:query')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
@@ -93,7 +93,7 @@ public class CaseLawController extends BaseController
     /**
      * 新增我的申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:add')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "我的申请", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CaseLaw caseLaw)
@@ -104,7 +104,7 @@ public class CaseLawController extends BaseController
     /**
      * 修改我的申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:edit')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "我的申请", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CaseLaw caseLaw)
@@ -115,7 +115,7 @@ public class CaseLawController extends BaseController
     /**
      * 删除我的申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:application:remove')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "我的申请", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)

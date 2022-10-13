@@ -40,7 +40,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 查询用印申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:list')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/list")
     public TableDataInfo list(CaseSealApplyfor caseSealApplyfor)
     {
@@ -52,7 +52,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 导出用印申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:export')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "用印申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CaseSealApplyfor caseSealApplyfor)
@@ -65,7 +65,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 获取用印申请详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:query')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
@@ -75,7 +75,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 查询用印申请下拉
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:xl')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/xl")
     public TableDataInfo listApplyforxl(FileType fileType)
     {
@@ -88,7 +88,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 新增用印申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:add')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "用印申请", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CaseSealApplyfor caseSealApplyfor)
@@ -99,7 +99,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 修改用印申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:edit')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "用印申请", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CaseSealApplyfor caseSealApplyfor)
@@ -110,7 +110,7 @@ public class CaseSealApplyforController extends BaseController
     /**
      * 删除用印申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:applyfor:remove')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "用印申请", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)

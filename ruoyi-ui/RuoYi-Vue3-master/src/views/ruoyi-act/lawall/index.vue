@@ -73,7 +73,6 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ruoyi-act:lawall:edit']"
           >查看流程</el-button>
         </template>
       </el-table-column>
