@@ -1,13 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm"  :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="案号搜索" prop="caseNo">
-        <el-input v-model="queryParams.whatisPerson" placeholder="请输入案号" clearable @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="日志类型" prop="logtypeId">
-        <el-input v-model="queryParams.logtypeId" placeholder="请输入日志类型" clearable
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
+     
 
 
       <el-form-item label="开始时间" prop="joblogStarttime">
@@ -29,18 +23,7 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['log:job:add']"
-        >新增</el-button>
-      </el-col>
-      </el-row>
+   
 
 
     <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
