@@ -43,8 +43,18 @@ public interface AdmExpressageMapper
      * 
      * @param admExpressage 快速登记
      * @return 结果
+     * 收件管理
      */
     int insertAdmExpressage(AdmExpressage admExpressage);
+
+    /**
+     * 新增快速登记
+     *
+     * @param admExpressage 快速登记
+     * @return 结果
+     * 发件管理
+     */
+    int FinsertAdmExpressage(AdmExpressage admExpressage);
 
     /**
      * 修改快速登记

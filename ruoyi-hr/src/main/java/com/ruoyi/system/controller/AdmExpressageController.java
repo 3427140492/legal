@@ -110,7 +110,7 @@ public class AdmExpressageController extends BaseController
     }
 
     /**
-     * 新增快速登记
+     * 新增快速登记  收件管理
      */
     @PreAuthorize("@ss.hasPermi('hr:expressage:add')")
     @Log(title = "快速登记", businessType = BusinessType.INSERT)
@@ -118,6 +118,17 @@ public class AdmExpressageController extends BaseController
     public AjaxResult add(@RequestBody AdmExpressage admExpressage)
     {
         return toAjax(admExpressageService.insertAdmExpressage(admExpressage));
+    }
+
+    /**
+     * 新增快速登记  发件管理
+     */
+    @PreAuthorize("@ss.hasPermi('hr:expressage:fadd')")
+    @Log(title = "快速登记", businessType = BusinessType.INSERT)
+    @RequestMapping(value="/fadd",method = RequestMethod.POST)
+    public AjaxResult fadd(@RequestBody AdmExpressage admExpressage)
+    {
+        return toAjax(admExpressageService.FinsertAdmExpressage(admExpressage));
     }
 
     /**

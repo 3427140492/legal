@@ -108,6 +108,26 @@ public class AdmExpressage extends BaseEntity
 
     private String selectType;
 
+    private String expressageSendadate1;
+
+    private String expressageSendadate2;
+
+    public String getExpressageSendadate1() {
+        return expressageSendadate1;
+    }
+
+    public void setExpressageSendadate1(String expressageSendadate1) {
+        this.expressageSendadate1 = expressageSendadate1;
+    }
+
+    public String getExpressageSendadate2() {
+        return expressageSendadate2;
+    }
+
+    public void setExpressageSendadate2(String expressageSendadate2) {
+        this.expressageSendadate2 = expressageSendadate2;
+    }
+
     public void setSelectType(String selectType)
     {
         this.selectType = selectType;

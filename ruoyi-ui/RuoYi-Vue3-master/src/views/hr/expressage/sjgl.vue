@@ -977,13 +977,13 @@ export default {
     handleAdd() {
       this.reset();
       this.AddOpen = true;
-      this.title = "添加快速登记";
+      this.title = "添加收件";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       // this.reset();
       this.AddOpen = true;
-      this.title = "修改快速登记";
+      this.title = "修改收件";
       const id = row.id || this.ids
       getExpressage(id).then(response => {
         this.form = response.data;
@@ -1147,7 +1147,7 @@ export default {
        console.log(selection);
         this.quding1 = selection;
     },
-    //收件人复选框
+    //领件人复选框
     LjrhandleSelectionChange(selection,row){
        if(selection.length > 1){
           const del_row = selection.shift()
