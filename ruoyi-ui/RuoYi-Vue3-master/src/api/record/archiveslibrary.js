@@ -51,3 +51,11 @@ export function updatey(id) {
     method: 'put'
   })
 }
+
+// 修改状态为n
+export function updaten(nid) {
+  return request({
+    url: '/record/archiveslibrary/xgn/' + nid,
+    method: 'put'
+  })
+}

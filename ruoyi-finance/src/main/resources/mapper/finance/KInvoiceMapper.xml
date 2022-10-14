@@ -135,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cwInvoiceMoney != null">cw_invoice_money,</if>
             <if test="cwApplicationDate != null">cw_application_date,</if>
             <if test="cwInvoiceDate != null">cw_invoice_date,</if>
-            <if test="cwInvoiceStatus != null">cw_invoice_status,</if>
+            cw_invoice_status,
             <if test="cwInvoiceNumber != null">cw_invoice_number,</if>
             <if test="cwOpenType != null">cw_open_type,</if>
             <if test="cwInvoiceType != null">cw_invoice_type,</if>
@@ -155,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cwInvoiceMoney != null">#{cwInvoiceMoney},</if>
             <if test="cwApplicationDate != null">#{cwApplicationDate},</if>
             <if test="cwInvoiceDate != null">#{cwInvoiceDate},</if>
-            <if test="cwInvoiceStatus != null">#{cwInvoiceStatus},</if>
+            'Y',
             <if test="cwInvoiceNumber != null">#{cwInvoiceNumber},</if>
             <if test="cwOpenType != null">#{cwOpenType},</if>
             <if test="cwInvoiceType != null">#{cwInvoiceType},</if>

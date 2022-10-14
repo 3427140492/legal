@@ -91,6 +91,12 @@ public class RecordArchiveslibraryController extends BaseController
         return toAjax(recordArchiveslibraryService.updateYstatus(id));
     }
 
+    @RequestMapping(value = "/xgn/{nid}",method = RequestMethod.PUT)
+    public AjaxResult updateztz(@PathVariable("nid") Integer nid )
+    {
+        return toAjax(recordArchiveslibraryService.updateNstatus(nid));
+    }
+
     /**
      * 删除档案借阅
      */

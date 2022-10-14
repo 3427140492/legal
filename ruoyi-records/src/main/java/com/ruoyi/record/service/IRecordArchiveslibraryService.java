@@ -61,4 +61,7 @@ public interface IRecordArchiveslibraryService
 
     //修改状态为已归还
     int updateYstatus(Integer id);
+
+    //修改状态为未归还
+    int updateNstatus(Integer nid);
 }

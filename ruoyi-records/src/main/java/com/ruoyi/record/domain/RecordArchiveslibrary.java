@@ -21,6 +21,7 @@ public class RecordArchiveslibrary extends BaseEntity
     /** $column.columnComment */
     private Integer id;
 
+
     /** 案件id 外键 */
     @Excel(name = "案件id 外键")
     private Long caseLawId;

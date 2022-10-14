@@ -114,7 +114,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <update id="updateYstatus" parameterType="Integer">
-        update record_archiveslibrary set borrow_status = 'Y' where id = #{id}
+        update record_archiveslibrary set borrow_status = 'N' where id = #{id}
+    </update>
+
+    <update id="updateNstatus" parameterType="Integer">
+        update record_archiveslibrary set borrow_status = 'Y' where id = #{nid}
     </update>
     
     <select id="selectRecordArchiveslibraryById" parameterType="Integer" resultMap="RecordArchiveslibraryCaseLawResult">
@@ -135,7 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="borrowDate != null">borrow_date,</if>
             <if test="giveBackDate != null">give_back_date,</if>
             <if test="remark != null">remark,</if>
-            <if test="borrowStatus != null">borrow_status,</if>
+            borrow_status,
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="caseLawId != null">#{caseLawId},</if>
@@ -145,7 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="borrowDate != null">#{borrowDate},</if>
             <if test="giveBackDate != null">#{giveBackDate},</if>
             <if test="remark != null">#{remark},</if>
-            <if test="borrowStatus != null">"N",</if>
+            "N",
          </trim>
     </insert>
 

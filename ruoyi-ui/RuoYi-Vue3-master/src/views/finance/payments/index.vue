@@ -31,7 +31,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item prop="cctid">
+      <el-form-item>
         <el-select v-model="queryParams.cctid" placeholder="请选择案件类型" style="width:150px;">
         <el-option v-for="t in caseTypeList" :key="t.cctid" :label="t.caseTypeName" :value="t.cctid" />
         </el-select>
@@ -151,7 +151,8 @@ export default {
         casePaidsal: null,
         cwName: null,
         cctid: null,
-        overTime: null
+        overTime: null,
+        typeId: null
       },
       // 表单参数
       form: {},

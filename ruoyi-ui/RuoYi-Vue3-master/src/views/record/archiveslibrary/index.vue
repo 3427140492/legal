@@ -56,20 +56,6 @@
           v-hasPermi="['record:archiveslibrary:remove']"
         >批量删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button 
-        plain
-        :disabled="single" 
-        @click="updatezty"
-        >设为已归还</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          plain
-          :disabled="multiple"
-          @click=""
-        >设为未归还</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -104,12 +90,21 @@
                 <arrow-down />
               </el-icon>
             </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
-                <el-dropdown-item @click="updatezty(scope.row)">设置为已归还</el-dropdown-item>
-                <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
-              </el-dropdown-menu>
+            <template #dropdown v-slot="scope">
+                <span v-if="scope.row.borrowStatus == 'Y'">
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                    <el-dropdown-item @click="updatezty(scope.row)">设置为未归还</el-dropdown-item>
+                    <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
+                  </el-dropdown-menu>
+                </span>
+                <span v-if="scope.row.borrowStatus == 'N'">
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="handleUpdate(scope.row)">修改</el-dropdown-item>
+                    <el-dropdown-item @click="updateztn(scope.row)">设置为已归还</el-dropdown-item>
+                    <el-dropdown-item @click="handleDelete(scope.row)">删除</el-dropdown-item>
+                  </el-dropdown-menu>
+                </span>
             </template>
           </el-dropdown>
         </template>
@@ -260,7 +255,7 @@
 </template>
 
 <script>
-import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary, updatey } from "@/api/record/archiveslibrary";
+import { listArchiveslibrary, getArchiveslibrary, delArchiveslibrary, addArchiveslibrary, updateArchiveslibrary, updatey, updaten } from "@/api/record/archiveslibrary";
 import { selectCaseLawList, selectNameList } from "@/api/record/law";
 
 export default {
@@ -389,11 +384,22 @@ export default {
         this.title = "修改档案借阅";
       });
     },
-    //修改状态
+    //修改状态y
     updatezty(row){
       const id = row.id;
       this.$modal.confirm('是否将状态认改为已归还？').then(function() {
         return updatey(id);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("修改成功");
+      }).catch(() => {});
+    },
+
+    //修改状态n
+    updateztn(row){
+      const nid = row.id;
+      this.$modal.confirm('是否将状态认改为未归还？').then(function() {
+        return updaten(nid);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("修改成功");

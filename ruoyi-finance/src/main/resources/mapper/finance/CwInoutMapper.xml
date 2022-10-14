@@ -38,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCwInoutVo">
-        select a.cid,a.cw_name, a.cw_pid,a.cw_inout_type_id, a.cw_inout_date, a.case_law_id, a.cw_pay_type, b.case_no, a.emp_name, a.cw_payer, a.cw_remark, a.cw_inout_money,a.cw_enteringdate
+        select tab.* from
+        (select a.cid,a.cw_name, a.cw_pid,a.cw_inout_type_id, a.cw_inout_date, a.case_law_id, a.cw_pay_type, b.case_no, a.emp_name, a.cw_payer, a.cw_remark, a.cw_inout_money,a.cw_enteringdate,b.case_case_type_id
         from (
                  select ci.id cid,ci.*,cit.cw_name,cit.cw_pid,he.emp_name,su.id user_id
                  from cw_inout ci
@@ -49,11 +50,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id,cl.case_parties, cct.id as cctid, cct.case_type_name
             from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
             where case_recycle = 'Y'
-        ) b on b.cid = a.case_law_id where 1 = 1
+        ) b on b.cid = a.case_law_id where 1 = 1)tab
+            left join case_case_type t
+        on t.id = tab.case_case_type_id where 1=1
     </sql>
 
     <sql id="selectMyCwInout">
-        select t.cw_name,t.cw_inout_date,t.cw_inout_money,t.cw_pay_type,t1.case_no,t.cw_enteringdate,t.cw_remark,t1.case_case_type_id
+        select tab.* from
+        (select t.cw_name,t.cw_inout_date,t.cw_inout_money,t.cw_pay_type,t1.case_no,t.cw_enteringdate,t.cw_remark,t1.case_case_type_id
         from
             (select ci.id cid,ci.* ,ct.cw_name
              from cw_inout ci left join cw_inout_type ct on ci.cw_inout_type_id = ct.id
@@ -62,7 +66,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (select cl.case_no, cl.id cid, cct.type_pid, cl.case_case_type_id, cct.id as cctid, cct.case_type_name
              from case_law cl inner join case_case_type cct on cct.id = cl.case_case_type_id
              where case_recycle = 'Y')t1
-            on t1.cid = t.case_law_id where 1 = 1
+            on t1.cid = t.case_law_id where 1 = 1)tab
+             left join case_case_type t
+         on t.id = tab.case_case_type_id where 1=1
     </sql>
 
     <sql id="selectCwInoutTypeVo">
@@ -91,6 +97,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="cwInoutDate != null  and cwInoutDate != ''"> and a.cw_inout_date <![CDATA[>=]]> #{cwInoutDate}</if>
         <if test="overTime != null  and overTime != ''"> and a.cw_inout_date <![CDATA[<=]]> #{overTime}</if>
         <if test="cwPayType != null  and cwPayType != ''"> and a.cw_pay_type = #{cwPayType}</if>
+        <if test="cctid != null and cctid !=''">
+            and t.type_pid = #{cctid}
+        </if>
     </select>
 
     <select id="selectMyCwInout" parameterType="FinCwInout" resultMap="CwInoutResult">
@@ -101,6 +110,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="cwInoutDate != null  and cwInoutDate != ''"> and t.cw_inout_date <![CDATA[>=]]> #{cwInoutDate}</if>
         <if test="overTime != null  and overTime != ''"> and t.cw_inout_date <![CDATA[<=]]> #{overTime}</if>
         <if test="cwPayType != null  and cwPayType != ''"> and t.cw_pay_type = #{cwPayType}</if>
+        <if test="cctid != null and cctid !=''">
+            and t.type_pid = #{cctid}
+        </if>
     </select>
 
     <select id="selectCwInoutTypeList" resultMap="CwInoutTypeResult">

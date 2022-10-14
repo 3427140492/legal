@@ -71,6 +71,15 @@
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
+
+       <el-form-item>
+        <el-button
+          type="primary"
+          plain
+          @click="handleAdd"
+          v-hasPermi="['finance:kinvoice:add']"
+        >新增发票</el-button>
+      </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="kinvoiceList" @selection-change="handleSelectionChange" border>
@@ -127,6 +136,200 @@
         <el-descriptions-item label="开票状态" align="center">{{data.cwInvoiceStatus == 'Y'?'已开':'未开'}}</el-descriptions-item>
       </el-descriptions>
     </el-dialog>
+
+    <!-- 添加开具发票对话框 -->
+    <el-dialog :title="title" v-model="open"  append-to-body>
+      <el-form ref="form" :model="form" :rules="rules">
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>案件：</label>
+            <el-form-item  prop="caseLawId">
+              <el-input v-model="form.caseLawId" @click="selectcase" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>发票抬头：</label>
+            <el-form-item  prop="cwInvoiceTitle">
+              <el-input v-model="form.cwInvoiceTitle" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="1">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>发票金额：</label>
+            <el-form-item  prop="cwInvoiceMoney">
+              <el-input v-model="form.cwInvoiceMoney" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>开票项目：</label>
+            <el-form-item>
+              <el-select v-model="form.cwInvoiceItem" style="width: 350px">
+                <el-option label="律师代理费" value="1"/>
+                <el-option label="法律顾问费" value="2"/>
+                <el-option label="咨询费" value="3"/>
+                <el-option label="法务托管费" value="4"/>
+                <el-option label="非诉" value="5"/>
+                <el-option label="其他(备注中填写)" value="5"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="1">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>开具类型：</label>
+            <el-form-item>
+              <el-select v-model="form.cwOpenType" style="width: 350px">
+                <el-option label="企业" value="1"/>
+                <el-option label="个人" value="2"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>发票类型：</label>
+            <el-form-item  prop="cwInvoiceType">
+              <el-select v-model="form.cwInvoiceType" style="width: 350px">
+                <el-option label="增值税专用发票" value="1"/>
+                <el-option label="增值税普通发票" value="2"/>
+                <el-option label="通用机打发票" value="3"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="1">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>纳税人识别号：</label>
+            <el-form-item  prop="cwTaxpayerIdentityNumber">
+              <el-input v-model="form.cwTaxpayerIdentityNumber" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>发票号：</label>
+            <el-form-item  prop="cwInvoiceNumber">
+              <el-input v-model="form.cwInvoiceNumber" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="1">
+          </el-col>
+          <el-col :span="10">
+            <label><span style="color:red;">*</span>开票日期：</label>
+            <el-form-item  prop="cwInvoiceDate">
+              <el-date-picker clearable v-model="form.cwInvoiceDate" value-format="YYYY-MM-DD"  style="width:450px;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <div class="demo-collapse" style="margin:auto;">
+          <el-collapse accordion>
+            <el-collapse-item name="1">
+              <template #title>
+                <span style="font-size:16px;font-weight: bold;">其他选填</span>
+              </template>
+
+                <el-row>
+                <el-col :span="10">
+                  <label><span style="color:red;">*</span>基本开户银行：</label>
+                  <el-form-item prop="cwBasicBankofdeposit">
+                    <el-input v-model="form.cwBasicBankofdeposit" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="1">
+                </el-col>
+                <el-col :span="10">
+                  <label><span style="color:red;">*</span>基本开户账号：</label>
+                  <el-form-item prop="cwAccountNumber">
+                    <el-input v-model="form.cwAccountNumber" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="10">
+                  <label><span style="color:red;">*</span>注册地址：</label>
+                  <el-form-item prop="cwRegisteredAddress">
+                    <el-input v-model="form.cwRegisteredAddress" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="1">
+                </el-col>
+                <el-col :span="10">
+                  <label><span style="color:red;">*</span>固定电话：</label>
+                  <el-form-item prop="cwFixedlineTelephone">
+                    <el-input v-model="form.cwFixedlineTelephone" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="17">
+                  <label><span style="color:red;">*</span>申请备注：</label>
+                  <el-form-item prop="cwApplicationRemark">
+                    <textarea rows="5" cols="90" class="form-control" style="width:1200px;" v-model="form.cwApplicationRemark"></textarea>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="17">
+                  <label><span style="color:red;">*</span>开票备注：</label>
+                  <el-form-item  prop="cwInvoiceRemark">
+                    <textarea rows="5" cols="90" class="form-control" style="width:1200px;" v-model="form.cwInvoiceRemark"></textarea>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+        
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+        <!-- 案件查询 -->
+    <el-dialog title="案件选择" v-model="ajcx" draggable>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
+      </el-form>
+      <el-table :data="caselist" border ref="ajlist" @select="ajhandleSelectionChange" >
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="案号" align="center" prop="caseNo" width="180" />
+        <el-table-column label="委托人" align="center" prop="caseWtr" />
+        <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" width="150" />
+        <el-table-column label="已到款" align="center" prop="casePaidsal" width="150" />
+        <el-table-column label="已开票" align="center" prop="caseInvoiced" width="150"/>
+        <el-table-column label="承办律师" align="center" prop="caseAttorney" width="180"/>
+        <el-table-column label="收案日期" align="center" prop="collectionTime" width="180">
+          <template v-slot="scope">
+            <span>{{ parseTime(scope.row.collectionTime, '{yyyy}-{mm}-{dd}') }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button @click="ajcx = false">取消</el-button>
+      <el-button @click="quding">确定</el-button>
+      <pagination
+          v-show="total>0"
+          :total="total"
+          v-model="queryParams.pageNum"
+          v-model:limit="queryParams.pageSize"
+          @pagination="selectcase"
+        />
+    </el-dialog>
     
     <pagination
       v-show="total>0"
@@ -140,6 +343,7 @@
 
 <script>
 import { listKinvoice, getKinvoice, delKinvoice, addKinvoice, updateKinvoice, listType } from "@/api/finance/kinvoice";
+import { selectCaseLawList} from "@/api/record/law";
 
 export default {
   name: "Kinvoice",
@@ -165,12 +369,15 @@ export default {
       // 开具发票表格数据
       kinvoiceList: [],
       caseTypeList: [],
+      //查询案件
+      caselist: [],
       // 审批中心表格数据
       caseLawList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      ajcx: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -202,6 +409,9 @@ export default {
       // 表单校验
       rules: {
       },
+      //案件复选框
+      ajlist: [],
+      qudings: {},
       data: {}
     };
   },
@@ -273,6 +483,31 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加开具发票";
+    },
+    selectcase(){//案件查询
+      this.ajcx=true;
+      selectCaseLawList(this.queryParams).then(response=>{
+         this.caselist = response.rows;
+         this.total = response.total;
+          this.$nextTick(()=>{
+            this.$refs.ajlist.toggleRowSelection(this.caselist)
+         })
+      });
+    },
+    //案件复选框
+    ajhandleSelectionChange(selection,row){
+       if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.ajlist.toggleRowSelection(del_row,false);
+       }
+       this.systemlist = selection[0];
+       console.log(selection);
+       this.quding1 = selection;
+    },
+    //案件复选框
+    quding(){
+      this.form.caseLawId = this.quding1[0].id;
+      this.ajcx = false;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

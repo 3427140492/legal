@@ -112,6 +112,12 @@ public class RecordArchiveslibraryServiceImpl implements IRecordArchiveslibraryS
         return recordArchiveslibraryMapper.updateYstatus(id);
     }
 
+    //修改状态为未归还
+    @Override
+    public int updateNstatus(Integer nid) {
+        return recordArchiveslibraryMapper.updateNstatus(nid);
+    }
+
     /**
      * 新增审批中心信息
      * 
