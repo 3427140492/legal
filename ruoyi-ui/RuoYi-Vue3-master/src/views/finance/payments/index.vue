@@ -31,7 +31,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item prop="cctid">
         <el-select v-model="queryParams.cctid" placeholder="请选择案件类型" style="width:150px;">
         <el-option v-for="t in caseTypeList" :key="t.cctid" :label="t.caseTypeName" :value="t.cctid" />
         </el-select>
@@ -199,7 +199,8 @@ export default {
         cwEnteringdate: null,
         cwRemark: null,
         cwPayer: null,
-        overTime: null
+        overTime: null,
+        cctid: null
       };
       this.cwInoutTypeList = [];
       this.resetForm("form");
