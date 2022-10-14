@@ -64,15 +64,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into record_document
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="caseLawId != null">case_law_id,</if>
-            <if test="systemUserId != null">system_user_id,</if>
-            <if test="upddate != null">upddate,</if>
+            system_user_id,
+            upddate,
             <if test="folderId != null">folder_id,</if>
             <if test="documentFile != null">document_file,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="caseLawId != null">#{caseLawId},</if>
-            <if test="systemUserId != null">10,</if>
-            <if test="upddate != null">sysdate(),</if>
+            10,
+            sysdate(),
             <if test="folderId != null">#{folderId},</if>
             <if test="documentFile != null">#{documentFile},</if>
          </trim>
