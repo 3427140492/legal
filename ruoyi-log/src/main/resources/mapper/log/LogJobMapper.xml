@@ -87,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="joblogFile != null  and joblogFile != ''"> and joblog_file = #{joblogFile}</if>
             <if test="joblogText != null  and joblogText != ''"> and joblog_text = #{joblogText}</if>
             <if test="joblogStatus != null  and joblogStatus != ''"> and joblog_status = #{joblogStatus}</if>
+
         </where>
     </select>
     

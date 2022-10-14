@@ -28,7 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="expressName"    column="express_name"    />
         <result property="selectStr"    column="selectStr"    />
         <result property="selectStrs"    column="selectStrs"    />
-        <result property="selectType"    column="selectType"    />
+        <result property="expressageSendadate1"    column="expressageSendadate1"    />
+        <result property="expressageSendadate2"    column="expressageSendadate2"    />
     </resultMap>
 
     <resultMap id="AdmExpressageSendWaayResult" type="AdmExpressage" extends="AdmExpressageResult">
@@ -90,11 +91,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="expressageExpressTypeId != null "> and expressage_express_type_id = #{expressageExpressTypeId}</if>
         <if test="takestatus != null "> and takestatus = #{takestatus}</if>
         <if test="collarPerson != null  and collarPerson != ''"> and ae.collar_person like '%${collarPerson}%'</if>
-        <if test="expressageSendadate != null and expressageSendadate != '' ">
-            and expressage_sendaunit >= '${expressageSendadate}'
-        </if>
         <if test="expressageDateofreceipt != null and expressageDateofreceipt != '' ">
             and expressage_dateofreceipt >= '${expressageDateofreceipt}'
+        </if>
+
+        <if test="expressageSendadate1 != null and expressageSendadate1 != '' ">
+            and expressage_sendadate  &gt;= '${expressageSendadate1}'
+        </if>
+
+        <if test="expressageSendadate2 != null and expressageSendadate2 != '' ">
+            and expressage_sendadate  &lt;= '${expressageSendadate2}'
         </if>
 
 
@@ -111,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-        
+        <!--添加收件管理-->
     <insert id="insertAdmExpressage" parameterType="AdmExpressage" useGeneratedKeys="true" keyProperty="id">
         insert into adm_expressage
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -154,6 +160,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             'S',
             <if test="caseNo != null">#{caseNo},</if>
          </trim>
+    </insert>
+
+    <!--添加发件管理-->
+    <insert id="FinsertAdmExpressage" parameterType="AdmExpressage" useGeneratedKeys="true" keyProperty="id">
+        insert into adm_expressage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">system_user_addresser,</if>
+            <if test="systemUserRecipients != null">system_user_recipients,</if>
+            <if test="expressageSendaunit != null">expressage_sendaunit,</if>
+            <if test="expressageSendadate != null">expressage_sendadate,</if>
+            <if test="expressageDateofreceipt != null">expressage_dateofreceipt,</if>
+            <if test="expressageBringDate != null">expressage_bring_date,</if>
+            <if test="expressageSendWaayId != null">expressage_send_waay_id,</if>
+            <if test="expressageExpressTypeId != null">expressage_express_type_id,</if>
+            <if test="expressageCourierNumber != null">expressage_courier_number,</if>
+            <if test="expressageFile != null">expressage_file,</if>
+            <if test="expressageCollarnote != null">expressage_collarnote,</if>
+            <if test="expressageRemark != null">expressage_remark,</if>
+            <if test="takestatus != null">takestatus,</if>
+            <if test="expressFee != null">express_fee,</if>
+            <if test="collarPerson != null">collar_person,</if>
+            <if test="expressageTel != null">expressage_tel,</if>
+            expressage_type,
+            <if test="caseNo != null">case_no,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">#{systemUserAddresser},</if>
+            <if test="systemUserRecipients != null">#{systemUserRecipients},</if>
+            <if test="expressageSendaunit != null">#{expressageSendaunit},</if>
+            <if test="expressageSendadate != null">#{expressageSendadate},</if>
+            <if test="expressageDateofreceipt != null">#{expressageDateofreceipt},</if>
+            <if test="expressageBringDate != null">#{expressageBringDate},</if>
+            <if test="expressageSendWaayId != null">#{expressageSendWaayId},</if>
+            <if test="expressageExpressTypeId != null">#{expressageExpressTypeId},</if>
+            <if test="expressageCourierNumber != null">#{expressageCourierNumber},</if>
+            <if test="expressageFile != null">#{expressageFile},</if>
+            <if test="expressageCollarnote != null">#{expressageCollarnote},</if>
+            <if test="expressageRemark != null">#{expressageRemark},</if>
+            <if test="takestatus != null">#{takestatus},</if>
+            <if test="expressFee != null">#{expressFee},</if>
+            <if test="collarPerson != null">#{collarPerson},</if>
+            <if test="expressageTel != null">#{expressageTel},</if>
+            'F',
+            <if test="caseNo != null">#{caseNo},</if>
+        </trim>
     </insert>
 
     <update id="updateAdmExpressage" parameterType="AdmExpressage">

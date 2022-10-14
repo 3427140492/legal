@@ -303,6 +303,15 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        client: [
+          { required: true, message: "客户不能为空", trigger: "blur" }
+        ],
+        phone: [
+          { required: true, message: "手机号码不能为空", trigger: "blur" }
+        ],
+        cardnum: [
+          { required: true, message: "身份证号码不能为空", trigger: "blur" }
+        ],
       }
     };
   },

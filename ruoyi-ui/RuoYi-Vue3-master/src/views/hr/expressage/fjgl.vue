@@ -47,17 +47,14 @@
      </el-form-item> -->
 
 
-      <el-form-item label="日期" prop="time">
-        <el-date-picker clearable
-          v-model="queryParams.expressageSendadate"
-          type="date"
-          value-format="YYYY-MM-DD">
-        </el-date-picker>
-        <el-date-picker clearable
-          v-model="queryParams.expressageDateofreceipt"
-          type="date"
-          value-format="YYYY-MM-DD">
-        </el-date-picker>
+     <el-form-item label="日期" prop="expressageSendadate">
+
+      <el-date-picker clearable v-model="queryParams.expressageSendadate1" value-format="YYYY-MM-DD">
+      </el-date-picker>
+
+      <el-date-picker clearable v-model="queryParams.expressageSendadate2" value-format="YYYY-MM-DD">
+      </el-date-picker>
+
       </el-form-item>
   
       <!-- <el-form-item  prop="selectType">
@@ -76,7 +73,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['hr:expressage:add']"
-        >添加收件</el-button>
+        >添加发件</el-button>
 
       </el-form-item>
     </el-form>
@@ -218,15 +215,14 @@
       @pagination="getList"
     />
 
-    <!-- 查看对话框 -->
-    <el-dialog :title="title" v-model="this.open" width="1000px" append-to-body>
+       <!-- 查看对话框 -->
+       <el-dialog :title="title" v-model="this.open" width="1000px" append-to-body>
         <!-- <div style="margin:0px 0px 0px 20px;color: black;  line-height: 20px; display: inline-block;font-size: 16px;font-weight: bold;">基本资料</div> -->
         <el-descriptions title="基本资料" :column="3" border>
-        <el-descriptions-item label="收件人" align="center">{{form.systemUserRecipients}}</el-descriptions-item>
-        <el-descriptions-item label="收件日期" align="center">{{form.expressageDateofreceipt}}</el-descriptions-item>
-        <el-descriptions-item label="收件来源" align="center">{{form.sendName}}</el-descriptions-item>
+        <el-descriptions-item label="发件人" align="center">{{form.systemUserAddresser}}</el-descriptions-item>
+        <el-descriptions-item label="发件日期" align="center">{{form.expressageSendadate}}</el-descriptions-item>
+        <el-descriptions-item label="收件方式" align="center">{{form.sendName}}</el-descriptions-item>
         <el-descriptions-item label="快件类型" align="center">{{form.expressName}}</el-descriptions-item>
-        <el-descriptions-item label="领取状态" align="center">{{form.takestatus == 1 ?'未领取':'已领取'}}</el-descriptions-item>
         </el-descriptions>
         <br>
         <br>
@@ -234,29 +230,28 @@
         <el-descriptions-item label="案件" align="center">{{form.caseNo}}</el-descriptions-item>
         <el-descriptions-item label="快递单号" align="center">{{form.expressageCourierNumber}}</el-descriptions-item>
         <el-descriptions-item label="快递费" align="center">{{form.expressFee}}</el-descriptions-item>
-        <el-descriptions-item label="领件人" align="center">{{form.collarPerson}}</el-descriptions-item>
-        <el-descriptions-item label="领件时间" align="center">{{form.expressageBringDate}}</el-descriptions-item>
-        <el-descriptions-item label="相关文件" align="center">{{form.expressageFile}}</el-descriptions-item>
+        <el-descriptions-item label="收件人" align="center">{{form.collarPerson}}</el-descriptions-item>
+        <el-descriptions-item label="收件单位" align="center">{{form.expressageSendaunit}}</el-descriptions-item>
+        <el-descriptions-item label="联系电话" align="center">{{form.expressageTel}}</el-descriptions-item>
         <el-descriptions-item label="备注说明" align="center">{{form.expressageRemark}}</el-descriptions-item>
         </el-descriptions>
       </el-dialog>
  
-
-    <!-- 添加或修改快速登记对话框 -->
-    <el-dialog :title="title" v-model="this.AddOpen" width="1000px" append-to-body draggable>
+<!-- 添加或修改快速登记对话框 -->
+<el-dialog :title="title" v-model="this.AddOpen" width="1000px" append-to-body draggable>
       <el-descriptions title="详细信息" :column="3" border>基本信息</el-descriptions>
       <el-form ref="form" :model="form" :rules="rules" >
         <el-row style="margin-left:15px;">
           <el-col :span="12">
-            <el-form-item  prop="systemUserRecipients" style="width:450px;">
-              <label><span style="color:red;">*</span>收件人：</label>
-              <el-input v-model="form.systemUserRecipients"   @click="openSystemUser" />
+            <el-form-item  prop="systemUserAddresser" style="width:450px;">
+              <label><span style="color:red;">*</span>发件人：</label>
+              <el-input v-model="form.systemUserAddresser"   @click="openSystemUser" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item prop="expressageDateofreceipt" style="width:450px;">
-              <label><span style="color:red;">*</span>收件日期：</label>
-              <el-date-picker clearable v-model="queryParams.expressageDateofreceipt" value-format="YYYY-MM-DD"  style="width:450px;">
+            <el-form-item prop="expressageSendadate" style="width:450px;">
+              <label><span style="color:red;">*</span>发件日期：</label>
+              <el-date-picker clearable v-model="form.expressageSendadate" value-format="YYYY-MM-DD"  style="width:450px;">
               </el-date-picker>
             </el-form-item>
           </el-col>
@@ -265,29 +260,16 @@
         <el-row style="margin-left:15px;">
           <el-col :span="12">
             <el-form-item  prop="expressageSendWaayId" style="width:450px;">
-              <label><span style="color:red;">*</span>快递公司：</label>
+              <label><span style="color:red;">*</span>发件方式：</label>
               <el-input v-model="form.expressageSendWaayId"  @click="openSendWaayFun" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item  prop="expressageExpressTypeId" style="width:450px;">
               <label><span style="color:red;">*</span>快件类型：</label>
-              <el-input v-model="form.expressageExpressTypeId"  />
+              <el-input v-model="form.expressageExpressTypeId"  @click="openExpressFun"/>
             </el-form-item>
           </el-col>
-        </el-row>
-
-        <el-row style="margin-left:15px;">
-          <el-col :span="12">
-            <el-form-item  prop="takestatus" style="width:450px;">
-              <label><span style="color:red;">*</span>领取状态：</label>
-              <el-select v-model="form.takestatus" style="width:450px;">
-              <el-option label="未领取" value="1" />
-              <el-option label="已领取" value="2" />
-            </el-select>
-            </el-form-item>
-          </el-col>
-        
         </el-row>
 
         <div class="demo-collapse" style="width:950px;margin:auto;">
@@ -296,31 +278,41 @@
               <template #title>
                 <span style="font-size:16px;font-weight: bold;">其他选填</span>
               </template>
+
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="caseNo" style="width:450px;">
-                    <label>案件：</label>
-                    <el-input v-model="form.caseNo"  />
+                  <el-form-item  prop="systemUserRecipients" style="width:450px;">
+                    <label>代发人：</label>
+                    <el-input v-model="form.systemUserRecipients"  @click="openSystemUserdfr" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item  prop="expressageCourierNumber" style="width:450px;">
-                    <label>快递单号：</label>
-                    <el-input v-model="form.expressageCourierNumber"  />
+                  <el-form-item  prop="caseNo" style="width:450px;">
+                    <label>案件：</label>
+                    <el-input v-model="form.caseNo"  @click="openCaseLawFun" />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
+                  <el-form-item  prop="expressageCourierNumber" style="width:450px;">
+                    <label>快递单号：</label>
+                    <el-input v-model="form.expressageCourierNumber"  />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
                   <el-form-item  prop="expressFee" style="width:450px;">
                     <label>快递费：</label>
                     <el-input v-model="form.expressFee"  />
                   </el-form-item>
                 </el-col>
+              </el-row>
+
+              <el-row style="margin-left:15px;">
                 <el-col :span="12">
                   <el-form-item  prop="collarPerson" style="width:450px;">
-                    <label>领件人</label>
+                    <label>收件人：</label>
                     <el-input v-model="form.collarPerson"  />
                   </el-form-item>
                 </el-col>
@@ -328,16 +320,15 @@
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item label=""  prop="expressageFile">
-                    <label>相关文件：</label>
-                    <div style="width:450px;"><file-upload v-model="form.expressageFile"/></div>
+                  <el-form-item  prop="expressageSendaunit" style="width:450px;">
+                    <label>收件单位：</label>
+                    <el-input v-model="form.expressageSendaunit"  />
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item prop="expressageBringDate" style="width:450px;">
-                    <label><span style="color:red;">*</span>领件时间：</label>
-                      <el-date-picker clearable v-model="queryParams.expressageBringDate" value-format="YYYY-MM-DD"  style="width:450px;">
-                      </el-date-picker>
+                  <el-form-item  prop="expressageCollarnote" style="width:450px;">
+                    <label>收件地址：</label>
+                    <el-input v-model="form.expressageCollarnote"  />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -345,9 +336,9 @@
 
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
-                  <el-form-item  prop="expressageCollarnote" style="width:920px;">
-                    <label>领件说明：</label>
-                    <el-input v-model="form.expressageCollarnote"  />
+                  <el-form-item  prop="expressageTel" style="width:450px;">
+                    <label>联系电话：</label>
+                    <el-input v-model="form.expressageTel"  />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -355,9 +346,9 @@
               <el-row style="margin-left:15px;">
                 <el-col :span="12">
                   <el-form-item  prop="expressageRemark" style="width:920px;">
-                    <label>其他备注说明：</label>
+                    <label>发件备注：</label>
                     <!-- <el-input v-model="form.systemUserAddresser"  /> -->
-                    <textarea rows="3" cols="90" class="form-control" style="width:920px;"></textarea>
+                    <textarea rows="3" cols="90" class="form-control" style="width:920px;" v-model="form.expressageRemark"></textarea>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -460,14 +451,18 @@
     <!-- 收件人弹出框 -->
     <el-dialog title="收件人" v-model="sjr" draggable>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
-        <el-form-item prop="userRealname">
-          <el-input v-model="form.userRealname"  />
+        <el-form-item label="" prop="userRealname">
+              <el-input
+              v-model="queryParams.userRealname"
+              placeholder="请输入姓名"
+              clearable
+             />
         </el-form-item>
           <el-form-item>
-            <el-button type="primary"  @click="SystemhandleQuery">搜索</el-button>
+            <el-button type="primary"  @click="SystemhandleQuery">检索</el-button>
           </el-form-item>
         </el-form>
-        <el-table :data="systemlist" border >
+        <el-table :data="systemlist" ref="systemlist" border @select="SjrhandleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="姓名" align="center" prop="userRealname" />
           <el-table-column label="手机号" align="center" prop="empPhone" />
@@ -476,6 +471,42 @@
           </el-table-column>
           <el-table-column label="权限组" align="center" prop="roleName" />
       </el-table>
+        <el-button @click="sjr = false">取消</el-button>
+        <el-button @click="quding">确定</el-button>
+      <pagination
+          v-show="total>0"
+          :total="total"
+          v-model="queryParams.pageNum"
+          v-model:limit="queryParams.pageSize"
+          @pagination="openSystemUser"
+        />
+    </el-dialog>
+
+    <!-- 代发人弹出框 -->
+    <el-dialog title="代发人" v-model="dfr" draggable>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" >
+        <el-form-item label="" prop="userRealname">
+              <el-input
+              v-model="queryParams.userRealname"
+              placeholder="请输入姓名"
+              clearable
+             />
+        </el-form-item>
+          <el-form-item>
+            <el-button type="primary"  @click="SystemhandleQuery">检索</el-button>
+          </el-form-item>
+        </el-form>
+        <el-table :data="systemlist" ref="systemlist" border @select="DfrhandleSelectionChange">
+          <el-table-column type="selection" width="55" align="center" />
+          <el-table-column label="姓名" align="center" prop="userRealname" />
+          <el-table-column label="手机号" align="center" prop="empPhone" />
+          <el-table-column label="提成组" align="center" prop="">
+            <span>-</span>
+          </el-table-column>
+          <el-table-column label="权限组" align="center" prop="roleName" />
+      </el-table>
+        <el-button @click="dfr = false">取消</el-button>
+        <el-button @click="qudinges">确定</el-button>
       <pagination
           v-show="total>0"
           :total="total"
@@ -491,7 +522,7 @@
       <el-card>
         <el-tabs v-model="activeName" >
           <el-tab-pane label="列表" name="sendwaaylist" >
-              <el-table border="1px" v-loading="loading" :data="sendWaayList" @selection-change="handleSelectionChange">
+              <el-table border="1px" v-loading="loading" ref="sendlist" :data="sendWaayList" @select="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center" />
                 <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
                 <el-table-column label="排序" align="center" prop="sorting" />
@@ -517,12 +548,16 @@
                 </el-table-column>
                
               </el-table> 
+
+              <el-button @click="sendWaayDia = false">取消</el-button>
+              <el-button @click="qudings">确定</el-button>
+
               <pagination
                   v-show="total>0"
                   :total="total"
                   v-model="queryParams.pageNum"
                   v-model:limit="queryParams.pageSize"
-                  @pagination="openSendWaayFun"
+                  @pagination="openExpressFun"
                 />
           </el-tab-pane>
 
@@ -559,14 +594,149 @@
         
     </el-dialog>
 
+
+
+       <!-- 快递类型弹出框 -->
+       <el-dialog title="设置管理" v-model="expressDia" draggable width="1000px">
+      <el-card>
+        <el-tabs v-model="expressName" >
+          <el-tab-pane label="列表" name="expresslist" >
+              <el-table border="1px" v-loading="loading" ref="expresslist" :data="expressList" @select="ExpresshandleSelectionChange">
+                <el-table-column type="selection" width="55" align="center" />
+                <!-- <el-table-column label="编号" width="150" align="center" prop="id"  /> -->
+                <el-table-column label="排序" align="center" prop="sorting" />
+                <el-table-column label="名称" align="center" prop="expressName" />
+                <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
+
+                    <template v-slot="scope">
+                    <el-dropdown trigger="click">
+                      <el-button>
+                        操作<el-icon class="el-icon--right">
+                          <arrow-down />
+                        </el-icon>
+                      </el-button>
+                      <template #dropdown>
+                        <el-dropdown-menu>
+                          <el-dropdown-item @click="handleUpdateExpress(scope.row)">修改</el-dropdown-item>
+                          <el-dropdown-item @click="handleDeleteExpress(scope.row)">删除</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </template>
+                    </el-dropdown>
+                  </template>
+
+                </el-table-column>
+               
+              </el-table> 
+
+              <el-button @click="expressDia = false">取消</el-button>
+              <el-button @click="qudingss">确定</el-button>
+
+              <pagination
+                  v-show="total>0"
+                  :total="total"
+                  v-model="queryParams.pageNum"
+                  v-model:limit="queryParams.pageSize"
+                  @pagination="openExpressFun"
+                />
+          </el-tab-pane>
+
+          <el-tab-pane label="添加/编辑" name="expressAdd">
+             <div style="width:1000px;height:30px;border-bottom:1px solid gainsboro;margin-bottom: 20px;">
+              <span style="font-size:15px;font-weight:bold;">基本信息</span>
+            </div>
+            <el-form :inline="true">
+            <el-row style="margin-left:15px;">
+              <el-col :span="12">
+                <el-form-item  prop="expressName" style="width:400px;">
+                  <label><span style="color:red;">*</span>名称：</label>
+                  <el-input v-model="form.expressName"/>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item prop="sorting" style="width:400px;">
+                  <label><span style="color:red;">*</span>排序：</label>
+                  <el-input v-model="form.sorting"/>
+                </el-form-item>
+              </el-col>
+            </el-row>
+              
+            <el-form-item style="margin-left:15px;">
+              <el-button type="primary"  size="mini" @click="ExpresssubmitForm">确定提交</el-button>
+            </el-form-item>
+
+            </el-form>
+
+          </el-tab-pane>
+
+        </el-tabs>
+      </el-card>
+        
+    </el-dialog>
+
+
+     <!-- 案件弹出框 -->
+     <el-dialog title="案件选择" v-model="caselawDia" width="1000px"  draggable >
+      <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="" prop="caseStr">
+              <el-input
+              v-model="queryParams.caseStr"
+              placeholder=""
+              clearable
+              />
+        </el-form-item>
+        <el-form-item  prop="caseType">
+          <el-select v-model="queryParams.caseType" placeholder="">
+              <el-option label="案号搜索" value="1" />
+              <el-option label="委托人搜索" value="2" />
+              <el-option label="对方当事人搜索" value="3" />
+              <el-option label="案由搜索" value="4" />
+              <el-option label="承办律师搜索" value="5" />
+              <el-option label="受理法院搜索" value="6" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="mini" @click="CasehandleQuery">搜索</el-button>
+          <el-button size="mini" @click="CaseresetQuery">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+        <el-table v-loading="loading" :data="lawList" @selection-change="CaselawhandleSelectionChange">
+          <el-table-column type="selection" width="55" align="center" />
+          <el-table-column label="案号" align="center" prop="caseNo" />
+          <el-table-column label="委托人" align="center" prop="caseParties" />
+          <el-table-column label="对方当事人" align="center" prop="caseOppositeParties" />
+          <el-table-column label="已付金额" align="center" prop="casePaidsal" />
+          <el-table-column label="已开票金额" align="center" prop="caseInvoiced" />
+          <el-table-column label="承办律师" align="center" prop="caseSubmitter" />
+          <el-table-column label="收案时间" align="center" prop="collectionTime" width="180">
+            <template v-slot="scope">
+              <span>{{ parseTime(scope.row.collectionTime, '{y}-{m}-{d}') }}</span>
+            </template>
+          </el-table-column>
+      </el-table>
+      <el-button @click="caselawDia = false">取消</el-button>
+      <el-button @click="qudingsss">确定</el-button>
+        <pagination
+        v-show="total>0"
+        :total="total"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
+        @pagination="openCaseLawFun"
+      />
+
+    </el-dialog>
+
+
   </div>
 </template>
 
 
 
 <script>
-import { flistExpressage, getExpressage, delExpressage, addExpressage, updateExpressage,sendList,expressList,getSendwaay,addSendwaay,updateSendwaay,delSendwaay} from "@/api/hr/expressage";
+import { flistExpressage, getExpressage, delExpressage, faddExpressage, updateExpressage,sendList,expressList,getSendwaay,addSendwaay,updateSendwaay,delSendwaay } from "@/api/hr/expressage";
 import { listUser } from "@/api/hr/user";
+import {getExpress, addExpress, updateExpress ,delExpress} from "@/api/hr/express"
+import { listHrLaw } from "@/api/hr/HrLaw";
 
 export default {
   name: "expressage",
@@ -574,6 +744,7 @@ export default {
     return {
       // 选中选项卡的 name
       activeName: "sendwaaylist",
+      expressName: "expresslist",
       // 遮罩层
       loading: true,
       // 选中数组
@@ -592,6 +763,7 @@ export default {
       expressageList: [],
       sendTypeList: [],
       expressList:[],
+      lawList:[],
       //收件人
       systemlist:[],
       // 发送表格数据
@@ -603,6 +775,9 @@ export default {
       AddOpen: false,
       sendWaayDia:false,
       sjr:false,
+      dfr:false,
+      expressDia:false,
+      caselawDia:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -613,17 +788,35 @@ export default {
         expressageExpressTypeId: null,
         takestatus: null,
         collarPerson: null,
+        selectType:null,
+        selectStr:null,
+        selectStrs:null,
         userRealname:null,
-        time:null,
-        expressageSendadate:null,
-        expressageDateofreceipt:null,
+        caseType:null,
+        caseStr:null,
+        expressageSendadate1:null,
+        expressageSendadate2:null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
       },
-     
+      //收件人复选框
+      systemlist:[],
+      quding1: {},
+      //快递公司复选框
+      sendlist:[],
+      quding2: {},
+      //快递类型复选框
+      expresslist:[],
+      quding3: {},
+      //案件复选框
+      lawList:[],
+      quding4: {},
+      //领件人复选框
+       systemlist:[],
+      quding5: {},
     };
   },
   created() {
@@ -679,33 +872,90 @@ export default {
         sendName:null,
         sorting:null,
         userRealname:null,
+        expressName:null,
       };
       this.sendWaayList = [];
       this.resetForm("form");
     },
     openSendWaayFun(){//快递公司查询
       this.sendWaayDia=true;
-      sendList().then(response=>{ 
-        console.log(response.rows);
-         this.sendWaayList = response.rows;
-         this.total = response.total;
-         console.log(this.sendWaayList);
-      });
+      sendList().then(res=>{ 
+        console.log(res.rows);
+         this.sendWaayList = res.rows
+         this.total = res.total;
+         this.$nextTick(()=>{
+            this.$refs.sendlist.toggleRowSelection(this.checklist)
+         })
+      })
+      
 
     },
-    openSystemUser(){//收件人查询
+    openSystemUser(){//发件人查询
+      this.loading = true;
       this.sjr=true;
-      listUser(this.queryParams).then(response=>{ 
-        console.log(response.rows);
-         this.systemlist = response.rows;
-         this.total = response.total;
-         console.log(this.systemlist);
+      listUser(this.queryParams).then(res =>{ 
+        console.log(res.rows);
+        //  this.systemlist = res.rows;
+        this.systemlist = res.rows
+         this.total = res.total;
+         this.loading = false;
+        //  this.checklist = this.systemlist[0]
+         this.$nextTick(()=>{
+            this.$refs.systemlist.toggleRowSelection(this.checklist)
+         })
+      });
+    },
+    openSystemUserdfr(){//代发人查询
+      this.loading = true;
+      this.dfr=true;
+      listUser(this.queryParams).then(res =>{ 
+        console.log(res.rows);
+        //  this.systemlist = res.rows;
+        this.systemlist = res.rows
+         this.total = res.total;
+         this.loading = false;
+        //  this.checklist = this.systemlist[0]
+         this.$nextTick(()=>{
+            this.$refs.systemlist.toggleRowSelection(this.checklist)
+         })
+      });
+    },
+    openExpressFun(){//快递类型查询
+      this.expressDia=true;
+      expressList().then(res =>{ 
+        console.log(res.rows);
+        //  this.systemlist = res.rows;
+        this.expressList = res.rows
+         this.total = res.total;
+        //  this.checklist = this.systemlist[0]
+         this.$nextTick(()=>{
+            this.$refs.expresslist.toggleRowSelection(this.checklist)
+         })
+      });
+    },
+    openCaseLawFun(){//案件查询
+      this.loading = true;
+      this.caselawDia=true;
+      listHrLaw(this.queryParams).then(res =>{ 
+        console.log(res.rows);
+        //  this.systemlist = res.rows;
+        this.lawList = res.rows
+         this.total = res.total;
+         this.loading = false;
+        //  this.checklist = this.lawList[0]
+         this.$nextTick(()=>{
+            this.$refs.lawList.toggleRowSelection(this.checklist)
+         })
       });
     },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+    },
+    CasehandleQuery(){//案件
+      this.queryParams.pageNum = 1;
+      this.openCaseLawFun();
     },
     SystemhandleQuery() { //收件人
       this.queryParams.pageNum = 1;
@@ -716,45 +966,45 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+    CaseresetQuery() {
+      this.resetForm("queryForm");
+      this.openCaseLawFun();
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.AddOpen = true;
-      this.title = "添加快速登记";
+      this.title = "添加发件";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      // this.reset();
+      this.AddOpen = true;
+      this.title = "修改发件";
       const id = row.id || this.ids
       getExpressage(id).then(response => {
         this.form = response.data;
-        this.sendWaayList = response.data.sendWaayList;
-        this.open = true;
-        this.title = "修改快速登记";
+        // this.expressageList = response.data.expressageList;
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.form.sendWaayList = this.sendWaayList;
+          this.form.expressageList = this.expressageList;
           if (this.form.id != null) {
             updateExpressage(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              this.AddOpen = false;
               this.getList();
             });
           } else {
-            addExpressage(this.form).then(response => {
+            faddExpressage(this.form).then(response => {
+              this.reset;
               this.$modal.msgSuccess("新增成功");
-              this.open = false;
+              this.AddOpen = false;
               this.getList();
+              
             });
           }
         }
@@ -774,14 +1024,14 @@ export default {
     rowSendWaayIndex({ row, rowIndex }) {
       row.index = rowIndex + 1;
     },
-    /** 发送添加按钮操作 */
+    /** 快递公司发送添加按钮操作 */
     handleAddSendWaay() {
       let obj = {};
       obj.sorting = "";
       obj.sendName = "";
       this.sendWaayList.push(obj);
     },
-    /** 发送删除按钮操作 */
+    /** 快递公司删除按钮操作 */
     handleDeleteSendWaay(row) {
         const ids = row.id || this.ids;
         this.$modal.confirm('是否确认删除快速登记编号为"' + ids + '"的数据项？').then(function() {
@@ -792,9 +1042,8 @@ export default {
         }).catch(() => {});
      
     },
-      /** 修改按钮操作 */
+      /** 快递公司修改按钮操作 */
       handleUpdateSendwaay(row) {
-        this.reset();
         const id = row.id || this.ids;
         this.activeName = "sendwaayAdd";
         getSendwaay(id).then(response => {
@@ -811,42 +1060,158 @@ export default {
           if (this.form.id != null) {
             updateSendwaay(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              // this.open = false;
               this.activeName = "sendwaaylist";
               this.openSendWaayFun();
-              this.reset();
             });
           } else {
             addSendwaay(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
-              this.open = false;
+              // this.open = false;
               this.activeName = "sendwaaylist";
               this.openSendWaayFun();
-              this.reset();
             });
           }
         }
       });
     },
-
-    /** 复选框选中数据 */
-    handleSendWaaySelectionChange(selection) {
-      this.sendwaaylist = selection.map(item => item.index)
+    // /** 复选框选中数据 */
+    // handleSendWaaySelectionChange(selection) {
+    //   this.sendwaaylist = selection.map(item => item.index)
+    // },
+     /** 快递类型新增按钮操作 */
+    //  handleAdd() {
+    //   this.reset();
+    //   this.open = true;
+    //   this.title = "添加快递类型";
+    // },
+    /** 快递类型修改按钮操作 */
+    handleUpdateExpress(row) {
+      const id = row.id || this.ids
+      this.expressName = "expressAdd";
+      getExpress(id).then(response => {
+        this.form = response.data;
+        // this.open = true;
+        this.expressName = "expressAdd";
+      });
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      this.download('hr/expressage/export', {
-        ...this.queryParams
-      }, `expressage_${new Date().getTime()}.xlsx`)
+    /** 快递类型提交按钮 */
+    ExpresssubmitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.id != null) {
+            updateExpress(this.form).then(response => {
+              this.$modal.msgSuccess("修改成功");
+              // this.open = false;
+              this.expressName = "expresslist";
+              this.openExpressFun();
+            });
+          } else {
+            addExpress(this.form).then(response => {
+              this.$modal.msgSuccess("新增成功");
+              // this.open = false;
+              this.expressName = "expresslist";
+              this.openExpressFun();
+            });
+          }
+        }
+      });
+    },
+    /** 快递类型删除按钮操作 */
+    handleDeleteExpress(row) {
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除快递类型编号为"' + ids + '"的数据项？').then(function() {
+        return delExpress(ids);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("删除成功");
+      }).catch(() => {});
     },
     Query(id){  //根据id查询
           this.open = true;
           getExpressage(id).then(response => {
             this.form = response.data;
-            this.title = "收件详情";
+            this.title = "发件详情";
           });
-        },
-
+     },
+        //收件人复选框
+    SjrhandleSelectionChange(selection,row){
+       if(selection.length > 1){
+          const del_row = selection.shift()
+          this.$refs.systemlist.toggleRowSelection(del_row,false);
+       }
+       this.checklist = selection[0];
+       console.log(selection);
+        this.quding1 = selection;
+    },
+    //代发人复选框
+    DfrhandleSelectionChange(selection,row){
+       if(selection.length > 1){
+          const del_row = selection.shift()
+          this.$refs.systemlist.toggleRowSelection(del_row,false);
+       }
+       this.checklist = selection[0];
+       console.log(selection);
+        this.quding5 = selection;
+    },
+     // 快递公司多选框选中数据
+     handleSelectionChange(selection,row) {
+      if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.sendlist.toggleRowSelection(del_row,false);
+       }
+       this.checklist = selection[0];
+       console.log(selection);
+       this.quding2 = selection;
+    },
+     // 快递类型多选框选中数据
+     ExpresshandleSelectionChange(selection,row) {
+      if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.expresslist.toggleRowSelection(del_row,false);
+       }
+       this.checklist = selection[0];
+       console.log(selection);
+       this.quding3 = selection;
+    },
+     // 案件多选框选中数据
+     CaselawhandleSelectionChange(selection,row) {
+      if(selection.length >1){
+          const del_row = selection.shift()
+          this.$refs.lawList.toggleRowSelection(del_row,false);
+       }
+       this.checklist = selection[0];
+       console.log(selection);
+       this.quding4 = selection;
+    },
+    //收件人复选框
+    quding(){
+      this.form.systemUserAddresser = this.quding1[0].userRealname;
+      this.sjr = false;
+    },
+    //代发人复选框
+    qudinges(){
+      this.form.systemUserRecipients = this.quding5[0].userRealname;
+      this.dfr = false;
+    },
+     //快递公司复选框
+     qudings(){
+      this.form.expressageSendWaayId = this.quding2[0].id;
+      this.sendWaayDia = false;
+    },
+    //快递类型复选框
+    qudingss(){
+      this.form.expressageExpressTypeId = this.quding3[0].id;
+      this.expressDia = false;
+    },
+    //案件复选框
+    qudingsss(){
+      this.form.caseNo = this.quding4[0].caseNo;
+      this.caselawDia = false;
+    },
+    
   }
+
+
 }
 </script>

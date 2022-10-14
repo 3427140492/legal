@@ -63,7 +63,7 @@
         <el-form-item label="团队名称" prop="teamName">
           <el-input v-model="form.teamName" placeholder="请输入团队名称" />
         </el-form-item>
-        <el-form-item label="负责人">
+        <el-form-item label="负责人"  prop="teamPrincipal">
           <el-select v-model="form.teamPrincipal" placeholder="请输入团队负责人">
             <el-option label="请选择---" value="" />
             <el-option v-for="item in ListUserName" :label="item.empName" :value="item.empName" />
@@ -125,15 +125,15 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        // teamName: [
-        //   { required: true, message: "团队名称不能为空", trigger: "blur" }
-        // ],
-        // teamPrincipal: [
-        //   { required: true, message: "团队负责人不能为空", trigger: "blur" }
-        // ],
-        // teamMember: [
-        //   { required: true, message: "团队成员不能为空", trigger: "blur" }
-        // ],
+        teamName: [
+          { required: true, message: "团队名称不能为空", trigger: "blur" }
+        ],
+        teamPrincipal: [
+          { required: true, message: "负责人不能为空", trigger: "blur" }
+        ],
+        teamIntro: [
+          { required: true, message: "团队介绍不能为空", trigger: "blur" }
+        ]
       },
       data: {
 
@@ -195,6 +195,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加团队";
+      this.value1 = [];
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -282,6 +283,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加人事档案";
+      this.value1 = [];
     }
   }
 };

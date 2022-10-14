@@ -66,13 +66,31 @@ public class AdmExpressageServiceImpl implements IAdmExpressageService
      * 
      * @param admExpressage 快速登记
      * @return 结果
+     * 收件管理
      */
     @Transactional
     @Override
     public int insertAdmExpressage(AdmExpressage admExpressage)
     {
         int rows = admExpressageMapper.insertAdmExpressage(admExpressage);
-        insertSendWaay(admExpressage);
+//        insertSendWaay(admExpressage);
+        return rows;
+    }
+
+
+    /**
+     * 新增快速登记
+     *
+     * @param admExpressage 快速登记
+     * @return 结果
+     * 发件管理
+     */
+    @Transactional
+    @Override
+    public int FinsertAdmExpressage(AdmExpressage admExpressage)
+    {
+        int rows = admExpressageMapper.FinsertAdmExpressage(admExpressage);
+//        insertSendWaay(admExpressage);
         return rows;
     }
 

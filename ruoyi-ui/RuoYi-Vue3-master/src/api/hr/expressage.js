@@ -39,10 +39,19 @@ export function getExpressage(id) {
   })
 }
 
-// 新增快速登记
+// 新增快速登记  收件管理
 export function addExpressage(data) {
   return request({
     url: '/hr/expressage',
+    method: 'post',
+    data: data
+  })
+}
+
+// 新增快速登记  发件管理
+export function faddExpressage(data) {
+  return request({
+    url: '/hr/expressage/fadd',
     method: 'post',
     data: data
   })
