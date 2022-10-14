@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
         <include refid="selectClientVo"/>
         <where>  
-            <if test="client != null  and client != ''"> and client = #{client}</if>
+            <if test="client != null  and client != ''"> and client like '${client}%'</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="typeinfo != null  and typeinfo != ''"> and typeinfo = #{typeinfo}</if>

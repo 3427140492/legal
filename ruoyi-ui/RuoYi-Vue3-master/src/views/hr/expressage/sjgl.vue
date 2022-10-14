@@ -41,6 +41,7 @@
 
      <el-form-item prop="takestatus">
       <el-select v-model="queryParams.takestatus" placeholder="领取状态">
+        <el-option value="">选择领取状态</el-option>
         <el-option label="未领取" value="1" />
         <el-option label="已领取" value="2" />
       </el-select>

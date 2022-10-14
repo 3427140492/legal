@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.AdmExpressagesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.AdmExpressages" id="AdmExpressageResult">
+        <result property="id"    column="id"    />
+        <result property="systemUserAddresser"    column="system_user_addresser"    />
+        <result property="systemUserRecipients"    column="system_user_recipients"    />
+        <result property="expressageSendaunit"    column="expressage_sendaunit"    />
+        <result property="expressageSendadate"    column="expressage_sendadate"    />
+        <result property="expressageDateofreceipt"    column="expressage_dateofreceipt"    />
+        <result property="expressageBringDate"    column="expressage_bring_date"    />
+        <result property="expressageSendWaayId"    column="expressage_send_waay_id"    />
+        <result property="expressageExpressTypeId"    column="expressage_express_type_id"    />
+        <result property="expressageCourierNumber"    column="expressage_courier_number"    />
+        <result property="expressageFile"    column="expressage_file"    />
+        <result property="expressageCollarnote"    column="expressage_collarnote"    />
+        <result property="expressageRemark"    column="expressage_remark"    />
+        <result property="takestatus"    column="takestatus"    />
+        <result property="expressFee"    column="express_fee"    />
+        <result property="collarPerson"    column="collar_person"    />
+        <result property="expressageTel"    column="expressage_tel"    />
+        <result property="expressageType"    column="expressage_type"    />
+        <result property="caseNo"    column="case_no"    />
+    </resultMap>
+
+    <sql id="selectAdmExpressageVo">
+        select id, system_user_addresser, system_user_recipients, expressage_sendaunit, expressage_sendadate, expressage_dateofreceipt, expressage_bring_date, expressage_send_waay_id, expressage_express_type_id, expressage_courier_number, expressage_file, expressage_collarnote, expressage_remark, takestatus, express_fee, collar_person, expressage_tel, expressage_type, case_no from adm_expressage
+    </sql>
+
+        
+    <insert id="insertAdmExpressage" parameterType="com.ruoyi.lawyer.domain.AdmExpressages" useGeneratedKeys="true" keyProperty="id">
+        insert into adm_expressage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">system_user_addresser,</if>
+            <if test="systemUserRecipients != null">system_user_recipients,</if>
+            <if test="expressageSendaunit != null">expressage_sendaunit,</if>
+<!--            <if test="expressageSendadate != null">expressage_sendadate,</if>-->
+            expressage_sendadate,
+            <if test="expressageDateofreceipt != null">expressage_dateofreceipt,</if>
+            <if test="expressageBringDate != null">expressage_bring_date,</if>
+            <if test="expressageSendWaayId != null">expressage_send_waay_id,</if>
+            <if test="expressageExpressTypeId != null">expressage_express_type_id,</if>
+            <if test="expressageCourierNumber != null">expressage_courier_number,</if>
+            <if test="expressageFile != null">expressage_file,</if>
+            <if test="expressageCollarnote != null">expressage_collarnote,</if>
+            <if test="expressageRemark != null">expressage_remark,</if>
+            <if test="takestatus != null">takestatus,</if>
+            <if test="expressFee != null">express_fee,</if>
+            <if test="collarPerson != null">collar_person,</if>
+            <if test="expressageTel != null">expressage_tel,</if>
+            <if test="expressageType != null">expressage_type,</if>
+            <if test="caseNo != null">case_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemUserAddresser != null">#{systemUserAddresser},</if>
+            <if test="systemUserRecipients != null">#{systemUserRecipients},</if>
+            <if test="expressageSendaunit != null">#{expressageSendaunit},</if>
+<!--            <if test="expressageSendadate != null">#{expressageSendadate},</if>-->
+            NOW(),
+            <if test="expressageDateofreceipt != null">#{expressageDateofreceipt},</if>
+            <if test="expressageBringDate != null">#{expressageBringDate},</if>
+            <if test="expressageSendWaayId != null">#{expressageSendWaayId},</if>
+            <if test="expressageExpressTypeId != null">#{expressageExpressTypeId},</if>
+            <if test="expressageCourierNumber != null">#{expressageCourierNumber},</if>
+            <if test="expressageFile != null">#{expressageFile},</if>
+            <if test="expressageCollarnote != null">#{expressageCollarnote},</if>
+            <if test="expressageRemark != null">#{expressageRemark},</if>
+            <if test="takestatus != null">#{takestatus},</if>
+            <if test="expressFee != null">#{expressFee},</if>
+            <if test="collarPerson != null">#{collarPerson},</if>
+            <if test="expressageTel != null">#{expressageTel},</if>
+            <if test="expressageType != null">#{expressageType},</if>
+            <if test="caseNo != null">#{caseNo},</if>
+         </trim>
+    </insert>
+
+</mapper>

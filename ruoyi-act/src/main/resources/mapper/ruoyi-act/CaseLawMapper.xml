@@ -79,7 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCaseLawVo">
-        select case_law.id,case_approve_status,case_approval_endtime,system_approval_id,case_no ,type2.case_type_name,case_approve_status,case_subtime,case_submitter from case_law
+        select case_law.id,case_approve_status,case_approval_endtime,system_approval_id,case_no ,type2.case_type_name,case_approve_status,case_subtime,case_submitter
+        from case_law
            inner join case_case_type type on type.id = case_law.case_case_type_id
            inner join case_case_type type2 on type2.id = type.type_pid
 </sql>

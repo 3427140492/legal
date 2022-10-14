@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CaseCaseTypesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CaseCaseTypes" id="CaseCaseTypeResult">
+        <result property="id"   column="id"    />
+        <result property="caseTypeName"    column="case_type_name"    />
+        <result property="typePid"    column="type_pid"    />
+        <result property="typeMoneyMin"    column="type_money_min"    />
+        <result property="typeMoneyMax"    column="type_money_max"    />
+    </resultMap>
+
+    <sql id="selectCaseCaseTypeVo">
+        select id, case_type_name, type_pid, type_money_min, type_money_max from case_case_type
+    </sql>
+
+    <select id="selectCaseCaseTypeList" parameterType="com.ruoyi.lawyer.domain.CaseCaseTypes" resultMap="CaseCaseTypeResult">
+        <include refid="selectCaseCaseTypeVo"/>
+        <where>  
+            <if test="caseTypeName != null  and caseTypeName != ''"> and case_type_name like concat('%', #{caseTypeName}, '%')</if>
+            <if test="typePid == null "> and type_pid is null </if>
+            <if test="typeMoneyMin != null "> and type_money_min = #{typeMoneyMin}</if>
+            <if test="typeMoneyMax != null "> and type_money_max = #{typeMoneyMax}</if>
+        </where>
+    </select>
+
+    <select id="selectCaseCaseTypeListById" parameterType="Long" resultMap="CaseCaseTypeResult">
+        <include refid="selectCaseCaseTypeVo"/>
+        where type_pid = #{id}
+    </select>
+
+    <select id="getCaseTypeMin" parameterType="Long" resultMap="CaseCaseTypeResult">
+        select * from case_case_type where id = (select type_pid from case_case_type where id = #{id})
+    </select>
+
+</mapper>

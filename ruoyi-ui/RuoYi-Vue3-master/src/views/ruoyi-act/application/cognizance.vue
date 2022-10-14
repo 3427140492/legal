@@ -64,7 +64,6 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['ruoyi-act:application:edit']"
           >查看流程</el-button>
         </template>
       </el-table-column>

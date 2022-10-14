@@ -59,63 +59,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCaseLawVo">
-        select id, case_no, case_opposite_parties, case_opposite_cardnum, case_third_party, case_suspect, case_clash, case_cause, case_accept, case_lawsuitobj, case_subsidy, case_subsidysal, case_settle_status, case_plan, case_approve_status, case_agencyfee, case_proxysal, case_transaction_region, case_assign, case_paidsal, case_unpaidsal, case_invoiced, case_notinvoiced, case_propernum, case_court, case_filenumber, case_correlation_file, case_submitter, case_subtime, case_recycle, case_remarks, client_id, case_attorney, case_status, case_lawsuit_status, case_charge_way, system_approval_id, case_case_type_id, case_seal_applyfor_id, hr_emp_id, collection_time, case_parties, case_fxmoney, case_wtr, case_contract, case_record, case_share, case_settle_type, case_approval_endtime, case_record_num, standard from case_law
+        select * from case_law
+
     </sql>
 
     <select id="selectCaseLawList" parameterType="ClientCaseLaw" resultMap="CaseLawResult">
         <include refid="selectCaseLawVo"/>
-        <where>  
-            <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
-            <if test="caseOppositeParties != null  and caseOppositeParties != ''"> and case_opposite_parties = #{caseOppositeParties}</if>
-            <if test="caseOppositeCardnum != null  and caseOppositeCardnum != ''"> and case_opposite_cardnum = #{caseOppositeCardnum}</if>
-            <if test="caseThirdParty != null  and caseThirdParty != ''"> and case_third_party = #{caseThirdParty}</if>
-            <if test="caseSuspect != null  and caseSuspect != ''"> and case_suspect = #{caseSuspect}</if>
-            <if test="caseClash != null  and caseClash != ''"> and case_clash = #{caseClash}</if>
-            <if test="caseCause != null  and caseCause != ''"> and case_cause = #{caseCause}</if>
-            <if test="caseAccept != null  and caseAccept != ''"> and case_accept = #{caseAccept}</if>
-            <if test="caseLawsuitobj != null "> and case_lawsuitobj = #{caseLawsuitobj}</if>
-            <if test="caseSubsidy != null  and caseSubsidy != ''"> and case_subsidy = #{caseSubsidy}</if>
-            <if test="caseSubsidysal != null "> and case_subsidysal = #{caseSubsidysal}</if>
-            <if test="caseSettleStatus != null  and caseSettleStatus != ''"> and case_settle_status = #{caseSettleStatus}</if>
-            <if test="casePlan != null  and casePlan != ''"> and case_plan = #{casePlan}</if>
-            <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
-            <if test="caseAgencyfee != null "> and case_agencyfee = #{caseAgencyfee}</if>
-            <if test="caseProxysal != null "> and case_proxysal = #{caseProxysal}</if>
-            <if test="caseTransactionRegion != null  and caseTransactionRegion != ''"> and case_transaction_region = #{caseTransactionRegion}</if>
-            <if test="caseAssign != null  and caseAssign != ''"> and case_assign = #{caseAssign}</if>
-            <if test="casePaidsal != null "> and case_paidsal = #{casePaidsal}</if>
-            <if test="caseUnpaidsal != null "> and case_unpaidsal = #{caseUnpaidsal}</if>
-            <if test="caseInvoiced != null "> and case_invoiced = #{caseInvoiced}</if>
-            <if test="caseNotinvoiced != null "> and case_notinvoiced = #{caseNotinvoiced}</if>
-            <if test="casePropernum != null  and casePropernum != ''"> and case_propernum = #{casePropernum}</if>
-            <if test="caseCourt != null  and caseCourt != ''"> and case_court = #{caseCourt}</if>
-            <if test="caseFilenumber != null  and caseFilenumber != ''"> and case_filenumber = #{caseFilenumber}</if>
-            <if test="caseCorrelationFile != null  and caseCorrelationFile != ''"> and case_correlation_file = #{caseCorrelationFile}</if>
-            <if test="caseSubmitter != null  and caseSubmitter != ''"> and case_submitter = #{caseSubmitter}</if>
-            <if test="caseSubtime != null "> and case_subtime = #{caseSubtime}</if>
-            <if test="caseRecycle != null  and caseRecycle != ''"> and case_recycle = #{caseRecycle}</if>
-            <if test="caseRemarks != null  and caseRemarks != ''"> and case_remarks = #{caseRemarks}</if>
-            <if test="clientId != null "> and client_id = #{clientId}</if>
-            <if test="caseAttorney != null  and caseAttorney != ''"> and case_attorney = #{caseAttorney}</if>
-            <if test="caseStatus != null  and caseStatus != ''"> and case_status = #{caseStatus}</if>
-            <if test="caseLawsuitStatus != null  and caseLawsuitStatus != ''"> and case_lawsuit_status = #{caseLawsuitStatus}</if>
-            <if test="caseChargeWay != null  and caseChargeWay != ''"> and case_charge_way = #{caseChargeWay}</if>
-            <if test="systemApprovalId != null  and systemApprovalId != ''"> and system_approval_id = #{systemApprovalId}</if>
-            <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_case_type_id = #{caseCaseTypeId}</if>
-            <if test="caseSealApplyforId != null "> and case_seal_applyfor_id = #{caseSealApplyforId}</if>
-            <if test="hrEmpId != null "> and hr_emp_id = #{hrEmpId}</if>
-            <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
-            <if test="caseParties != null  and caseParties != ''"> and case_parties = #{caseParties}</if>
-            <if test="caseFxmoney != null "> and case_fxmoney = #{caseFxmoney}</if>
-            <if test="caseWtr != null  and caseWtr != ''"> and case_wtr = #{caseWtr}</if>
-            <if test="caseContract != null  and caseContract != ''"> and case_contract = #{caseContract}</if>
-            <if test="caseRecord != null  and caseRecord != ''"> and case_record = #{caseRecord}</if>
-            <if test="caseShare != null  and caseShare != ''"> and case_share = #{caseShare}</if>
-            <if test="caseSettleType != null  and caseSettleType != ''"> and case_settle_type = #{caseSettleType}</if>
-            <if test="caseApprovalEndtime != null "> and case_approval_endtime = #{caseApprovalEndtime}</if>
-            <if test="caseRecordNum != null  and caseRecordNum != ''"> and case_record_num = #{caseRecordNum}</if>
-            <if test="standard != null "> and standard = #{standard}</if>
-        </where>
+            <where>
+                <if test="caseNo != null  and caseNo != ''"> and case_no = #{caseNo}</if>
+                <if test="caseOppositeParties != null  and caseOppositeParties != ''"> and case_opposite_parties like '${caseOppositeParties}%'</if>
+                <if test="caseOppositeCardnum != null  and caseOppositeCardnum != ''"> and case_opposite_cardnum = #{caseOppositeCardnum}</if>
+                <if test="caseThirdParty != null  and caseThirdParty != ''"> and case_third_party = #{caseThirdParty}</if>
+                <if test="caseSuspect != null  and caseSuspect != ''"> and case_suspect = #{caseSuspect}</if>
+                <if test="caseClash != null  and caseClash != ''"> and case_clash = #{caseClash}</if>
+                <if test="caseCause != null  and caseCause != ''"> and case_cause = #{caseCause}</if>
+                <if test="caseAccept != null  and caseAccept != ''"> and case_accept = #{caseAccept}</if>
+                <if test="caseLawsuitobj != null "> and case_lawsuitobj = #{caseLawsuitobj}</if>
+                <if test="caseSubsidy != null  and caseSubsidy != ''"> and case_subsidy = #{caseSubsidy}</if>
+                <if test="caseSubsidysal != null "> and case_subsidysal = #{caseSubsidysal}</if>
+                <if test="caseSettleStatus != null  and caseSettleStatus != ''"> and case_settle_status = #{caseSettleStatus}</if>
+                <if test="casePlan != null  and casePlan != ''"> and case_plan = #{casePlan}</if>
+                <if test="caseApproveStatus != null  and caseApproveStatus != ''"> and case_approve_status = #{caseApproveStatus}</if>
+                <if test="caseAgencyfee != null "> and case_agencyfee = #{caseAgencyfee}</if>
+                <if test="caseProxysal != null "> and case_proxysal = #{caseProxysal}</if>
+                <if test="caseTransactionRegion != null  and caseTransactionRegion != ''"> and case_transaction_region = #{caseTransactionRegion}</if>
+                <if test="caseAssign != null  and caseAssign != ''"> and case_assign = #{caseAssign}</if>
+                <if test="casePaidsal != null "> and case_paidsal = #{casePaidsal}</if>
+                <if test="caseUnpaidsal != null "> and case_unpaidsal = #{caseUnpaidsal}</if>
+                <if test="caseInvoiced != null "> and case_invoiced = #{caseInvoiced}</if>
+                <if test="caseNotinvoiced != null "> and case_notinvoiced = #{caseNotinvoiced}</if>
+                <if test="casePropernum != null  and casePropernum != ''"> and case_propernum = #{casePropernum}</if>
+                <if test="caseCourt != null  and caseCourt != ''"> and case_court = #{caseCourt}</if>
+                <if test="caseFilenumber != null  and caseFilenumber != ''"> and case_filenumber = #{caseFilenumber}</if>
+                <if test="caseCorrelationFile != null  and caseCorrelationFile != ''"> and case_correlation_file = #{caseCorrelationFile}</if>
+                <if test="caseSubmitter != null  and caseSubmitter != ''"> and case_submitter = #{caseSubmitter}</if>
+                <if test="caseSubtime != null "> and case_subtime = #{caseSubtime}</if>
+                <if test="caseRecycle != null  and caseRecycle != ''"> and case_recycle = #{caseRecycle}</if>
+                <if test="caseRemarks != null  and caseRemarks != ''"> and case_remarks = #{caseRemarks}</if>
+                <if test="clientId != null "> and client_id = #{clientId}</if>
+                <if test="caseAttorney != null  and caseAttorney != ''"> and case_attorney = #{caseAttorney}</if>
+                <if test="caseStatus != null  and caseStatus != ''"> and case_status = #{caseStatus}</if>
+                <if test="caseLawsuitStatus != null  and caseLawsuitStatus != ''"> and case_lawsuit_status = #{caseLawsuitStatus}</if>
+                <if test="caseChargeWay != null  and caseChargeWay != ''"> and case_charge_way = #{caseChargeWay}</if>
+                <if test="systemApprovalId != null  and systemApprovalId != ''"> and system_approval_id = #{systemApprovalId}</if>
+                <if test="caseCaseTypeId != null  and caseCaseTypeId != ''"> and case_case_type_id = #{caseCaseTypeId}</if>
+                <if test="caseSealApplyforId != null "> and case_seal_applyfor_id = #{caseSealApplyforId}</if>
+                <if test="hrEmpId != null "> and hr_emp_id = #{hrEmpId}</if>
+                <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
+                <if test="caseParties != null  and caseParties != ''"> and case_parties = #{caseParties}</if>
+                <if test="caseFxmoney != null "> and case_fxmoney = #{caseFxmoney}</if>
+                <if test="caseWtr != null  and caseWtr != ''"> and case_wtr = #{caseWtr}</if>
+                <if test="caseContract != null  and caseContract != ''"> and case_contract = #{caseContract}</if>
+                <if test="caseRecord != null  and caseRecord != ''"> and case_record = #{caseRecord}</if>
+                <if test="caseShare != null  and caseShare != ''"> and case_share = #{caseShare}</if>
+                <if test="caseSettleType != null  and caseSettleType != ''"> and case_settle_type = #{caseSettleType}</if>
+                <if test="caseApprovalEndtime != null "> and case_approval_endtime = #{caseApprovalEndtime}</if>
+                <if test="caseRecordNum != null  and caseRecordNum != ''"> and case_record_num = #{caseRecordNum}</if>
+                <if test="standard != null "> and standard = #{standard}</if>
+            </where>
     </select>
     
     <select id="selectCaseLawById" parameterType="Integer" resultMap="CaseLawResult">

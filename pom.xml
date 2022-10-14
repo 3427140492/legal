@@ -249,6 +249,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+
+            <!-- 客户-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-case</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -267,6 +274,7 @@
         <module>ruoyi-finance</module>
         <module>ruoyi-personnelMatters</module>
         <module>ruoyi-log</module>
+        <module>ruoyi-case</module>
     </modules>
     <packaging>pom</packaging>
 

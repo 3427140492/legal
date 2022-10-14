@@ -39,7 +39,7 @@ public class ApplyController extends BaseController
     /**
      * 查询业务申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:list')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/list")
     public TableDataInfo list(Apply apply)
     {
@@ -64,7 +64,7 @@ public class ApplyController extends BaseController
     /**
      * 导出业务申请列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:export')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "业务申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Apply apply)
@@ -77,7 +77,7 @@ public class ApplyController extends BaseController
     /**
      * 获取业务申请详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:query')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
@@ -87,7 +87,7 @@ public class ApplyController extends BaseController
     /**
      * 新增业务申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:add')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "业务申请", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Apply apply)
@@ -98,7 +98,7 @@ public class ApplyController extends BaseController
     /**
      * 修改业务申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:edit')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "业务申请", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Apply apply)
@@ -109,7 +109,7 @@ public class ApplyController extends BaseController
     /**
      * 删除业务申请
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:apply:remove')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "业务申请", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)

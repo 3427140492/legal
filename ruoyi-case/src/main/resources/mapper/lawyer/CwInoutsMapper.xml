@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CwInoutsMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CwInouts" id="CwInoutResult">
+        <result property="id"    column="id"    />
+        <result property="cwInoutTypeId"    column="cw_inout_type_id"    />
+        <result property="cwInoutDate"    column="cw_inout_date"    />
+        <result property="cwInoutPerson"    column="cw_inout_person"    />
+        <result property="cwInoutMoney"    column="cw_inout_money"    />
+        <result property="cwPayType"    column="cw_pay_type"    />
+        <result property="caseLawId"    column="case_law_id"    />
+        <result property="cwEnteringdate"    column="cw_enteringdate"    />
+        <result property="cwRemark"    column="cw_remark"    />
+        <result property="cwPayer"    column="cw_payer"    />
+    </resultMap>
+
+    <sql id="selectCwInoutVo">
+        select id, cw_inout_type_id, cw_inout_date, cw_inout_person, cw_inout_money, cw_pay_type, case_law_id, cw_enteringdate, cw_remark, cw_payer from cw_inout
+    </sql>
+
+        
+    <insert id="insertCwInout" parameterType="com.ruoyi.lawyer.domain.CwInouts" useGeneratedKeys="true" keyProperty="id">
+        insert into cw_inout
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cwInoutTypeId != null">cw_inout_type_id,</if>
+            <if test="cwInoutDate != null">cw_inout_date,</if>
+            <if test="cwInoutPerson != null">cw_inout_person,</if>
+            <if test="cwInoutMoney != null">cw_inout_money,</if>
+            <if test="cwPayType != null">cw_pay_type,</if>
+            <if test="caseLawId != null">case_law_id,</if>
+            <if test="cwEnteringdate != null">cw_enteringdate,</if>
+            <if test="cwRemark != null">cw_remark,</if>
+            <if test="cwPayer != null">cw_payer,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cwInoutTypeId != null">#{cwInoutTypeId},</if>
+            <if test="cwInoutDate != null">#{cwInoutDate},</if>
+            <if test="cwInoutPerson != null">#{cwInoutPerson},</if>
+            <if test="cwInoutMoney != null">#{cwInoutMoney},</if>
+            <if test="cwPayType != null">#{cwPayType},</if>
+            <if test="caseLawId != null">#{caseLawId},</if>
+            <if test="cwEnteringdate != null">#{cwEnteringdate},</if>
+            <if test="cwRemark != null">#{cwRemark},</if>
+            <if test="cwPayer != null">#{cwPayer},</if>
+         </trim>
+    </insert>
+
+</mapper>

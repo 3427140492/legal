@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CwInoutTypesMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CwInoutTypes" id="CwInoutTypeResult">
+        <result property="id"    column="id"    />
+        <result property="cwName"    column="cw_name"    />
+        <result property="cwPid"    column="cw_pid"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectCwInoutTypeVo">
+        select id, cw_name, cw_pid, type from cw_inout_type where cw_pid is null
+    </sql>
+
+    <select id="selectCwInoutTypeList" parameterType="com.ruoyi.lawyer.domain.CwInoutTypes" resultMap="CwInoutTypeResult">
+        <include refid="selectCwInoutTypeVo"/>
+        <where>  
+            <if test="cwName != null  and cwName != ''"> and cw_name like concat('%', #{cwName}, '%')</if>
+            <if test="cwPid != null "> and cw_pid = #{cwPid}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectCwInoutTypeById" parameterType="String" resultMap="CwInoutTypeResult">
+        select id, cw_name, cw_pid, type from cw_inout_type where cw_pid = #{id}
+    </select>
+        
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lawyer.mapper.CaseSealApplyforsMapper">
+    
+    <resultMap type="com.ruoyi.lawyer.domain.CaseSealApplyfors" id="CaseSealApplyforResult">
+        <result property="id"    column="id"    />
+        <result property="caseNo"    column="case_no"    />
+        <result property="applyforReceive"    column="applyfor_receive"    />
+        <result property="applyforApprovalStatus"    column="applyfor_approval_status"    />
+        <result property="applyforRecipient"    column="applyfor_recipient"    />
+        <result property="sendPerson"    column="send_person"    />
+        <result property="applyforUsingTheItem"    column="applyfor_using_the_item"    />
+        <result property="caseid"    column="caseid"    />
+        <result property="remark"    column="remark"    />
+        <result property="typeid"    column="typeid"    />
+    </resultMap>
+
+    <resultMap id="CaseSealApplyforCaseFilesResult" type="com.ruoyi.lawyer.domain.CaseSealApplyfors" extends="CaseSealApplyforResult">
+        <association property="caseFiles" notNullColumn="cf_id" javaType="com.ruoyi.lawyer.domain.CaseFiless" resultMap="CaseFilesResult" />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.lawyer.domain.CaseFiless" id="CaseFilesResult">
+        <result property="id"    column="cf_id"    />
+        <result property="appid"    column="appid"    />
+        <result property="filename"    column="filename"    />
+        <result property="filepath"    column="filepath"    />
+        <result property="typeid"    column="typeid"    />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.lawyer.domain.RecordFiles" id="RecordFileResult">
+        <result property="rid"    column="rid"    />
+        <result property="file_name"    column="file_name"    />
+        <result property="filename"    column="filename"    />
+        <result property="file_path"    column="file_path"    />
+        <result property="tid"    column="tid"    />
+        <result property="caseid"    column="caseid"    />
+    </resultMap>
+
+    <select id="selectCaseSealApplyforList2" parameterType="com.ruoyi.lawyer.domain.CaseSealApplyfors" resultMap="CaseSealApplyforResult">
+        select
+            app.*
+        from
+            case_seal_applyfor app
+        inner join case_law cl on cl.case_no = app.case_no
+        where
+            cl.case_recycle = 'Y'
+        <if test="applyforRecipient != null  and applyforRecipient != ''"> and applyfor_recipient = #{applyforRecipient}</if>
+        <if test="caseNo != null  and caseNo != ''"> and cl.case_no like concat('%', #{caseNo} , '%') </if>
+        <if test="applyforApprovalStatus != null  and applyforApprovalStatus != ''"> and applyfor_approval_status = #{applyforApprovalStatus}</if>
+        <if test="applyforUsingTheItem != null  and applyforUsingTheItem != ''"> and applyfor_using_the_item = #{applyforUsingTheItem}</if>
+    </select>
+
+    <select id="selectCaseSealApplyforList" parameterType="String" resultMap="CaseSealApplyforCaseFilesResult">
+        select
+            cf.id as cf_id,ca.case_no,ca.applyfor_recipient,ca.send_person,ca.applyfor_using_the_item,ca.applyfor_receive,cf.filename,ca.applyfor_approval_status
+        from
+            case_seal_applyfor ca
+                left join
+            case_files cf
+            on
+                cf.appid = ca.id
+        where ca.caseid = #{id}
+    </select>
+
+    <insert id="insertCaseSealApplyfor" parameterType="com.ruoyi.lawyer.domain.CaseSealApplyfors" useGeneratedKeys="true" keyProperty="id">
+        insert into case_seal_applyfor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">case_no,</if>
+            <if test="applyforReceive != null">applyfor_receive,</if>
+            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">applyfor_approval_status,</if>
+            <if test="applyforRecipient != null">applyfor_recipient,</if>
+            <if test="sendPerson != null">send_person,</if>
+            <if test="applyforUsingTheItem != null">applyfor_using_the_item,</if>
+            <if test="caseid != null">caseid,</if>
+            <if test="remark != null">remark,</if>
+            <if test="typeid != null">typeid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caseNo != null">#{caseNo},</if>
+            <if test="applyforReceive != null">#{applyforReceive},</if>
+            <if test="applyforApprovalStatus != null and applyforApprovalStatus != ''">#{applyforApprovalStatus},</if>
+            <if test="applyforRecipient != null">#{applyforRecipient},</if>
+            <if test="sendPerson != null">#{sendPerson},</if>
+            <if test="applyforUsingTheItem != null">#{applyforUsingTheItem},</if>
+            <if test="caseid != null">#{caseid},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="typeid != null">#{typeid},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteCaseSealApplyforById" parameterType="Long">
+        delete from case_seal_applyfor where id = #{id}
+    </delete>
+
+    <select id="getProduction" parameterType="String" resultMap="RecordFileResult">
+        select
+            rid,file_name,IFNULL(filename,'空') filename,file_path ,tid
+        from
+            (select rf.id rid ,t.id tid, file_name, file_path,typeName from file_type t inner join record_file rf on t.id = rf.file_type_id where typeName = '立案文书') fileModal
+                LEFT JOIN
+            (select cfs.filename,cfs.id from case_files cfs inner join case_seal_applyfor app on app.id = cfs.appid where app.caseid = #{caseid} ) cf
+        on
+            cf.filename = fileModal.file_name
+    </select>
+</mapper>

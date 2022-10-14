@@ -21,6 +21,10 @@ public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /** 律师信息表id_外键 */
+    @Excel(name = "律师信息表id_外键")
+    private String hrEmpId;
+
     /** 用户ID */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
@@ -100,6 +104,14 @@ public class SysUser extends BaseEntity
     public SysUser(Long userId)
     {
         this.userId = userId;
+    }
+
+    public String getHrEmpId() {
+        return hrEmpId;
+    }
+
+    public void setHrEmpId(String hrEmpId) {
+        this.hrEmpId = hrEmpId;
     }
 
     public Long getUserId()
@@ -314,6 +326,7 @@ public class SysUser extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
+            .append("hrEmpId", getHrEmpId())
             .append("deptId", getDeptId())
             .append("userName", getUserName())
             .append("nickName", getNickName())

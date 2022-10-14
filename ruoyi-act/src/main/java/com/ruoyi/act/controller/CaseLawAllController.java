@@ -37,7 +37,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 查询审批中心列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:list')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping("/list")
     public TableDataInfo list(CaseLawAll caseLawAll)
     {
@@ -49,7 +49,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 导出审批中心列表
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:export')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "审批中心", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CaseLawAll caseLawAll)
@@ -62,7 +62,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 获取审批中心详细信息
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:query')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Integer id)
     {
@@ -72,7 +72,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 新增审批中心
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:add')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "审批中心", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CaseLawAll caseLawAll)
@@ -83,7 +83,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 修改审批中心
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:edit')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "审批中心", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CaseLawAll caseLawAll)
@@ -94,7 +94,7 @@ public class CaseLawAllController extends BaseController
     /**
      * 删除审批中心
      */
-    @PreAuthorize("@ss.hasPermi('ruoyi-act:lawall:remove')")
+    @PreAuthorize("@ss.hasPermi('ruoyi-act:application')")
     @Log(title = "审批中心", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)
