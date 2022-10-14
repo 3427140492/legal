@@ -72,7 +72,8 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="ViewDetail(scope.row.id)">查看详细信息</el-dropdown-item>
-                <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息</el-dropdown-item>
+                <el-dropdown-item @click="handleUpdate(scope.row)" v-hasPermi="['persM:archives:edit']">修改员工信息
+                </el-dropdown-item>
                 <el-dropdown-item @click="WorkExperience(scope.row.id)">查看工作经历</el-dropdown-item>
                 <el-dropdown-item @click="Education(scope.row.id)">查看教育经历</el-dropdown-item>
                 <el-dropdown-item @click="delArchivesUser(scope.row)">删除员工</el-dropdown-item>
@@ -160,13 +161,13 @@
             <el-radio label="F">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否在职">
+        <el-form-item label="是否在职" prop="empWorkstatus">
           <el-radio-group v-model="form.empWorkstatus">
             <el-radio label="Y">在职</el-radio>
             <el-radio label="N">离职</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="证件类型">
+        <el-form-item label="证件类型" prop="empPaperstype">
           <el-select v-model="form.empPaperstype">
             <el-option label="身份证" value="身份证" />
             <el-option label="回乡证" value="回乡证" />
@@ -469,7 +470,7 @@
 
     <!-- 添加或修改工作经历对话框 -->
     <el-dialog :title="title" v-model="openWork">
-      <el-form :inline="true" ref="formWork" :model="formWork" :rules="rules" label-width="80px">
+      <el-form :inline="true" ref="formWork" :model="formWork" :rules="rules1" label-width="80px">
         <el-form-item label="起止时间" prop="workhistoryStartdate">
           <el-date-picker clearable v-model="formWork.workhistoryStartdate" type="date" value-format="YYYY-MM-DD"
             placeholder="请选择起止时间">
@@ -486,7 +487,7 @@
         <el-form-item label="工作职务" prop="workhistoryJobPosition">
           <el-input v-model="formWork.workhistoryJobPosition" placeholder="请输入工作职务" />
         </el-form-item>
-        <el-form-item label="工作类别">
+        <el-form-item label="工作类别" prop="workhistoryWorktype">
           <el-select v-model="formWork.workhistoryWorktype">
             <el-option value="">请选择…</el-option>
             <el-option value="律师工作">律师工作</el-option>
@@ -498,7 +499,7 @@
             <el-option value="其他">其他</el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="单位性质">
+        <el-form-item label="单位性质" prop="workhistoryWorknature">
           <el-select v-model="formWork.workhistoryWorknature">
             <el-option value="">请选择…</el-option>
             <el-option value="党委">党委</el-option>
@@ -527,29 +528,29 @@
 
     <el-dialog v-model="this.Educations" title="查看教育经历" width="65%">
       <el-table v-loading="loading" :data="degreeList" @selection-change="handleSelectionChange">
-      <el-table-column label="序号" align="center" prop="id" />
-      <el-table-column label="开始日期" align="center" prop="degreeStartdate" width="100">
-        <template #default="scope">
-          <span>{{ parseTime(scope.row.degreeStartdate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="结束日期" align="center" prop="degreeEnddate" width="100">
-        <template #default="scope">
-          <span>{{ parseTime(scope.row.degreeEnddate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="毕业学校" align="center" prop="degreeSchool" />
-      <el-table-column label="主修专业" align="center" prop="degreeMajor" />
-      <el-table-column label="获得学历" align="center" prop="degreeEducation" />
-      <el-table-column label="获得学位" align="center" prop="degreeDegrees" />
-      <el-table-column label="证书编号" align="center" prop="degreeCrednum" />
-      <el-table-column label="全日制" align="center" prop="degreeFulltime">
-        <template v-slot="scope">
-          <span v-if="scope.row.degreeFulltime == 'Y'">是</span>
-          <span v-if="scope.row.degreeFulltime == 'N'">否</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="所在地" align="center" prop="degreeSite" />
+        <el-table-column label="序号" align="center" prop="id" />
+        <el-table-column label="开始日期" align="center" prop="degreeStartdate" width="100">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.degreeStartdate, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="结束日期" align="center" prop="degreeEnddate" width="100">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.degreeEnddate, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="毕业学校" align="center" prop="degreeSchool" />
+        <el-table-column label="主修专业" align="center" prop="degreeMajor" />
+        <el-table-column label="获得学历" align="center" prop="degreeEducation" />
+        <el-table-column label="获得学位" align="center" prop="degreeDegrees" />
+        <el-table-column label="证书编号" align="center" prop="degreeCrednum" />
+        <el-table-column label="全日制" align="center" prop="degreeFulltime">
+          <template v-slot="scope">
+            <span v-if="scope.row.degreeFulltime == 'Y'">是</span>
+            <span v-if="scope.row.degreeFulltime == 'N'">否</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="所在地" align="center" prop="degreeSite" />
       </el-table>
     </el-dialog>
 
@@ -561,7 +562,7 @@
   
 <script>
 
-import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork, addWorkhistory,delWorkhistory,getDegree} from "@/api/persM/archives";
+import { listArchives, getArchives, delArchives, addArchives, updateArchives, getWorkArchives, updateWorkhistory, getWork, addWorkhistory, delWorkhistory, getDegree } from "@/api/persM/archives";
 
 
 export default {
@@ -618,6 +619,113 @@ export default {
       },
       // 表单校验
       rules: {
+        empName: [
+          { required: true, message: "姓名不能为空", trigger: "blur" }
+        ],
+        empSex: [
+          { required: true, message: "性别不能为空", trigger: "blur" }
+        ],
+        empBirthdate: [
+          { required: true, message: "出生日期不能为空", trigger: "blur" }
+        ],
+        empPaperstype: [
+          { required: true, message: "证件类型不能为空", trigger: "blur" }
+        ],
+        empWorkstatus: [
+          { required: true, message: "在职信息不能为空", trigger: "blur" }
+        ],
+        empPapersnum: [
+          { required: true, message: "证件号不能为空", trigger: "blur" }
+        ],
+        empHigthEducation: [
+          { required: true, message: "最高学历不能为空", trigger: "blur" }
+        ],
+        empHigthDegree: [
+          { required: true, message: "最高学位不能为空", trigger: "blur" }
+        ],
+        empPosition: [
+          { required: true, message: "所内身份不能为空", trigger: "blur" }
+        ],
+        hrPoliticalId: [
+          { required: true, message: "政治面貌不能为空", trigger: "blur" }
+        ],
+        hrSpecialtyId: [
+          { required: true, message: "专业部门不能为空", trigger: "blur" }
+        ],
+        hrPractiseId: [
+          { required: true, message: "职业类别不能为空", trigger: "blur" }
+        ],
+        empPracnum: [
+          { required: true, message: "执业证号码不能为空", trigger: "blur" }
+        ],
+        empPracdate: [
+          { required: true, message: "首次执业时间不能为空", trigger: "blur" }
+        ],
+        empPracsite: [
+          { required: true, message: "首次执业地不能为空", trigger: "blur" }
+        ],
+        hrCertifyId: [
+          { required: true, message: "资格证类别不能为空", trigger: "blur" }
+        ],
+        empCertifynum: [
+          { required: true, message: "资格证号码不能为空", trigger: "blur" }
+        ],
+        empGainway: [
+          { required: true, message: "资格证取得方式不能为空", trigger: "blur" }
+        ],
+        empGainsite: [
+          { required: true, message: "资格证取得地不能为空", trigger: "blur" }
+        ],
+        empEntrydate: [
+          { required: true, message: "入职时间不能为空", trigger: "blur" }
+        ],
+        empSocialNum: [
+          { required: true, message: "社保号码不能为空", trigger: "blur" }
+        ],
+        empContStartdate: [
+          { required: true, message: "合同开始不能为空", trigger: "blur" }
+        ],
+        empContEnddate: [
+          { required: true, message: "合同截止不能为空", trigger: "blur" }
+        ],
+        empInsured: [
+          { required: true, message: "是否参保不能为空", trigger: "blur" }
+        ],
+        empPhone: [
+          { required: true, message: "手机号码不能为空", trigger: "blur" }
+        ],
+        empSite: [
+          { required: true, message: "联系地址不能为空", trigger: "blur" }
+        ],
+        empContactPhone: [
+          { required: true, message: "联系电话不能为空", trigger: "blur" }
+        ],
+        empEmail: [
+          { required: true, message: "邮箱不能为空", trigger: "blur" }
+        ]
+      },
+      rules1: {
+        workhistoryStartdate: [
+          { required: true, message: "起止时间不能为空", trigger: "blur" }
+        ],
+        workhistoryEnddate: [
+          { required: true, message: "结束时间不能为空", trigger: "blur" }
+        ],
+        workhistoryWorkunit: [
+          { required: true, message: "工作单位不能为空", trigger: "blur" }
+        ],
+        workhistoryJobPosition: [
+          { required: true, message: "工作职务不能为空", trigger: "blur" }
+        ],
+        workhistoryWorktype: [
+          { required: true, message: "工作类别不能为空", trigger: "blur" }
+        ],
+        workhistoryWorknature: [
+          { required: true, message: "单位性质不能为空", trigger: "blur" }
+        ],
+        workhistorySite: [
+          { required: true, message: "所在地不能为空", trigger: "blur" }
+        ]
       },
       rules2: {
       },
@@ -832,7 +940,7 @@ export default {
       this.Educations = true;
       this.hrEmpId = id;
       getDegree(id).then(response => {
-        this.degreeList  = response.rows;
+        this.degreeList = response.rows;
       })
     },
     /** 提交按钮 */
@@ -872,23 +980,23 @@ export default {
       this.openWork = true;
       this.title = "添加人事档案";
     },
-    handleDeleteWork(row){
+    handleDeleteWork(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除工作经历编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除工作经历编号为"' + ids + '"的数据项？').then(function () {
         return delWorkhistory(ids);
       }).then(() => {
         this.WorkExperience(this.hrEmpId);
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     },
-    delArchivesUser(row){
+    delArchivesUser(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除编号为"' + ids + '"的员工？').then(function() {
+      this.$modal.confirm('是否确认删除编号为"' + ids + '"的员工？').then(function () {
         return delArchives(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     }
   }
 }
